@@ -60,7 +60,7 @@ exports.query = function(path, handler) {
 		}
 
 		// aggregate result body
-		body = '';
+		var body = '';
 		res.on('data', function(chunck) {
 			body += chunck;
 		});
@@ -68,7 +68,7 @@ exports.query = function(path, handler) {
 		// when everything is aggregated, part body and invoke handlers
 		res.on('end', function() {
 			// TODO handle parsing errors
-			answer = JSON.parse(body);
+			var answer = JSON.parse(body);
 			if(!answer.status || answer.status !== 'ok') {
 				console.warn('STATUS:' + answer.status);
 			}
