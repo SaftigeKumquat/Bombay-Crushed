@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Load modules
 var http = require('http');
 
