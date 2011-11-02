@@ -18,6 +18,29 @@ var baseurl = {
 };
 
 /**
+ * Build up the request options for the given path.
+ */
+var buildRequestOptions = function(path) {
+	var options = {
+		host: baseurl.host,
+		port: baseurl.port
+	};
+	if(path) {
+		if(baseurl.path && typeof(baseurl.path) === 'string') {
+			// make sure there is a dash in between
+			if(path.charAt(0) === '/' || baseurl.path.charAt(baseurl.path.length-1) === '/') {
+				options.path = baseurl.path + path;
+			} else {
+				options.path = baseurl.path + '/' + path;
+			}
+		} else {
+			options.path = path;
+		}
+	}
+	return options;
+}
+
+/**
  * Perform a query against the Liquid Feedback API Server.
  *
  * The function will automaticall check for HTTP-Errors, parse the JSON returned by the server and
@@ -28,14 +51,11 @@ var baseurl = {
  * @return The ClientResponseObject given by http(s).request.
  */
 exports.query = function(path, handler) {
-	var options = baseurl;
-	options.path = path;
-
-	//console.log(JSON.stringify(options));
+	var options = buildRequestOptions(path);
 
 	var extended_handler = function(res) {
 		if(res.statusCode != 200) {
-			console.warn('Request failed!');
+			console.warn('Request failed: ' + res.statusCode);
 			return;
 		}
 
@@ -47,6 +67,7 @@ exports.query = function(path, handler) {
 
 		// when everything is aggregated, part body and invoke handlers
 		res.on('end', function() {
+			// TODO handle parsing errors
 			answer = JSON.parse(body);
 			console.log('STATUS:' + answer.status);
 			handler(answer);
@@ -57,3 +78,12 @@ exports.query = function(path, handler) {
 		console.log("Got error: " + e.message);
 	});
 };
+
+/**
+ * Allow to update the Base URL.
+ *
+ * @param newbase JSON specification of the base URL as it would be expected by http(s).request().
+ */
+exports.setBaseURL = function(newbase) {
+	baseurl = newbase;
+}
