@@ -55,7 +55,7 @@ exports.query = function(path, handler) {
 
 	var extended_handler = function(res) {
 		if(res.statusCode != 200) {
-			console.warn('Request failed: ' + res.statusCode);
+			console.error('Request failed: ' + res.statusCode);
 			return;
 		}
 
@@ -69,13 +69,16 @@ exports.query = function(path, handler) {
 		res.on('end', function() {
 			// TODO handle parsing errors
 			answer = JSON.parse(body);
-			console.log('STATUS:' + answer.status);
+			if(!answer.status || answer.status !== 'ok') {
+				console.warn('STATUS:' + answer.status);
+			}
+			// TODO different handler in case of errors
 			handler(answer);
 		});
 	}
 
 	return http.get(options, extended_handler).on('error', function(e) {
-		console.log("Got error: " + e.message);
+		console.error("Got error: " + e.message);
 	});
 };
 
