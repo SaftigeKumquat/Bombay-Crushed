@@ -1,6 +1,6 @@
 /** @file
  * This module provides several utilities to easier access
- * access the lfapi.
+ * the lfapi.
  *
  * This is meant to be used as a module in nodejs, so use
  * @code
@@ -61,8 +61,8 @@ exports.query = function(path, handler) {
 
 		// aggregate result body
 		var body = '';
-		res.on('data', function(chunck) {
-			body += chunck;
+		res.on('data', function(chunk) {
+			body += chunk;
 		});
 
 		// when everything is aggregated, part body and invoke handlers
