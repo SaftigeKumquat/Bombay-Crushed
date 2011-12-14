@@ -98,6 +98,19 @@ actions.initiatives = function() {
 };
 actions.initiatives.help = 'Get list of initiatives';
 
+actions.session = function() {
+	// TODO better argument handling
+	if(process.argv.length > 3) {
+		var api_key = process.argv[3];
+		lfcli.perform('/session', { key: api_key }, function(res) {
+			console.log('Session key: ' + res.session_key);
+		} );
+	} else {
+		console.error('You must provide an API key');
+	}
+}
+actions.session.help = 'Start a session with the API server. Requires API key as additinal argument.';
+
 actions.help = function() {
 	console.log('Invocation: apicli.js [action]');
 	console.log('\nAvailable actions:');
