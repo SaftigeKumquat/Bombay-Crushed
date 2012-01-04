@@ -106,8 +106,8 @@ exports.perform = function(path, args, handler) {
 
 		// aggregate result body
 		var body = '';
-		res.on('data', function(chunck) {
-			body += chunck;
+		res.on('data', function(chunk) {
+			body += chunk;
 		});
 
 		// when everything is aggregated, part body and invoke handlers
