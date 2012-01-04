@@ -7,3 +7,5 @@ Where to start?
 ---------------
 
 `apicli.js` contains code that, when executed via [node.js](http://nodejs.org/), connects to the [Liquid Feedback API Test Server](http://apitest.liquidfeedback.org:25520/) and pulls some information.
+
+`dataCollectorDemo.js` contains some code showing how data can be collected from several parts and only processed once all parts are available.
