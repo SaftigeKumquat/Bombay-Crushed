@@ -7,7 +7,7 @@ var lfcli = require('./lfcli.js');
 actions = {};
 
 actions.info = function() {
-	lfcli.query('/info', function(res) {
+	lfcli.query('/info', {}, function(res) {
 		console.log('Core Version: ' + res.core_version);
 		console.log('API Version:  ' + res.api_version);
 	});
@@ -15,14 +15,14 @@ actions.info = function() {
 actions.info.help = 'Get general information on the server.';
 
 actions.member_count = function() {
-	lfcli.query('/member_count', function(res) {
+	lfcli.query('/member_count', {}, function(res) {
 		console.log('Members: ' + res.total_count);
 	});
 };
 actions.member_count.help = 'Get the number of members registered.';
 
 actions.members = function() {
-	lfcli.query('/member', function(res) {
+	lfcli.query('/member', {}, function(res) {
 		var i;
 		var members = res.result;
 		for(i = 0; i < members.length; ++i) {
@@ -34,7 +34,7 @@ actions.members = function() {
 actions.members.help = 'Get member list.';
 
 actions.policies = function() {
-	lfcli.query('/policy', function(res) {
+	lfcli.query('/policy', {}, function(res) {
 		var i;
 		var policies = res.result;
 		console.log('Policies: ' + policies.length);
@@ -47,7 +47,7 @@ actions.policies = function() {
 actions.policies.help = 'Get list of policies';
 
 actions.units = function() {
-	lfcli.query('/unit', function(res) {
+	lfcli.query('/unit', {}, function(res) {
 		var i;
 		var units = res.result;
 		console.log('Units: ' + units.length);
@@ -60,7 +60,7 @@ actions.units = function() {
 actions.units.help = 'Get list of units';
 
 actions.areas = function() {
-	lfcli.query('/area', function(res) {
+	lfcli.query('/area', {}, function(res) {
 		var i;
 		var areas = res.result;
 		console.log('Areas: ' + areas.length);
@@ -73,7 +73,7 @@ actions.areas = function() {
 actions.areas.help = 'Get list of areas';
 
 actions.issues = function() {
-	lfcli.query('/issue', function(res) {
+	lfcli.query('/issue', {}, function(res) {
 		var i;
 		var issues = res.result;
 		console.log('Issues: ' + issues.length);
@@ -86,7 +86,7 @@ actions.issues = function() {
 actions.issues.help = 'Get list of issues';
 
 actions.initiatives = function() {
-	lfcli.query('/initiative', function(res) {
+	lfcli.query('/initiative', {}, function(res) {
 		var i;
 		var initiatives = res.result;
 		console.log('Initiatives: ' + initiatives.length);
