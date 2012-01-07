@@ -111,6 +111,67 @@ actions.session = function() {
 }
 actions.session.help = 'Start a session with the API server. Requires API key as additinal argument.';
 
+actions.news = function() {
+	var lastBallot, criticalQuorum;
+
+	// data output
+	var finish = function() {
+		if(lastBallot !== undefined && criticalQuorum !== undefined) {
+			console.log('Got all data');
+			if(!lastBallot) {
+				console.log('No initiative has been passed recently');
+			} else {
+				console.log('Last Ballot: ' + lastBallot.name);
+			}
+
+			if(!criticalQuorum) {
+				console.log('Currently no initiative is close to the quorum');
+			} else {
+				console.log('Critical Quorum: ' + criticalQuorum.name);
+			}
+		}
+	}
+
+	// query last ballot
+	// erst nach issue fragen, dann winning initiative für den issue abfragen -> weniger daten
+	// TODO nach eigenen areas einschränken
+	// 1. get issues with issue_state =  finished_with_winner
+	// 2. Select initiative closed last (we only got ones with winners -> end of voting time)
+	// 3. get winner of that issue
+	lfcli.query('/issue', {'issue_state': 'finished_with_winner'}, function(res) {
+		var i;
+		var issues = res.result;
+		var last_timestamp = 0;
+		var last_issue;
+		console.log('Completed issues: ' + issues.length);
+		for(i = 0; i < issues.length; ++i) {
+			var issue = issues[i];
+			closing_time = Date.parse(issue.closed);
+			if(closing_time > last_timestamp) {
+				last_timestamp = closing_time;
+				last_issue = issue;
+			}
+		}
+		if(!last_issue) {
+			lastBallot = false;
+			finish();
+		} else {
+			lfcli.query('/initiative', {'initiative_winner': true, 'issue_id': last_issue.id}, function(res) {
+				var i;
+				lastBallot = res.result();
+				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
+				finish();
+			});
+		}
+	});
+
+	// query critical Quorum
+	console.error('Not implemented');
+	criticalQuorum = false;
+	finish();
+};
+actions.news.help = 'Show the news as found on the Bombay Chrushed start page';
+
 actions.help = function() {
 	console.log('Invocation: apicli.js [action]');
 	console.log('\nAvailable actions:');
