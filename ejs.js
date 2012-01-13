@@ -171,14 +171,46 @@ var context = {
 
 var ejs = require('ejs')
   , fs = require('fs')
-  , headtpl = fs.readFileSync(__dirname + '/head.tpl', 'utf8')
-  , maintpl = fs.readFileSync(__dirname + '/main.tpl', 'utf8')
-  , footertpl = fs.readFileSync(__dirname + '/footer.tpl', 'utf8');
+  , headtpl
+  , maintpl
+  , footertpl;
 
-var head = ejs.render(headtpl, context);
-var main = ejs.render(maintpl, context);
-var footer = ejs.render(footertpl, context);
+var render = function() {
+	if(headtpl && maintpl && footertpl) {
+		var head = ejs.render(headtpl, context);
+		var main = ejs.render(maintpl, context);
+		var footer = ejs.render(footertpl, context);
 
-console.log(head);
-console.log(main);
-console.log(footer);
+		console.log(head);
+		console.log(main);
+		console.log(footer);
+	}
+}
+
+fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
+	if(err) {
+		throw err;
+	}
+
+	headtpl = data;
+
+	render();
+} );
+fs.readFile(__dirname + '/main.tpl', 'utf8', function(err, data) {
+	if(err) {
+		throw err;
+	}
+
+	maintpl = data;
+
+	render();
+} );
+fs.readFile(__dirname + '/footer.tpl', 'utf8', function(err, data) {
+	if(err) {
+		throw err;
+	}
+
+	footertpl = data;
+
+	render();
+} );
