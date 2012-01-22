@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="de">
+
+
+<head>
+	<meta charset="utf-8" />
+	<title>Bombay Crushed &middot; Redesign der LQFB Instanz der Piratenpartei Deutschland</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+
+	<!-- 1140px Grid styles for IE -->
+	<!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
+	<!-- The 1140px Grid - http://cssgrid.net/, modified by Christophe Chan Hin -->
+	<link rel="stylesheet" href="css/1140.css" type="text/css" media="screen" />
+	<!-- Your styles -->
+	<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
+	<!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
+	<script type="text/javascript" src="js/css3-mediaqueries.js"></script>
+
+	<script type="text/javascript" src="js/canvas-graphics.js"></script>
+</head>
+
+<body>
+
+<div id="header" class="container">
+	<div class="row">
+		<div class="twelvecol last">
+			<a href="/" title="Zurück zur Startseite" id="logo">
+ 				 <img src="img/logo.png" alt="LQFB logo" />
+			</a>
+			<ul id="metamenu">
+				<li><a id="metamenu-logout" href="#">ausloggen</a></li>
+				<li><a href="#">AGBs</a></li>
+				<li><a href="#">Datenschutz</a></li>
+				<li><a href="#">Impressum</a></li>
+				<li><a href="#">Kontakt</a></li>
+			</ul>	
+		</div>
+	</div>		
+	<div class="row">		
+		<div class="twelvecol last">
+			<ul id="mainmenu">
+				<li><a href="index.html">Übersicht</a></li>
+				<li><a href="themen.html">Themen</a></li>
+				<li><a class="active" href="contacts.html">Kontakte&amp;Delegationen</a></li>
+				<li><a href="profile.html">Profil</a></li>
+				<li><a href="timeline.html">Zeitleiste</a></li>
+			</ul>
+			<form method="get" action="/search" id="search">
+ 				 <input name="q" type="text" size="40" placeholder="Suche" />
+			</form>
+		</div>		
+	</div>
+</div>
+
+<div id="contentcontainer" class="container">
+	<div class="row">
+
+		<div class="twelvecol box last">
+			<h2>Delegationsansicht</h2>
+				<label class="table-label" for="select_fiter">Ebene:</label>	
+				<select id="select-filter" name="filter">							
+					<option value="1">Globale Delegation</option>
+					<option value="2">Unit</option>
+					<option value="3">Themenbereich</option>
+					<option value="4">Thema</option>		
+				</select>
+				
+			<div class="box-footer">			
+			 
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="twelvecol box last">
+			<h2>Deine Delegierten</h2>
+			<div class="box-description">
+				<p>Zuletzt ist mit deiner Stimme passiert:</p>
+			</div>	
+
+			<div class="box-delegate-info">
+				<img src="content_img/profile_delegate_3.png" alt="Profilbild" />
+				<h3><a href="#">Johannes Knopp</a><br /><span class="for">für</span></h3>
+				<p><a class="hiddenlink" href="#">Erneuerbare Energien-Gesetz II - Initiative des Bundes zur Förderung der reg. Energien</a> <a href="#">Begründung</a></p>
+			</div>
+
+			<div class="box-delegate-info">
+				<img src="content_img/profile_delegate_2.png" alt="Profilbild" />
+				<h3><a href="#">Christophe Chan Hin</a><br /><span class="against">gegen</span></h3>
+				<p><a class="hiddenlink" href="#">Gegen Quoten und positive Maßnahmen</a> <a href="#">Begründung</a></p>
+			</div>
+
+			<div class="box-delegate-info">
+				<img src="content_img/profile_delegate_1.png" alt="Profilbild" />
+				<h3><a href="#">Christoph Fritzsche</a><br /><span class="for">für</span></h3>
+				<p><a class="hiddenlink" href="#">Öffentliche Angabe der Penislänge in sozialen Netzwerken</a> <a href="#">Begründung</a></p>
+			</div>			
+
+			<div class="box-delegate-info">
+				<img src="content_img/profile_delegate_4.png" alt="Profilbild" />
+				<h3><a href="#">Matthias Bach</a><br /><span class="support">unterstützt</span></h3>
+				<p><a class="hiddenlink" href="#">Abschaffung der Zeitumstellung</a> <a href="#">Begründung</a></p>
+			</div>		
+
+			<div class="box-footer">
+				<a href="#" class="button button-forward">weitere</a>
+			</div>
+
+		</div>
+
+	</div>
+	<div id="push"></div>
+</div>
+
+
+<div id="footer" class="container">
+	<div class="row">
+		<div class="twocol">
+		</div>
+		<div class="threecol">
+			<h3>Meta</h3>
+			<ul>
+				<li><a href="#">Nutzungsbedingungen</a></li>
+				<li><a href="#">Datenschutzerklärung</a></li>
+				<li><a href="#">Hinweise zum Umgang mit Pseudonymen</a></li>
+				<li><a href="#">Impressum</a></li>
+			</ul>
+		</div>
+		<div class="threecol">
+			<h3>Piratenpartei</h3>
+			<ul>
+				<li><a href="#">Internetauftritt der Piratenpartei</a></li>
+				<li><a href="#">Piratenwiki</a></li>
+				<li><a href="#">Piratenpad</a></li>
+				<li><a href="#">Mailinglisten</a></li>
+				<li><a href="#">Vorstände</a></li>
+			</ul>
+		</div>		
+		<div class="threecol last">
+			<h3>Urheberrechte</h3>
+			<p>Die Texte von Initiativen und Anregungen stehen unter einer Creative Commons BY-SA Lizenz und dürfen unter <a href="#">bestimmten Bedingungen</a> geteilt und verändert werden.</p>
+
+			<a href="#"><img src="img/CC-BY-SA_icon.png" title="CC-BY-SA"></img></a>
+
+		</div>
+	</div>
+</div>	
+</body>
+
+</html>

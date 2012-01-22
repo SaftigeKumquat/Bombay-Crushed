@@ -44,7 +44,7 @@ exports.render = function(template, result) {
 	//
 	// READ TEMPLATES
 	//
-	fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
+	fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
 		if(err) {
 			throw err;
 		}
@@ -54,7 +54,7 @@ exports.render = function(template, result) {
 		render();
 	} );
 
-	fs.readFile(__dirname + template, 'utf8', function(err, data) {
+	fs.readFile(__dirname + '/templates' + template, 'utf8', function(err, data) {
 		if(err) {
 			throw err;
 		}
@@ -64,7 +64,7 @@ exports.render = function(template, result) {
 		render();
 	} );
 
-	fs.readFile(__dirname + '/footer.tpl', 'utf8', function(err, data) {
+	fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
 		if(err) {
 			throw err;
 		}
