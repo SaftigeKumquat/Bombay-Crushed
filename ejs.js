@@ -8,63 +8,69 @@ var ejs = require('ejs')
   , footertpl;
 
 /**
- * Render the templates once all data and
- * files are available.
+ * @todo requires an additional context variable
  */
-var render = function() {
-	if(context && headtpl && maintpl && footertpl) {
-		var head = ejs.render(headtpl, context);
-		var main = ejs.render(maintpl, context);
-		var footer = ejs.render(footertpl, context);
+exports.render = function(template, result) {
+	/**
+	* Render the templates once all data and
+	* files are available.
+	*/
+	var render = function() {
+		if(context && headtpl && maintpl && footertpl) {
+			var head = ejs.render(headtpl, context);
+			var main = ejs.render(maintpl, context);
+			var footer = ejs.render(footertpl, context);
 
-		console.log(head);
-		console.log(main);
-		console.log(footer);
+			result.write(head);
+			result.write(main);
+			result.write(footer);
+			result.end();
+		}
 	}
+
+	//
+	// READ CONTEXT
+	//
+	fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
+		if(err) {
+			throw err;
+		}
+
+		context = JSON.parse(data);
+
+		render();
+	} );
+
+	//
+	// READ TEMPLATES
+	//
+	fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
+		if(err) {
+			throw err;
+		}
+
+		headtpl = data;
+
+		render();
+	} );
+
+	fs.readFile(__dirname + template, 'utf8', function(err, data) {
+		if(err) {
+			throw err;
+		}
+
+		maintpl = data;
+
+		render();
+	} );
+
+	fs.readFile(__dirname + '/footer.tpl', 'utf8', function(err, data) {
+		if(err) {
+			throw err;
+		}
+
+		footertpl = data;
+
+		render();
+	} );
 }
-
-//
-// READ CONTEXT
-//
-fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
-	if(err) {
-		throw err;
-	}
-
-	context = JSON.parse(data);
-
-	render();
-} );
-
-//
-// READ TEMPLATES
-//
-fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
-	if(err) {
-		throw err;
-	}
-
-	headtpl = data;
-
-	render();
-} );
-
-fs.readFile(__dirname + '/main.tpl', 'utf8', function(err, data) {
-	if(err) {
-		throw err;
-	}
-
-	maintpl = data;
-
-	render();
-} );
-
-fs.readFile(__dirname + '/footer.tpl', 'utf8', function(err, data) {
-	if(err) {
-		throw err;
-	}
-
-	footertpl = data;
-
-	render();
-} );
