@@ -39,7 +39,7 @@ fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 //
 // READ TEMPLATES
 //
-fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
+fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
 	if(err) {
 		throw err;
 	}
@@ -49,7 +49,7 @@ fs.readFile(__dirname + '/head.tpl', 'utf8', function(err, data) {
 	render();
 } );
 
-fs.readFile(__dirname + '/main.tpl', 'utf8', function(err, data) {
+fs.readFile(__dirname + '/templates/main.tpl', 'utf8', function(err, data) {
 	if(err) {
 		throw err;
 	}
@@ -59,7 +59,7 @@ fs.readFile(__dirname + '/main.tpl', 'utf8', function(err, data) {
 	render();
 } );
 
-fs.readFile(__dirname + '/footer.tpl', 'utf8', function(err, data) {
+fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
 	if(err) {
 		throw err;
 	}
