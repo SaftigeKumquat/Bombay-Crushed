@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 var http = require('http');
 var ejs = require('./ejs.js');
