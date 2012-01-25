@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var http = require('http');
+var fs = require('fs');
 var ejs = require('./ejs.js');
 
 // Ok, not really an index, but works.
@@ -13,16 +14,39 @@ var invalidURL = function(req, res) {
 	res.end('Kuckst du woanders!\n');
 }
 
+var serveStatic = function(req, res) {
+	// TODO guess content type
+
+	// stream from file to requestee
+	// TODO could probably be read chunkwise
+	filepath = __dirname + '/html' + req.url;
+	console.log('Serving: ' + filepath);
+	fs.readFile(filepath, function(err, data) {
+		if(err) {
+			invalidURL(req, res);
+			return;
+		}
+		res.end(data);
+		console.log('Served: ' + filepath);
+	});
+}
+
 /**
  * Mapping from URLs to functions
  */
 var url_mapping = {
   '/': printIndex,
+  '/index.html': printIndex
 }
 /**
  * Mapping from patterns to functions
  */
 var pattern_mapping = [
+	{ pattern: '/css/', mapped: serveStatic },
+	{ pattern: '/js/', mapped: serveStatic },
+	{ pattern: '/img/', mapped: serveStatic },
+	{ pattern: '/content_img/', mapped: serveStatic },
+	{ pattern: /^\/\w+\.html/, mapped: serveStatic }
 ];
 
 /**
@@ -44,7 +68,7 @@ mapU2F = function(req, res, url_mappings, pattern_mappings) {
 		// check whether it matches anny of the patterns
 		for (i = 0; !mapped && i < pattern_mappings.length; i = i + 1) {
 			pattern = pattern_mappings[i].pattern;
-			console.log('Testing pattern ' + i + ': ' + pattern + ' [' + typeof(pattern) + ']');
+			//console.log('Testing pattern ' + i + ': ' + pattern + ' [' + typeof(pattern) + ']');
 			if( typeof(pattern) === 'string' && req.url.slice(0, pattern.length) === pattern ) {
 				mapped = pattern_mappings[i].mapped;
 			} else if ( pattern.test && typeof(pattern.test) === 'function' && pattern.test(req.url) ) {
