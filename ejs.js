@@ -7,6 +7,17 @@ var ejs = require('ejs')
   , maintpl
   , footertpl;
 
+var texts;
+
+fs.readFile(__dirname + '/texts.json', function(err, data) {
+	if(err) {
+		throw err;
+	}
+
+	texts = JSON.parse(data);
+	console.log('Finished parsing texts');
+} );
+
 /**
  * @todo requires an additional context variable
  */
@@ -17,6 +28,8 @@ exports.render = function(template, result) {
 	*/
 	var render = function() {
 		if(context && headtpl && maintpl && footertpl) {
+			context.texts = texts;
+
 			var head = ejs.render(headtpl, context);
 			var main = ejs.render(maintpl, context);
 			var footer = ejs.render(footertpl, context);
