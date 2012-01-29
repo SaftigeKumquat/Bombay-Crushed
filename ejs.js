@@ -21,7 +21,7 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
 /**
  * @todo requires an additional context variable
  */
-exports.render = function(template, result) {
+exports.render = function(state, template) {
 	/**
 	* Render the templates once all data and
 	* files are available.
@@ -34,6 +34,7 @@ exports.render = function(template, result) {
 			var main = ejs.render(maintpl, context);
 			var footer = ejs.render(footertpl, context);
 
+			var result = state.result;
 			result.write(head);
 			result.write(main);
 			result.write(footer);
@@ -46,7 +47,7 @@ exports.render = function(template, result) {
 	//
 	fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 		if(err) {
-			throw err;
+			state.fail(err);
 		}
 
 		context = JSON.parse(data);
@@ -59,7 +60,7 @@ exports.render = function(template, result) {
 	//
 	fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
 		if(err) {
-			throw err;
+			state.fail(err);
 		}
 
 		headtpl = data;
@@ -69,7 +70,7 @@ exports.render = function(template, result) {
 
 	fs.readFile(__dirname + '/templates' + template, 'utf8', function(err, data) {
 		if(err) {
-			throw err;
+			state.fail(err);
 		}
 
 		maintpl = data;
@@ -79,7 +80,7 @@ exports.render = function(template, result) {
 
 	fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
 		if(err) {
-			throw err;
+			state.fail(err);
 		}
 
 		footertpl = data;

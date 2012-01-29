@@ -10,4 +10,6 @@ var resultWriter = {
 	'end': function() { /* noop */ }
 }
 
-ejs.render('/main.tpl', resultWriter);
+ejs.render({'result': resultWriter, 'fail': function(message, code) { console.error(message + ' – Error code: ' + code)} },
+           '/main.tpl'
+);
