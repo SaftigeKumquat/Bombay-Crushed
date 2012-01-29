@@ -91,6 +91,11 @@ server = function() {
 		mapU2F(req, res, url_mapping, pattern_mapping);
 	}).listen(1337, "127.0.0.1");
 	console.log('Server running at http://127.0.0.1:1337/');
+
+	// make sure uncaught exceptions don't kill the server
+	process.on('uncaughtException', function (err) {
+		console.log('ERROR: Exception not handled properly: ' + err);
+	});
 };
 
 server();
