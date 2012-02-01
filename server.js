@@ -2,11 +2,19 @@
 
 var http = require('http');
 var fs = require('fs');
+var Cookies = require('cookies');
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
+var querystring = require('querystring');
 
 // Ok, not really an index, but works.
 var printIndex = function(state) {
+	// we need a valid user session...
+	if(!state.session_key) {
+		state.sendToLogin();
+		return;
+	}
+
 	ejs.render(state, '/main.tpl');
 }
 
@@ -27,6 +35,37 @@ var serverError = function(state, logmessage, errorcode) {
 	var res = state.result;
 	res.writeHead(500, {'Content-Type': 'text/plain'});
 	res.end('I feel blue. Guess I\'ll go swimming!\n');
+}
+
+var performLogin = function(state) {
+	// get form data
+	console.log(state.request.method);
+	if(state.request.method !== 'POST') {
+		state.sendToLogin();
+		return;
+	}
+
+	// collect data
+	body = '';
+
+	state.request.on('data', function(chunk) {
+		body += chunk;
+	});
+
+	state.request.on('end', function() {
+		data = querystring.parse(body);
+		console.log(data);
+		lf.perform('/session', { key: data.key }, function(res) {
+			state.cookies.set('session_key', res.session_key);
+			state.session_key = res.session_key;
+
+			lf.query('/info', { session_key: state.session_key }, function(res) {
+				state.user_id = res.current_member_id;
+				state.cookies.set('user_id', state.user_id);
+				printIndex(state);
+			});
+		});
+	});
 }
 
 var serveStatic = function(state) {
@@ -50,8 +89,9 @@ var serveStatic = function(state) {
  * Mapping from URLs to functions
  */
 var url_mapping = {
-  '/': printIndex,
-  '/index.html': printIndex
+	'/': printIndex,
+	'/index.html': printIndex,
+	'/login': performLogin
 }
 /**
  * Mapping from patterns to functions
@@ -114,8 +154,18 @@ var createState = function(req, res) {
 		'result': res,
 		'fail': function(logmessage, errorcode) {
 			serverError(state, logmessage, errorcode);
+		},
+		'cookies': new Cookies(req, res),
+		'sendToLogin': function(message) {
+			// TODO pass message to template
+			ejs.render(state, '/login.tpl');
 		}
 	};
+
+	// convenience..
+	state.session_key = state.cookies.get('session_key');
+	state.user_id = state.cookies.get('user_id');
+
 	return state;
 }
 
