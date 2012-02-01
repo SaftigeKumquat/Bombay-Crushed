@@ -3,6 +3,7 @@
 var http = require('http');
 var fs = require('fs');
 var ejs = require('./ejs.js');
+var lf = require('./lfcli.js');
 
 // Ok, not really an index, but works.
 var printIndex = function(state) {
@@ -119,12 +120,6 @@ var createState = function(req, res) {
 }
 
 server = function() {
-	http.createServer(function (req, res) {
-		var state = createState(req, res);
-		mapU2F(state, url_mapping, pattern_mapping);
-	}).listen(1337, "127.0.0.1");
-	console.log('Server running at http://127.0.0.1:1337/');
-
 	// make sure uncaught exceptions don't kill the server
 	process.on('uncaughtException', function (err) {
 		if(err.stack) {
@@ -132,6 +127,20 @@ server = function() {
 		}
 		console.error('ERROR: Exception not handled properly: ' + err);
 	});
+
+	lf.query('/info', {}, function(res) {
+		server = lf.getBaseURL();
+		console.log('Connected to ' + server.host + ':' + server.port);
+		console.log('Core Version: ' + res.core_version);
+		console.log('API Version:  ' + res.api_version);
+	});
+
+	http.createServer(function (req, res) {
+		var state = createState(req, res);
+		mapU2F(state, url_mapping, pattern_mapping);
+	}).listen(1337, "127.0.0.1");
+	console.log('Server running at http://127.0.0.1:1337/');
+
 };
 
 server();

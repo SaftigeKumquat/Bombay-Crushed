@@ -145,3 +145,10 @@ exports.perform = function(path, args, handler) {
 exports.setBaseURL = function(newbase) {
 	baseurl = newbase;
 }
+
+exports.getBaseURL = function() {
+	return {
+		'host': baseurl.host,
+		'port': baseurl.port
+	}
+}
