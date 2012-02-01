@@ -39,7 +39,6 @@ var serverError = function(state, logmessage, errorcode) {
 
 var performLogin = function(state) {
 	// get form data
-	console.log(state.request.method);
 	if(state.request.method !== 'POST') {
 		state.sendToLogin();
 		return;
@@ -54,7 +53,6 @@ var performLogin = function(state) {
 
 	state.request.on('end', function() {
 		data = querystring.parse(body);
-		console.log(data);
 		lf.perform('/session', { key: data.key }, function(res) {
 			state.cookies.set('session_key', res.session_key);
 			state.session_key = res.session_key;
@@ -66,6 +64,15 @@ var performLogin = function(state) {
 			});
 		});
 	});
+}
+
+var performLogout = function(state) {
+	// *nom* *nom*
+	state.cookies.set('session_key').set('user_id');
+	delete state.user_id
+	delete state.session_key
+	// and run
+	printIndex(state);
 }
 
 var serveStatic = function(state) {
@@ -91,7 +98,8 @@ var serveStatic = function(state) {
 var url_mapping = {
 	'/': printIndex,
 	'/index.html': printIndex,
-	'/login': performLogin
+	'/login': performLogin,
+	'/logout': performLogout
 }
 /**
  * Mapping from patterns to functions

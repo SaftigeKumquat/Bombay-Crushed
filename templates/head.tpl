@@ -29,7 +29,7 @@
  				 <img src="img/logo.png" alt="LQFB logo" />
 			</a>
 			<ul id="metamenu">
-				<li><a id="metamenu-logout" href="#"><%= texts.logout %></a></li>
+				<li><a id="metamenu-logout" href="/logout"><%= texts.logout %></a></li>
 				<li><a href="#"><%= texts.terms %></a></li>
 				<li><a href="#"><%= texts.privacy %></a></li>
 				<li><a href="#"><%= texts.imprint %></a></li>
