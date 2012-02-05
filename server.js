@@ -9,6 +9,10 @@ var printIndex = function(state) {
 	ejs.render(state, '/main.tpl');
 }
 
+var showProfile = function(state) {
+	ejs.render(state, '/profile.tpl');
+}
+
 var invalidURL = function(state) {
 	var res = state.result;
 	res.writeHead(404, {'Content-Type': 'text/plain'});
@@ -49,9 +53,11 @@ var serveStatic = function(state) {
  * Mapping from URLs to functions
  */
 var url_mapping = {
-  '/': printIndex,
-  '/index.html': printIndex
+	'/': printIndex,
+	'/index.html': printIndex,
+	'/profile.html': showProfile
 }
+
 /**
  * Mapping from patterns to functions
  */
