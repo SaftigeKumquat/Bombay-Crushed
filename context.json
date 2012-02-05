@@ -1,7 +1,22 @@
 {
 	"user": {
 		"nick": "Fußfall", "name": "Stefan Täge",
-		"picbig": "content_img/profile_image.png"
+		"picbig": "content_img/profile_image.png",
+		"divname":"Stefan-Täge",
+		"website":"www.stefantaege.de",
+		"profession":"Servicetechniker",
+		"birthdate":"14.4.1969",
+		"email":"bla@bla.de",
+		"twitter":"fussfall",
+		"facebook":"fussfall",
+		"googleplus":"fussfall",
+		"jabber":"tatortinternet@jabber.ru",
+		"phone":"0160/13371337",
+		"mobile":"0170/13371337",
+		"units":[ { "name":"Bund" }, { "name":"Baden-Württemberg" }, { "name":"Mannheim" } ],
+		"offices":"Beisitzer Bezirksvorstand Karlsruhe",
+		"memberships":"Keine",
+		"statement":"Synapsen und so"
 	},
 	"filter": [
 		{"id": 1, "text": "Neue oder kürzlich geänderte Inititativen"},
@@ -67,6 +82,52 @@
 		{ "action": "support", "title": "Abschaffung der Zeitumstellung",
 		"user": { "nick": "marix", "name": "Matthias Bach",
 		          "picsmall": "content_img/profile_delegate_4.png"}}
+	],
+	"delegateactions":[
+		{ "unit": "Hessen", "area":"Transparenz und Datenschutz",
+			"count":"4",
+			"user":{"nick": "marix", "name": "Matthias Bach",
+			"picsmall": "content_img/profile_delegate_4.png"}},
+		{ "unit": "Bund", "area":"Aussenpolitik",
+			"count":"3",
+			"user":{"nick": "incredibul", "name": "Christophe Chan&nbsp;Hin",
+			"picsmall":"content_img/profile_delegate_2.png"}},
+		{ "unit": "Mannheim", "area":"Alle Themen",
+			"count":"1",
+			"user":{"nick": "cfritzsche", "name": "Christoph Fritzsche",
+			"picsmall":"content_img/profile_delegate_1.png"}}
+	],
+	"strongestdelegates":[
+		{ "unit": "Bund", "area":"Bildungspolitik",
+			"count":"224",
+			"user":{"nick": "afelia", "name": "Marina Weisband",
+			"picsmall":"content_img/profile_delegate_7.png"}},
+		{ "unit": "Bund", "area":"Digitales, Urheber-/Patentrecht, Datenschutz",
+			"count":"145",
+			"user":{"nick": "zeitweise", "name": "Marcel-André Casasola Merkle",
+			"picsmall":"content_img/profile_delegate_6.png"}},
+		{ "unit": "Berlin", "area":"Alle Themen",
+			"count":"60",
+			"user":{"nick": "schmidtlepp", "name": "Christopher Lauer",
+			"picsmall":"content_img/profile_delegate_5.png"}}
+	],
+	"votingcomments":[
+		{ "date":"21.03.2011", "action":"for",
+		"topic":"Erneuerbare Energien-Gesetz II - Initiative des Bundes zur Förderung der reg. Energien",
+		"comment":"Food truck gentrify salvia banh mi, butcher DIY iphone sustainable brunch. Wayfarers helvetica high life hoodie, jean shorts photo booth banh mi brunch PBR banksy art party four loko keytar readymade cosby sweater.<br /><br /> Organic freegan butcher, fap leggings cardigan shoreditch farm-to-table. Austin single-origin coffee cred, seitan raw denim messenger bag marfa brooklyn stumptown synth master cleanse chambray. Biodiesel beard marfa gluten-free DIY hoodie. Beard biodiesel salvia farm-to-table, wes anderson DIY cosby sweater. Put a bird on it photo booth mlkshk cosby sweater.",
+		"user":{ "nick":"Fussfall" } },
+		{ "date":"14.03.2011", "action":"against",
+		"topic":"Abschaffung der Zeitumstellung",
+		"comment":"Eingeführt wurde die Zeitumstellung erstmals 1916 in Deutschland, drei Wochen später folgten Großbritannien und Irland. Die Bezeichnung die man in den englischsprachigen Ländern für die Zeitumstellung fand, beschreibt auch bereits den Zweck, das Optimum an nutzbarer Tageszeit zu gewinnen: 'Daylight Saving Time'. Zuvor machte sich etwa bereits Benjamin Franklin in einem Aufsatz mit dem Thema 'An Economical Project for Diminishing the Cost of Light.'  im Journal de Paris vom 26. April 1784 Gedanken zum Thema. Jedoch dauerte es bis 1907, bis das Thema erneut aufgegriffen wurde, dieses Mal von dem Engländer William Willett dessen Abhandlung 'The Waste of Daylight' Grundlage für eine breite Diskussion war. Nachdem die Einführung einer Sommerzeit noch 1908 vom Britischen Unterhaus abgelehnt worden war, wurde diese dann 1916 als 'British Summer Time' Realität.",
+		"user":{ "nick":"Fussfall" } },
+		{ "date":"01.02.2011", "action":"for",
+		"topic":"Karenzzeiten für Politiker und Beamte",
+		"comment":"Wayfarers gluten-free keffiyeh, cardigan freegan quinoa butcher fap single-origin coffee 8-bit trust fund artisan ethical gentrify. Locavore banksy terry richardson marfa fap. Skateboard master cleanse butcher, quinoa food truck trust fund vinyl viral biodiesel ethical twee cliche.",
+		"user":{ "nick":"Fussfall" } },
+		{ "date":"14.03.2011", "action":"against",
+		"topic":"Öffentliche Angabe der Penislänge in sozialen Netzwerken",
+		"comment":"Dass ist wieder so ein feuchter post-privacy Wunschtraum! Da mach ich nicht mit! Habe deswegen meine Delegation dem Fritzsche entzogen",
+		"user":{ "nick":"Fussfall" } }
 	],
 	"news": {
 		"chart": { "title": "Karenzzeiten für Politiker und Beamte", "for": 430,
