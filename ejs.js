@@ -22,6 +22,8 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
  * @todo requires an additional context variable
  */
 exports.render = function(state, template) {
+	var context, headtpl, maintpl, footertpl;
+
 	/**
 	* Render the templates once all data and
 	* files are available.
@@ -39,6 +41,8 @@ exports.render = function(state, template) {
 			result.write(main);
 			result.write(footer);
 			result.end();
+
+			console.log('Served ' + state.request.url);
 		}
 	}
 
