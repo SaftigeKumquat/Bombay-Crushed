@@ -10,7 +10,7 @@ var querystring = require('querystring');
 // Ok, not really an index, but works.
 var printIndex = function(state) {
 	// we need a valid user session...
-	if(!state.session_key) {
+	if(!state.session_key()) {
 		state.sendToLogin();
 		return;
 	}
@@ -62,12 +62,10 @@ var performLogin = function(state) {
 	state.request.on('end', function() {
 		data = querystring.parse(body);
 		lf.perform('/session', { key: data.key }, function(res) {
-			state.cookies.set('session_key', res.session_key);
-			state.session_key = res.session_key;
+			state.session_key(res.session_key);
 
-			lf.query('/info', { session_key: state.session_key }, function(res) {
-				state.user_id = res.current_member_id;
-				state.cookies.set('user_id', state.user_id);
+			lf.query('/info', { session_key: state.session_key() }, function(res) {
+				state.user_id(res.current_member_id);
 				printIndex(state);
 			});
 		});
@@ -76,9 +74,8 @@ var performLogin = function(state) {
 
 var performLogout = function(state) {
 	// *nom* *nom*
-	state.cookies.set('session_key').set('user_id');
-	delete state.user_id
-	delete state.session_key
+	state.session_key(null);
+	state.user_id(null);
 	// and run
 	printIndex(state);
 }
@@ -181,9 +178,33 @@ var createState = function(req, res) {
 		}
 	};
 
+	var session_key, user_id;
+
 	// convenience..
-	state.session_key = state.cookies.get('session_key');
-	state.user_id = state.cookies.get('user_id');
+	state.session_key = function(key) {
+		if(key === undefined) {
+			if(session_key === undefined) {
+				session_key = state.cookies.get('session_key');
+			}
+			return session_key;
+		} else {
+			session_key = key;
+			state.cookies.set('session_key', session_key);
+			return session_key;
+		}
+	}
+	state.user_id = function(id) {
+		if(id === undefined) {
+			if(user_id === undefined) {
+				user_id = state.cookies.get('user_id');
+			}
+			return user_id;
+		} else {
+			user_id = id;
+			state.cookies.set('user_id', user_id);
+			return user_id;
+		}
+	}
 
 	return state;
 }
