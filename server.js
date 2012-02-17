@@ -15,7 +15,13 @@ var printIndex = function(state) {
 		return;
 	}
 
-	ejs.render(state, '/main.tpl');
+	lf.query('/member', {'member_id': state.user_id()}, function(res) {
+		lf_user = res.result[0];
+		state.context = {
+			user: { 'nick': lf_user.name }
+		};
+		ejs.render(state, '/main.tpl');
+	} );
 }
 
 var showProfile = function(state) {

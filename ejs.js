@@ -22,14 +22,22 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
  * @todo requires an additional context variable
  */
 exports.render = function(state, template) {
-	var context, headtpl, maintpl, footertpl;
+	var fallback_context, headtpl, maintpl, footertpl;
 
 	/**
 	* Render the templates once all data and
 	* files are available.
 	*/
 	var render = function() {
-		if(context && headtpl && maintpl && footertpl) {
+		if(fallback_context && headtpl && maintpl && footertpl) {
+			context = state.context;
+			for(key in fallback_context) {
+				if( ! (key in context) ) {
+					context[key] = fallback_context[key];
+					console.log("Fell back for " + key);
+				}
+			}
+
 			context.texts = texts;
 
 			var head = ejs.render(headtpl, context);
@@ -54,7 +62,7 @@ exports.render = function(state, template) {
 			state.fail(err);
 		}
 
-		context = JSON.parse(data);
+		fallback_context = JSON.parse(data);
 
 		render();
 	} );
