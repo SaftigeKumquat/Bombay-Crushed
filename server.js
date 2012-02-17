@@ -22,6 +22,10 @@ var showProfile = function(state) {
 	ejs.render(state, '/profile.tpl');
 }
 
+var showContacts = function(state) {
+	ejs.render(state, '/contacts.tpl');
+}
+
 var invalidURL = function(state) {
 	var res = state.result;
 	res.writeHead(404, {'Content-Type': 'text/plain'});
@@ -104,7 +108,8 @@ var url_mapping = {
 	'/index.html': printIndex,
 	'/login': performLogin,
 	'/logout': performLogout,
-	'/profile.html': showProfile
+	'/profile.html': showProfile,
+	'/contacts.html': showContacts
 }
 
 /**

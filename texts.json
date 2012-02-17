@@ -86,5 +86,13 @@
 	"votingcomments":"Abstimmungsbegründungen",
 	"entersearch":"Suchbegriff eingeben",
 	"at":"am",
-	"because":"weil"
+	"because":"weil",
+	"delegateview":"Delegationsansicht",
+	"level":"Ebene",
+	"globallevel":"Globale Delegation",
+	"unitlevel":"Unit",
+	"arealevel":"Themenbereich",
+	"issuelevel":"Thema",
+	"lastactions":"Zuletzt ist mit deiner Stimme passiert",
+	"votingcomment":"Begründung"
 }
