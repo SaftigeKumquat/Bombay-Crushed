@@ -7,6 +7,124 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 
+var news = function(state, render) {
+	var lastBallot, criticalQuorum, voters, votes;
+
+	// data output
+	var finish = function() {
+		if(lastBallot !== undefined && criticalQuorum !== undefined && voters !== undefined && votes !== undefined) {
+			var news = {};
+			if(!lastBallot) {
+				news.chart = {
+					'title': 'No ballot has completed recently',
+					'for': 0,
+					'fordelegated': 0,
+					'against': 0,
+					'againstdelegated': 0
+				};
+			} else {
+				var pVoters = lastBallot.positive_votes;
+				var nVoters = lastBallot.negative_votes;
+				var pDirect = 0, pIndirect = 0;
+				var nDirect = 0, nIndirect = 0;
+
+				var i, j;
+				for(i = 0; i < voters.length; ++i) {
+					var voter = voters[i];
+					if(voter.delegate_member_id) {
+						for(j = 0; j < votes.length; ++j) {
+							var vote = votes[j];
+							if(vote.member_id === voter.member_id) { // issue_id should be correct by query restriction
+								if(vote.grade > 0) {
+									pDirect = pDirect + 1;
+									pIndirect = pIndirect + voter.weight - 1;
+								}
+								if(vote.grade < 0) {
+									nDirect = nDirect + 1;
+									nIndirect = nIndirect + voter.weight - 1;
+								}
+							}
+						}
+					}
+				}
+
+				news.chart = {
+					'title': lastBallot.name,
+					'for': pDirect,
+					'fordelegated': pIndirect,
+					'against': nDirect,
+					'againstdelegated': nIndirect
+				};
+			}
+
+			if(!criticalQuorum) {
+				news.graph = {
+					'title': 'Currently no initiative is close to the quorum',
+					'quorum': 0,
+					'support': 0,
+					'potential': 0,
+					'uninvolved': 0,
+					'supporter': 0,
+					'potsupporter': 0,
+					'uninterested': 0
+				};
+			} else {
+				news.graph = criticalQuorum;
+			}
+
+			state.context.news = news;
+			render();
+		}
+	}
+
+	// query last ballot
+	// erst nach issue fragen, dann winning initiative für den issue abfragen -> weniger daten
+	// TODO nach eigenen areas einschränken
+	// 1. get issues with issue_state =  finished_with_winner
+	// 2. Select initiative closed last (we only got ones with winners -> end of voting time)
+	// 3. get winner of that issue
+	lf.query('/issue', {'issue_state': 'finished_with_winner'}, function(res) {
+		var i;
+		var issues = res.result;
+		var last_timestamp = 0;
+		var last_issue;
+		console.log('Completed issues: ' + issues.length);
+		for(i = 0; i < issues.length; ++i) {
+			var issue = issues[i];
+			closing_time = Date.parse(issue.closed);
+			if(closing_time > last_timestamp) {
+				last_timestamp = closing_time;
+				last_issue = issue;
+			}
+		}
+		if(!last_issue) {
+			lastBallot = false;
+			voters = false;
+			votes = false;
+			finish();
+		} else {
+			lf.query('/initiative', {'initiative_winner': true, 'issue_id': last_issue.id}, function(res) {
+				var i;
+				lastBallot = res.result[0];
+				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
+				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
+					votes = res.result;
+					finish();
+				});
+			});
+			lf.query('/voter', {'issue_id': last_issue.id}, function(res) {
+				voters = res.result;
+				finish();
+			});
+		}
+	});
+
+	// query critical Quorum
+	console.error('Query for critical quorum: not implemented');
+	criticalQuorum = false;
+	finish();
+};
+
 // Ok, not really an index, but works.
 var printIndex = function(state) {
 	// we need a valid user session...
@@ -15,14 +133,23 @@ var printIndex = function(state) {
 		return;
 	}
 
+	var finish = function() {
+		var ctx = state.context;
+		if(ctx.user !== undefined && ctx.news !== undefined) {
+			ejs.render(state, '/main.tpl');
+		}
+	}
+
 	lf.query('/member', {'member_id': state.user_id()}, function(res) {
 		lf_user = res.result[0];
 		state.context.user = {
 			'nick': lf_user.name,
 			'picbig': '/picbig/' + lf_user.id
 		};
-		ejs.render(state, '/main.tpl');
+		finish();
 	} );
+
+	news(state, finish);
 }
 
 var showProfile = function(state) {
