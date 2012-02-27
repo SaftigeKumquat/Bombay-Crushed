@@ -17,9 +17,7 @@ var printIndex = function(state) {
 
 	lf.query('/member', {'member_id': state.user_id()}, function(res) {
 		lf_user = res.result[0];
-		state.context = {
-			user: { 'nick': lf_user.name }
-		};
+		state.context.user = {'nick': lf_user.name};
 		ejs.render(state, '/main.tpl');
 	} );
 }
@@ -181,7 +179,8 @@ var createState = function(req, res) {
 		'sendToLogin': function(message) {
 			// TODO pass message to template
 			ejs.render(state, '/login.tpl');
-		}
+		},
+		'context': {}
 	};
 
 	var session_key, user_id;
