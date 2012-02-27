@@ -126,6 +126,28 @@ var sendPicture = function(state) {
 	});
 }
 
+var sendAvatar = function(state) {
+	var user_id = state.request.url.slice('/avatar/'.length);
+	console.log('Retrieving avatar for user ' + user_id);
+	var query_obj = {
+		'type': 'avatar',
+		'member_id': user_id
+	}
+	if(state.session_key()) {
+		query_obj.session_key = state.session_key()
+	};
+	lf.query('/member_image', query_obj, function(result) {
+		var response = state.result;
+		if(result.result.length) {
+			var image = result.result[0];
+			response.setHeader("Content-Type", result.content_type);
+			response.end(result.data);
+		} else {
+			state.fail('No avatar found for user ' + user_id, 404);
+		}
+	});
+}
+
 /**
  * Mapping from URLs to functions
  */
@@ -142,7 +164,8 @@ var url_mapping = {
  * Mapping from patterns to functions
  */
 var pattern_mapping = [
-	{ pattern: '/picbig', mapped: sendPicture },
+	{ pattern: '/picbig/', mapped: sendPicture },
+	{ pattern: '/avatar/', mapped: sendAvatar },
 	{ pattern: '/css/', mapped: serveStatic },
 	{ pattern: '/js/', mapped: serveStatic },
 	{ pattern: '/img/', mapped: serveStatic },
