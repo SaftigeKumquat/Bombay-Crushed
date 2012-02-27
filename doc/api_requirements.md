@@ -32,12 +32,6 @@ Actions of delegations:
 Neuigkeiten
 -----------
 
-*TODO*
-
-
-Deine Themen
-------------
-
 *Last finished voting*:
 
     GET /issue
@@ -77,6 +71,12 @@ same for nVoters
 
 
 *not far from quorum, ending soon*
+
+*TODO*
+
+
+Deine Themen
+------------
 
 *TODO*
 
