@@ -17,7 +17,10 @@ var printIndex = function(state) {
 
 	lf.query('/member', {'member_id': state.user_id()}, function(res) {
 		lf_user = res.result[0];
-		state.context.user = {'nick': lf_user.name};
+		state.context.user = {
+			'nick': lf_user.name,
+			'picbig': '/picbig/' + lf_user.id
+		};
 		ejs.render(state, '/main.tpl');
 	} );
 }
@@ -101,6 +104,28 @@ var serveStatic = function(state) {
 	});
 }
 
+var sendPicture = function(state) {
+	var user_id = state.request.url.slice('/picbig/'.length);
+	console.log('Retrieving portrait for user ' + user_id);
+	var query_obj = {
+		'type': 'portrait',
+		'member_id': user_id
+	}
+	if(state.session_key()) {
+		query_obj.session_key = state.session_key()
+	};
+	lf.query('/member_image', query_obj, function(result) {
+		var response = state.result;
+		if(result.result.length) {
+			var image = result.result[0];
+			response.setHeader("Content-Type", result.content_type);
+			response.end(result.data);
+		} else {
+			state.fail('No image found for user ' + user_id, 404);
+		}
+	});
+}
+
 /**
  * Mapping from URLs to functions
  */
@@ -117,6 +142,7 @@ var url_mapping = {
  * Mapping from patterns to functions
  */
 var pattern_mapping = [
+	{ pattern: '/picbig', mapped: sendPicture },
 	{ pattern: '/css/', mapped: serveStatic },
 	{ pattern: '/js/', mapped: serveStatic },
 	{ pattern: '/img/', mapped: serveStatic },
