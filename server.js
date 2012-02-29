@@ -187,7 +187,7 @@ var printIndex = function(state) {
 
 	var finish = function() {
 		var ctx = state.context;
-		if(ctx.user !== undefined && ctx.news !== undefined) {
+		if(ctx.user !== undefined && ctx.news !== undefined && ctx.units !== undefined) {
 			ejs.render(state, '/main.tpl');
 		}
 	}
