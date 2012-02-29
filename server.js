@@ -7,6 +7,31 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 
+var areas = function(state, render) {
+	var units;
+
+	// TODO areas and memberships
+
+	// data output
+	var finish = function() {
+		var i;
+		if(units) {
+			// TODO filter all units of which you cannot become a member
+			for(i = 0; i < units.length; i++) {
+				units[i].areas = [];
+			}
+			state.context.units = units;
+			render();
+		}
+	}
+
+	lf.query('/unit', {}, function(res) {
+		units = res.result;
+		finish();
+	});
+}
+
+
 var news = function(state, render) {
 	var lastBallot, criticalQuorum, voters, votes;
 
@@ -150,6 +175,8 @@ var printIndex = function(state) {
 	} );
 
 	news(state, finish);
+
+	areas(state, finish);
 }
 
 var showProfile = function(state) {
