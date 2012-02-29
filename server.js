@@ -8,18 +8,35 @@ var lf = require('./lfcli.js');
 var querystring = require('querystring');
 
 var areas = function(state, render) {
-	var units;
+	var units, areas, memberships;
 
 	// TODO areas and memberships
 
 	// data output
 	var finish = function() {
-		var i;
-		if(units) {
+		var i, j, k;
+		// TODO this can be done more efficiently using hashes (objects)
+		if(units !== undefined && areas !== undefined && memberships !== undefined) {
 			// TODO filter all units of which you cannot become a member
 			for(i = 0; i < units.length; i++) {
 				units[i].areas = [];
 			}
+
+			for(i = 0; i < areas.length; i++) {
+				area = areas[i];
+				for(j = 0; j < units.length; j++) {
+					if(units[j].id === area.unit_id) {
+						// check if user is a member of the area
+						for(k = 0; k < memberships.length; k++) {
+							if(memberships[k].area_id === area.id) {
+								area.checked = true;
+							}
+						}
+						units[j].areas.push(area);
+					}
+				}
+			}
+
 			state.context.units = units;
 			render();
 		}
@@ -27,6 +44,16 @@ var areas = function(state, render) {
 
 	lf.query('/unit', {}, function(res) {
 		units = res.result;
+		finish();
+	});
+
+	lf.query('/area', {}, function(res) {
+		areas = res.result;
+		finish();
+	});
+
+	lf.query('/area', {'member_id': state.user_id()}, function(res) {
+		memberships = res.result;
 		finish();
 	});
 }
