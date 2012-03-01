@@ -338,7 +338,7 @@ var sendPicture = function(state) {
 	};
 	lf.query('/member_image', query_obj, function(result) {
 		var response = state.result;
-		if(result.result.length) {
+		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
 			response.setHeader("Content-Type", result.content_type);
 			response.end(result.data);
@@ -360,7 +360,7 @@ var sendAvatar = function(state) {
 	};
 	lf.query('/member_image', query_obj, function(result) {
 		var response = state.result;
-		if(result.result.length) {
+		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
 			response.setHeader("Content-Type", result.content_type);
 			response.end(result.data);
