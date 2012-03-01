@@ -7,6 +7,46 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 
+var delegations = function(state, render) {
+	var delegations;
+
+	var finish = function() {
+		if(delegations !== undefined) {
+			state.context.delegations = delegations;
+			render();
+		}
+	}
+
+	lf.query('/delegation', {
+		'member_id': state.user_id(),
+		'direction': 'out'
+	}, function(res) {
+		var links = res.result;
+		var i, resolved = 0;
+		var resolved_delegations = [];
+
+		if(links.length) {
+			for(i = 0; i < links.length; i++) {
+				lf.query('/member', {'member_id': links[i].trustee_id}, function(res) {
+					var delegate = res.result[0];
+					resolved_delegations.push({
+						user: {
+							'name': delegate.name,
+							'picsmal': '/avatar/' + delegate.id
+						}
+					});
+					if(resolved_delegations.length === links.length) {
+						finish();
+					}
+				});
+			}
+		} else {
+			delegations = [];
+			finish();
+		}
+	});
+};
+
 var areas = function(state, render) {
 	var units, areas, memberships;
 
@@ -187,7 +227,8 @@ var printIndex = function(state) {
 
 	var finish = function() {
 		var ctx = state.context;
-		if(ctx.user !== undefined && ctx.news !== undefined && ctx.units !== undefined) {
+		if(ctx.user !== undefined && ctx.news !== undefined
+		   && ctx.units !== undefined && ctx.delegations !== undefined) {
 			ejs.render(state, '/main.tpl');
 		}
 	}
@@ -202,8 +243,8 @@ var printIndex = function(state) {
 	} );
 
 	news(state, finish);
-
 	areas(state, finish);
+	delegations(state, finish);
 }
 
 var showProfile = function(state) {
