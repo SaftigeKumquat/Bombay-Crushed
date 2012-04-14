@@ -72,7 +72,50 @@ same for nVoters
 
 *not far from quorum, ending soon*
 
-*TODO*
+get quorum from policy:
+
+    GET /policy
+        policy
+            policy_id (integer)
+
+    RESULT: initiative_quorum_num (integer),
+            initiative_quorum_den (integer),
+            admission_time
+
+get member count:
+    GET /unit
+        unit options
+            unit_id
+
+    RESULT: member_count
+
+quorum = member_count × initiative_quorum_num / initiative_quorum_den
+
+get last login timestamp:
+
+    GET /member
+        member options
+            member_id
+    RESULT: last_login (timestamp)
+
+last_login is used to restrict the initiatives. If the timestamp is too
+long or too short ago it may be replaced with a default timestamp like
+'admission time' from the policy
+
+get initiatives that are close to the quorum and ending soon:
+
+    GET /initiative
+        initiative options
+            initiative_revoked(false)
+            initiative_created_after(last_login)
+            initiative_supporter_count_below(quorum)
+            initiative_supporter_count_above(quorum × 0.8)
+    RESULT: initiatives
+
+sort initiatives by the created attribute, maybe filter out the ones
+where the deadline is more than X days (4?) away
+
+
 
 
 Deine Themen
