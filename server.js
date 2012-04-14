@@ -343,9 +343,9 @@ var sendPicture = function(state) {
 		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
 			response.setHeader("Content-Type", image.content_type);
-			buf = new Buffer(image.data, 'base64')
+			buf = new Buffer(image.data, 'base64');
 			response.write(buf);
-			response.end()
+			response.end();
 		} else {
 			state.fail('No image found for user ' + user_id, 404);
 		}
@@ -366,8 +366,10 @@ var sendAvatar = function(state) {
 		var response = state.result;
 		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
-			response.setHeader("Content-Type", result.content_type);
-			response.end(result.data);
+			response.setHeader("Content-Type", image.content_type);
+			buf = new Buffer(image.data, 'base64');
+			response.write(buf);
+			response.end();
 		} else {
 			state.fail('No avatar found for user ' + user_id, 404);
 		}
