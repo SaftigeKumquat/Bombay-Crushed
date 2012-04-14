@@ -332,7 +332,7 @@ var sendPicture = function(state) {
 	var user_id = state.request.url.slice('/picbig/'.length);
 	console.log('Retrieving portrait for user ' + user_id);
 	var query_obj = {
-		'type': 'portrait',
+		'type': 'photo',
 		'member_id': user_id
 	}
 	if(state.session_key()) {
@@ -342,8 +342,10 @@ var sendPicture = function(state) {
 		var response = state.result;
 		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
-			response.setHeader("Content-Type", result.content_type);
-			response.end(result.data);
+			response.setHeader("Content-Type", image.content_type);
+			buf = new Buffer(image.data, 'base64')
+			response.write(buf);
+			response.end()
 		} else {
 			state.fail('No image found for user ' + user_id, 404);
 		}
