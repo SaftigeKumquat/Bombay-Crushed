@@ -236,6 +236,7 @@ var printIndex = function(state) {
 
 	var finish = function() {
 		var ctx = state.context;
+		ctx.meta.currentpage = "overview";
 		if(ctx.user !== undefined && ctx.news !== undefined
 		   && ctx.units !== undefined && ctx.delegations !== undefined) {
 			ejs.render(state, '/main.tpl');
@@ -257,10 +258,14 @@ var printIndex = function(state) {
 }
 
 var showProfile = function(state) {
+	var ctx = state.context;
+	ctx.meta.currentpage = "profile";
 	ejs.render(state, '/profile.tpl');
 }
 
 var showContacts = function(state) {
+	var ctx = state.context;
+	ctx.meta.currentpage = "contacts";
 	ejs.render(state, '/contacts.tpl');
 }
 
@@ -464,7 +469,9 @@ var createState = function(req, res) {
 			// TODO pass message to template
 			ejs.render(state, '/login.tpl');
 		},
-		'context': {}
+		'context': {
+				'meta': {'currentpage': ''}
+		}
 	};
 
 	var session_key, user_id;

@@ -29,10 +29,10 @@
 					<dt><%= texts.units %></dt><dd><% for(var i=0; i < user.units.length; i++) { %><% if(i > 0) { %>, <% } %><%= user.units[i].name %><% } %></dd>
 					<dt><%= texts.offices %></dt><dd><%= user.offices %></dd>
 					<dt><%= texts.memberships %></dt><dd><%= user.memberships %></dd>		
-					<dt><%= texts.statement %></dt><dd><%= user.statements %></dd>
+					<dt><%= texts.statement %></dt><dd><%= user.statement %></dd>
 				</dl>
 			</div>
-			<div class="box-footer"><a class="button" href="#"><%= user.changedata %></a></div>
+			<div class="box-footer"><a class="button" href="#"><%= texts.changedata %></a></div>
 		</div>
 		<div class="twocol last">
 		</div>
