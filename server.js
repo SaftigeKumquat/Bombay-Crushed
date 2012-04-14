@@ -7,6 +7,98 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 
+var delegations = function(state, render) {
+	var delegations;
+
+	var finish = function() {
+		if(delegations !== undefined) {
+			state.context.delegations = delegations;
+			render();
+		}
+	}
+
+	lf.query('/delegation', {
+		'member_id': state.user_id(),
+		'direction': 'out'
+	}, function(res) {
+		var links = res.result;
+		var i, resolved = 0;
+		var resolved_delegations = [];
+
+		if(links.length) {
+			for(i = 0; i < links.length; i++) {
+				lf.query('/member', {'member_id': links[i].trustee_id}, function(res) {
+					var delegate = res.result[0];
+					resolved_delegations.push({
+						user: {
+							'name': delegate.name,
+							'picsmal': '/avatar/' + delegate.id
+						}
+					});
+					if(resolved_delegations.length === links.length) {
+						finish();
+					}
+				});
+			}
+		} else {
+			delegations = [];
+			finish();
+		}
+	});
+};
+
+var areas = function(state, render) {
+	var units, areas, memberships;
+
+	// TODO areas and memberships
+
+	// data output
+	var finish = function() {
+		var i, j, k;
+		// TODO this can be done more efficiently using hashes (objects)
+		if(units !== undefined && areas !== undefined && memberships !== undefined) {
+			// TODO filter all units of which you cannot become a member
+			for(i = 0; i < units.length; i++) {
+				units[i].areas = [];
+			}
+
+			for(i = 0; i < areas.length; i++) {
+				area = areas[i];
+				for(j = 0; j < units.length; j++) {
+					if(units[j].id === area.unit_id) {
+						// check if user is a member of the area
+						for(k = 0; k < memberships.length; k++) {
+							if(memberships[k].area_id === area.id) {
+								area.checked = true;
+							}
+						}
+						units[j].areas.push(area);
+					}
+				}
+			}
+
+			state.context.units = units;
+			render();
+		}
+	}
+
+	lf.query('/unit', {}, function(res) {
+		units = res.result;
+		finish();
+	});
+
+	lf.query('/area', {}, function(res) {
+		areas = res.result;
+		finish();
+	});
+
+	lf.query('/area', {'member_id': state.user_id()}, function(res) {
+		memberships = res.result;
+		finish();
+	});
+}
+
+
 var news = function(state, render) {
 	var lastBallot, criticalQuorum, voters, votes;
 
@@ -137,7 +229,8 @@ var printIndex = function(state) {
 
 	var finish = function() {
 		var ctx = state.context;
-		if(ctx.user !== undefined && ctx.news !== undefined) {
+		if(ctx.user !== undefined && ctx.news !== undefined
+		   && ctx.units !== undefined && ctx.delegations !== undefined) {
 			ejs.render(state, '/main.tpl');
 		}
 	}
@@ -152,6 +245,8 @@ var printIndex = function(state) {
 	} );
 
 	news(state, finish);
+	areas(state, finish);
+	delegations(state, finish);
 }
 
 var showProfile = function(state) {
@@ -245,7 +340,7 @@ var sendPicture = function(state) {
 	};
 	lf.query('/member_image', query_obj, function(result) {
 		var response = state.result;
-		if(result.result.length) {
+		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
 			response.setHeader("Content-Type", result.content_type);
 			response.end(result.data);
@@ -267,7 +362,7 @@ var sendAvatar = function(state) {
 	};
 	lf.query('/member_image', query_obj, function(result) {
 		var response = state.result;
-		if(result.result.length) {
+		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
 			response.setHeader("Content-Type", result.content_type);
 			response.end(result.data);

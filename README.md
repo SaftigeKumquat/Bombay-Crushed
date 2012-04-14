@@ -20,3 +20,4 @@ Requirements
 * [Node.js](http://nodejs.org/)
 * [npm](http://npmjs.org/) modules:
  * EJS
+ * cookies
