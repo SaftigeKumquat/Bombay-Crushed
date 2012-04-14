@@ -557,8 +557,8 @@ server = function() {
 	http.createServer(function (req, res) {
 		var state = createState(req, res);
 		mapU2F(state, url_mapping, pattern_mapping);
-	}).listen(1337, "127.0.0.1");
-	console.log('Server running at http://127.0.0.1:1337/');
+	}).listen(8080);
+	console.log('Server running at http://127.0.0.1:8080/');
 
 };
 

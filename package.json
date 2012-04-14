@@ -3,7 +3,8 @@
   "description": "Bombay Crushed Liquid Feedback Client",
   "version": "0.0.1",
   "dependencies": {
-	"ejs", "cookies"
+	"ejs": "", 
+	"cookies": ""
   },
   "main": "server.js"
 }

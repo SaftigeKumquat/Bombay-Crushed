@@ -6,7 +6,7 @@ This is a collection of prototypical code for [Bombay Crushed](https://saftigeku
 Where to start?
 ---------------
 
-`server.js` starts a server listening on [port 1337](http://localhost:1337) serving Bombay Crushed.
+`server.js` starts a server listening on [port 8080](http://localhost:8080) serving Bombay Crushed.
 
 `ejs.cli.js` allows testing templates on the command line.
 
