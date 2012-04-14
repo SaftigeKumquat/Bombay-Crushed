@@ -108,12 +108,14 @@ var news = function(state, render) {
 				lastBallot = res.result[0];
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
 				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
-					votes = res.result;
+					votes = res.result || false;
+					console.log('Vote: ' + voters);
 					finish();
 				});
 			});
 			lf.query('/voter', {'issue_id': last_issue.id}, function(res) {
-				voters = res.result;
+				voters = res.result || false;
+				console.log('Voter: ' + voters);
 				finish();
 			});
 		}
