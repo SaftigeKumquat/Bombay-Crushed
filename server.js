@@ -275,6 +275,12 @@ var showContacts = function(state) {
 	ejs.render(state, '/contacts.tpl');
 }
 
+var showTimeline = function(state) {
+	var ctx = state.context;
+	ctx.meta.currentpage = "timeline";
+	ejs.render(state, '/timeline.tpl');
+}
+
 var invalidURL = function(state) {
 	var res = state.result;
 	res.writeHead(404, {'Content-Type': 'text/plain'});
@@ -404,7 +410,8 @@ var url_mapping = {
 	'/logout': performLogout,
 	'/topics.html': showTopics,
 	'/profile.html': showProfile,
-	'/contacts.html': showContacts
+	'/contacts.html': showContacts,
+	'/timeline.html': showTimeline
 }
 
 /**
