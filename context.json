@@ -141,28 +141,71 @@
 			"potential": 10, "uninvolved": 50 }
 	},
 	"units":[
-		{ "name": "Bund", "areas": [
-			{ "name": "Innen, Recht, Demokratie, Sicherheit" }, { "name": "Digitales, Urheber-/Patentrecht, Datenschutz", "checked": true },
-			{ "name": "Wirtschaft, Soziales" }, { "name": "Umwelt, Verkehr, Energie" },
-			{ "name": "Kinder, Jugend, Familie und Bildung", "checked": true }, { "name": "Außen, Internationales, Frieden" },
-			{ "name": "Gesundheit und Drogen/Suchtpolitik", "checked": true }, { "name": "Satzung und Parteistruktur", "checked": true }
+		{ "id": "1", "name": "Bund", "description": "Bundespolitik", "areas": [
+			{ "name": "Innen, Recht, Demokratie, Sicherheit", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Digitales, Urheber-/Patentrecht, Datenschutz", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Wirtschaft, Soziales", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Umwelt, Verkehr, Energie", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Kinder, Jugend, Familie und Bildung", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Außen, Internationales, Frieden", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Gesundheit und Drogen/Suchtpolitik", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Satzung und Parteistruktur", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }
 		]},
-		{ "name": "Baden-Württemberg", "areas": [
-			{ "name": "Innen, Recht, Demokratie, Sicherheit" }, { "name": "Digitales, Urheber-/Patentrecht, Datenschutz", "checked": true },
-			{ "name": "Wirtschaft, Soziales" }, { "name": "Umwelt, Verkehr, Energie" },
-			{ "name": "Kinder, Jugend, Familie und Bildung", "checked": true }, { "name": "Gesundheit und Drogen/Suchtpolitik", "checked": true },
-			{ "name": "Satzung und Parteistruktur", "checked": true }
+		{ "id": "2", "name": "Baden-Württemberg", "description": "Landespolitik Baden-Württemberg", "areas": [
+			{ "name": "Innen, Recht, Demokratie, Sicherheit", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Digitales, Urheber-/Patentrecht, Datenschutz", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Wirtschaft, Soziales", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Umwelt, Verkehr, Energie", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Kinder, Jugend, Familie und Bildung", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Gesundheit und Drogen/Suchtpolitik", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Satzung und Parteistruktur", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }
 		]},
-		{ "name": "Mannheim", "areas": [
-			{ "name": "Verkehr und Stadtentwicklung" }, { "name": "Kultur und Bildung", "checked": true },
-			{ "name": "Demokratie" }, { "name": "Sicherheit" },
-			{ "name": "Energie und Umwelt", "checked": true }, { "name": "Ernährung" },
-			{ "name": "Finanzen und Steuern", "checked": true }, { "name": "Arbeit und Soziales", "checked": true }
+		{ "id": "3", "name": "Mannheim", "description": "Kommunalpolitik Mannheim", "areas": [
+			{ "name": "Verkehr und Stadtentwicklung", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Kultur und Bildung", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Demokratie", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Sicherheit", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Energie und Umwelt", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Ernährung", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Finanzen und Steuern", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Arbeit und Soziales", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }
 		]},
-		{ "name": "Meta", "areas": [
-			{ "name": "LiquidFeedback Systembetrieb" }, { "name": "Sonstige innerparteiliche Angelegenheiten" },
-			{ "name": "Streitfragen zu Abstimmungen" }, { "name": "Sandkasten/Spielwiese" },
-			{ "name": "Liquid Feedback Weiterentwicklung", "checked": true }, { "name": "Veröffentlichungen" }
+		{ "id": "4", "name": "Meta", "description": "Meta", "areas": [
+			{ "name": "LiquidFeedback Systembetrieb", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Sonstige innerparteiliche Angelegenheiten", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Streitfragen zu Abstimmungen", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Sandkasten/Spielwiese", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } },
+			{ "name": "Liquid Feedback Weiterentwicklung", "checked": true, 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
+			{ "name": "Veröffentlichungen", 
+				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }
 		]}
 	]
 }

@@ -94,5 +94,15 @@
 	"arealevel":"Themenbereich",
 	"issuelevel":"Thema",
 	"lastactions":"Zuletzt ist mit deiner Stimme passiert",
-	"votingcomment":"Begründung"
+	"votingcomment":"Begründung",
+	"sortedby": "sortiert nach",
+	"nummembers": "Anzahl Direktmitglieder",
+	"alphabetical": "Alphabetisch",
+	"status1": "Neu",
+	"status2": "Diskussion",
+	"status3": "Eingefroren",
+	"status4": "Abstimmung",
+	"status5": "Abgeschlossen",
+	"status6": "Abgebrochen",
+	"totop": "Nach oben"
 }

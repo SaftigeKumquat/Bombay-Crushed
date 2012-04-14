@@ -257,6 +257,12 @@ var printIndex = function(state) {
 	delegations(state, finish);
 }
 
+var showTopics = function(state) {
+	var ctx = state.context;
+	ctx.meta.currentpage = "topics";
+	ejs.render(state, '/topics.tpl');
+}
+
 var showProfile = function(state) {
 	var ctx = state.context;
 	ctx.meta.currentpage = "profile";
@@ -396,6 +402,7 @@ var url_mapping = {
 	'/index.html': printIndex,
 	'/login': performLogin,
 	'/logout': performLogout,
+	'/topics.html': showTopics,
 	'/profile.html': showProfile,
 	'/contacts.html': showContacts
 }
