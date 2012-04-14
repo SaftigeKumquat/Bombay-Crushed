@@ -1,0 +1,9 @@
+{
+  "name": "bombay-crushed",
+  "description": "Bombay Crushed Liquid Feedback Client",
+  "version": "0.0.1",
+  "dependencies": {
+	"ejs", "cookies"
+  },
+  "main": "server.js"
+}
