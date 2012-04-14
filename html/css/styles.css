@@ -230,6 +230,9 @@ table td {
 	padding:6px 0px 3px 10px;
 }
 
+.filtertable th:nth-child(2), .filtertable td:nth-child(2) {width:50%;}
+.filtertable td {overflow:hidden;}
+#filter {display:none;}
 
 .themetable-status1,.themetable-status2,.themetable-status3,.themetable-status4,.themetable-status5,.themetable-status6 {
 	border-bottom:1px solid #fff;
@@ -309,7 +312,7 @@ h3 a:hover {text-decoration:underline}
 
 /*footer*/
 
-#footer, #push {height:100px;}
+#footer, #push {height:120px;}
 
 #footer {
 	background-color:#4e4b40; 
@@ -368,6 +371,8 @@ h3 a:hover {text-decoration:underline}
     }
 
 #select-filter {margin: 6px 0px 6px 6px;}
+#select-filter-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}
+
 .table-label {font: bold 12px Arial,Helvetica,Sans-serif; padding-left: 8px;} 
 
 .bargraph {width:85%; border: 1pt solid #777; height:6px; background-color:#999;}
@@ -405,6 +410,10 @@ h3 a:hover {text-decoration:underline}
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+
+.buttonrow {margin-top:-3px}
+
+.button-grey {background: #888}
 
 .button-forward, .button-forward-off, .pagination li .button-forward {
 	float:right;
@@ -536,7 +545,6 @@ h3 a:hover {text-decoration:underline}
 .searchfilter-theme-occurence input {display: table-cell; margin-right:10px; float:left}
 .searchfilter-theme-occurence label {display: table-cell; vertical-align:middle}
 
-
 input[type="checkbox"]{
 	vertical-align:middle
 }
@@ -572,8 +580,6 @@ body {
 #search input[type="text"] {width:120px; float:left; margin:2.5% 0px 4% 0%;}
 #search input[type="text"]:focus {width: 160px;}
 
-
-
 table td {
 	padding:6px 2px 3px 5px;
 }
@@ -583,7 +589,8 @@ table td {
 table th:nth-child(2), table td:nth-child(2) {width:40px;}
 table th:nth-child(3), table td:nth-child(3) {width:55px;}
 
-.filtertable th:nth-child(2), .filtertable td:nth-child(2) {width:50%;}
+
+
 
 #footer {
 	padding:30px 0px 300px 0px;
