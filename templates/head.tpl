@@ -40,11 +40,11 @@
 	<div class="row">		
 		<div class="twelvecol last">
 			<ul id="mainmenu">
-				<li><a class="active" href="#"><%= texts.overview %></a></li>
-				<li><a href="themen.html"><%= texts.topics %></a></li>
-				<li><a href="contacts.html"><%= texts.contacts %></a></li>
-				<li><a href="profile.html"><%= texts.profile %></a></li>
-				<li><a href="timeline.html"><%= texts.timeline %></a></li>
+				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="#"><%= texts.overview %></a></li>
+				<li><a <% if(meta.currentpage == "topics") { %>class="active" <% } %>href="themen.html"><%= texts.topics %></a></li>
+				<li><a <% if(meta.currentpage == "contacts") { %>class="active" <% } %>href="contacts.html"><%= texts.contacts %></a></li>
+				<li><a <% if(meta.currentpage == "profile") { %>class="active" <% } %>href="profile.html"><%= texts.profile %></a></li>
+				<li><a <% if(meta.currentpage == "timeline") { %>class="active" <% } %>href="timeline.html"><%= texts.timeline %></a></li>
 			</ul>
 			<form method="get" action="/search" id="search">
  				 <input name="q" type="text" size="40" placeholder="<%= texts.search %>" />
