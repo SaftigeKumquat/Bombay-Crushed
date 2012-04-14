@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="twocol nobox">
 			<h2><%= user.nick %></h2>
-			<a href="profile.html" title="<%= texts.editprofile %>" id="profile-image">
+			<a href="profile" title="<%= texts.editprofile %>" id="profile-image">
  				<img src="<%= user.picbig %>" alt="<%= texts.profilepic %>" />
 			</a>
 			<ul id="personal-menu">
