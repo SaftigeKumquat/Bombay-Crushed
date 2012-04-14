@@ -23,11 +23,43 @@ Delegations:
             member_id(self)
         direction="out"
         scope="unit","are","issue"
-    RESULT: users that have delegations from self
+    RESULT: delegates (users that have delegations from self)
 
-*TODO* Which actions of users are displayed?
-Actions of delegations:
+Recent actions can be defined with the last login timestamp:
 
+    GET /member
+        member options
+            member_id
+    RESULT: last_login (timestamp)
+
+Which actions of users are displayed?
+- support initiative
+- vote for/against initiative
+
+voting behaviour:
+
+    GET /vote
+        member options:
+            member_id = delegates
+        issue options:
+            issue_state = finished_with_winner, finished_without_winner
+            issue_closed_after = last_login
+    RESULT vote objects
+
+The _grade_ attribute of _vote_ objects is positive if the initiative is
+approved by the voter, otherwise it is negative. The votes may be sorted
+with help of a GET /voter query which tells about the voter's weight.
+        
+
+*TODO*
+support for initiative:
+    needs timestamp of initiative support
+    @joknopp: "@darkbln Denke über kürzliche Aktivitäten meiner
+    Delegierten nach. Gibt es ne Möglichkeit an den Zeitpunkt eines
+    Ini-Supports ranzukommen?"
+    @darkbln: "Zur Zeit gar nicht. Wird aber wohl zukünftig in das
+    event-system eingebaut werden. Dann wäre das auch für die API
+    verfügbar."
 
 Neuigkeiten
 -----------
@@ -89,7 +121,7 @@ get member count:
 
     RESULT: member_count
 
-quorum = member_count × initiative_quorum_num / initiative_quorum_den
+    quorum = member_count × initiative_quorum_num / initiative_quorum_den
 
 get last login timestamp:
 
@@ -98,9 +130,9 @@ get last login timestamp:
             member_id
     RESULT: last_login (timestamp)
 
-last_login is used to restrict the initiatives. If the timestamp is too
+`last_login is used to restrict the initiatives. If the timestamp is too
 long or too short ago it may be replaced with a default timestamp like
-'admission time' from the policy
+'admission time' from the policy`
 
 get initiatives that are close to the quorum and ending soon:
 
