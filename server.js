@@ -424,12 +424,13 @@ var sendAvatar = function(state) {
 var url_mapping = {
 	'/': printIndex,
 	'/index.html': printIndex,
+	'/overview': printIndex,
 	'/login': performLogin,
 	'/logout': performLogout,
-	'/topics.html': showTopics,
-	'/profile.html': showProfile,
-	'/contacts.html': showContacts,
-	'/timeline.html': showTimeline
+	'/topics': showTopics,
+	'/profile': showProfile,
+	'/contacts': showContacts,
+	'/timeline': showTimeline
 }
 
 /**
