@@ -40,7 +40,7 @@
 	<div class="row">		
 		<div class="twelvecol last">
 			<ul id="mainmenu">
-				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="#"><%= texts.overview %></a></li>
+				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="index.html"><%= texts.overview %></a></li>
 				<li><a <% if(meta.currentpage == "topics") { %>class="active" <% } %>href="themen.html"><%= texts.topics %></a></li>
 				<li><a <% if(meta.currentpage == "contacts") { %>class="active" <% } %>href="contacts.html"><%= texts.contacts %></a></li>
 				<li><a <% if(meta.currentpage == "profile") { %>class="active" <% } %>href="profile.html"><%= texts.profile %></a></li>
