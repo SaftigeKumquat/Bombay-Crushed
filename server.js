@@ -25,17 +25,24 @@ var delegations = function(state, render) {
 		var i, resolved = 0;
 		var resolved_delegations = [];
 
+		console.log('DELEGATIONS: ' + JSON.stringify(links));
+
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
+				console.log('Query trustee name: ' + links[i].trustee_id);
 				lf.query('/member', {'member_id': links[i].trustee_id}, function(res) {
 					var delegate = res.result[0];
+					console.log(JSON.stringify(delegate));
 					resolved_delegations.push({
 						user: {
 							'name': delegate.name,
-							'picsmal': '/avatar/' + delegate.id
+							'picsmall': '/avatar/' + delegate.id
+							// TODO fill info about last initivative or hide
 						}
 					});
+					console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
 					if(resolved_delegations.length === links.length) {
+						delegations = resolved_delegations;
 						finish();
 					}
 				});
