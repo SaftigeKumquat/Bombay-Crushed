@@ -74,7 +74,7 @@ exports.query = function(path, args, handler) {
 			// TODO handle parsing errors
 			var answer = JSON.parse(body);
 			if(!answer.status || answer.status !== 'ok') {
-				console.warn('STATUS: ' + answer.status + ' - Query was: ' + path + ' ' + JSON.stringify(args));
+				console.warn('STATUS: ' + answer.status + ' - Error String: "' + answer.error + '" - Query was: ' + path + ' ' + JSON.stringify(args));
 			}
 			// TODO different handler in case of errors
 			handler(answer);
@@ -118,7 +118,7 @@ exports.perform = function(path, args, handler) {
 			// TODO handle parsing errors
 			var answer = JSON.parse(body);
 			if(!answer.status || answer.status !== 'ok') {
-				console.warn('STATUS: ' + answer.status + ' - Query was: ' + path + ' ' + JSON.stringify(args));
+				console.warn('STATUS: ' + answer.status + ' - Error String: "' + answer.error + '" - Query was: ' + path + ' ' + JSON.stringify(args));
 			}
 			// TODO different handler in case of errors
 			handler(answer);

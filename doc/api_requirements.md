@@ -115,6 +115,7 @@ get quorum from policy:
             admission_time
 
 get member count:
+
     GET /unit
         unit options
             unit_id

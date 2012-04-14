@@ -208,22 +208,125 @@ var news = function(state, render) {
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
 				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
 					votes = res.result || false;
-					console.log('Vote: ' + voters);
+					console.log('Vote: ' + JSON.stringify(votes));
 					finish();
 				});
 			});
 			lf.query('/voter', {'issue_id': last_issue.id}, function(res) {
 				voters = res.result || false;
-				console.log('Voter: ' + voters);
+				console.log('Voter: ' + JSON.stringify(voters));
 				finish();
 			});
 		}
 	});
 
 	// query critical Quorum
-	console.error('Query for critical quorum: not implemented');
-	criticalQuorum = false;
-	finish();
+	quorumHelper = function() {
+		var policies, units, last_activity;
+
+		var getIni = function() {
+			if(policies !== undefined && units !== undefined && last_activity !== undefined) {
+				var requests = 0, responses = 0, initiatives = [];
+
+				var selectTopIni = function() {
+					if(responses == requests) {
+						if(initiatives.length == 0) {
+							criticalQuorum = false;
+							finish();
+						} else {
+							// pick oldes
+							var i, oldest_i, oldest_time;
+							for(i = 0; i < initiatives.length; ++i) {
+								if(oldest_time === undefined || initiatives[i].created < oldest_time) {
+									oldest_i = i;
+									oldest_time = initiatives[i].created;
+								}
+							}
+							var oldest_ini = initiatives[oldest_i];
+							var supporters = oldest_ini.satisfied_supporter_count;
+							var potentials = oldest_ini.supporter_count - oldest_ini.satisfied_supporter_count;
+							lf.query('/issue', {'id': oldest_ini.issue_id}, function(res) {
+								var issue = res.result[0];
+
+								var policy, unit;
+								for(i = 0; i < policies.length; ++i) {
+									if(policies[i].id === issue.policy_id) {
+										policy = policies[i];
+									}
+								}
+								for(i = 0; i < units.length; ++i) {
+									if(units[i].id === issue.unit_id) {
+										unit = units[i];
+									}
+								}
+
+								// TODO is population really sufficient for quorum?
+								var quorum = issue.population * policy.initiative_quorum_num / policy.initiative_quorum_den;
+								var not_involved = issue.population - supporters - potentials;
+
+								console.log(quorum + ' ' + issue.population);
+
+								criticalQuorum = {
+									'title': oldest_ini.name,
+									'quorum': quorum / issue.population * 100,
+									'support': supporters / issue.population * 100,
+									'potential': potentials / issue.population * 100,
+									'uninvolved': not_involved / issue.population * 100,
+									'supporter': supporters,
+									'potsupporter': potentials,
+									'uninterested': not_involved
+								}
+
+								console.log(JSON.stringify(criticalQuorum));
+								finish();
+							});
+						}
+					}
+				}
+
+				// loop over all compinations of policies and units and get inis
+				var i, j;
+				for(i = 0; i < policies.length; ++i) {
+					var policy = policies[i];
+					for(j = 0; j < units.length; ++j) {
+						var unit = units[j];
+						var quorum = unit.member_count * policy.initiative_quorum_num / policy.initiative_quorum_den;
+
+						lf.query('/initiative', {
+							'initiative_revoked': false,
+							//'initiative_created_after': last_activity,
+							'issue_state': 'admission',
+							'initiative_supporter_count_below': Math.ceil(quorum),
+							'initiative_supporter_count_above': Math.floor(0.8 * quorum)
+						}, function(res) {
+							if(res.result) {
+								initiatives = initiatives.concat(res.result);
+							}
+							++responses;
+							selectTopIni();
+						});
+						++requests;
+					}
+				}
+			}
+		};
+
+		return {
+			'setPolicies': function(val) { policies = val, getIni() },
+			'setUnits': function(val) { units = val, getIni() },
+			'setLastActivity': function(val) { last_activity = val; console.log('LAST ACTIVITY: ' + last_activity); getIni() }
+		};
+	}();
+	
+	lf.query('/policy', {}, function(res) {
+		quorumHelper.setPolicies(res.result || false);
+	});
+	lf.query('/unit', {}, function(res) {
+		quorumHelper.setUnits(res.result || false);
+	});
+	lf.query('/member', {'member_id': state.user_id(), 'session_key': state.session_key()}, function(res) {
+		quorumHelper.setLastActivity(res.result[0].last_activity || false);
+	});
 };
 
 // Ok, not really an index, but works.
