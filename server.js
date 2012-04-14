@@ -92,7 +92,7 @@ var areas = function(state, render) {
 		finish();
 	});
 
-	lf.query('/area', {'member_id': state.user_id()}, function(res) {
+	lf.query('/membership', {'member_id': state.user_id()}, function(res) {
 		memberships = res.result;
 		finish();
 	});
