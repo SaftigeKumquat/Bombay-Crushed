@@ -264,18 +264,36 @@ var showTopics = function(state) {
 }
 
 var showProfile = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
 	var ctx = state.context;
 	ctx.meta.currentpage = "profile";
 	ejs.render(state, '/profile.tpl');
 }
 
 var showContacts = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
 	var ctx = state.context;
 	ctx.meta.currentpage = "contacts";
 	ejs.render(state, '/contacts.tpl');
 }
 
 var showTimeline = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
 	var ctx = state.context;
 	ctx.meta.currentpage = "timeline";
 	ejs.render(state, '/timeline.tpl');
