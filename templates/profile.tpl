@@ -87,7 +87,7 @@
 		%><%= texts.supports %><% }
 		%></span>
 				<a href="#"><%= votingcomments[i].topic %></a>, <%= texts.because %></h3>
-				<p><%= votingcomments[i].comment %></p>
+				<p><%- votingcomments[i].comment %></p>
 			</div><% } %>
 						
 			<div class="box-footer">
