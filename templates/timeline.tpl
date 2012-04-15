@@ -56,12 +56,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence2-member">
+								<label for="searchfilter-theme-occurence2-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence2-interested">
+								<label for="searchfilter-theme-occurence2-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>					
@@ -74,12 +74,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence3-member">
+								<label for="searchfilter-theme-occurence3-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence3-interested">
+								<label for="searchfilter-theme-occurence3-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -92,12 +92,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence4-member">
+								<label for="searchfilter-theme-occurence4-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence4-interested">
+								<label for="searchfilter-theme-occurence4-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -110,12 +110,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence5-member">
+								<label for="searchfilter-theme-occurence5-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence5-interested">
+								<label for="searchfilter-theme-occurence5-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -128,12 +128,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence6-member">
+								<label for="searchfilter-theme-occurence6-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence6-interested">
+								<label for="searchfilter-theme-occurence6-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>		
@@ -146,12 +146,12 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence7-member">
+								<label for="searchfilter-theme-occurence7-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-theme-occurence7-interested">
+								<label for="searchfilter-theme-occurence7-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -199,24 +199,24 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-member">
-								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-init-occurence2-member">
+								<label for="searchfilter-init-occurence2-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-interested">
-								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-init-occurence2-interested">
+								<label for="searchfilter-init-occurence2-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-support">
-								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence2-support">
+								<label for="searchfilter-init-occurence2-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
-								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence2-possiblesupport">
+								<label for="searchfilter-init-occurence2-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-init">
-								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
+								<input type="checkbox" id="searchfilter-init-occurence2-init">
+								<label for="searchfilter-init-occurence2-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
@@ -229,24 +229,24 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-member">
-								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-init-occurence3-member">
+								<label for="searchfilter-init-occurence3-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-interested">
-								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-init-occurence3-interested">
+								<label for="searchfilter-init-occurence3-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-support">
-								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence3-support">
+								<label for="searchfilter-init-occurence3-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
-								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence3-possiblesupport">
+								<label for="searchfilter-init-occurence3-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-init">
-								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
+								<input type="checkbox" id="searchfilter-init-occurence3-init">
+								<label for="searchfilter-init-occurence3-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
@@ -259,30 +259,31 @@
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-member">
-								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
+								<input type="checkbox" id="searchfilter-init-occurence4-member">
+								<label for="searchfilter-init-occurence4-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-interested">
-								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
+								<input type="checkbox" id="searchfilter-init-occurence4-interested">
+								<label for="searchfilter-init-occurence4-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-support">
-								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence4-support">
+								<label for="searchfilter-init-occurence4-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
-								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
+								<input type="checkbox" id="searchfilter-init-occurence4-possiblesupport">
+								<label for="searchfilter-init-occurence4-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence1-init">
-								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
+								<input type="checkbox" id="searchfilter-init-occurence4-init">
+								<label for="searchfilter-init-occurence4-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
 
 					<% var l = Math.ceil(units.length/2);
 					var a = 0;
+					var occurence = 1;
 					for(var i = 0; i < l; i++) { %><tr>
 						<th><%= texts.ignoreareaperunit %> <%= units[a].name %></th>
 						<th><% if(units[a+1]) { %><%= texts.ignoreareaperunit %> <%= units[a+1].name %><% } %></th>
@@ -290,15 +291,15 @@
 					<tr class="odd">
 						<td>
 							<% for(var j = 0; j < units[a].areas.length; j++) { %><span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence1">
-								<label for="searchfilter-ignore-occurence1"><%= units[a].areas[j].name %></label>
-							</span><% } %>
+								<input type="checkbox" id="searchfilter-ignore-occurence<%= occurence %>">
+								<label for="searchfilter-ignore-occurence<%= occurence %>"><%= units[a].areas[j].name %></label>
+							</span><% occurence++; } %>
 						</td>
 						<td><% if(units[a+1]) { %>
 							<% for(var j = 0; j < units[a+1].areas.length; j++) { %><span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence1">
-								<label for="searchfilter-ignore-occurence1"><%= units[a+1].areas[j].name %></label>
-							</span><% } %>
+								<input type="checkbox" id="searchfilter-ignore-occurence<%= occurence %>">
+								<label for="searchfilter-ignore-occurence<%= occurence %>"><%= units[a+1].areas[j].name %></label>
+							</span><% occurence++; } %>
 						<% } %></td>
 					</tr>
 					<% var a = a + 2;
