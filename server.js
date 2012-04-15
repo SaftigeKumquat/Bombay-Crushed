@@ -661,7 +661,7 @@ server = function() {
 		var state = createState(req, res);
 		mapU2F(state, url_mapping, pattern_mapping);
 	}).listen(8080);
-	console.log('Server running at http://127.0.0.1:8080/');
+	console.log('Server running at port 8080');
 
 };
 
