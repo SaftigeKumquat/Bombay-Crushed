@@ -53,6 +53,7 @@
 							</ul>
 						</td>
 						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><% 
+						if(inis[i].status == texts.tablevote) { %></span><% }						
 						if(inis[i].delegate) { 
 						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
 						} %></td>
