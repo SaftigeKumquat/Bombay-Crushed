@@ -2,49 +2,48 @@
 
 	<div class="row">
 		<div class="twelvecol last">
-				<label class="table-label" for="select_fiter">Filter:</label>	
+				<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
 				<select id="select-filter-big" name="filter">
-					<option value="1">Neue oder kürzlich geänderte Inititativen</option>
-					<option value="2">Nur neue Initiativen</option>
-					<option value="3">Nur Abstimmungen</option>
-					<option value="4">Feedback zu eigenen Initiativen</option>
+				<% for(var i = 0; i < filter.length; i++) { %>
+					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
+				<% } %> 
 				</select>
-				<a class="button buttonrow" href="#">Filter verwalten</a>
-				<a id="filterslide" class="button buttonrow" href="#">Filter einstellen</a>
+				<a class="button buttonrow" href="#"><%= texts.managefilter %></a>
+				<a id="filterslide" class="button buttonrow" href="#"><%= texts.editfilter %></a>
 		</div>
 		
 	</div>
 
 	<div class="row">
 		<div id="filter" class="twelvecol box last">
-			<h2>Filter einstellen</h2>
+			<h2><%= texts.editfilter %></h2>
 			<form method="get" action="/search" id="timeline-filter">
 				<div class="timeline-filter-timerange">
 				    <input type="radio" name="timerange" id="radio-1"/>
-				    	<label for="radio-1">Letzte 24 Stunden</label>
+				    	<label for="radio-1"><%= texts.last24hours %></label>
 				    <input type="radio" name="timerange" id="radio-2"/>
 				    	<label for="radio-2"><input name="age" type="text" size="14" placeholder="age: 40 days" /></label>
 			    </div>	
 			   	<table class="filtertable">
 					<tr>
-						<th>Themen-Ereignisse</th>
-						<th>Zeige nur Ereignisse welche folgendes erfüllen... (oder-verknüpft)</th>
+						<th><%= texts.issueevents %></th>
+						<th><%= texts.issueeventsdesc %></th>
 					</tr>
 					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-theme-occurence1">
-								<label for="searchfilter-theme-occurence1">Neues Thema</label>
+								<label for="searchfilter-theme-occurence1"><%= texts.newissue %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence1-member">
-								<label for="searchfilter-theme-occurence1-member">Mitglied des Themenbereichs</label>
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
-								<label for="searchfilter-theme-occurence1-interested">Interessiert</label>
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -52,53 +51,53 @@
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence2">
-								<label for="searchfilter-theme-occurence2">Thema abgebrochen</label>
+								<label for="searchfilter-theme-occurence2"><%= texts.issueaborted %></label>
 							</span>
 						</td>
 						<td>
-						<span class="searchfilter-theme-occurence">
-							<input type="checkbox" id="searchfilter-theme-occurence2-member">
-							<label for="searchfilter-theme-occurence2-member">Mitglied des Themenbereichs</label>
-						</span>
-						<span class="searchfilter-theme-occurence">
-							<input type="checkbox" id="searchfilter-theme-occurence2-interested">
-							<label for="searchfilter-theme-occurence2-interested">Interessiert</label>
-						</span>							
+							<span class="searchfilter-theme-occurence">
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
+							</span>
+							<span class="searchfilter-theme-occurence">
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+							</span>							
 						</td>
 					</tr>					
 					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence3">
-								<label for="searchfilter-theme-occurence3">Thema akzeptiert</label>
+								<label for="searchfilter-theme-occurence3"><%= texts.issueaccepted %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence3-member">
-								<label for="searchfilter-theme-occurence3-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence3-interested">
-								<label for="searchfilter-theme-occurence3-interested">Interessiert</label>
-							<span>							
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
+							</span>							
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence4">
-								<label for="searchfilter-theme-occurence4">Thema eingefroren</label>
+								<label for="searchfilter-theme-occurence4"><%= texts.issuefrozen %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence4-member">
-								<label for="searchfilter-theme-occurence4-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-theme-occurence4-interested">
-								<label for="searchfilter-theme-occurence4-interested">Interessiert</label>
+							<span class="searchfilter-theme-occurence">
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -106,17 +105,17 @@
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence5">
-								<label for="searchfilter-theme-occurence5">Thema ohne Abstimmung abgeschlossen</label>
+								<label for="searchfilter-theme-occurence5"><%= texts.issueclosedwovote %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence5-member">
-								<label for="searchfilter-theme-occurence5-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence5-interested">
-								<label for="searchfilter-theme-occurence5-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
@@ -124,17 +123,17 @@
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence6">
-								<label for="searchfilter-theme-occurence6">Abstimmung begonnen</label>
+								<label for="searchfilter-theme-occurence6"><%= texts.votingstarted %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence6-member">
-								<label for="searchfilter-theme-occurence6-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence6-interested">
-								<label for="searchfilter-theme-occurence6-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>		
@@ -142,52 +141,52 @@
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence7">
-								<label for="searchfilter-theme-occurence7">Thema abgeschlossen</label>
+								<label for="searchfilter-theme-occurence7"><%= texts.issueclosed %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence7-member">
-								<label for="searchfilter-theme-occurence7-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-member">
+								<label for="searchfilter-theme-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-theme-occurence7-interested">
-								<label for="searchfilter-theme-occurence7-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
+								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
 							</span>							
 						</td>
 					</tr>
 
 					<tr>
-						<th>Initiativen-Ereignisse</th>
-						<th>Zeige nur Ereignisse welche folgendes erfüllen... (oder-verknüpft)</th>
+						<th><%= texts.issueevents %></th>
+						<th><%= texts.issueeventsdesc %></th>
 					</tr>
 					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-init-occurence1">
-								<label for="searchfilter-init-occurence1">Neue Initiative</label>
+								<label for="searchfilter-init-occurence1"><%= texts.newini %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-member">
-								<label for="searchfilter-init-occurence1-member">Mitglied des Themenbereichs</label>
+								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-interested">
-								<label for="searchfilter-init-occurence1-interested">Interessiert</label>
+								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-support">
-								<label for="searchfilter-init-occurence1-support">Unterstützt</label>
+								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
-								<label for="searchfilter-init-occurence1-possiblesupport">Potentiell Unterstützt</label>
+								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-init">
-								<label for="searchfilter-init-occurence1-init">Initiiert</label>
+								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
@@ -195,59 +194,59 @@
 						<td>
 							<span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-init-occurence2">
-								<label for="searchfilter-init-occurence2"> Initiative zurückgezogen</label>
+								<label for="searchfilter-init-occurence2"><%= texts.iniwithdrawn %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence2-member">
-								<label for="searchfilter-init-occurence2-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-member">
+								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence2-interested">
-								<label for="searchfilter-init-occurence2-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-interested">
+								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence2-support">
-								<label for="searchfilter-init-occurence2-support">Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-support">
+								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence2-possiblesupport">
-								<label for="searchfilter-init-occurence2-possiblesupport">Potentiell Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
+								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence2-init">
-								<label for="searchfilter-init-occurence2-init">Initiiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-init">
+								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
-					<tr>
+					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-init-occurence3">
-								<label for="searchfilter-init-occurence3">Neuer Entwurf</label>
+								<label for="searchfilter-init-occurence3"><%= texts.newdraft %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence3-member">
-								<label for="searchfilter-init-occurence3-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-member">
+								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence3-interested">
-								<label for="searchfilter-init-occurence3-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-interested">
+								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence3-support">
-								<label for="searchfilter-init-occurence3-support">Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-support">
+								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence3-possiblesupport">
-								<label for="searchfilter-init-occurence3-possiblesupport">Potentiell Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
+								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence3-init">
-								<label for="searchfilter-init-occurence3-init">Initiiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-init">
+								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
@@ -255,185 +254,58 @@
 						<td>
 							<span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-init-occurence4">
-								<label for="searchfilter-init-occurence4">Neue Anregung</label>
+								<label for="searchfilter-init-occurence4"><%= texts.newsuggestion %></label>
 							</span>
 						</td>
 						<td>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence4-member">
-								<label for="searchfilter-init-occurence4-member">Mitglied des Themenbereichs</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-member">
+								<label for="searchfilter-init-occurence1-member"><%= texts.memberofarea %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence4-interested">
-								<label for="searchfilter-init-occurence4-interested">Interessiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-interested">
+								<label for="searchfilter-init-occurence1-interested"><%= texts.interested %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence4-support">
-								<label for="searchfilter-init-occurence4-support">Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-support">
+								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
 							</span>		
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence4-possiblesupport">
-								<label for="searchfilter-init-occurence4-possiblesupport">Potentiell Unterstützt</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
+								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
 							</span>
 							<span class="searchfilter-theme-occurence">
-								<input type="checkbox" id="searchfilter-init-occurence4-init">
-								<label for="searchfilter-init-occurence4-init">Initiiert</label>
+								<input type="checkbox" id="searchfilter-init-occurence1-init">
+								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
 							</span>											
 						</td>
 					</tr>
 
-					<tr>
-						<th>Ignoriere Bereiche - Unit Bund</th>
-						<th>Ignoriere Bereiche - Unit Baden-Württemberg</th>
+					<% var l = Math.ceil(units.length/2);
+					var a = 0;
+					for(var i = 0; i < l; i++) { %><tr>
+						<th><%= texts.ignoreareaperunit %> <%= units[a].name %></th>
+						<th><% if(units[a+1]) { %><%= texts.ignoreareaperunit %> <%= units[a+1].name %><% } %></th>
 					</tr>
 					<tr class="odd">
 						<td>
-							<span class="searchfilter-theme-occurence">	
+							<% for(var j = 0; j < units[a].areas.length; j++) { %><span class="searchfilter-theme-occurence">	
 								<input type="checkbox" id="searchfilter-ignore-occurence1">
-								<label for="searchfilter-ignore-occurence1">Umwelt, Verkehr, Energie</label>
-							</span>							
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence3">
-								<label for="searchfilter-ignore-occurence3">Satzung und Parteistruktur</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence4">
-								<label for="searchfilter-ignore-occurence4">Wirtschaft, Soziales</label>
-							</span>										
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence7">
-								<label for="searchfilter-ignore-occurence7">Gesundheit und Drogen/Suchtpolitik</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence8">
-								<label for="searchfilter-ignore-occurence8">Aussen, Internationales, Frieden</label>
-							</span>	
-
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence10">
-								<label for="searchfilter-ignore-occurence10">Innen, Recht, Demokratie, Sicherheit</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence11">
-								<label for="searchfilter-ignore-occurence11">Digitales, Urheber-/Patentrecht, Datenschutz</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence14">
-								<label for="searchfilter-ignore-occurence14">Kinder, Jugend, Familie und Bildung</label>
-							</span>								
-							<span class="searchfilter-theme-occurence ">	
-								<input type="checkbox" id="searchfilter-ignore-occurence15">
-								<label for="searchfilter-ignore-occurence15">Sonstige Politische Themen</label>
-							</span>	
+								<label for="searchfilter-ignore-occurence1"><%= units[a].areas[j].name %></label>
+							</span><% } %>
 						</td>
-						<td>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence16">
-								<label for="searchfilter-ignore-occurence16">Umwelt, Verkehr, Energie</label>
-							</span>							
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence17">
-								<label for="searchfilter-ignore-occurence17">Satzung und Parteistruktur</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence18">
-								<label for="searchfilter-ignore-occurence18">Wirtschaft, Soziales</label>
-							</span>										
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence19">
-								<label for="searchfilter-ignore-occurence19">Gesundheit und Drogen/Suchtpolitik</label>
-							</span>	
-
-
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence21">
-								<label for="searchfilter-ignore-occurence21">Innen, Recht, Demokratie, Sicherheit</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence22">
-								<label for="searchfilter-ignore-occurence22">Digitales, Urheber-/Patentrecht, Datenschutz</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence23">
-								<label for="searchfilter-ignore-occurence23">Kinder, Jugend, Familie und Bildung</label>
-							</span>								
-							<span class="searchfilter-theme-occurence ">	
-								<input type="checkbox" id="searchfilter-ignore-occurence24">
-								<label for="searchfilter-ignore-occurence24">Sonstige Politische Themen</label>
-							</span>	
-						</td>
+						<td><% if(units[a+1]) { %>
+							<% for(var j = 0; j < units[a+1].areas.length; j++) { %><span class="searchfilter-theme-occurence">	
+								<input type="checkbox" id="searchfilter-ignore-occurence1">
+								<label for="searchfilter-ignore-occurence1"><%= units[a+1].areas[j].name %></label>
+							</span><% } %>
+						<% } %></td>
 					</tr>
-					<tr>
-						<th>Ignoriere Bereiche - Unit Mannheim</th>
-						<th>Ignoriere Bereiche - Unit Meta</th>
-					</tr>
-					<tr class="odd">
-						<td>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence25">
-								<label for="searchfilter-ignore-occurence25">Umwelt, Verkehr, Energie</label>
-							</span>							
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence26">
-								<label for="searchfilter-ignore-occurence26">Satzung und Parteistruktur</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence27">
-								<label for="searchfilter-ignore-occurence27">Wirtschaft, Soziales</label>
-							</span>										
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence28">
-								<label for="searchfilter-ignore-occurence28">Gesundheit und Drogen/Suchtpolitik</label>
-							</span>	
-
-
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence30">
-								<label for="searchfilter-ignore-occurence30">Innen, Recht, Demokratie, Sicherheit</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence31">
-								<label for="searchfilter-ignore-occurence31">Digitales, Urheber-/Patentrecht, Datenschutz</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence32">
-								<label for="searchfilter-ignore-occurence32">Kinder, Jugend, Familie und Bildung</label>
-							</span>								
-							<span class="searchfilter-theme-occurence ">	
-								<input type="checkbox" id="searchfilter-ignore-occurence33">
-								<label for="searchfilter-ignore-occurence33">Sonstige Politische Themen</label>
-							</span>	
-						</td>
-						<td>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence34">
-								<label for="searchfilter-ignore-occurence34">Liquid Feedback Weiterentwicklung</label>
-							</span>	
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence35">
-								<label for="searchfilter-ignore-occurence35">Streitfragen zu Abstimmungen</label>
-							</span>								
-							<span class="searchfilter-theme-occurence ">	
-								<input type="checkbox" id="searchfilter-ignore-occurence36">
-								<label for="searchfilter-ignore-occurence36">Liquid Feedback Systembetrieb</label>
-							</span>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence37">
-								<label for="searchfilter-ignore-occurence37">Sandkasten/Spielwiese</label>
-							</span>									
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence38">
-								<label for="searchfilter-ignore-occurence38">Sonstige Innerparteiliche Angelegenheiten</label>
-							</span>
-							<span class="searchfilter-theme-occurence">	
-								<input type="checkbox" id="searchfilter-ignore-occurence39">
-								<label for="searchfilter-ignore-occurence39">Veröffentlichungen</label>
-							</span>																																					
-						</td>
-					</tr>										
+					<% var a = a + 2;
+					} %>										
 				</table>	 				    	
 			
-			<div class="box-footer"><a class="button" href="#top">Suchen</a><a class="button button-grey" href="#top">Filter speichern</a></div>
+			<div class="box-footer"><a class="button" href="#top"><%= texts.searchaction %></a><a class="button button-grey" href="#top"><%= texts.savefilter %></a></div>
 			</form>												
 		</div>
 
@@ -441,110 +313,62 @@
 		
 	<div class="row">
 		<div class="twelvecol box last">
-			<h2>Initiativen</h2>
+			<h2><%= texts.inis %></h2>
 
 				<table>
 					<tr>
-						<th>Inititative</th>
-						<th>Unit</th>
-						<th>Unterstützung</th>
-						<th>Status</th>
+						<th><%= texts.ini %></th>
+						<th><%= texts.unit %></th>
+						<th><%= texts.support %></th>
+						<th><%= texts.status %></th>
 					</tr>
-					<tr class="odd">
-						<td><h3><a href="#">Für liberalisierte Ladenöffnungszeiten</a></h3><a href='#'>Wirtschaft, Soziales</a></td>
-						<td>Bund</td>
-						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:5%;"></li>
-								<li class="bargraph-support" style="width:30%"></li>
-								<li class="bargraph-potential" style="width:10%"></li>
-								<li class="bargraph-uninvolved" style="width:60%"></li>	
-							</ul>
-						</td>
-						<td><span class="table-vote">4.Abstimmung</span><br />14:25:30 Abstimmung begonnen</td>
-					</tr>
-					<tr>
-						<td><h3><a href='#'>Karenzzeiten für Politiker und Beamte</a></h3><a href='#'>Inneres, Demokratie, Recht, Sicherheit</a></td>
-						<td>Baden-Württemberg</td>
-						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:5%;"></li>
-								<li class="bargraph-support" style="width:40%"></li>
-								<li class="bargraph-potential" style="width:10%"></li>
-								<li class="bargraph-uninvolved" style="width:50%"></li>	
-							</ul>
-						</td>
-						<td>2. Diskussion <br />14:07:23 Neue Anregung<p class="table-delegate"><a href="#"><img title="Ende der Delegationskette: Johannes Knopp" src="content_img/profile_small.png"/></a></p></td>
-					</tr>
-					<tr class="odd">
-						<td><h3><a href='#'>Freier Zugang zu öffentlichen Inhalten</a></h3><a href='#'>Digitales, Urheber-/ Patentrecht, Datenschutz</a></td>
-						<td>Bund</td>
-						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:5%;"></li>
-								<li class="bargraph-support" style="width:30%"></li>
-								<li class="bargraph-potential" style="width:10%"></li>
-								<li class="bargraph-uninvolved" style="width:60%"></li>	
-							</ul>
-						</td>
-						<td>1. Neu<br />13:37:22
-Thema akzeptiert</td>
-					</tr>	
-					<tr>
-						<td><h3><a href='#'>Abschaffung der Zeitumstellung</a></h3></td>
-						<td>Bund</td>
-						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:5%;"></li>
-								<li class="bargraph-support" style="width:30%"></li>
-								<li class="bargraph-potential" style="width:10%"></li>
-								<li class="bargraph-uninvolved" style="width:60%"></li>	
-							</ul>
 
-						</td>
-						<td>2.Diskussion<br />22:26:20
-Neue Anregung</td>
-					</tr>
-					<tr class="table-alternateinitiative">
-						<td><h3><a href='#'>Abschaffung der Zeitumstellung, Beibehaltung Sommerzeit</a></h3><a href='#'>Wirtschaft, Soziales</a></td>
-						<td>Bund</td>
+					<% var odd = true;
+					for(var i = 0; i < inis.length; i++) { %>
+					<tr<% 
+					if(inis[i].alternativeid > 0) {
+						%> class="table-alternativeinitiative"<% }
+					else {
+						if(odd == true) { 
+							odd = false; 
+							%> class="odd"<% } 
+						else { 
+							odd = true; }
+					}					
+					%>>
+						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
+						if(!inis[i].hasalternatives) {
+						%><a href='#'><%= inis[i].area %></a><% } %></td>
+						<td><%= inis[i].unit %></td>
 						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:3%;"></li>
-								<li class="bargraph-support" style="width:10%"></li>
-								<li class="bargraph-potential" style="width:30%"></li>
-								<li class="bargraph-uninvolved" style="width:60%"></li>	
-							</ul>
-
-						</td>
-						<td>2.Diskussion<br />22:26:20
-Neue Anregung</td>
-					</tr>
-					<tr class="odd">
-						<td><h3><a href='#'>Freier Zugang zu öffentlichen Inhalten</a></h3><a href='#'>Digitales, Urheber-/ Patentrecht, Datenschutz</a></td>
-						<td>Bund</td>
-						<td>
-							<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-								<li class="bargraph-quorum" style="left:5%;"></li>
-								<li class="bargraph-support" style="width:30%"></li>
-								<li class="bargraph-potential" style="width:10%"></li>
-								<li class="bargraph-uninvolved" style="width:60%"></li>	
+							<ul class="bargraph" title="<%= inis[i].supporter %> <%= texts.supporter %> / <%= inis[i].potsupporter %> <%= texts.potsupporter %> / <%= inis[i].uninterested %> <%= texts.uninterested %>">
+								<li class="bargraph-quorum" style="left:<%= inis[i].quorum %>%;"></li>
+								<li class="bargraph-support" style="width:<%= inis[i].support %>%"></li>
+								<li class="bargraph-potential" style="width:<%= inis[i].potential %>%"></li>
+								<li class="bargraph-uninvolved" style="width:<%= inis[i].uninvolved %>%"></li>
 							</ul>
 						</td>
-						<td><span class="table-vote">4.Abstimmung</span><br />20:25:30 Abstimmung begonnen</td>
-					</tr>														
+						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><% 
+						if(inis[i].status == texts.tablevote) { %></span><% }
+						%><br /><%= inis[i].lastaction.time %> <%= inis[i].lastaction.action %><%
+						if(inis[i].delegate) { 
+						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
+						} %></td>
+					</tr><%
+					} %>														
 				</table>
 			<div class="box-footer">			
 				<ul class="pagination">
-					<li class="button button-backward-off">zurück</li>
-					<li class="active">1</li>
-					<li><a href="?page=2">2</a></li>
-					<li><a href="?page=3">3</a></li>
-					<li><a href="?page=4">4</a></li>
-					<li><a href="?page=5">5</a></li>
-					<li><a href="?page=6">6</a></li>
-					<li><a href="?page=7">7</a></li>
-					<li><a class="button button-forward" href="#">weiter</a></li>
+					<li class="button button-backward-off"><%= texts.backshort %></li>
+					<% for(var i = 1; i <= initable.pages; i++) {
+						if(i === initable.activepage) { %>
+							<li class="active"><%= i %></li>
+						<% }
+						else { %>
+							<li><a href="?page=<%= i %>"><%= i %></a></li>	
+						<% } 
+					} %>
+					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
 				</ul>				 
 			</div>
 		</div>

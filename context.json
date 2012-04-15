@@ -33,7 +33,9 @@
 		"supporter": 365, "potsupporter": 15,
 		"uninterested": 631, "status": "1.Neu",
 		"quorum": 5, "support": 30,
-		"potential": 10, "uninvolved": 60},
+		"potential": 10, "uninvolved": 60,
+		"lastaction": { "time": "14:25:30", "action": "Neuer Entwurf" }
+		},
 		{"id": 2, "title": "Karenzzeiten für Politiker und Beamte",
 		"area": "Inneres, Demokratie, Recht, Sicherheit", "unit": "Baden-Württemberg",
 		"supporter": 365, "potsupporter": 15,
@@ -41,33 +43,43 @@
 		"quorum": 5, "support": 40,
 		"potential": 10, "uninvolved": 50,
 		"delegate": {"nick": "joknopp", "name": "Johannes Knopp",
-		             "picsmall": "content_img/profile_small.png"} },
+		             "picsmall": "content_img/profile_small.png"},
+		"lastaction": { "time": "14:07:23", "action": "Neue Anregung" }
+		},
 		{"id": 3, "title": "Freier Zugang zu öffentlichen Inhalten",
 		"area": "Digitales, Urheber-/ Patentrecht, Datenschutz", "unit": "Bund",
 		"supporter": 365, "potsupporter": 15,
 		"uninterested": 631, "status": "4.Abstimmung",
 		"quorum": 5, "support": 30,
-		"potential": 10, "uninvolved": 60},
+		"potential": 10, "uninvolved": 60,
+		"lastaction": { "time": "13:37:22", "action": "Abstimmung begonnen" }
+		},
 		{"id": 4, "title": "Abschaffung der Zeitumstellung",
 		"area": "Wirtschaft, Soziales", "unit": "Bund",
 		"supporter": 365, "potsupporter": 15,
 		"uninterested": 631, "status": "2.Diskussion",
 		"quorum": 5, "support": 30,
 		"potential": 10, "uninvolved": 60,
-		"hasalternatives": true},
+		"hasalternatives": true,
+		"lastaction": { "time": "22:26:20", "action": "Neue Anregung" }
+		},
 		{"id": 5, "title": "Abschaffung der Zeitumstellung, Beibehaltung Sommerzeit",
 		"area": "Wirtschaft, Soziales", "unit": "Bund",
 		"supporter": 365, "potsupporter": 15,
 		"uninterested": 631, "status": "2.Diskussion",
 		"quorum": 3, "support": 10,
 		"potential": 30, "uninvolved": 60,
-		"alternativeid": 4},
+		"alternativeid": 4,
+		"lastaction": { "time": "22:26:20", "action": "Initiative zurückgezogen" }
+		},
 		{"id": 6, "title": "Freier Zugang zu öffentlichen Inhalten",
 		"area": "Digitales, Urheber-/ Patentrecht, Datenschutz", "unit": "Bund",
 		"supporter": 365, "potsupporter": 15,
 		"uninterested": 631, "status": "4.Abstimmung",
 		"quorum": 5, "support": 30,
-		"potential": 10, "uninvolved": 60}
+		"potential": 10, "uninvolved": 60,
+		"lastaction": { "time": "20:25:30", "action": "Abstimmung begonnen" }
+		}
 	],
 	"initable": {
 		"pages": 7, "activepage": 1
@@ -86,7 +98,7 @@
 		"user": { "nick": "marix", "name": "Matthias Bach",
 		          "picsmall": "content_img/profile_delegate_4.png"}}
 	],
-	"delegateactions":[
+	"delegateactions": [
 		{ "unit": "Hessen", "area":"Transparenz und Datenschutz",
 			"count":"4",
 			"user":{"nick": "marix", "name": "Matthias Bach",
@@ -100,7 +112,7 @@
 			"user":{"nick": "cfritzsche", "name": "Christoph Fritzsche",
 			"picsmall":"content_img/profile_delegate_1.png"}}
 	],
-	"strongestdelegates":[
+	"strongestdelegates": [
 		{ "unit": "Bund", "area":"Bildungspolitik",
 			"count":"224",
 			"user":{"nick": "afelia", "name": "Marina Weisband",
@@ -114,7 +126,7 @@
 			"user":{"nick": "schmidtlepp", "name": "Christopher Lauer",
 			"picsmall":"content_img/profile_delegate_5.png"}}
 	],
-	"votingcomments":[
+	"votingcomments": [
 		{ "date":"21.03.2011", "action":"for",
 		"topic":"Erneuerbare Energien-Gesetz II - Initiative des Bundes zur Förderung der reg. Energien",
 		"comment":"Food truck gentrify salvia banh mi, butcher DIY iphone sustainable brunch. Wayfarers helvetica high life hoodie, jean shorts photo booth banh mi brunch PBR banksy art party four loko keytar readymade cosby sweater.<br /><br /> Organic freegan butcher, fap leggings cardigan shoreditch farm-to-table. Austin single-origin coffee cred, seitan raw denim messenger bag marfa brooklyn stumptown synth master cleanse chambray. Biodiesel beard marfa gluten-free DIY hoodie. Beard biodiesel salvia farm-to-table, wes anderson DIY cosby sweater. Put a bird on it photo booth mlkshk cosby sweater.",
@@ -140,7 +152,7 @@
 			"uninterested": 400, "quorum": 5, "support": 40,
 			"potential": 10, "uninvolved": 50 }
 	},
-	"units":[
+	"units": [
 		{ "id": "1", "name": "Bund", "description": "Bundespolitik", "areas": [
 			{ "name": "Innen, Recht, Demokratie, Sicherheit", 
 				"topics": { "status1": "32", "status2": "42", "status3": "18", "status4": "42", "status5": "58", "status6": "18" } }, 
