@@ -95,7 +95,7 @@
 		if(delegations[i].action == 'support') {
 		%><%= texts.supports %><% }
 		%></span></h3>
-				<p><a class="hiddenlink" href="#"><%= delegations[i].title %></a> <a href="#">Begründung</a></p>
+				<p><a class="hiddenlink" href="#"><%= delegations[i].title || '' %></a> <a href="#">Begründung</a></p>
 			</div>
 			<% } %>
 			<div class="box-footer">
