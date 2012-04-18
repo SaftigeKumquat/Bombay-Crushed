@@ -148,6 +148,7 @@ get initiatives that are close to the quorum and ending soon:
 sort initiatives by the created attribute, maybe filter out the ones
 where the deadline is more than X days (4?) away
 
+it might be better to select by issue_state_time_left_below instead of created_after, as in the latter case we would have to respect different rule sets.
 
 
 
