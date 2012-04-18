@@ -30,21 +30,48 @@ var delegations = function(state, render) {
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
 				console.log('Query trustee name: ' + links[i].trustee_id);
-				lf.query('/member', {'member_id': links[i].trustee_id}, function(res) {
+				lf.query('/member', {'member_id': links[i].trustee_id, 'session_key': state.session_key()}, function(res) {
 					var delegate = res.result[0];
 					console.log(JSON.stringify(delegate));
-					resolved_delegations.push({
+
+					info_obj = {
 						user: {
 							'name': delegate.name,
 							'picsmall': '/avatar/' + delegate.id
-							// TODO fill info about last initivative or hide
+						}
+					};
+					// get last action of user
+					lf.query('/vote', {'member_id': delegate.id,
+					                   'issue_state': 'finished_with_winner, finnished_without_winner',
+					                   'issue_closed_after': delegate.last_activity,
+					                   'session_key': state.session_key()
+					                  }, function(res) {
+						if(res.res && res.res.length > 0) {
+							// TODO sort these properly instead of taking an arbitrary one
+							vote = res.res[0];
+							if(vote.grade.grade > 0) {
+								info_obj.action = 'for';
+							} else {
+								info_obj.action = 'against';
+							}
+							lfapi.query('/initiative', {'initiative_id': vote.initiative_id}, function(res) {
+								info_obj.title = res.res[0].name;
+								resolved_delegations.push(info_obj);
+								console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+								if(resolved_delegations.length === links.length) {
+									delegations = resolved_delegations;
+									finish();
+								}
+							});
+						} else {
+							resolved_delegations.push(info_obj);
+							console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+							if(resolved_delegations.length === links.length) {
+								delegations = resolved_delegations;
+								finish();
+							}
 						}
 					});
-					console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
-					if(resolved_delegations.length === links.length) {
-						delegations = resolved_delegations;
-						finish();
-					}
 				});
 			}
 		} else {
