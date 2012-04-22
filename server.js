@@ -479,7 +479,6 @@ var inis = function(state, render) {
 				builtInis.push(ini);
 			}
 			state.context.inis = builtInis;
-			console.log(JSON.stringify(state.context.inis));
 			render();			
 		}
 	}
@@ -489,19 +488,15 @@ var inis = function(state, render) {
 		// consider max 5
 		// TODO must consider page index in table
 		for(var i = 0; i < res.result.length && i < 5; i++) {
-			console.log('Event: ' + JSON.stringify(res.result[i]));
 			events.push(res.result[i]);
 			// get issue for event
 			lf.query('/issue', {'issue_id': res.result[i].issue_id}, function(issue_res) {
-				console.log('ISSUE: ' + JSON.stringify(issue_res.result[0]));
 				issues.push(issue_res.result[0]);
 				// get area for issue
 				lf.query('/area', {'area_id': issue_res.result[0].area_id}, function(area_res) {
-					console.log('AREA: ' + JSON.stringify(area_res.result[0]));
 					areas.push(area_res.result[0]);
 					// get unit for area
 					lf.query('/unit', {'unit_id': area_res.result[0].unit_id}, function(unit_res) {
-						console.log('UNIT: ' + JSON.stringify(unit_res.result[0]));
 						units.push(unit_res.result[0]);						
 						finish();
 					});
@@ -509,7 +504,6 @@ var inis = function(state, render) {
 				});
 				// get policy for issue
 				lf.query('/policy', {'policy_id': issue_res.result[0].policy_id}, function(pol_res) {
-					console.log('POLICY: ' + JSON.stringify(pol_res.result[0]));
 					policies.push(pol_res.result[0]);
 					finish();
 				});
@@ -519,7 +513,6 @@ var inis = function(state, render) {
 					var found = false;
 					for(var j = 0; j < ini_res.result.length; j++) {
 						if(ini_res.result[j].rank === 1) {
-							console.log('INI: ' + JSON.stringify(ini_res.result[j]));
 							inis.push(ini_res.result[j]);	
 							found = true;						
 						}
@@ -531,7 +524,6 @@ var inis = function(state, render) {
 								leadingIni = ini_res.result[j];
 							}
 						}
-						console.log('INI: ' + JSON.stringify(leadingIni));
 						inis.push(leadingIni);
 					}
 					finish();
