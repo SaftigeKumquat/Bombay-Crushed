@@ -34,7 +34,7 @@
 		"uninterested": 631, "status": "1.Neu",
 		"quorum": 5, "support": 30,
 		"potential": 10, "uninvolved": 60,
-		"lastaction": { "time": "14:25:30", "action": "Neuer Entwurf" }
+		"lastaction": { "date": "01.04.2012", "time": "14:25:30", "action": "Neuer Entwurf" }
 		},
 		{"id": 2, "title": "Karenzzeiten für Politiker und Beamte",
 		"area": "Inneres, Demokratie, Recht, Sicherheit", "unit": "Baden-Württemberg",
@@ -44,7 +44,7 @@
 		"potential": 10, "uninvolved": 50,
 		"delegate": {"nick": "joknopp", "name": "Johannes Knopp",
 		             "picsmall": "content_img/profile_small.png"},
-		"lastaction": { "time": "14:07:23", "action": "Neue Anregung" }
+		"lastaction": { "date": "01.04.2012", "time": "14:07:23", "action": "Neue Anregung" }
 		},
 		{"id": 3, "title": "Freier Zugang zu öffentlichen Inhalten",
 		"area": "Digitales, Urheber-/ Patentrecht, Datenschutz", "unit": "Bund",
@@ -52,7 +52,7 @@
 		"uninterested": 631, "status": "4.Abstimmung",
 		"quorum": 5, "support": 30,
 		"potential": 10, "uninvolved": 60,
-		"lastaction": { "time": "13:37:22", "action": "Abstimmung begonnen" }
+		"lastaction": { "date": "01.04.2012", "time": "13:37:22", "action": "Abstimmung begonnen" }
 		},
 		{"id": 4, "title": "Abschaffung der Zeitumstellung",
 		"area": "Wirtschaft, Soziales", "unit": "Bund",
@@ -61,7 +61,7 @@
 		"quorum": 5, "support": 30,
 		"potential": 10, "uninvolved": 60,
 		"hasalternatives": true,
-		"lastaction": { "time": "22:26:20", "action": "Neue Anregung" }
+		"lastaction": { "date": "31.03.2012", "time": "22:26:20", "action": "Neue Anregung" }
 		},
 		{"id": 5, "title": "Abschaffung der Zeitumstellung, Beibehaltung Sommerzeit",
 		"area": "Wirtschaft, Soziales", "unit": "Bund",
@@ -70,7 +70,7 @@
 		"quorum": 3, "support": 10,
 		"potential": 30, "uninvolved": 60,
 		"alternativeid": 4,
-		"lastaction": { "time": "22:26:20", "action": "Initiative zurückgezogen" }
+		"lastaction": { "date": "31.03.2012", "time": "22:26:20", "action": "Initiative zurückgezogen" }
 		},
 		{"id": 6, "title": "Freier Zugang zu öffentlichen Inhalten",
 		"area": "Digitales, Urheber-/ Patentrecht, Datenschutz", "unit": "Bund",
@@ -78,7 +78,7 @@
 		"uninterested": 631, "status": "4.Abstimmung",
 		"quorum": 5, "support": 30,
 		"potential": 10, "uninvolved": 60,
-		"lastaction": { "time": "20:25:30", "action": "Abstimmung begonnen" }
+		"lastaction": { "date": "31.03.2012", "time": "20:25:30", "action": "Abstimmung begonnen" }
 		}
 	],
 	"initable": {
