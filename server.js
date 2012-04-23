@@ -6,6 +6,7 @@ var Cookies = require('cookies');
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
+var url = require('url');
 
 var delegations = function(state, render) {
 	var delegations;
@@ -765,12 +766,12 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 	var i;
 	var mapped;
 
-	var req = state.request;
+	var path = state.url.pathname;
 
-	console.log('Request url: ' + req.url);
+	console.log('Request url: ' + path);
 
 	// check whether the url has a direct mapping
-	mapped = url_mappings[req.url];
+	mapped = url_mappings[path];
 	if (mapped) {
 		mapped(state);
 	} else {
@@ -779,9 +780,9 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 		for (i = 0; !mapped && i < pattern_mappings.length; i = i + 1) {
 			pattern = pattern_mappings[i].pattern;
 			//console.log('Testing pattern ' + i + ': ' + pattern + ' [' + typeof(pattern) + ']');
-			if( typeof(pattern) === 'string' && req.url.slice(0, pattern.length) === pattern ) {
+			if( typeof(pattern) === 'string' && path.slice(0, pattern.length) === pattern ) {
 				mapped = pattern_mappings[i].mapped;
-			} else if ( pattern.test && typeof(pattern.test) === 'function' && pattern.test(req.url) ) {
+			} else if ( pattern.test && typeof(pattern.test) === 'function' && pattern.test(path) ) {
 				// we can only assume it's a regexp, as typeof is not clear on it,
 				// but if it has a test function...
 				mapped = pattern_mappings[i].mapped;
@@ -790,7 +791,7 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 		if (mapped) {
 			mapped(state);
 		} else {
-			console.log(req.url + ' has not been mapped');
+			console.log(path + ' has not been mapped');
 			invalidURL(state);
 		}
 	}
@@ -815,7 +816,8 @@ var createState = function(req, res) {
 		},
 		'context': {
 				'meta': {'currentpage': ''}
-		}
+		},
+		'url': url.parse(req.url, true)
 	};
 
 	var session_key, user_id;
