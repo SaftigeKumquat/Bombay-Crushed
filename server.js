@@ -43,7 +43,7 @@ var delegations = function(state, render) {
 					};
 					// get last action of user
 					lf.query('/vote', {'member_id': delegate.id,
-					                   'issue_state': 'finished_with_winner, finnished_without_winner',
+					                   'issue_state': 'finished_with_winner,finished_without_winner',
 					                   'issue_closed_after': delegate.last_activity,
 					                   'session_key': state.session_key()
 					                  }, function(res) {
