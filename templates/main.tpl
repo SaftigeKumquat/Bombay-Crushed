@@ -62,17 +62,17 @@
 				</table>
 			<div class="box-footer">			
 				<ul class="pagination">
-					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="?page=<%= ( initable.activepage - 1 ) %>"><%= texts.backshort %></a></li><% }
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="overview?page=<%= ( initable.activepage - 1 ) %>"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
 						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="?page=<%= i %>"><%= i %></a></li>	
+							<li><a href="overview?page=<%= i %>"><%= i %></a></li>	
 						<% } 
 					} 
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="?page=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="overview?page=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>				 
 			</div>
 		</div>
