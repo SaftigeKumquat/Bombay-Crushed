@@ -364,9 +364,19 @@ var inis = function(state, render) {
 	var units = [];
 	var inis = [];
 	var policies = [];
+
+	var activepage;	
+	state.context.initable = {};
+	if(state.url.query.page !== undefined) {
+		activepage = state.url.query.page - 1;
+		state.context.initable.activepage = state.url.query.page;
+	}
+	else {
+		activepage = 0;
+		state.context.initable.activepage = 1;
+	}
  
 	var finish = function() {
-		var ctx = state.context;
 		builtInis = [];
 		if(events.length === issues.length
 			&& events.length === areas.length
@@ -488,8 +498,25 @@ var inis = function(state, render) {
  	lf.query('/event', {}, function(res) {
 		// consider max 5
 		// TODO must consider page index in table
-		for(var i = 0; i < res.result.length && i < 5; i++) {
-			events.push(res.result[i]);
+		state.context.initable.pages = Math.ceil(res.result.length / 5);
+		var end = ( activepage * 5 ) + 5;
+		var found = false;
+		for(var i = activepage * 5; i < res.result.length && i < end; i++) {
+			found = false;
+			// check if event has issue that was already registered
+			for(var l = 0; l < events.length; l++) {
+				if(events[l].issue_id == res.result[i].issue_id) {
+					found = true;
+					break;
+				}
+			}
+			if(found == false) {
+				events.push(res.result[i]);
+			}
+			else {
+				end = end + 1;
+				continue;
+			}
 			// get issue for event
 			lf.query('/issue', {'issue_id': res.result[i].issue_id}, function(issue_res) {
 				issues.push(issue_res.result[0]);
