@@ -43,7 +43,7 @@ var delegations = function(state, render) {
 					};
 					// get last action of user
 					lf.query('/vote', {'member_id': delegate.id,
-					                   'issue_state': 'finished_with_winner, finnished_without_winner',
+					                   'issue_state': 'finished_with_winner,finished_without_winner',
 					                   'issue_closed_after': delegate.last_activity,
 					                   'session_key': state.session_key()
 					                  }, function(res) {
@@ -158,18 +158,16 @@ var news = function(state, render) {
 				var i, j;
 				for(i = 0; i < voters.length; ++i) {
 					var voter = voters[i];
-					if(voter.delegate_member_id) {
-						for(j = 0; j < votes.length; ++j) {
-							var vote = votes[j];
-							if(vote.member_id === voter.member_id) { // issue_id should be correct by query restriction
-								if(vote.grade > 0) {
-									pDirect = pDirect + 1;
-									pIndirect = pIndirect + voter.weight - 1;
-								}
-								if(vote.grade < 0) {
-									nDirect = nDirect + 1;
-									nIndirect = nIndirect + voter.weight - 1;
-								}
+					for(j = 0; j < votes.length; ++j) {
+						var vote = votes[j];
+						if(vote.member_id === voter.member_id) { // issue_id should be correct by query restriction
+							if(vote.grade > 0) {
+								pDirect = pDirect + 1;
+								pIndirect = pIndirect + voter.weight - 1;
+							}
+							if(vote.grade < 0) {
+								nDirect = nDirect + 1;
+								nIndirect = nIndirect + voter.weight - 1;
 							}
 						}
 					}
