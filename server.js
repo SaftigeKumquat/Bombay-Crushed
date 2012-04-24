@@ -494,12 +494,35 @@ var inis = function(state, render) {
 
 	// get last events
  	lf.query('/event', {}, function(res) {
-		// consider max 5
-		// TODO must consider page index in table
-		state.context.initable.pages = Math.ceil(res.result.length / 5);
+		// calculate number of pages
+		var foundissues = [];
+		var foundissue = false;
+		for(var i = 0; i < res.result.length; i++) {
+			foundissue = false;
+			for(var j = 0; j < foundissues.length; j++) {
+				if(foundissues[j] == res.result[i].issue_id) {
+					foundissue = true;
+				}
+			}
+			if(foundissue == false) {
+				foundissues.push(res.result[i].issue_id);
+			}
+		}
+
+		state.context.initable.pages = Math.ceil(foundissues.length / 5);
 		var end = ( activepage * 5 ) + 5;
 		var found = false;
+		var foundpage = false;
 		for(var i = activepage * 5; i < res.result.length && i < end; i++) {
+			// start with first found issue on the page
+			if(foundpage == false && res.result[i].issue_id != foundissues[activepage * 5]) {
+				end = end + 1;
+				continue;
+			}
+			else {
+				foundpage = true;
+			}
+
 			found = false;
 			// check if event has issue that was already registered
 			for(var l = 0; l < events.length; l++) {
