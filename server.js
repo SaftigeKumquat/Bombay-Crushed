@@ -790,7 +790,8 @@ var url_mapping = {
 	'/topics': showTopics,
 	'/profile': showProfile,
 	'/contacts': showContacts,
-	'/timeline': showTimeline
+	'/timeline': showTimeline,
+	'/favicon.ico': serveStatic
 }
 
 /**
