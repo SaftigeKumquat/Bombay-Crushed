@@ -8,6 +8,8 @@ var lf = require('./lfcli.js');
 var querystring = require('querystring');
 var url = require('url');
 
+var config;
+
 var delegations = function(state, render) {
 	var delegations;
 
@@ -909,6 +911,17 @@ server = function() {
 		console.error('ERROR: Exception not handled properly: ' + err);
 	});
 
+	// read config
+	config = JSON.parse(fs.readFileSync('config.default.json'));
+	try { // this does not necessarily exist
+		custom = JSON.parse(fs.readFileSync('config.json'));
+		for(key in custom) {
+			config[key] = custom[key];
+		};
+	} catch(err) {
+		console.log('No custom configuration, using defaults');
+	}
+
 	lf.query('/info', {}, function(res) {
 		server = lf.getBaseURL();
 		console.log('Connected to ' + server.host + ':' + server.port);
@@ -916,11 +929,17 @@ server = function() {
 		console.log('API Version:  ' + res.api_version);
 	});
 
-	http.createServer(function (req, res) {
+	var server = http.createServer(function (req, res) {
 		var state = createState(req, res);
 		mapU2F(state, url_mapping, pattern_mapping);
-	}).listen(8080);
-	console.log('Server running at port 8080');
+	});
+	if(config.listen.host) {
+		server.listen(config.listen.port, config.listen.host);
+		console.log('Server running at port ' + config.listen.port + ' on ' + config.listen.host);
+	} else {
+		server.listen(config.listen.port);
+		console.log('Server running at port ' + config.listen.port + ' on all interfaces');
+	}
 
 };
 
