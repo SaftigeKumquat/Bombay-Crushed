@@ -230,13 +230,9 @@ var news = function(state, render) {
 			votes = false;
 			finish();
 		} else {
-			lf.query('/initiative', {'initiative_winner': true, 'issue_id': last_issue.id}, function(res) {
+			lf.query('/initiative', {'initiative_winner': 1, 'issue_id': last_issue.id}, function(res) {
 				var i;
-				for(var a = 0; a < res.result.length; a++) {
-					if(res.result[a].rank == 1) {
-						lastBallot = res.result[a];
-					}
-				}				
+				lastBallot = res.result[0];
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
 				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
 					votes = res.result || false;
