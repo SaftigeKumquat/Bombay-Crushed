@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 var http = require('http');
-var fs = require('fs');
 var Cookies = require('cookies');
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 var url = require('url');
+var fs = require('fs');
 
-var config;
+var config = require('./config.js');
 
 var delegations = function(state, render) {
 	var delegations;
@@ -985,17 +985,6 @@ server = function() {
 		}
 		console.error('ERROR: Exception not handled properly: ' + err);
 	});
-
-	// read config
-	config = JSON.parse(fs.readFileSync('config.default.json'));
-	try { // this does not necessarily exist
-		custom = JSON.parse(fs.readFileSync('config.json'));
-		for(key in custom) {
-			config[key] = custom[key];
-		};
-	} catch(err) {
-		console.log('No custom configuration, using defaults');
-	}
 
 	lf.query('/info', {}, function(res) {
 		server = lf.getBaseURL();
