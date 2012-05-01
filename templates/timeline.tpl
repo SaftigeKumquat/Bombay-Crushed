@@ -360,16 +360,17 @@
 				</table>
 			<div class="box-footer">			
 				<ul class="pagination">
-					<li class="button button-backward-off"><%= texts.backshort %></li>
-					<% for(var i = 1; i <= initable.pages; i++) {
-						if(i === initable.activepage) { %>
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="timeline?page=<%= ( initable.activepage - 1 ) %>"><%= texts.backshort %></a></li><% }
+					for(var i = 1; i <= initable.pages; i++) {
+						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="?page=<%= i %>"><%= i %></a></li>	
+							<li><a href="timeline?page=<%= i %>"><%= i %></a></li>	
 						<% } 
-					} %>
-					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+					} 
+					var nextpage = ( initable.activepage - 1 ) + 2;
+					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="timeline?page=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>				 
 			</div>
 		</div>

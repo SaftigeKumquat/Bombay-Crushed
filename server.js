@@ -656,9 +656,24 @@ var showTimeline = function(state) {
 		return;
 	}
 
-	var ctx = state.context;
-	ctx.meta.currentpage = "timeline";
-	ejs.render(state, '/timeline.tpl');
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "timeline";
+		if(ctx.user !== undefined && ctx.inis !== undefined) {
+			ejs.render(state, '/timeline.tpl');
+		}
+	}
+
+	lf.query('/member', {'member_id': state.user_id()}, function(res) {
+		lf_user = res.result[0];
+		state.context.user = {
+			'nick': lf_user.name,
+			'picbig': '/picbig/' + lf_user.id
+		};
+		finish();
+	} );
+
+	inis(state, finish);
 }
 
 var invalidURL = function(state) {
