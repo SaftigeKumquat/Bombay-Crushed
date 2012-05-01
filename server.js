@@ -586,6 +586,53 @@ var inis = function(state, render) {
 	});
 };
 
+var user = function(state, finish) {
+	var unit_count = 0;
+
+	var check = function() {
+		console.log('TEST: ' + JSON.stringify(state.context.user.units) + ', unit_count: ' + unit_count);
+		if(state.context.user !== undefined && state.context.user.units.length === unit_count
+		&& unit_count !== 0) {
+			console.log('SUCCESS');
+			finish();
+		}
+	}
+
+	lf.query('/member', {'member_id': state.user_id()}, function(res) {
+		lf_user = res.result[0];
+		var date = new Date(lf_user.birthday);
+		state.context.user = {
+			'nick': lf_user.name,
+			'picbig': '/picbig/' + lf_user.id,
+			'name': lf_user.realname,
+			'website': lf_user.website,
+			'profession': lf_user.profession,
+			'birthdate': date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear(),
+			'email': lf_user.email,
+			'jabber': lf_user.xmpp_address,
+			'phone': lf_user.phone,
+			'mobile': lf_user.mobile_phone,
+			'statement': lf_user.statement,
+			'offices': lf_user.internal_posts,
+			'memberships': lf_user.external_memberships,
+			'units': [ ]
+		};
+
+		check();
+	} );
+
+	lf.query('/privilege', {'member_id': state.user_id()}, function(priv_res) {
+		unit_count = priv_res.result.length;
+		for(var i = 0; i < unit_count; i++) {
+			lf.query('/unit', {'unit_id': priv_res.result[i].unit_id}, function(unit_res) {
+				state.context.user.units.push({'name': unit_res.result[0].name});
+				check();
+			});
+		}
+		check();
+	} );
+}
+
 // Ok, not really an index, but works.
 var printIndex = function(state) {
 	// we need a valid user session...
@@ -604,15 +651,7 @@ var printIndex = function(state) {
 		}
 	}
 
-	lf.query('/member', {'member_id': state.user_id()}, function(res) {
-		lf_user = res.result[0];
-		state.context.user = {
-			'nick': lf_user.name,
-			'picbig': '/picbig/' + lf_user.id
-		};
-		finish();
-	} );
-
+	user(state, finish);
 	news(state, finish);
 	areas(state, finish);
 	delegations(state, finish);
@@ -632,9 +671,15 @@ var showProfile = function(state) {
 		return;
 	}
 
-	var ctx = state.context;
-	ctx.meta.currentpage = "profile";
-	ejs.render(state, '/profile.tpl');
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "profile";
+		if(ctx.user !== undefined && ctx.user.units.length != 0) {
+			ejs.render(state, '/profile.tpl');
+		}
+	}
+
+	user(state, finish);
 }
 
 var showContacts = function(state) {
@@ -659,19 +704,10 @@ var showTimeline = function(state) {
 	var finish = function() {
 		var ctx = state.context;
 		ctx.meta.currentpage = "timeline";
-		if(ctx.user !== undefined && ctx.inis !== undefined) {
+		if(ctx.inis !== undefined) {
 			ejs.render(state, '/timeline.tpl');
 		}
 	}
-
-	lf.query('/member', {'member_id': state.user_id()}, function(res) {
-		lf_user = res.result[0];
-		state.context.user = {
-			'nick': lf_user.name,
-			'picbig': '/picbig/' + lf_user.id
-		};
-		finish();
-	} );
 
 	inis(state, finish);
 }
