@@ -137,12 +137,27 @@ var areas = function(state, render) {
 
 
 var news = function(state, render) {
-	var lastBallot, criticalQuorum, voters, votes;
+	var lastBallot, criticalQuorum, voters, votes, activepage;
+
+	if(state.url.query.newspage !== undefined) {
+		activepage = state.url.query.newspage - 1;
+	}
+	else {
+		activepage = 0;
+	}
 
 	// data output
 	var finish = function() {
 		if(lastBallot !== undefined && criticalQuorum !== undefined && voters !== undefined && votes !== undefined) {
 			var news = {};
+
+			if(state.url.query.newspage !== undefined) {
+				news.activepage = state.url.query.newspage;
+			}
+			else {
+				news.activepage = 1;
+			}
+			
 			if(!lastBallot) {
 				news.chart = {
 					'title': 'No ballot has completed recently',
@@ -182,6 +197,8 @@ var news = function(state, render) {
 					'against': nDirect,
 					'againstdelegated': nIndirect
 				};
+
+				news.pages = lastBallot.pages;
 			}
 
 			if(!criticalQuorum) {
@@ -216,13 +233,19 @@ var news = function(state, render) {
 		var last_timestamp = 0;
 		var last_issue;
 		console.log('Completed issues: ' + issues.length);
-		for(i = 0; i < issues.length; ++i) {
-			var issue = issues[i];
-			closing_time = Date.parse(issue.closed);
-			if(closing_time > last_timestamp) {
-				last_timestamp = closing_time;
-				last_issue = issue;
-			}
+
+		// sort the issues by closing
+		Array.prototype.sort.call(issues, function(a,b) {
+    			if (a.closed > b.closed)
+        			return -1;
+    			else if (b.closed > a.closed)
+        			return 1;
+    			else 
+        			return 0;
+		});
+
+		if(issues.length != 0 && activepage <= issues.length) {
+			last_issue = issues[activepage];
 		}
 		if(!last_issue) {
 			lastBallot = false;
@@ -233,6 +256,7 @@ var news = function(state, render) {
 			lf.query('/initiative', {'initiative_winner': 1, 'issue_id': last_issue.id}, function(res) {
 				var i;
 				lastBallot = res.result[0];
+				lastBallot.pages = issues.length;
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
 				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
 					votes = res.result || false;
