@@ -101,10 +101,10 @@ var performLogin = function(state) {
 
 	state.request.on('end', function() {
 		data = querystring.parse(body);
-		lf.perform('/session', { key: data.key }, function(res) {
+		lf.perform('/session', { key: data.key }, state, function(res) {
 			state.session_key(res.session_key);
 
-			lf.query('/info', { session_key: state.session_key() }, function(res) {
+			lf.query('/info', {}, state, function(res) {
 				state.user_id(res.current_member_id);
 				overview.show(state);
 			});
@@ -144,10 +144,7 @@ var sendPicture = function(state) {
 		'type': 'photo',
 		'member_id': user_id
 	}
-	if(state.session_key()) {
-		query_obj.session_key = state.session_key()
-	};
-	lf.query('/member_image', query_obj, function(result) {
+	lf.query('/member_image', query_obj, state, function(result) {
 		var response = state.result;
 		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
@@ -168,10 +165,7 @@ var sendAvatar = function(state) {
 		'type': 'avatar',
 		'member_id': user_id
 	}
-	if(state.session_key()) {
-		query_obj.session_key = state.session_key()
-	};
-	lf.query('/member_image', query_obj, function(result) {
+	lf.query('/member_image', query_obj, state, function(result) {
 		var response = state.result;
 		if(result.status === 'ok' && result.result.length) {
 			var image = result.result[0];
@@ -264,7 +258,7 @@ server = function() {
 		console.error('ERROR: Exception not handled properly: ' + err);
 	});
 
-	lf.query('/info', {}, function(res) {
+	lf.query('/info', {}, null, function(res) {
 		server = lf.getBaseURL();
 		console.log('Connected to ' + server.host + ':' + server.port);
 		console.log('Core Version: ' + res.core_version);

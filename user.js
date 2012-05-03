@@ -12,7 +12,7 @@ var user = function(state, finish) {
 		}
 	}
 
-	lf.query('/member', {'member_id': state.user_id()}, function(res) {
+	lf.query('/member', {'member_id': state.user_id()}, state, function(res) {
 		lf_user = res.result[0];
 		var date = new Date(lf_user.birthday);
 		state.context.user = {
@@ -35,10 +35,10 @@ var user = function(state, finish) {
 		check();
 	} );
 
-	lf.query('/privilege', {'member_id': state.user_id()}, function(priv_res) {
+	lf.query('/privilege', {'member_id': state.user_id()}, state, function(priv_res) {
 		unit_count = priv_res.result.length;
 		for(var i = 0; i < unit_count; i++) {
-			lf.query('/unit', {'unit_id': priv_res.result[i].unit_id}, function(unit_res) {
+			lf.query('/unit', {'unit_id': priv_res.result[i].unit_id}, state, function(unit_res) {
 				state.context.user.units.push({'name': unit_res.result[0].name});
 				check();
 			});

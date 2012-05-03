@@ -16,7 +16,7 @@ var delegations = function(state, render) {
 	lf.query('/delegation', {
 		'member_id': state.user_id(),
 		'direction': 'out'
-	}, function(res) {
+	}, state, function(res) {
 		var links = res.result;
 		var i, resolved = 0;
 		var resolved_delegations = [];
@@ -26,7 +26,7 @@ var delegations = function(state, render) {
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
 				console.log('Query trustee name: ' + links[i].trustee_id);
-				lf.query('/member', {'member_id': links[i].trustee_id, 'session_key': state.session_key()}, function(res) {
+				lf.query('/member', {'member_id': links[i].trustee_id }, state, function(res) {
 					var delegate = res.result[0];
 					console.log(JSON.stringify(delegate));
 
@@ -39,9 +39,8 @@ var delegations = function(state, render) {
 					// get last action of user
 					lf.query('/vote', {'member_id': delegate.id,
 					                   'issue_state': 'finished_with_winner,finished_without_winner',
-					                   'issue_closed_after': delegate.last_activity,
-					                   'session_key': state.session_key()
-					                  }, function(res) {
+					                   'issue_closed_after': delegate.last_activity
+					                  }, state, function(res) {
 						if(res.res && res.res.length > 0) {
 							// TODO sort these properly instead of taking an arbitrary one
 							vote = res.res[0];
@@ -50,7 +49,7 @@ var delegations = function(state, render) {
 							} else {
 								info_obj.action = 'against';
 							}
-							lfapi.query('/initiative', {'initiative_id': vote.initiative_id}, function(res) {
+							lfapi.query('/initiative', {'initiative_id': vote.initiative_id}, state, function(res) {
 								info_obj.title = res.res[0].name;
 								resolved_delegations.push(info_obj);
 								console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
@@ -112,17 +111,17 @@ var areas = function(state, render) {
 		}
 	}
 
-	lf.query('/unit', {}, function(res) {
+	lf.query('/unit', {}, state, function(res) {
 		units = res.result;
 		finish();
 	});
 
-	lf.query('/area', {}, function(res) {
+	lf.query('/area', {}, state, function(res) {
 		areas = res.result;
 		finish();
 	});
 
-	lf.query('/membership', {'member_id': state.user_id()}, function(res) {
+	lf.query('/membership', {'member_id': state.user_id()}, state, function(res) {
 		memberships = res.result;
 		finish();
 	});
@@ -220,7 +219,7 @@ var news = function(state, render) {
 	// 1. get issues with issue_state =  finished_with_winner
 	// 2. Select initiative closed last (we only got ones with winners -> end of voting time)
 	// 3. get winner of that issue
-	lf.query('/issue', {'issue_state': 'finished_with_winner'}, function(res) {
+	lf.query('/issue', {'issue_state': 'finished_with_winner'}, state, function(res) {
 		var i;
 		var issues = res.result;
 		var last_timestamp = 0;
@@ -246,18 +245,18 @@ var news = function(state, render) {
 			votes = false;
 			finish();
 		} else {
-			lf.query('/initiative', {'initiative_winner': 1, 'issue_id': last_issue.id}, function(res) {
+			lf.query('/initiative', {'initiative_winner': 1, 'issue_id': last_issue.id}, state, function(res) {
 				var i;
 				lastBallot = res.result[0];
 				lastBallot.pages = issues.length;
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
-				lf.query('/vote', {'initiative_id': lastBallot.id}, function(res) {
+				lf.query('/vote', {'initiative_id': lastBallot.id}, state, function(res) {
 					votes = res.result || false;
 					console.log('Vote: ' + JSON.stringify(votes));
 					finish();
 				});
 			});
-			lf.query('/voter', {'issue_id': last_issue.id}, function(res) {
+			lf.query('/voter', {'issue_id': last_issue.id}, state, function(res) {
 				voters = res.result || false;
 				console.log('Voter: ' + JSON.stringify(voters));
 				finish();
@@ -290,7 +289,7 @@ var news = function(state, render) {
 							var oldest_ini = initiatives[oldest_i];
 							var supporters = oldest_ini.satisfied_supporter_count;
 							var potentials = oldest_ini.supporter_count - oldest_ini.satisfied_supporter_count;
-							lf.query('/issue', {'id': oldest_ini.issue_id}, function(res) {
+							lf.query('/issue', {'id': oldest_ini.issue_id}, state, function(res) {
 								var issue = res.result[0];
 
 								var policy, unit;
@@ -343,7 +342,7 @@ var news = function(state, render) {
 							'issue_state': 'admission',
 							'initiative_supporter_count_below': Math.ceil(quorum),
 							'initiative_supporter_count_above': Math.floor(0.8 * quorum)
-						}, function(res) {
+						}, state, function(res) {
 							if(res.result) {
 								initiatives = initiatives.concat(res.result);
 							}
@@ -363,13 +362,13 @@ var news = function(state, render) {
 		};
 	}();
 	
-	lf.query('/policy', {}, function(res) {
+	lf.query('/policy', {}, state, function(res) {
 		quorumHelper.setPolicies(res.result || false);
 	});
-	lf.query('/unit', {}, function(res) {
+	lf.query('/unit', {}, state, function(res) {
 		quorumHelper.setUnits(res.result || false);
 	});
-	lf.query('/member', {'member_id': state.user_id(), 'session_key': state.session_key()}, function(res) {
+	lf.query('/member', {'member_id': state.user_id() }, state, function(res) {
 		quorumHelper.setLastActivity(res.result[0].last_activity || false);
 	});
 };
@@ -512,7 +511,7 @@ var inis = function(state, render) {
 	}
 
 	// get last events
- 	lf.query('/event', {}, function(res) {
+ 	lf.query('/event', {}, state, function(res) {
 		// calculate number of pages
 		var foundissues = [];
 		var foundissue = false;
@@ -558,25 +557,25 @@ var inis = function(state, render) {
 				continue;
 			}
 			// get issue for event
-			lf.query('/issue', {'issue_id': res.result[i].issue_id}, function(issue_res) {
+			lf.query('/issue', {'issue_id': res.result[i].issue_id}, state, function(issue_res) {
 				issues.push(issue_res.result[0]);
 				// get area for issue
-				lf.query('/area', {'area_id': issue_res.result[0].area_id}, function(area_res) {
+				lf.query('/area', {'area_id': issue_res.result[0].area_id}, state, function(area_res) {
 					areas.push(area_res.result[0]);
 					// get unit for area
-					lf.query('/unit', {'unit_id': area_res.result[0].unit_id}, function(unit_res) {
+					lf.query('/unit', {'unit_id': area_res.result[0].unit_id}, state, function(unit_res) {
 						units.push(unit_res.result[0]);						
 						finish();
 					});
 					finish();
 				});
 				// get policy for issue
-				lf.query('/policy', {'policy_id': issue_res.result[0].policy_id}, function(pol_res) {
+				lf.query('/policy', {'policy_id': issue_res.result[0].policy_id}, state, function(pol_res) {
 					policies.push(pol_res.result[0]);
 					finish();
 				});
 				// get inis for issue
-				lf.query('/initiative', {'issue_id': issue_res.result[0].id}, function(ini_res) {
+				lf.query('/initiative', {'issue_id': issue_res.result[0].id}, state, function(ini_res) {
 					// get the leading ini
 					var found = false;
 					for(var j = 0; j < ini_res.result.length; j++) {

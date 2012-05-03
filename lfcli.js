@@ -21,7 +21,7 @@ var baseurl = {
 /**
  * Build up the request options for the given path.
  */
-var buildRequestOptions = function(path, args) {
+var buildRequestOptions = function(path, args, state) {
 	var options = {
 		host: baseurl.host,
 		port: baseurl.port
@@ -39,6 +39,9 @@ var buildRequestOptions = function(path, args) {
 		}
 	}
 	if(args) {
+		if(state && state.session_key()) {
+			args['session_key'] = state.session_key()
+		}
 		options.path += '?' + querystring.stringify(args);
 	}
 	return options;
@@ -54,8 +57,8 @@ var buildRequestOptions = function(path, args) {
  * @param handler The function to handle the JSON object returned by the API Server in response to the query.
  * @return The ClientResponseObject given by http(s).request.
  */
-exports.query = function(path, args, handler) {
-	var options = buildRequestOptions(path, args);
+exports.query = function(path, args, state, handler) {
+	var options = buildRequestOptions(path, args, state);
 
 	var extended_handler = function(res) {
 		if(res.statusCode != 200) {
@@ -97,8 +100,8 @@ exports.query = function(path, args, handler) {
  * @param handler The function to handle the JSON object returned by the API Server in response to the query.
  * @return The ClientResponseObject given by http(s).request.
  */
-exports.perform = function(path, args, handler) {
-	var options = buildRequestOptions(path);
+exports.perform = function(path, args, state, handler) {
+	var options = buildRequestOptions(path, state);
 	options.method = 'POST';
 
 	var extended_handler = function(res) {
