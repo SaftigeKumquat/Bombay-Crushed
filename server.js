@@ -12,6 +12,8 @@ var overview = require('./overview.js');
 
 var user = require('./user.js');
 
+var inis = require('./inis.js');
+
 var showTopics = function(state) {
 	var ctx = state.context;
 	ctx.meta.currentpage = "topics";
