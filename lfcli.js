@@ -77,6 +77,9 @@ exports.query = function(path, args, state, handler) {
 			// TODO handle parsing errors
 			var answer = JSON.parse(body);
 			if(!answer.status || answer.status !== 'ok') {
+				if(answer.status && answer.status === 'forbidden') {
+					state.sendToLogin();
+				}
 				console.warn('STATUS: ' + answer.status + ' - Error String: "' + answer.error + '" - Query was: ' + path + ' ' + JSON.stringify(args));
 			}
 			// TODO different handler in case of errors
@@ -121,6 +124,9 @@ exports.perform = function(path, args, state, handler) {
 			// TODO handle parsing errors
 			var answer = JSON.parse(body);
 			if(!answer.status || answer.status !== 'ok') {
+				if(answer.status && answer.status === 'forbidden') {
+					state.sendToLogin();
+				}
 				console.warn('STATUS: ' + answer.status + ' - Error String: "' + answer.error + '" - Query was: ' + path + ' ' + JSON.stringify(args));
 			}
 			// TODO different handler in case of errors
