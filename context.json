@@ -150,7 +150,8 @@
 		"graph": { "title": "Erneuerbare Energien-Gesetz II - Initiative des Bundes zur Förderung der regenerativen Energien",
 			"supporter": 232, "potsupporter": 180,
 			"uninterested": 400, "quorum": 5, "support": 40,
-			"potential": 10, "uninvolved": 50 }
+			"potential": 10, "uninvolved": 50 },
+		"activepage": 1, "pages": 2
 	},
 	"units": [
 		{ "id": "1", "name": "Bund", "description": "Bundespolitik", "areas": [
