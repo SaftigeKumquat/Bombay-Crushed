@@ -1,12 +1,14 @@
 var lf = require('./lfcli.js');
 
 var user = function(state, finish) {
-	var unit_count = 0;
+	var unit_count = -1;
+	var units = [];
 
 	var check = function() {
-		console.log('TEST: ' + JSON.stringify(state.context.user.units) + ', unit_count: ' + unit_count);
-		if(state.context.user !== undefined && state.context.user.units.length === unit_count
-		&& unit_count !== 0) {
+		console.log('TEST: ' + JSON.stringify(units) + ', unit_count: ' + unit_count);
+		if(state.context.user !== undefined && units.length === unit_count
+		&& unit_count !== -1) {
+			state.context.user.units = units;
 			console.log('SUCCESS');
 			finish();
 		}
@@ -29,7 +31,6 @@ var user = function(state, finish) {
 			'statement': lf_user.statement,
 			'offices': lf_user.internal_posts,
 			'memberships': lf_user.external_memberships,
-			'units': [ ]
 		};
 
 		check();
@@ -39,7 +40,7 @@ var user = function(state, finish) {
 		unit_count = priv_res.result.length;
 		for(var i = 0; i < unit_count; i++) {
 			lf.query('/unit', {'unit_id': priv_res.result[i].unit_id}, state, function(unit_res) {
-				state.context.user.units.push({'name': unit_res.result[0].name});
+				units.push({'name': unit_res.result[0].name});
 				check();
 			});
 		}
