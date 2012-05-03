@@ -6,6 +6,8 @@ var ejs = require('ejs')
   , headtpl
   , maintpl
   , footertpl;
+exports.tpls = new Array(); // Cache for templates
+exports.fbctx = undefined; // Fallback context
 
 var texts;
 
@@ -57,46 +59,67 @@ exports.render = function(state, template) {
 	//
 	// READ CONTEXT
 	//
-	fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
-		if(err) {
-			state.fail(err);
-		}
+	if (exports.fbctx === undefined) {
+		fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
+			if(err) {
+				state.fail(err);
+			}
 
-		fallback_context = JSON.parse(data);
+			fallback_context = JSON.parse(data);
+			exports.fbctx = fallback_context;
 
-		render();
-	} );
+			render();
+		} );
+	} else {
+		fallback_context = exports.fbctx;
+	}
 
 	//
 	// READ TEMPLATES
 	//
-	fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
-		if(err) {
-			state.fail(err);
-		}
+	if (exports.tpls['/templates/head.tpl'] === undefined) {
+		fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
+			if(err) {
+				state.fail(err);
+			}
 
-		headtpl = data;
+			headtpl = data;
+			exports.tpls['/templates/head.tpl'] = data;
 
-		render();
-	} );
+			render();
+		} );
+	} else {
+		headtpl = exports.tpls['/templates/head.tpl'];
+	}
 
-	fs.readFile(__dirname + '/templates' + template, 'utf8', function(err, data) {
-		if(err) {
-			state.fail(err);
-		}
+	if (exports.tpls['/templates' + template] === undefined) {
+		fs.readFile(__dirname + '/templates' + template, 'utf8', function(err, data) {
+			if(err) {
+				state.fail(err);
+			}
 
-		maintpl = data;
+			maintpl = data;
+			exports.tpls['/templates' + template] = data;
 
-		render();
-	} );
+			render();
+		} );
+	} else {
+		maintpl = exports.tpls['/templates' + template];
+	}
 
-	fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
-		if(err) {
-			state.fail(err);
-		}
+	if (exports.tpls['/templates/footer.tpl'] === undefined) {
+		fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
+			if(err) {
+				state.fail(err);
+			}
 
-		footertpl = data;
+			footertpl = data;
+			exports.tpls['/templates/footer.tpl'] = data;
 
-		render();
-	} );
+			render();
+		} );
+	} else {
+		footertpl = exports.tpls['/templates/footer.tpl'];
+	}
+	render();
 }
