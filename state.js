@@ -1,5 +1,6 @@
 var Cookies = require('cookies');
 var url = require('url');
+var ejs = require('./ejs.js')
 
 module.exports = function(serverError) {
 	return {
