@@ -79,7 +79,7 @@ exports.render = function(state, template) {
 
 			console.log('Served ' + state.request.url);
 		} else {
-			state.fail(err);
+			state.fail('No template found for the page you requested.', 500);
 		}
 	}
 
@@ -99,4 +99,4 @@ function caching(tpl) {
 			tpls[tpl] = data;
 		} );
 	}
-};
+}
