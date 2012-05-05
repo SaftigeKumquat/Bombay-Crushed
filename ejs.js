@@ -2,12 +2,8 @@
 
 var ejs = require('ejs')
   , fs = require('fs')
-  , context
-  , headtpl
-  , maintpl
-  , footertpl;
-exports.tpls = new Array(); // Cache for templates
-exports.fbctx = undefined; // Fallback context
+  , tpls = new Array() // Cache for templates
+  , fallback_context; // Fallback context
 
 var texts;
 
@@ -20,19 +16,48 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
 	console.log('Finished parsing texts');
 } );
 
+//
+// READ CONTEXT
+//
+fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
+	if(err) {
+		state.fail(err);
+	}
+	fallback_context = JSON.parse(data);
+	console.log('Finished parsing fallback context');
+} );
+
+//
+// Get a list of templates and cache them.
+//
+fs.readdir(__dirname + '/templates/', function(err, files) {
+	if (err) {
+		throw err;
+	}
+	console.log('Found ' + files.length + ' template files:');
+	for (f in files) {
+		try {
+			caching('/templates/' + files[f]);
+			console.log(' -- ' + files[f]);
+		} catch (ignore) {}
+	}
+} );
+
 /**
  * @todo requires an additional context variable
  */
 exports.render = function(state, template) {
-	var fallback_context, headtpl, maintpl, footertpl;
+	var headtpl = '/templates/head.tpl';
+	var maintpl = '/templates' + template;
+	var footertpl = '/templates/footer.tpl';
 
 	/**
 	* Render the templates once all data and
 	* files are available.
 	*/
 	var render = function() {
-		if(fallback_context && headtpl && maintpl && footertpl) {
-			context = state.context;
+		if(tpls[headtpl] && tpls[maintpl] && tpls[footertpl]) {
+			var context = state.context;
 			for(key in fallback_context) {
 				if( ! (key in context) ) {
 					context[key] = fallback_context[key];
@@ -42,9 +67,9 @@ exports.render = function(state, template) {
 
 			context.texts = texts;
 
-			var head = ejs.render(headtpl, context);
-			var main = ejs.render(maintpl, context);
-			var footer = ejs.render(footertpl, context);
+			var head = ejs.render(tpls[headtpl], context);
+			var main = ejs.render(tpls[maintpl], context);
+			var footer = ejs.render(tpls[footertpl], context);
 
 			var result = state.result;
 			result.write(head);
@@ -53,73 +78,25 @@ exports.render = function(state, template) {
 			result.end();
 
 			console.log('Served ' + state.request.url);
+		} else {
+			state.fail('No template found for the page you requested.', 500);
 		}
 	}
 
-	//
-	// READ CONTEXT
-	//
-	if (exports.fbctx === undefined) {
-		fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
-			if(err) {
-				state.fail(err);
-			}
-
-			fallback_context = JSON.parse(data);
-			exports.fbctx = fallback_context;
-
-			render();
-		} );
-	} else {
-		fallback_context = exports.fbctx;
-	}
-
-	//
-	// READ TEMPLATES
-	//
-	if (exports.tpls['/templates/head.tpl'] === undefined) {
-		fs.readFile(__dirname + '/templates/head.tpl', 'utf8', function(err, data) {
-			if(err) {
-				state.fail(err);
-			}
-
-			headtpl = data;
-			exports.tpls['/templates/head.tpl'] = data;
-
-			render();
-		} );
-	} else {
-		headtpl = exports.tpls['/templates/head.tpl'];
-	}
-
-	if (exports.tpls['/templates' + template] === undefined) {
-		fs.readFile(__dirname + '/templates' + template, 'utf8', function(err, data) {
-			if(err) {
-				state.fail(err);
-			}
-
-			maintpl = data;
-			exports.tpls['/templates' + template] = data;
-
-			render();
-		} );
-	} else {
-		maintpl = exports.tpls['/templates' + template];
-	}
-
-	if (exports.tpls['/templates/footer.tpl'] === undefined) {
-		fs.readFile(__dirname + '/templates/footer.tpl', 'utf8', function(err, data) {
-			if(err) {
-				state.fail(err);
-			}
-
-			footertpl = data;
-			exports.tpls['/templates/footer.tpl'] = data;
-
-			render();
-		} );
-	} else {
-		footertpl = exports.tpls['/templates/footer.tpl'];
-	}
 	render();
+}
+
+/**
+ * Read a template and store it in the cache.
+ * @param tpl The path to the template (without __dirname), starting with '/'.
+ */
+function caching(tpl) {
+	if (tpls[tpl] === undefined) {
+		fs.readFile(__dirname + tpl, 'utf8', function(err, data) {
+			if (err) {
+				throw err;
+			}
+			tpls[tpl] = data;
+		} );
+	}
 }
