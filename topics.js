@@ -28,6 +28,7 @@ var topics = function(state, render) {
 						'description': units[i].description,
 						'areas': []
 					};
+					// if description is empty, at least show the name
 					if(units[i].description === "") {
 						builtUnit.description = builtUnit.name;
 					}
