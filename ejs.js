@@ -3,9 +3,8 @@
 var ejs = require('ejs')
   , fs = require('fs')
   , tpls = new Array() // Cache for templates
-  , fallback_context; // Fallback context
-
-var texts;
+  , fallback_context // Fallback context
+  , texts;
 
 fs.readFile(__dirname + '/texts.json', function(err, data) {
 	if(err) {
@@ -21,7 +20,7 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
 //
 fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 	if(err) {
-		state.fail(err);
+		throw err;
 	}
 	fallback_context = JSON.parse(data);
 	console.log('Finished parsing fallback context');
@@ -55,35 +54,31 @@ exports.render = function(state, template) {
 	* Render the templates once all data and
 	* files are available.
 	*/
-	var render = function() {
-		if(tpls[headtpl] && tpls[maintpl] && tpls[footertpl]) {
-			var context = state.context;
-			for(key in fallback_context) {
-				if( ! (key in context) ) {
-					context[key] = fallback_context[key];
-					console.log("Fell back for " + key);
-				}
+	if(tpls[headtpl] && tpls[maintpl] && tpls[footertpl]) {
+		var context = state.context;
+		for(key in fallback_context) {
+			if( ! (key in context) ) {
+				context[key] = fallback_context[key];
+				console.log("Fell back for " + key);
 			}
-
-			context.texts = texts;
-
-			var head = ejs.render(tpls[headtpl], context);
-			var main = ejs.render(tpls[maintpl], context);
-			var footer = ejs.render(tpls[footertpl], context);
-
-			var result = state.result;
-			result.write(head);
-			result.write(main);
-			result.write(footer);
-			result.end();
-
-			console.log('Served ' + state.request.url);
-		} else {
-			state.fail('No template found for the page you requested.', 500);
 		}
-	}
 
-	render();
+		context.texts = texts;
+
+		var head = ejs.render(tpls[headtpl], context);
+		var main = ejs.render(tpls[maintpl], context);
+		var footer = ejs.render(tpls[footertpl], context);
+
+		var result = state.result;
+		result.write(head);
+		result.write(main);
+		result.write(footer);
+		result.end();
+
+		console.log('Served ' + state.request.url);
+	} else {
+		state.fail('No template found for the requested page.', 500);
+	}
 }
 
 /**
@@ -97,6 +92,6 @@ function caching(tpl) {
 				throw err;
 			}
 			tpls[tpl] = data;
-		} );
+		});
 	}
 }
