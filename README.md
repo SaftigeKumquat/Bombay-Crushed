@@ -1,14 +1,14 @@
-Bombay Crushed Prototype
-========================
+Bombay Crushed
+==============
 
-This is a collection of prototypical code for [Bombay Crushed](https://saftigekumquat.wordpress.com/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) currently developed by [Saftige Kumquat](https://saftigekumquat.wordpress.com/).
+This is the public repository for [Bombay Crushed](http://saftigekumquat.org/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) currently developed by [Saftige Kumquat](http://saftigekumquat.org/).
 
 Where to start?
 ---------------
 
 `server.js` starts a server listening on [port 8080](http://localhost:8080) serving Bombay Crushed.
 
-`ejs.cli.js` allows testing templates on the command line.
+`ejscli.js` allows testing templates on the command line.
 
 `apicli.js` contains code that, when executed via [node.js](http://nodejs.org/), connects to the [Liquid Feedback API Test Server](http://apitest.liquidfeedback.org:25520/) and pulls some information.
 

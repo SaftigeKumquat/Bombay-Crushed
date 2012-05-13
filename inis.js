@@ -184,23 +184,17 @@ var inis = function(state, render) {
 				continue;
 			}
 			// get issue for event
-			lf.query('/issue', {'issue_id': res.result[i].issue_id}, state, function(issue_res) {
+			// only embed unit, area und policy for the issue
+			// doing this in the event query itself would cause the API to embed ALL data
+			lf.query('/issue', {'issue_id': res.result[i].issue_id, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(issue_res) {
 				issues.push(issue_res.result[0]);
 				// get area for issue
-				lf.query('/area', {'area_id': issue_res.result[0].area_id}, state, function(area_res) {
-					areas.push(area_res.result[0]);
-					// get unit for area
-					lf.query('/unit', {'unit_id': area_res.result[0].unit_id}, state, function(unit_res) {
-						units.push(unit_res.result[0]);						
-						finish();
-					});
-					finish();
-				});
+				area = issue_res.areas[issue_res.result[0].area_id];
+				areas.push(area);
+				// get unit for area
+				units.push(issue_res.units[area.unit_id]);
 				// get policy for issue
-				lf.query('/policy', {'policy_id': issue_res.result[0].policy_id}, state, function(pol_res) {
-					policies.push(pol_res.result[0]);
-					finish();
-				});
+				policies.push(issue_res.policies[issue_res.result[0].policy_id]);
 				// get inis for issue
 				lf.query('/initiative', {'issue_id': issue_res.result[0].id}, state, function(ini_res) {
 					// get the leading ini

@@ -14,10 +14,24 @@ var user = require('./user.js');
 
 var inis = require('./inis.js');
 
+var topics = require('./topics.js');
+
 var showTopics = function(state) {
-	var ctx = state.context;
-	ctx.meta.currentpage = "topics";
-	ejs.render(state, '/topics.tpl');
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "topics";
+		if(ctx.units !== undefined) {
+			ejs.render(state, '/topics.tpl');
+		}
+	}
+
+	topics.get(state, finish);
 }
 
 var showProfile = function(state) {
