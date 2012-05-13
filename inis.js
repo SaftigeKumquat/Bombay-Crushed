@@ -184,6 +184,8 @@ var inis = function(state, render) {
 				continue;
 			}
 			// get issue for event
+			// only embed unit, area und policy for the issue
+			// doing this in the event query itself would cause the API to embed ALL data
 			lf.query('/issue', {'issue_id': res.result[i].issue_id, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(issue_res) {
 				issues.push(issue_res.result[0]);
 				// get area for issue
