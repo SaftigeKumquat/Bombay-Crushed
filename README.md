@@ -1,7 +1,7 @@
-Bombay Crushed Prototype
-========================
+Bombay Crushed
+==============
 
-This is a collection of prototypical code for [Bombay Crushed](https://saftigekumquat.wordpress.com/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) currently developed by [Saftige Kumquat](https://saftigekumquat.wordpress.com/).
+This is the public repository for [Bombay Crushed](http://saftigekumquat.org/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) currently developed by [Saftige Kumquat](http://saftigekumquat.org/).
 
 Where to start?
 ---------------
