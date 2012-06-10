@@ -20,6 +20,11 @@ var baseurl = {
 
 /**
  * Build up the request options for the given path.
+ *
+ * @param path The query to perform as defined in http://dev.liquidfeedback.org/trac/lf/wiki/API.
+ * @param args A dictionary of query arguments
+ * @param state The current HTTP requests state object.
+ *              Used for session information
  */
 var buildRequestOptions = function(path, args, state) {
 	var options = {
@@ -53,7 +58,11 @@ var buildRequestOptions = function(path, args, state) {
  * The function will automaticall check for HTTP-Errors, parse the JSON returned by the server and
  * invoke the given handler function.
  *
+ * In case of insufficient priviledges this function will trigger a redirection to the login page.
+ *
  * @param path The query to perform as defined in http://dev.liquidfeedback.org/trac/lf/wiki/API.
+ * @param args Any arguments required to perform the query (JS Object as Key-Value-Map)
+ * @param state The current HTTP requests state object. Used for session and error handling.
  * @param handler The function to handle the JSON object returned by the API Server in response to the query.
  * @return The ClientResponseObject given by http(s).request.
  */
@@ -98,8 +107,11 @@ exports.query = function(path, args, state, handler) {
  * The function will automaticall check for HTTP-Errors, parse the JSON returned by the server and
  * invoke the given handler function.
  *
- * @param path The query to perform as defined in http://dev.liquidfeedback.org/trac/lf/wiki/API.
+ * In case of insufficient priviledges this function will trigger a redirection to the login page.
+ *
+ * @param path The action to perform as defined in http://dev.liquidfeedback.org/trac/lf/wiki/API.
  * @param args Any arguments required to perform the actions (JS Object as Key-Value-Map)
+ * @param state The current HTTP requests state object. Used for session and error handling.
  * @param handler The function to handle the JSON object returned by the API Server in response to the query.
  * @return The ClientResponseObject given by http(s).request.
  */

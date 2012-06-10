@@ -1,21 +1,39 @@
 #!/usr/bin/env node
 
+/** @file
+ * The Bombay Crushed server.
+ *
+ * Provides an HTTP server listening on the devices configured in
+ * `config.json` or `config.default.json` that serves the Bombay
+ * Crushed UI.
+ *
+ * This server can also serve the static parts of the interface.
+ *
+ * @todo Add an option to prefix static parts to a different URL
+ * allowing to serve them using a traditional webserver.
+ */
+
 var http = require('http');
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 var fs = require('fs');
 
+// load configuration
 var config = require('./config.js');
 
+// load modules for building different parts of the ui
 var overview = require('./overview.js');
-
 var user = require('./user.js');
-
 var inis = require('./inis.js');
-
 var topics = require('./topics.js');
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * Topics page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
 var showTopics = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -34,6 +52,12 @@ var showTopics = function(state) {
 	topics.get(state, finish);
 }
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * user profile page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
 var showProfile = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -52,6 +76,12 @@ var showProfile = function(state) {
 	user.get(state, finish);
 }
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * user contacts page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
 var showContacts = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -64,6 +94,12 @@ var showContacts = function(state) {
 	ejs.render(state, '/contacts.tpl');
 }
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * timeline page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
 var showTimeline = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -82,12 +118,22 @@ var showTimeline = function(state) {
 	inis(state, finish);
 }
 
+/**
+ * Sends a 404 error page to the browser
+ *
+ * @state The state object representing the current HTTP-Request
+ */
 var invalidURL = function(state) {
 	var res = state.result;
 	res.writeHead(404, {'Content-Type': 'text/plain'});
 	res.end('Kuckst du woanders!\n');
 }
 
+/**
+ * Sends a 5XX error page to the browser.
+ *
+ * @state The state object representing the current HTTP-Request
+ */
 var serverError = function(state, logmessage, errorcode) {
 	if(!errorcode) {
 		errorcode = 500;
@@ -101,6 +147,12 @@ var serverError = function(state, logmessage, errorcode) {
 	res.end('I feel blue. Guess I\'ll go swimming!\n');
 }
 
+/**
+ * Create a new session with the lfapi server for the current user or
+ * send user back to login page.
+ *
+ * @param state State object for the current HTTP-Request
+ */
 var performLogin = function(state) {
 	// get form data
 	if(state.request.method !== 'POST') {
@@ -128,6 +180,11 @@ var performLogin = function(state) {
 	});
 }
 
+/**
+ * Kill all session info and send the user back to the overview page.
+ *
+ * @param state State object for the current HTTP-Request
+ */
 var performLogout = function(state) {
 	// *nom* *nom*
 	state.session_key(null);
@@ -136,6 +193,11 @@ var performLogout = function(state) {
 	overview.show(state);
 }
 
+/**
+ * Server a static file from the filesystem to the browser.
+ *
+ * @param state State object for the current HTTP-Request
+ */
 var serveStatic = function(state) {
 	// TODO guess content type
 
@@ -153,6 +215,14 @@ var serveStatic = function(state) {
 	});
 }
 
+/**
+ * Serve a user picture from LQFB to the browser.
+ *
+ * The id of the user who's picture is to be server is taken
+ * from the HTTP request url.
+ *
+ * @param state State object for the current HTTP-Request
+ */
 var sendPicture = function(state) {
 	var user_id = state.request.url.slice('/picbig/'.length);
 	console.log('Retrieving portrait for user ' + user_id);
@@ -174,6 +244,14 @@ var sendPicture = function(state) {
 	});
 }
 
+/**
+ * Serve a user avatar from LQFB to the browser.
+ *
+ * The id of the user who's avatar is to be server is taken
+ * from the HTTP request url.
+ *
+ * @param state State object for the current HTTP-Request
+ */
 var sendAvatar = function(state) {
 	var user_id = state.request.url.slice('/avatar/'.length);
 	console.log('Retrieving avatar for user ' + user_id);
@@ -197,6 +275,8 @@ var sendAvatar = function(state) {
 
 /**
  * Mapping from URLs to functions
+ *
+ * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var url_mapping = {
 	'/': overview.show,
@@ -213,6 +293,8 @@ var url_mapping = {
 
 /**
  * Mapping from patterns to functions
+ *
+ * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var pattern_mapping = [
 	{ pattern: '/picbig/', mapped: sendPicture },
@@ -226,6 +308,8 @@ var pattern_mapping = [
 
 /**
  * Function to Map URLs to functions
+ *
+ * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 mapU2F = function(state, url_mappings, pattern_mappings) {
 	// Forward decleration of variables as recommended by Crockford
@@ -263,8 +347,12 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 	}
 }
 
+// get the state object creation function
 var State = require('./state.js')(serverError);
 
+/**
+ * the main-function of the server
+ */
 server = function() {
 	// make sure uncaught exceptions don't kill the server
 	process.on('uncaughtException', function (err) {
@@ -274,6 +362,7 @@ server = function() {
 		console.error('ERROR: Exception not handled properly: ' + err);
 	});
 
+	// check connection to API server
 	lf.query('/info', {}, null, function(res) {
 		server = lf.getBaseURL();
 		console.log('Connected to ' + server.host + ':' + server.port);
@@ -281,8 +370,11 @@ server = function() {
 		console.log('API Version:  ' + res.api_version);
 	});
 
+	// create the HTTP-Server
 	var server = http.createServer(function (req, res) {
+		// create the state object for this request
 		var state = State.create(req, res);
+		// have the proper handler invoked for the url of this request
 		mapU2F(state, url_mapping, pattern_mapping);
 	});
 	if(config.listen.host) {
@@ -295,4 +387,5 @@ server = function() {
 
 };
 
+// invoke main function
 server();

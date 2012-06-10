@@ -8,6 +8,8 @@ Where to start?
 
 `server.js` starts a server listening on [port 8080](http://localhost:8080) serving Bombay Crushed.
 
+`config.default.json` contains default configuration values for `server.js`. Override values by setting them in a new file called `config.json`.
+
 `ejscli.js` allows testing templates on the command line.
 
 `apicli.js` contains code that, when executed via [node.js](http://nodejs.org/), connects to the [Liquid Feedback API Test Server](http://apitest.liquidfeedback.org:25520/) and pulls some information.

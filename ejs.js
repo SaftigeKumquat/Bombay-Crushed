@@ -1,5 +1,13 @@
 #!/usr/bin/node
 
+/** @file
+ * Template rendering logic
+ *
+ * This file contains the functionality required to render a template from the filesystem
+ * into the output stream of an HTTP request. The relevant interface function to be used
+ * from the outside is render.
+ */
+
 var ejs = require('ejs')
   , fs = require('fs')
   , tpls = new Array() // Cache for templates
@@ -43,7 +51,17 @@ fs.readdir(__dirname + '/templates/', function(err, files) {
 } );
 
 /**
- * @todo requires an additional context variable
+ * Renders the given template.
+ *
+ * All information in the template will be filled from the
+ * given state object. In case of errors the handlers of the
+ * state object will be invoked.
+ *
+ * @param state A state object of the current HTTP Request
+ * @param template Name of the template to render
+ *
+ * @todo Somewhere document all the values expected on the state
+ * object, e.g. state.context.meta.currentpage.
  */
 exports.render = function(state, template) {
 	var headtpl = '/templates/head.tpl';

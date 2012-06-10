@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/** @file
+ * A simple CLI test utility for `ejs.js`.
+ *
+ * By default will render the template `main.js` to stdout.
+ * Other template names can be passed as the first program argument.
+ */
+
 var ejs = require('./ejs.js');
 
 var resultWriter = {

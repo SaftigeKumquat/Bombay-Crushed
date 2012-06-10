@@ -1,3 +1,11 @@
+/**
+ * HTTP-Request-Response state handling.
+ *
+ * This module implements the state object which holds the data for an
+ * HTTP-Request-Response cycle as well as utility function to work on
+ * that cycle and the corresponding session.
+ */
+
 var Cookies = require('cookies');
 var url = require('url');
 var ejs = require('./ejs.js')
@@ -6,8 +14,22 @@ module.exports = function(serverError) {
 	return {
 		/**
 		 * Create an object that keeps the state during a full request / response
-		 * cycle. This state will not be kept between request. It's purpose is to
+		 * cycle.
+		 *
+		 * This state will not be kept between request. It's purpose is to
 		 * bundle all data collected while building the response to one request.
+		 * In addition it allows easy access to the HTTP session by wrapping
+		 * the cookies.
+		 *
+		 * The important entries of the created object are:
+		 *  * `request`: The HTTP request object
+		 *  * `response`: The HTTP response object
+		 *  * `cookies`: Access to the cookie jar via http://search.npmjs.org/#/cookies
+		 *  * `sendToLogin(message)`: Redirect the cycle to the login screen
+		 *  * `context`: POD into which to store the data for the rendering process.
+		 *  * `url`: The URL of the current request
+		 *  * `session_key(key): Convenient access to the current session key. Leave key undefined to get.
+		 *  * `user_id(id): Convenient access to the current user id. Leave id undefined to get.
 		 */
 		'create': function(req, res) {
 			var state = {

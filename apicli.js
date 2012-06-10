@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/** @file
+ * A command line utility to test the API and the lfcli implementation.
+ */
+
 // Load modules
 var lfcli = require('./lfcli.js');
 

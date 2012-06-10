@@ -1,5 +1,18 @@
+/** @file
+ * The logic required to build a table of initiatives, e.g. as used in the overview page.
+ */
+
 var lf = require('./lfcli.js');
 
+/**
+ * Retrieve all initiatives as required to build the table on the overview page.
+ * The resulting data is stored in `state.context.initable`.
+ * Parameters of the current HTTP-Query used:
+ *  * page: Pagination of the table
+ *
+ * @param state State of the current HTTP-Request
+ * @param render The callback function to notify once data collection is finished
+ */
 var inis = function(state, render) {
 	var events = [];
 	var issues = [];
@@ -18,7 +31,13 @@ var inis = function(state, render) {
 		activepage = 0;
 		state.context.initable.activepage = 1;
 	}
- 
+
+	/**
+	 * Internal data collection callback.
+	 *
+	 * Called every time a data collection function returns. If all data has been collected
+	 * finalizes data processing and calls external callback.
+	 */
 	var finish = function() {
 		builtInis = [];
 		if(events.length === issues.length
@@ -222,5 +241,9 @@ var inis = function(state, render) {
 		finish();
 	});
 };
+
+/*
+ * exported functions of this module
+ */
 
 module.exports = inis;

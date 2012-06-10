@@ -1,12 +1,30 @@
+/** @file
+ * Functionality required for building the overview page
+ *
+ * Only function to use externally is show, which will trigger
+ * data collection for the overview page and finally cause rendering it.
+ */
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 
 var user = require('./user.js');
 var inis = require('./inis.js');
 
+/**
+ * Query all data required for the delegations box on the overview page.
+ * 
+ * The resolved delegations are stored in `state.context.delegations`.
+ *
+ * @param state The state object of the current HTTP-Request
+ * @param render The callback to notify once all data has been retrieved.
+ */
 var delegations = function(state, render) {
 	var delegations;
 
+	/**
+	 * Wrapper for the external callback that stores the results into
+	 * the state object before invoking the external callback.
+	 */
 	var finish = function() {
 		if(delegations !== undefined) {
 			state.context.delegations = delegations;
@@ -14,6 +32,7 @@ var delegations = function(state, render) {
 		}
 	}
 
+	// Query all outgoing delegations of the current user
 	lf.query('/delegation', {
 		'member_id': state.user_id(),
 		'direction': 'out'
@@ -24,6 +43,7 @@ var delegations = function(state, render) {
 
 		console.log('DELEGATIONS: ' + JSON.stringify(links));
 
+		// follow the delegations and resolve the user information
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
 				console.log('Query trustee name: ' + links[i].trustee_id);
@@ -50,10 +70,12 @@ var delegations = function(state, render) {
 							} else {
 								info_obj.action = 'against';
 							}
+							// get information about the initiative the last action was performed on
 							lfapi.query('/initiative', {'initiative_id': vote.initiative_id}, state, function(res) {
 								info_obj.title = res.res[0].name;
 								resolved_delegations.push(info_obj);
 								console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+								// if all delegations have been handled finish it up
 								if(resolved_delegations.length === links.length) {
 									delegations = resolved_delegations;
 									finish();
@@ -62,6 +84,7 @@ var delegations = function(state, render) {
 						} else {
 							resolved_delegations.push(info_obj);
 							console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+							// if all delegations have been handled finish it up
 							if(resolved_delegations.length === links.length) {
 								delegations = resolved_delegations;
 								finish();
@@ -77,12 +100,23 @@ var delegations = function(state, render) {
 	});
 };
 
+/**
+ * Get the list of areas including membership information.
+ *
+ * The result will be stored in `state.context.units`.
+ *
+ * @param state The state object of the current HTTP-Request
+ * @param render The external callback function to notify once the data has been collected.
+ */
 var areas = function(state, render) {
 	var units, areas, memberships;
 
 	// TODO areas and memberships
 
-	// data output
+	/**
+	 * Checks if all data has been fetched. If yes, convert to format required
+	 * by template engine, store in state and call external callback.
+	 */
 	var finish = function() {
 		var i, j, k;
 		// TODO this can be done more efficiently using hashes (objects)
@@ -112,26 +146,40 @@ var areas = function(state, render) {
 		}
 	}
 
+	// query all units
 	lf.query('/unit', {}, state, function(res) {
 		units = res.result;
 		finish();
 	});
 
+	// query all areas
 	lf.query('/area', {}, state, function(res) {
 		areas = res.result;
 		finish();
 	});
 
+	// query membership information
 	lf.query('/membership', {'member_id': state.user_id()}, state, function(res) {
 		memberships = res.result;
 		finish();
 	});
 }
 
-
+/**
+ * Query information required for the news block on the overview page.
+ *
+ * Stores its results in `state.context.news`.
+ *
+ * Parameters used from the HTTP-Query:
+ *  * newspage for pagination
+ *
+ * @param state The state object of the current HTTP request
+ * @param render The callback function to notify once the data is available.
+ */
 var news = function(state, render) {
 	var lastBallot, criticalQuorum, voters, votes, activepage;
 
+	// pagination or default page
 	if(state.url.query.newspage !== undefined) {
 		activepage = state.url.query.newspage - 1;
 	}
@@ -139,11 +187,15 @@ var news = function(state, render) {
 		activepage = 0;
 	}
 
-	// data output
+	/**
+	 * Checks if all data has been fetched. If yes, convert to format required
+	 * by template engine, store in state and call external callback.
+	 */
 	var finish = function() {
 		if(lastBallot !== undefined && criticalQuorum !== undefined && voters !== undefined && votes !== undefined) {
 			var news = {};
 
+			// handle pagination
 			if(state.url.query.newspage !== undefined) {
 				news.activepage = state.url.query.newspage;
 			}
@@ -160,6 +212,7 @@ var news = function(state, render) {
 					'againstdelegated': 0
 				};
 			} else {
+				// calculate pie-chart  data
 				var pVoters = lastBallot.positive_votes;
 				var nVoters = lastBallot.negative_votes;
 				var pDirect = 0, pIndirect = 0;
@@ -194,6 +247,7 @@ var news = function(state, render) {
 				news.pages = lastBallot.pages;
 			}
 
+			// handle critical quorum default
 			if(!criticalQuorum) {
 				news.graph = {
 					'title': 'Currently no initiative is close to the quorum',
@@ -209,6 +263,7 @@ var news = function(state, render) {
 				news.graph = criticalQuorum;
 			}
 
+			// notify caller
 			state.context.news = news;
 			render();
 		}
@@ -265,10 +320,16 @@ var news = function(state, render) {
 		}
 	});
 
-	// query critical Quorum
+	// object for qorum data collection
+	// if all required data has been collected format data for template
+	// and call news-function wide calback
 	quorumHelper = function() {
 		var policies, units, last_activity;
 
+		/**
+		 * Callback function used everytime data is stored in the object.
+		 * If all data is collected, process and call next level callback.
+		 */
 		var getIni = function() {
 			if(policies !== undefined && units !== undefined && last_activity !== undefined) {
 				var requests = 0, responses = 0, initiatives = [];
@@ -356,13 +417,15 @@ var news = function(state, render) {
 			}
 		};
 
+		// data setters with associated callback function
 		return {
 			'setPolicies': function(val) { policies = val, getIni() },
 			'setUnits': function(val) { units = val, getIni() },
 			'setLastActivity': function(val) { last_activity = val; console.log('LAST ACTIVITY: ' + last_activity); getIni() }
 		};
 	}();
-	
+
+	// run all the queries, results will be handled by helper object
 	lf.query('/policy', {}, state, function(res) {
 		quorumHelper.setPolicies(res.result || false);
 	});
@@ -374,7 +437,11 @@ var news = function(state, render) {
 	});
 };
 
-// Ok, not really an index, but works.
+/**
+ * Collect and render all data of the overview page
+ *
+ * @param state The HTTP-Request state object
+ */
 exports.show = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {

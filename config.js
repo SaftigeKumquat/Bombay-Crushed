@@ -1,5 +1,12 @@
 var fs = require('fs');
 
+/** @file
+ * Configuration file handling.
+ *
+ * Public API:
+ *  * `config`: Configuration object
+ */
+
 // read config
 var config = JSON.parse(fs.readFileSync('config.default.json'));
 try { // this does not necessarily exist
