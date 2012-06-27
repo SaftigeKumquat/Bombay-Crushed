@@ -109,7 +109,14 @@ var delegations = function(state, render) {
  * @param render The external callback function to notify once the data has been collected.
  */
 var areas = function(state, render) {
-	var units, areas, memberships;
+	/** array of area memberships */
+	var memberships;
+	/** units by id */
+	var units;
+	/** array of privileges */
+	var privs;
+	/** areas by id */
+	var areas;
 
 	// TODO areas and memberships
 
@@ -118,44 +125,59 @@ var areas = function(state, render) {
 	 * by template engine, store in state and call external callback.
 	 */
 	var finish = function() {
-		var i, j, k;
-		// TODO this can be done more efficiently using hashes (objects)
-		if(units !== undefined && areas !== undefined && memberships !== undefined) {
-			// TODO filter all units of which you cannot become a member
-			for(i = 0; i < units.length; i++) {
-				units[i].areas = [];
-			}
+		var unit_id, unit, area, i, k;
+		/** array of units to be passed to the ui */
+		var ui_units = [];
 
+		// TODO this can be done more efficiently using hashes (objects)
+		if(units !== undefined && areas !== undefined && memberships !== undefined && privs != undefined) {
+			// we don't actually need the priviledges, that should have already given us only the proper units
 			for(i = 0; i < areas.length; i++) {
 				area = areas[i];
-				for(j = 0; j < units.length; j++) {
-					if(units[j].id === area.unit_id) {
-						// check if user is a member of the area
-						for(k = 0; k < memberships.length; k++) {
-							if(memberships[k].area_id === area.id) {
-								area.checked = true;
-							}
+				unit = units[area.unit_id]
+				if(unit !== undefined) { // if unit is undefined we aren't a member (should't happen)
+					// check if user is a member of the area
+					for(k = 0; k < memberships.length; k++) {
+						if(memberships[k].area_id === area.id) {
+							area.checked = true;
 						}
-						units[j].areas.push(area);
 					}
+					if(unit.areas === undefined) {
+						unit.areas = [];
+					}
+					unit.areas.push(area);
 				}
 			}
 
-			state.context.units = units;
+			for(unit_id in units) {
+				var unit = units[unit_id];
+				ui_units.push(unit);
+			}
+
+			state.context.units = ui_units;
+			console.log('Meine Themen: ' + JSON.stringify(state.context.units));
 			render();
 		}
 	}
 
-	// query all units
-	lf.query('/unit', {}, state, function(res) {
-		units = res.result;
-		finish();
-	});
+	// query users units
+	lf.query('/privilege', {'member_id': state.user_id(), 'include_units': true}, state,  function(res) {
+		privs = res.result;
+		units = res.units;
 
-	// query all areas
-	lf.query('/area', {}, state, function(res) {
-		areas = res.result;
-		finish();
+		var unit_ids = '';
+		for(var unit_id in units) {
+			if(unit_ids !== '') {
+				unit_ids += ',';
+			}
+			unit_ids += unit_id;
+		}
+
+		// query of the users units areas
+		lf.query('/area', {'unit_id': unit_ids}, state, function(res) {
+			areas = res.result;
+			finish();
+		});
 	});
 
 	// query membership information
