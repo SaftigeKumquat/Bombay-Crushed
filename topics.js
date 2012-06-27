@@ -32,6 +32,9 @@ var topics = function(state, render) {
 					if(units[i].description === "") {
 						builtUnit.description = builtUnit.name;
 					}
+					// sort areas by direct members
+					byUnit[i].sort(function(a,b){return b.direct_member_count - a.direct_member_count;});
+
 					for(var a = 0; a < byUnit[i].length; a++) {
 						currentArea = byUnit[i][a];
 						
