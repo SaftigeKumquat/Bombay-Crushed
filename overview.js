@@ -465,3 +465,20 @@ exports.show = function(state) {
 	delegations(state, finish);
 	inis(state, finish);
 }
+
+exports.updateInis = function(state) {
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "overview";
+		if(ctx.inis !== undefined) {
+			ejs.render(state, '/update_inis.tpl', true);
+		}
+	}
+
+	inis(state, finish);
+}

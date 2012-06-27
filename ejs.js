@@ -63,7 +63,7 @@ fs.readdir(__dirname + '/templates/', function(err, files) {
  * @todo Somewhere document all the values expected on the state
  * object, e.g. state.context.meta.currentpage.
  */
-exports.render = function(state, template) {
+exports.render = function(state, template, standAlone) {
 	var headtpl = '/templates/head.tpl';
 	var maintpl = '/templates' + template;
 	var footertpl = '/templates/footer.tpl';
@@ -88,9 +88,17 @@ exports.render = function(state, template) {
 		var footer = ejs.render(tpls[footertpl], context);
 
 		var result = state.result;
-		result.write(head);
+
+		if(!standAlone) {
+			result.write(head);
+		}
+
 		result.write(main);
-		result.write(footer);
+		
+		if(!standAlone) {
+			result.write(footer);
+		}
+
 		result.end();
 
 		console.log('Served ' + state.request.url);

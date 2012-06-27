@@ -288,6 +288,7 @@ var url_mapping = {
 	'/profile': showProfile,
 	'/contacts': showContacts,
 	'/timeline': showTimeline,
+	'/update_inis': overview.updateInis,
 	'/favicon.ico': serveStatic
 }
 
@@ -309,7 +310,7 @@ var pattern_mapping = [
 /**
  * Function to Map URLs to functions
  *
- * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
+ * For a detailed German explanation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 mapU2F = function(state, url_mappings, pattern_mappings) {
 	// Forward decleration of variables as recommended by Crockford
