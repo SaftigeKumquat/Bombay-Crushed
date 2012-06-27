@@ -135,7 +135,7 @@ var areas = function(state, render) {
 			for(i = 0; i < areas.length; i++) {
 				area = areas[i];
 				unit = units[area.unit_id]
-				if(unit !== undefined) { // if unit is undefined we aren't a member
+				if(unit !== undefined) { // if unit is undefined we aren't a member (should't happen)
 					// check if user is a member of the area
 					for(k = 0; k < memberships.length; k++) {
 						if(memberships[k].area_id === area.id) {
@@ -164,12 +164,20 @@ var areas = function(state, render) {
 	lf.query('/privilege', {'member_id': state.user_id(), 'include_units': true}, state,  function(res) {
 		privs = res.result;
 		units = res.units;
-	});
 
-	// query all areas
-	lf.query('/area', {}, state, function(res) {
-		areas = res.result;
-		finish();
+		var unit_ids = '';
+		for(var unit_id in units) {
+			if(unit_ids !== '') {
+				unit_ids += ',';
+			}
+			unit_ids += unit_id;
+		}
+
+		// query of the users units areas
+		lf.query('/area', {'unit_id': unit_ids}, state, function(res) {
+			areas = res.result;
+			finish();
+		});
 	});
 
 	// query membership information
