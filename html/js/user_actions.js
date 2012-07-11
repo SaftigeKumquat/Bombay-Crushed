@@ -3,6 +3,9 @@
 /**
  * Delete the links from the ini table pagination,
  * so onClick on these will be triggered, if JS is active.
+ * 
+ * I know onClick is dirty, but have not found another way 
+ * to pass the page parameter from the links.
  */
 $(document).ready(function() {
 	$("#inipages").find("a").attr("href", "#");
