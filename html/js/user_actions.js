@@ -19,7 +19,7 @@ $(document).ready(function() {
 function update_inis(page) {
 	var url = "update_inis?page=" + page;
 	$.ajax({ 
-        	url: "update_inis",
+        	url: url,
         	type: "POST",
 		data: { page: page },
         	dataType: "text",
