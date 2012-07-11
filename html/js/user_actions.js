@@ -18,17 +18,10 @@ $(document).ready(function() {
  */
 function update_inis(page) {
 	var url = "update_inis?page=" + page;
-	/*$.get('update_inis', {page: page}, "test", function(data) {
-  		$("#initable").remove();
-		$("#inipages").remove();
-		alert(data);
-		var frag = "Some stuff";
-		$("#inicontent").append(frag);
-		$(data).appendTo('#inicontent')
-	});*/
 	$.ajax({ 
-        	url: url,
+        	url: "update_inis",
         	type: "POST",
+		data: { page: page },
         	dataType: "text",
         	success: function(data) {
   			$("#initable").remove();
