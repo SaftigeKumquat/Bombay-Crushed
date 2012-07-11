@@ -12,7 +12,7 @@
 
 			</ul>
 		</div>
-		<div class="tencol box last">
+		<div id="inicontent" class="tencol box last">
 			<h2><%= texts.currentinis %></h2>
 				<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
 				<select id="select-filter" name="filter">
@@ -20,7 +20,7 @@
 					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
 				<% } %> 					
 				</select>
-				<table name="initable">
+				<table id="initable">
 					<tr>
 						<th><%= texts.ini %></th>
 						<th><%= texts.unit %></th>
@@ -60,19 +60,19 @@
 					</tr><%
 					} %>
 				</table>
-			<div class="box-footer">			
+			<div id="inipages" class="box-footer">			
 				<ul class="pagination">
-					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>"><%= texts.backshort %></a></li><% }
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
 						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="overview?page=<%= i %>&newspage=<%= news.activepage %>"><%= i %></a></li>	
+							<li><a href="overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>	
 						<% } 
 					} 
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="overview?page=<%= nextpage %>&newspage=<%= news.activepage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>				 
 			</div>
 		</div>
