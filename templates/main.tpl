@@ -20,7 +20,7 @@
 					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
 				<% } %> 					
 				</select>
-				<table>
+				<table name="initable">
 					<tr>
 						<th><%= texts.ini %></th>
 						<th><%= texts.unit %></th>

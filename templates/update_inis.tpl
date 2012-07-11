@@ -1,10 +1,3 @@
-<h2><%= texts.currentinis %></h2>
-<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
-<select id="select-filter" name="filter">
-	<% for(var i = 0; i < filter.length; i++) { %>
-		<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
-	<% } %> 					
-</select>
 <table>
 	<tr>
 		<th><%= texts.ini %></th>
