@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "dependencies": {
 	"ejs": "", 
-	"cookies": ""
+	"cookies": "",
+	"querystring": "",
+	"url": ""
   },
   "main": "server.js"
 }

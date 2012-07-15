@@ -313,10 +313,10 @@
 	</div>
 		
 	<div class="row">
-		<div class="twelvecol box last">
+		<div id="inicontent" class="twelvecol box last">
 			<h2><%= texts.inis %></h2>
 
-				<table>
+				<table id="initable">
 					<tr>
 						<th><%= texts.ini %></th>
 						<th><%= texts.unit %></th>
@@ -358,19 +358,19 @@
 					</tr><%
 					} %>														
 				</table>
-			<div class="box-footer">			
+			<div id="inipages" class="box-footer">			
 				<ul class="pagination">
-					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="timeline?page=<%= ( initable.activepage - 1 ) %>"><%= texts.backshort %></a></li><% }
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="timeline?page=<%= ( initable.activepage - 1 ) %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
 						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="timeline?page=<%= i %>"><%= i %></a></li>	
+							<li><a href="timeline?page=<%= i %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>	
 						<% } 
 					} 
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="timeline?page=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="timeline?page=<%= nextpage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>				 
 			</div>
 		</div>

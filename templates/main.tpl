@@ -104,23 +104,23 @@
 			</div>
 
 		</div>
-		<div class="fourcol box">
+		<div id="newscontent" class="fourcol box">
 			<h2><%= texts.news %></h2>
 			<div class="box-description">
 				<p><%= texts.newstext %></p>
 			</div>	
-			<div class="box-news-piechart">
+			<div id="newschart" class="box-news-piechart">
 				<h3><a href="#"><%= news.chart.title %></a></h3>
 				<canvas id="piechart" width="110px" height="110px">Piechart</canvas>
-				<table id="piechart-table">
+				<table id="piechart-table"><tbody>
 				    <tr><td class="piechart-number"><%= news.chart.for %></td><td class="for"><%= texts.chartfor %></td></tr>
 				    <tr><td class="piechart-number"><%= news.chart.fordelegated %></td><td class="for-delegated"><%= texts.chartdelegatedfor %></td></tr>
 				    <tr><td class="piechart-number"><%= news.chart.against %></td><td class="against"><%= texts.chartagainst %></td></tr>
-				    <tr><td class="piechart-number"><%= news.chart.againstdelegated %></td><td class="against-delegated"> <%= texts.chartdelegatedagainst %></td></tr>
-				</table>
+				    <tr><td class="piechart-number"><%= news.chart.againstdelegated %></td><td class="against-delegated"><%= texts.chartdelegatedagainst %></td></tr>
+				</tbody></table>
 
 			</div>
-			<div class="box-news-bargraph">
+			<div id="newsgraph" class="box-news-bargraph">
 				<h3><a href="#"><%= news.graph.title %></a></h3>
 				<ul class="bargraph bargraph-big" title="<%= news.graph.supporter %> <%= texts.supporter %> / <%= news.graph.potsupporter %> <%= texts.potsupporter %> / <%= news.graph.uninterested %> <%= texts.uninterested %>">
 					<li class="bargraph-quorum" style="left:<%= news.graph.quorum %>%;"></li>
@@ -134,9 +134,9 @@
 					<li><%= news.graph.uninterested %> <%= texts.uninvolved %></li>
 				</ul>
 			</div>
-			<div class="box-footer">
-				<% if(news.activepage < news.pages) { var nextpage = ( news.activepage - 1 ) + 2; %><a href="overview?page=<%= initable.activepage %>&newspage=<%= nextpage %>" class="button button-forward"><%= texts.next %></a><% } else { %><a href="#" class="button button-forward"><%= texts.next %></a><% } %>
-				<% if(news.activepage > 1) { %><a href="overview?page=<%= initable.activepage %>&newspage=<%= (news.activepage - 1) %>" class="button button-backward"><%= texts.previous %></a></li><% } else { %><a href="#" class="button button-backward"><%= texts.previous %></a><% } %>
+			<div id="newspages" class="box-footer">
+				<% if(news.activepage < news.pages) { var nextpage = ( news.activepage - 1 ) + 2; %><a href="overview?page=<%= initable.activepage %>&newspage=<%= nextpage %>" class="button button-forward" onClick="update_news(<%= nextpage %>)"><%= texts.next %></a><% } else { %><a href="#" class="button button-forward"><%= texts.next %></a><% } %>
+				<% if(news.activepage > 1) { %><a href="overview?page=<%= initable.activepage %>&newspage=<%= (news.activepage - 1) %>" class="button button-backward" onClick="update_news(<%= (news.activepage - 1) %>)"><%= texts.previous %></a></li><% } else { %><a href="#" class="button button-backward"><%= texts.previous %></a><% } %>
 			</div>
 		</div>
 		<div class="threecol box last">

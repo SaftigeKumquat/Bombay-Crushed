@@ -289,6 +289,7 @@ var url_mapping = {
 	'/contacts': showContacts,
 	'/timeline': showTimeline,
 	'/update_inis': overview.updateInis,
+	'/update_news': overview.updateNews,
 	'/favicon.ico': serveStatic
 }
 

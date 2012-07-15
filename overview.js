@@ -504,3 +504,20 @@ exports.updateInis = function(state) {
 
 	inis(state, finish);
 }
+
+exports.updateNews = function(state) {
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "overview";
+		if(ctx.news !== undefined) {
+			ejs.render(state, '/update_news.tpl', true);
+		}
+	}
+
+	news(state, finish);
+}
