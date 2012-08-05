@@ -168,7 +168,7 @@
 	<div class="row">
 			<div class="twocol nobox"></div>
 
-		<div class="sevencol box last">
+		<div class="tencol box last">
 			<h2 id="Anregungen"><a href=""><%= texts.suggestionsforthisini %> (6)</a></h2>
 			<div class="box-description">
 				<p><%= texts.suggestioninfo %></p>
@@ -269,7 +269,7 @@
 	<div class="row">
 			<div class="twocol nobox"></div>
 
-		<div class="sevencol box last">
+		<div class="tencol box last">
 					<h2 id="Alternativen"><a href=""><%= texts.alternativeinitiatives %> (<%= initiative.alternativeinisnumber %>)</a></h2>
 			<div class="box-description">
 				<p><%= texts.alternativeiniinfo %></p>
