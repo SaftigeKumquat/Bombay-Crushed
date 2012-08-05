@@ -6,10 +6,31 @@
  * 
  * I know onClick is dirty, but have not found another way 
  * to pass the page parameter from the links.
+ *
+ * Also initialise the content sliders
+ *
  */
 $(document).ready(function() {
 	$("#inipages").find("a").attr("href", "#");
 	$("#newspages").find("a").attr("href", "#newscontent");
+
+	$("#filterslide").click(function(){
+  	$("#filter").slideToggle("slow");
+  	return false;
+
+	});
+
+	$("#detailslide").click(function(){
+  	$("#initiative-detail").slideToggle("slow");
+  	return false;
+
+	});
+
+	$("#historyslide").click(function(){
+  	$("#initiative-history").slideToggle("slow");
+  	return false;
+
+});
 });
 
 /**

@@ -96,6 +96,24 @@ var showContacts = function(state) {
 
 /**
  * Takes care of retrieving data for and rendering the
+ * initiative page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+var showInitiative = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var ctx = state.context;
+	ctx.meta.currentpage = "initiative";
+	ejs.render(state, '/initiative.tpl');
+}
+
+/**
+ * Takes care of retrieving data for and rendering the
  * timeline page.
  *
  * @param state The state object of the current HTTP-Request
@@ -290,7 +308,8 @@ var url_mapping = {
 	'/timeline': showTimeline,
 	'/update_inis': overview.updateInis,
 	'/update_news': overview.updateNews,
-	'/favicon.ico': serveStatic
+	'/favicon.ico': serveStatic,
+	'/initiative': showInitiative
 }
 
 /**
