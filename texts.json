@@ -190,5 +190,11 @@
 	"alternativeiniinfo": "Es gibt alternative Vorschläge für diese Initiative.",
 	"isupportini": "Ich unterstütze diese Initiative",
 	"createalternativeini": "Alternative Initiative erstellen",
-	"issue": "Thema"
+	"issue": "Thema",
+	"isupportinfo": "Du unterstützt diese Initiative",
+	"removesupport": "Unterstützung entziehen",
+	"draftupdatedinfo": "Der Entwurfstext der Initiative wurde aktualisiert!",
+	"updatesupport": "Unterstützung auf aktuellen Entwurf aktualisieren",
+	"showchanges": "Änderungen anzeigen",
+	"removedelegation": "Delegation im Themenbereich entziehen"
 }

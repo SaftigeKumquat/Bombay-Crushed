@@ -4,14 +4,40 @@
 			
 		</div>
 	</div>
+
+	<% if(initiative.draftupdated) { %>
+	<div class="row">
+		<div class="twocol noxbox first">
+			</div>
+			<div class="sevencol alertbox last">
+			<h2><%= texts.draftupdatedinfo %></h2>
+				<p><a class="button" href=""><%= texts.showchanges %></a> <a class="button"  href=""><%= texts.updatesupport %></a></p>
+			</div>
+	</div>
+	<% } %>
+
 	<div class="row">
 
 		<div class="twocol nobox first">
+			<% if(initiative.isupport) { %>
+			<h2><%= texts.support %></h2>
+			<div class="supportbox"><p><%= texts.isupportinfo %></p></div>
+			<% } %>
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
+				<% if(initiative.isupport) { %>
+				<li id="personal-menu-support"><a href="#"><%= texts.removesupport %></p></a></li>
+				<% } else { %>
 				<li id="personal-menu-green"><a href="#"><%- texts.supportini %></a></li>
+				<% } %>
+				<% if(initiative.delegate) { %>
+				<li  id="personal-menu-delegate"><a href="#"><img src="<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li>
+				<% } else { %>
 				<li><a href="#"><span>+</span><%= texts.delegatearea %></a></li>
+				<% } %>
+				<% if(initiative.state == texts.status4) { %>
 				<li><a href="#"><span>+</span><%= texts.changevote %></a></li>
+				<% } %>
 				<li><a href="#"><span>+</span><%= texts.discusstopic %></a></li>
 			</ul>
 
@@ -289,6 +315,7 @@
 				</ul>
 				<% } %>	 
 				<a class="button" href="#"><%= texts.createalternativeini %></a>
+				</div>
 			</div>
 	</div>	
 					
