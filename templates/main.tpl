@@ -18,7 +18,7 @@
 				<select id="select-filter" name="filter">
 				<% for(var i = 0; i < filter.length; i++) { %>
 					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
-				<% } %> 					
+				<% } %>
 				</select>
 				<table id="initable">
 					<tr>
@@ -29,16 +29,16 @@
 					</tr>
 					<% var odd = true;
 					for(var i = 0; i < inis.length; i++) { %>
-					<tr<% 
+					<tr<%
 					if(inis[i].alternativeid > 0) {
 						%> class="table-alternativeinitiative"<% }
 					else {
-						if(odd == true) { 
-							odd = false; 
-							%> class="odd"<% } 
-						else { 
+						if(odd == true) {
+							odd = false;
+							%> class="odd"<% }
+						else {
 							odd = true; }
-					}					
+					}
 					%>>
 						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
 						if(!inis[i].hasalternatives) {
@@ -52,15 +52,15 @@
 								<li class="bargraph-uninvolved" style="width:<%= inis[i].uninvolved %>%"></li>
 							</ul>
 						</td>
-						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><% 
-						if(inis[i].status == texts.tablevote) { %></span><% }						
-						if(inis[i].delegate) { 
+						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><%
+						if(inis[i].status == texts.tablevote) { %></span><% }
+						if(inis[i].delegate) {
 						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
 						} %></td>
 					</tr><%
 					} %>
 				</table>
-			<div id="inipages" class="box-footer">			
+			<div id="inipages" class="box-footer">
 				<ul class="pagination">
 					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
@@ -68,12 +68,12 @@
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>	
-						<% } 
-					} 
+							<li><a href="overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>
+						<% }
+					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
 					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
-				</ul>				 
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -84,7 +84,7 @@
 			<h2><%= texts.yourdelegates %></h2>
 			<div class="box-description">
 				<p><%= texts.lastactionyourvote %>:</p>
-			</div>	
+			</div>
 			<% for(var i = 0; i < delegations.length; i++) { %>
 			<div class="box-delegate-info">
 				<img src="<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
@@ -108,7 +108,7 @@
 			<h2><%= texts.news %></h2>
 			<div class="box-description">
 				<p><%= texts.newstext %></p>
-			</div>	
+			</div>
 			<div id="newschart" class="box-news-piechart">
 				<h3><a href="#"><%= news.chart.title %></a></h3>
 				<canvas id="piechart" width="110px" height="110px">Piechart</canvas>
@@ -126,7 +126,7 @@
 					<li class="bargraph-quorum" style="left:<%= news.graph.quorum %>%;"></li>
 					<li class="bargraph-support" style="width:<%= news.graph.support %>%"></li>
 					<li class="bargraph-potential" style="width:<%= news.graph.potential %>%"></li>
-					<li class="bargraph-uninvolved" style="width:<%= news.graph.uninvolved %>%"></li>	
+					<li class="bargraph-uninvolved" style="width:<%= news.graph.uninvolved %>%"></li>
 				</ul>
 				<ul>
 					<li><a href="#" class="for"><%= news.graph.supporter %> <%= texts.supporter %></a></li>

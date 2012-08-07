@@ -42,7 +42,7 @@
 			<h2><%= texts.delegations %></h2>
 			<div class="box-description">
 				<p><%= user.nick %> <%= texts.mostvotes %></p>
-			</div>	
+			</div>
 
 			<% for(var i=0; i < delegateactions.length; i++ ) { %><div class="box-delegate-info profile-delegate">
 					<img src="<%= delegateactions[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
@@ -54,7 +54,7 @@
 
 			<div class="box-footer">
 				<p><%= texts.strongestdelegates %> <%= user.nick %></p>
-			</div>	
+			</div>
 
 			<% for(var i=0; i < strongestdelegates.length; i++ ) { %><div class="box-delegate-info profile-delegate">
 					<img src="<%= strongestdelegates[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
@@ -75,7 +75,7 @@
 				<form method="get" action="/search" id="search-sub">
  					<input name="q" type="text" size="40" placeholder="<%= texts.entersearch %>" />
 				</form>
-			</div>	
+			</div>
 
 			<% for(var i=0; i < votingcomments.length; i++) { %><div class="box-statements-statement">
 			<h3><a href="#"><%= votingcomments[i].user.nick %></a> <%= texts.at %> <%= votingcomments[i].date %> <span class="<%= votingcomments[i].action %>"><%
@@ -89,7 +89,7 @@
 				<a href="#"><%= votingcomments[i].topic %></a>, <%= texts.because %></h3>
 				<p><%- votingcomments[i].comment %></p>
 			</div><% } %>
-						
+
 			<div class="box-footer">
 				<a href="#" class="button button-forward"><%= texts.next %></a>
 				<a href="#" class="button button-backward"><%= texts.previous %></a>

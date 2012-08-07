@@ -36,10 +36,10 @@
 				<li><a href="#"><%= texts.privacy %></a></li>
 				<li><a href="#"><%= texts.imprint %></a></li>
 				<li><a href="#"><%= texts.contact %></a></li>
-			</ul>	
+			</ul>
 		</div>
-	</div>		
-	<div class="row">		
+	</div>
+	<div class="row">
 		<div class="twelvecol last">
 			<ul id="mainmenu">
 				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="overview"><%= texts.overview %></a></li>
@@ -51,6 +51,6 @@
 			<form method="get" action="/search" id="search">
  				 <input name="q" type="text" size="40" placeholder="<%= texts.search %>" />
 			</form>
-		</div>		
+		</div>
 	</div>
 </div>
