@@ -6,7 +6,7 @@
 				<div class="sevencol alertbox last">
 				<% if(issue.castvote) { %>
 				<h2><%= texts.youalreadyvoted %></h2>
-					<p><a class="button" href=""><%= texts.revocevote %></a></p>
+					<p><a class="button" href=""><%= texts.revokevote %></a></p>
 				<% } else { %>
 				<h2><%= texts.issuevotingopen %></h2>
 					<p><a class="button" href=""><%= texts.votenow %></a></p>
