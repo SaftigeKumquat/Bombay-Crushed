@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"currentpage": "overview"
-	},	
+	},
 	"user": {
 		"nick": "Fußfall", "name": "Stefan Täge",
 		"picbig": "content_img/profile_image.png",
@@ -301,5 +301,9 @@
 			{ "name": "Einbeziehung von Renten und Pensionen", "supporter": 365, "potsupporter": 15, "uninterested": 631, "quorumwidth": "5%", "supporterwidth": "40%",
 				"potsupporterwidth": "10%", "uninterestedwidth": "50%", "isupport": true }
 		], "alternativeinispage": "1", "alternativeinispages": "1"
-	}
+	},
+	"issue": {
+        "state": "Abstimmung",
+        "castvote": false
+    }
 }

@@ -114,6 +114,24 @@ var showInitiative = function(state) {
 
 /**
  * Takes care of retrieving data for and rendering the
+ * issue page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+var showIssue = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var ctx = state.context;
+	ctx.meta.currentpage = "issue";
+	ejs.render(state, '/issue.tpl');
+}
+
+/**
+ * Takes care of retrieving data for and rendering the
  * timeline page.
  *
  * @param state The state object of the current HTTP-Request
@@ -309,7 +327,8 @@ var url_mapping = {
 	'/update_inis': overview.updateInis,
 	'/update_news': overview.updateNews,
 	'/favicon.ico': serveStatic,
-	'/initiative': showInitiative
+	'/initiative': showInitiative,
+	'/issue': showIssue
 }
 
 /**
