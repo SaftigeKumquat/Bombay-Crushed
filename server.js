@@ -96,6 +96,24 @@ var showContacts = function(state) {
 
 /**
  * Takes care of retrieving data for and rendering the
+ * area page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+var showArea = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var ctx = state.context;
+	ctx.meta.currentpage = "area";
+	ejs.render(state, '/area.tpl');
+}
+
+/**
+ * Takes care of retrieving data for and rendering the
  * initiative page.
  *
  * @param state The state object of the current HTTP-Request
@@ -312,7 +330,7 @@ var sendAvatar = function(state) {
 /**
  * Mapping from URLs to functions
  *
- * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
+ * For a detailed German explanation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var url_mapping = {
 	'/': overview.show,
@@ -328,13 +346,14 @@ var url_mapping = {
 	'/update_news': overview.updateNews,
 	'/favicon.ico': serveStatic,
 	'/initiative': showInitiative,
+	'/area': showArea,
 	'/issue': showIssue
 }
 
 /**
  * Mapping from patterns to functions
  *
- * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
+ * For a detailed German explanation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var pattern_mapping = [
 	{ pattern: '/picbig/', mapped: sendPicture },

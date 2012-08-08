@@ -33,7 +33,7 @@
 				<% if(initiative.delegate) { %>
 				<li  id="personal-menu-delegate"><a href="#"><img src="<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li>
 				<% } else { %>
-				<li><a href="#"><span>+</span><%= texts.delegatearea %></a></li>
+				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } %>
 				<% if(initiative.state == texts.status4) { %>
 				<li><a href="#"><span>+</span><%= texts.changevote %></a></li>
