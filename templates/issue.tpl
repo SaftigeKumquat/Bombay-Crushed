@@ -17,19 +17,22 @@
 	<div class="row">
 
 		<div class="twocol nobox first">
-			<h2>Mitgliedschaft</h2>
+			<h2><%= texts.membership %></h2>
 			<div class="interestbox"><p><%= texts.youareinterestedvotelater %></p></div>
 
-			<h2>Optionen</h2>
+			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
-				<li id="personal-menu-interest"><a href="#">Interesse anmelden</a></li>
-				<li id="personal-menu-later"><a href="#">Später abstimmen</a></li>
-				<li id="personal-menu-nointerest"><a href="#">Interesse abmelden</p></a></li>
-				<li id="personal-menu-nolater"><a href="#">Später abstimmen zurückziehen</p></a></li>
-				<li><a href="#"><span>+</span>Thema delegieren</a></li>
-				<li><a href="#"><span>+</span>Delegation ändern</a></li>
-				<li  id="personal-menu-delegate"><a href="#"><img src="content_img/profile_delegate_1.png" alt="Profilbild" /><p>Christoph Fritzsche Delegation im Themenbereich entziehen</p></a></li>
-				<li><a href="#"><span>+</span>Diskussion zum Thema</a></li>
+				<li id="personal-menu-interest"><a href="#"><%= texts.declareinterest %></a></li>
+				<li id="personal-menu-later"><a href="#"><%= texts.votelater %></a></li>
+				<li id="personal-menu-nointerest"><a href="#"><%= texts.revokeinterest %></p></a></li>
+				<li id="personal-menu-nolater"><a href="#"><%= texts.revokevotelater %></p></a></li>
+				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
+				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
+				<li  id="personal-menu-delegate"><a href="#"><img
+                src="content_img/profile_delegate_1.png" alt="<%=
+                texts.profilepic %>" /><p><%= issue.delegate %> <%= texts.removedelegation %></p></a></li>
+
+				<li><a href="#"><span>+</span> <%= texts.discusstopic %></a></li>
 
 			</ul>
 		</div>

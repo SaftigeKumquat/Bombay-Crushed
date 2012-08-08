@@ -424,6 +424,7 @@
 	},
 	"issue": {
         "state": "Abstimmung",
-        "castvote": false
+        "castvote": false,
+        "delegate": "Christoph Fritzsche"
     }
 }
