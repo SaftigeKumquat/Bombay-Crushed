@@ -38,115 +38,54 @@
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
-				<h2>Themenbereich „Innen, Recht, Demokratie, Sicherheit“ Baden-Württemberg</h2>
+				<h2><%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
 
 						<div class="filtertable">
-							<label class="table-label" for="select_fiter3">sortiert nach:</label>
+							<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>
 							<select id="select-filter2" name="filter">
-								<option value="1">Potentielle Unterstützung</option>
-								<option value="2">Unterstützung</option>
-								<option value="3">Neueste</option>
-								<option value="4">Älteste</option>
+								<option value="1"><%= texts.potsupport %></option>
+								<option value="2"><%= texts.support %></option>
+								<option value="3"><%= texts.newest %></option>
+								<option value="4"><%= texts.oldest %></option>
 							</select>
 						</div>
 						<table class="table-area">
 							<tr>
-								<th>Thema</th>
-								<th>Zustand</th>
-								<th>Initiativen</th>
-								<th>Status</th>
+								<th><%= texts.issue %></th>
+								<th><%= texts.state %></th>
+								<th><%= texts.inis %></th>
+								<th><%= texts.status %></th>
 							</tr>
+
 							<tr class="odd">
-								<td><a href="">Thema #1951</a></td>
-								<td>2.Diskussion</td>
-								<td><h3><a href="#">Recht auf Nacktheit im Öffentlichen Raum</a></h3></td>
+								<td><a href=""><%= texts.issue %> #<%= issue.id%></a></td>
+								<td><%= issue.state %></td>
+								<td><h3><a href="#"><%= issue.initiatives[0].title %></a></h3></td>
 								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:10%;"></li>
-										<li class="bargraph-support" style="width:25%"></li>
-										<li class="bargraph-potential" style="width:40%"></li>
-										<li class="bargraph-uninvolved" style="width:30%"></li>
+									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
+										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
+										<li class="bargraph-support" style="width:<%= issue.initiatives[0].support %>%"></li>
+										<li class="bargraph-potential" style="width:<%= issue.initiatives[0].potential %>%"></li>
+										<li class="bargraph-uninvolved" style="width:<%= issue.initiatives[0].uninvolved %>%"></li>
 									</ul>
 								</td>
 							</tr>
+
+							<% for(var i = 1; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
 								<td></td>
 								<td></td>
-								<td><h3><a href="#">Recht auf relative Nacktheit im Raumzeitkontinuum</a></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[i].title %></a></h3></td>
 								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
+									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
+										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
+										<li class="bargraph-support" style="width:<%= issue.initiatives[i].support %>%"></li>
+										<li class="bargraph-potential" style="width:<%= issue.initiatives[i].potential %>%"></li>
+										<li class="bargraph-uninvolved" style="width:<%= issue.initiatives[i].uninvolved %>%"></li>
 									</ul>
 								</td>
 							</tr>
-							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
-								<td><h3><a href="#">Recht auf relative Nacktheit einfach überall</a></h3></td>
-								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
-									</ul>
-								</td>
-							</tr>
-							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
-								<td><h3><a href="#">Recht auf absolute Nacktheit im hier und jetzt</a></h3></td>
-								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
-									</ul>
-								</td>
-							</tr>
-							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
-								<td><h3><a href="#">Recht auf absolute Nacktheit im hier und jetzt</a></h3></td>
-								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
-									</ul>
-								</td>
-							</tr>
-							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
-								<td><h3><a href="#">Recht auf absolute Nacktheit im hier und jetzt</a></h3></td>
-								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
-									</ul>
-								</td>
-							</tr>
-							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
-								<td><h3><a href="#">Recht auf absolute Nacktheit im hier und jetzt</a></h3></td>
-								<td>
-									<ul class="bargraph" title="365 Unterstützer / 15 potentielle Unterstützer / 631 nicht interessiert">
-										<li class="bargraph-quorum" style="left:30%;"></li>
-										<li class="bargraph-support" style="width:5%"></li>
-										<li class="bargraph-potential" style="width:10%"></li>
-										<li class="bargraph-uninvolved" style="width:60%"></li>
-									</ul>
-								</td>
-							</tr>
+							<% } %>
 						</table>
 
 
