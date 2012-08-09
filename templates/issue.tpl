@@ -111,7 +111,7 @@
 							<dt><%= texts.currentlyneedeforissue %></dt><dd><%= Math.round(issue.population * (issue.quorum / 100.0)).toString() %></dd>
 							<br />
 							<dt><%= texts.votenow %></dt><dd><%= issue.votenow %></dd>
-							<dt><%= texts.votelater %></dt><dd><%= issue.votelater %></dd>
+							<dt><%= texts.votelater %></dt><dd><%= issue.votelaterlist.length.toString() %></dd>
 							<dt><%= texts.closed %></dt><dd><% if(issue.open) { %> <%= texts.no %> <% } else { %><%= texts.yes %><% } %></dd>
 						</dl>
 					 	</div>
@@ -123,45 +123,28 @@
 		</div>
 
 		<div id="secondbox" class="box">
-				<h2>Mitglieder, die später abstimmen möchten (6) (1%)</h2>
-				 		<label class="table-label" for="select_fiter_later">sortiert nach:</label>
+				<h2><%= texts.memberswhowanttovotelater %> (<%= issue.votelaterlist.length.toString() %>) (<%=  Math.round(((issue.votelaterlist.length/issue.population)*100)).toString() %>%)</h2>
+				 		<label class="table-label" for="select_fiter_later"><%= texts.sortedby %>:</label>
 						<select id="select-filter_later" name="filter">
-							<option value="1">A-Z</option>
-							<option value="2">Z-A</option>
-							<option value="3">Neueste</option>
-							<option value="3">Älteste</option>
+							<option value="1"><%= texts.atoz %></option>
+							<option value="2"><%= texts.ztoa %></option>
+							<option value="3"><%= texts.newest %></option>
+							<option value="3"><%= texts.oldest %></option>
 						</select>
 
+						<% for(var i = 0; i < issue.votelaterlist.length; i++) { %>
 				 		<div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
+							<a href="#"><img src="<%= issue.votelaterlist[i].picmini%>" alt="<%= texts.profilepic %>"/></a>
+							<h3><a href="#"><%= issue.votelaterlist[i].name %></a></h3>
 						</div>
-				 		<div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
-						</div>
-						<div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
-						</div>
-						 <div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
-						</div>
-						 <div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
-						</div>
-						 <div class="box-delegate-info box-supporters">
-							<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-							<h3><a href="#">Johannes Knopp</a></h3>
-						</div>
+						<% } %>
+
 				<div class="box-footer">
 					<ul class="pagination">
-						<li class="button button-backward-off">zurück</li>
+						<li class="button button-backward-off"><%= texts.backshort %></li>
 						<li class="active">1</li>
 						<li><a href="?page=2">2</a></li>
-						<li><a class="button button-forward" href="#">weiter</a></li>
+						<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
 					</ul>
 				</div>
 			</div>
@@ -172,211 +155,55 @@
 		<div class="twocol nobox">
 		</div>
 		<div class="sevencol box">
-			<h2>Delegationen (200)</h2>
+			<h2><%= texts.delegations %> (<%= issue.delegationnumber %>)</h2>
+				<% for(var i = 0; i < issue.delegations.length; i++) { %>
 				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_1.png" alt="Profilbild"/>Christoph Fritzsche</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_7.png" alt="Profilbild"/>Marina Weisband</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
+					<a href="#"><img src="<%= issue.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegationstart.name %></a>
+					<% for(var a = 0; a < issue.delegations[i].delegations.length; a++) { %>
+					<img class="delegate-arrow" src="img/arrow.png" alt="<%= texts.delegatesto %>"/>
+					<a href="#"><img src="<%= issue.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegations[a].name %></a>
+					<% } %>
 				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_6.png" alt="Profilbild"/>Marcel-André Casasola Merkle</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_5.png" alt="Profilbild"/>Christopher Lauer</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_1.png" alt="Profilbild"/>Christoph Fritzsche</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>																															<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_1.png" alt="Profilbild"/>Christoph Fritzsche</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_7.png" alt="Profilbild"/>Marina Weisband</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_6.png" alt="Profilbild"/>Marcel-André Casasola Merkle</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_5.png" alt="Profilbild"/>Christopher Lauer</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_5.png" alt="Profilbild"/>Christopher Lauer</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-				</div>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_4.png" alt="Profilbild"/>Matthias Bach</a>
-				</div>																											<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="content_img/profile_delegate_3.png" alt="Profilbild"/>Johannes Knopp</a>
-					<img class="delegate-arrow" src="img/arrow.png" alt="delegiert zu"/>
-					<a href="#"><img src="content_img/profile_delegate_2.png" alt="Profilbild"/>Christophe Chan Hin</a>
-				</div>
+				<% } %>
+
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off">zurück</li>
+					<li class="button button-backward-off"><%= texts.backshort %></li>
 					<li class="active">1</li>
 					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#">weiter</a></li>
+					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="threecol box last">
-			<h2>Interessierte Mitglieder (1200)</h2>
+			<h2><%= texts.interestedmembers %> (1200)</h2>
 			<div class="box-description">
-				<p>Potentielle Unterstützung ist an Bedingungen in Änderungsanträgen geknüpft. Ausgegraute Profile stimmen über Delegation zu.</p>
+				<p><%= texts.areamembersinfo %></p>
 
-				<label class="table-label" for="select_fiter">sortiert nach:</label>
-				<select id="select-filter" name="filter">
-					<option value="1">A-Z</option>
-					<option value="2">Z-A</option>
-					<option value="3">Neueste</option>
-					<option value="3">Älteste</option>
+				<label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
+				<select id="select-filter" name="filter">							
+					<option value="1"><%= texts.atoz %></option>
+					<option value="2"><%= texts.ztoa %></option>
+					<option value="3"><%= texts.newest %></option>
+					<option value="3"><%= texts.oldest %></option>
 				</select>
 
 			</div>
 
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
+				<% for(var i = 0; i < issue.members.length; i++) { %>
+				<div class="box-delegate-info box-supporters<% if(issue.members[i].isdelegated) { %> box-supporter-delegate<% } %>">
+					<a href="#"><img src="<%= issue.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<h3><a href="#"><%= issue.members[i].name %></a></h3>
 				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp Doppelgänger</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Hans Dampf</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Doktor Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Jo Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp KI</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp Doppelgänger</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp Doppelgänger</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp 2</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Hans Dampf</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Doktor Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Jo Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp KI</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp Doppelgänger</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters box-supporter-delegate">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp Doppelgänger</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Johannes Knopp 2</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Hans Dampf</a></h3>
-				</div>
-				<div class="box-delegate-info box-supporters">
-					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
-					<h3><a href="#">Doktor Knopp</a></h3>
-				</div>
+				<% } %>
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off">zurück</li>
+					<li class="button button-backward-off"><%= texts.backshort %></li>
 					<li class="active">1</li>
 					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#">weiter</a></li>
+					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
 				</ul>
 			</div>
 		</div>

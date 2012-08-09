@@ -435,9 +435,9 @@
 		"timeforvote": "15",
 		"status": "Abstimmung",
 		"votenow": "0",
-		"votelater": "12",
 		"open": true,
 		"castvote": false,
+		"delegationnumber": 200,
 		"delegate": "Christoph Fritzsche",
 		"area": "Innen, Recht, Demokratie, Sicherheit",
 		"unit": "Baden-Württemberg",
@@ -452,6 +452,102 @@
 			{"title": "Recht auf relative Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
 			{"title": "Recht auf relative Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
 			{"title": "Recht auf relative Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60}
+		],
+		"votelaterlist": [
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},
+			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"}
+			],
+			"delegations": [
+			{ "delegationstart": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png"}, "delegations": [
+					{ "nick": "afelia", "name": "Marina Weisband", "picsmall": "content_img/profile_delegate_7.png" },
+					{ "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png"}, "delegations": [
+					{ "nick": "zeitweise", "name": "Marcel-André Casasola Merkle", "picsmall": "content_img/profile_delegate_6.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "Schmidtlepp", "name": "Christopher Lauer", "picsmall": "content_img/profile_delegate_5.png"}, "delegations": [
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" },
+					{ "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" },
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png"}, "delegations": [
+					{ "nick": "afelia", "name": "Marina Weisband", "picsmall": "content_img/profile_delegate_7.png" },
+					{ "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png"}, "delegations": [
+					{ "nick": "zeitweise", "name": "Marcel-André Casasola Merkle", "picsmall": "content_img/profile_delegate_6.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "Schmidtlepp", "name": "Christopher Lauer", "picsmall": "content_img/profile_delegate_5.png"}, "delegations": [
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "Schmidtlepp", "name": "Christopher Lauer", "picsmall": "content_img/profile_delegate_5.png"}, "delegations": [
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "marix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png" }
+				] 
+			},
+			{ "delegationstart": { "nick": "JoKnopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png"}, "delegations": [
+					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" }
+				] 
+			}
+		],
+		"members": [
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Doktor Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Jo Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Johannes Knopp KI", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Johannes Knopp 2", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
+			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Doktor Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Jo Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp KI", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "false" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "false" },
+			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Johannes Knopp 2", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+			{ "nick": "joknopp", "name": "Doktor Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }
 		]
     }
 }
