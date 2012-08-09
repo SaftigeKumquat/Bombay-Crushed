@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="twocol noxbox first">
 			</div>
- 			<% if(issue.state == texts.status4) { %>
+ 			<% if(issue.status == texts.status4) { %>
 				<div class="sevencol alertbox last">
 				<% if(issue.castvote) { %>
 				<h2><%= texts.youalreadyvoted %></h2>
@@ -59,7 +59,7 @@
 
 							<tr class="odd">
 								<td><a href=""><%= texts.issue %> #<%= issue.id%></a></td>
-								<td><%= issue.state %></td>
+								<td><%= issue.status %></td>
 								<td><h3><a href="#"><%= issue.initiatives[0].title %></a></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
@@ -91,35 +91,33 @@
 
 
 				 	<div id="initiative-detail" class="box-editorial">
-					 		<h3>Details</h3>
+							<h3><%= texts.details %></h3>
 							<br />
 						<dl>
-							<dt>Grundgesamtheit</dt><dd>1578</dd>
-							<dt>Zustand</dt><dd>eingefroren</dd>
+							<dt><%= texts.population %></dt><dd><%= issue.population.toString() %></dd>
+							<dt><%= texts.state %></dt><dd><%= issue.status %></dd>
 							<br />
-							<dt>Erzeugt am/um</dt><dd>3. September 2012 18:33:41</dd>
-							<dt>Angenommen am/um</dt><dd>8. September 2012 18:33:41</dd>
-							<dt>Halb eingefroren am/um</dt><dd>14. September 2012 18:33:41</dd>
-							<dt>Ganz eingefroren am/um</dt><dd>18. September 2012 18:33:41</dd>
+							<dt><%= texts.createdat %></dt><dd><%= issue.createdat %></dd>
+							<dt><%= texts.acceptedat %></dt><dd><%= issue.acceptedat %></dd>
+							<dt><%= texts.halffrozenat %></dt><dd><%= issue.halffrozenat %></dd>
+							<dt><%= texts.frozenat %></dt><dd><%= issue.frozenat %></dd>
 							<br />
-							<dt>Zeit für die Zulassung</dt><dd>15 Tage</dd>
-							<dt>Zeit für die Diskussion</dt><dd>30 Tage</dd>
-							<dt>Zeit für die Überprüfung</dt><dd>15 Tage</dd>
-							<dt>Zeit für die Abstimmung</dt><dd>15 Tage</dd>
+							<dt><%= texts.timeforadmission %></dt><dd><%= issue.timeforadmission %> <%= texts.days %></dd>
+							<dt><%= texts.timefordiscussion %></dt><dd><%= issue.timefordiscussion %> <%= texts.days %></dd>
+							<dt><%= texts.timeforrevision %></dt><dd><%= issue.timeforrevision %> <%= texts.days %></dd>
+							<dt><%= texts.timeforvote %></dt><dd><%= issue.timeforvote %> <%= texts.days %></dd>
 							<br />
-							<dt>Quorum für das Thema</dt><dd>10%</dd>
-							<dt>Quorum für Initiativen im Thema</dt><dd>10%</dd>
-							<dt>Zur Zeit benötigt für das Thema</dt><dd>156</dd>
-							<dt>Zur Zeit benötigt für die Initative</dt><dd>156</dd>
+							<dt><%= texts.issuequorum %></dt><dd><%= issue.quorum.toString() %>%</dd>
+							<dt><%= texts.currentlyneedeforissue %></dt><dd><%= Math.round(issue.population * (issue.quorum / 100.0)).toString() %></dd>
 							<br />
-							<dt>Jetzt abstimmen</dt><dd>0</dd>
-							<dt>Später abstimmen</dt><dd>12</dd>
-							<dt>Geschlossen</dt><dd>Nein</dd>
+							<dt><%= texts.votenow %></dt><dd><%= issue.votenow %></dd>
+							<dt><%= texts.votelater %></dt><dd><%= issue.votelater %></dd>
+							<dt><%= texts.closed %></dt><dd><% if(issue.open) { %> <%= texts.no %> <% } else { %><%= texts.yes %><% } %></dd>
 						</dl>
 					 	</div>
 
 				<div class="box-footer">
-					<a class="button" href="#">Alternative Initiative hinzufügen</a><a id="detailslide" class="button" href="#">Details</a>
+					<a class="button" href="#"><%= texts.addalternativeinitiative %></a><a id="detailslide" class="button" href="#"><%= texts.details %></a>
 			</div>
 
 		</div>
