@@ -102,10 +102,10 @@
 							<dt><%= texts.halffrozenat %></dt><dd><%= issue.halffrozenat %></dd>
 							<dt><%= texts.frozenat %></dt><dd><%= issue.frozenat %></dd>
 							<br />
-							<dt><%= texts.timeforadmission %></dt><dd><%= issue.timeforadmission %> <%= texts.days %></dd>
-							<dt><%= texts.timefordiscussion %></dt><dd><%= issue.timefordiscussion %> <%= texts.days %></dd>
-							<dt><%= texts.timeforrevision %></dt><dd><%= issue.timeforrevision %> <%= texts.days %></dd>
-							<dt><%= texts.timeforvote %></dt><dd><%= issue.timeforvote %> <%= texts.days %></dd>
+							<dt><%= texts.timeforadmission %></dt><dd><%= issue.timeforadmission %> <% if(issue.timeforadmission=="1") { %><%= texts.day %><% } else { %><%= texts.days %><% } %></dd>
+							<dt><%= texts.timefordiscussion %></dt><dd><%= issue.timefordiscussion %> <% if(issue.timefordiscussion=="1") { %><%= texts.day %><% } else { %><%= texts.days %><% } %></dd>
+							<dt><%= texts.timeforrevision %></dt><dd><%= issue.timeforrevision %> <% if(issue.timeforrevision=="1") { %><%= texts.day %><% } else { %><%= texts.days %><% } %></dd>
+							<dt><%= texts.timeforvote %></dt><dd><%= issue.timeforvote %> <% if(issue.timeforvote=="1") { %><%= texts.day %><% } else { %><%= texts.days %><% } %></dd>
 							<br />
 							<dt><%= texts.issuequorum %></dt><dd><%= issue.quorum.toString() %>%</dd>
 							<dt><%= texts.currentlyneedeforissue %></dt><dd><%= Math.round(issue.population * (issue.quorum / 100.0)).toString() %></dd>
