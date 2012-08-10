@@ -2,5 +2,9 @@
 	"listen": {
 		"port": 8080,
 		"host": "localhost"
-	}
+	},
+	"baseurl": {
+		"host": "apitest.liquidfeedback.org",
+		"port": 25520
+}
 }
