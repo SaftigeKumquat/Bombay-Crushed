@@ -38,7 +38,7 @@
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
-				<h2><%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
+				<h2><%= issue.status %> | <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
 
 						<div class="filtertable">
 							<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>
@@ -51,15 +51,11 @@
 						</div>
 						<table class="table-area">
 							<tr>
-								<th><%= texts.issue %></th>
-								<th><%= texts.state %></th>
 								<th><%= texts.inis %></th>
 								<th><%= texts.status %></th>
 							</tr>
 
 							<tr class="odd">
-								<td><a href=""><%= texts.issue %> #<%= issue.id%></a></td>
-								<td><%= issue.status %></td>
 								<td><h3><a href="#"><%= issue.initiatives[0].title %></a></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
@@ -73,8 +69,6 @@
 
 							<% for(var i = 1; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
-								<td></td>
-								<td></td>
 								<td><h3><a href="#"><%= issue.initiatives[i].title %></a></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
