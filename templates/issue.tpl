@@ -38,7 +38,15 @@
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
-				<h2><%= issue.status %> | <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
+				<h2><% switch(issue.status) {
+						   case texts.status1: %> <%= texts.statusstep1 %> <% break; %>
+						<% case texts.status2: %> <%= texts.statusstep2 %> <% break; %>
+						<% case texts.status3: %> <%= texts.statusstep3 %> <% break; %>
+						<% case texts.status4: %> <%= texts.statusstep4 %> <% break; %>
+						<% case texts.status5: %> <%= texts.statusstep5 %> <% break; %>
+						<% case texts.status6: %> <%= texts.statusstep6 %> <% break; %>
+						<% } %>
+					| <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
 
 						<div class="filtertable">
 							<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>
