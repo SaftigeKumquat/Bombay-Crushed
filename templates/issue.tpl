@@ -59,7 +59,15 @@
 
 							<tr class="odd">
 								<td><a href=""><%= texts.issue %> #<%= issue.id%></a></td>
-								<td><%= issue.status %></td>
+								<td> <% switch(issue.status) {
+									   case texts.status1: %> <%= texts.statusstep1 %> <% break; %>
+									<% case texts.status2: %> <%= texts.statusstep2 %> <% break; %>
+									<% case texts.status3: %> <%= texts.statusstep3 %> <% break; %>
+									<% case texts.status4: %> <%= texts.statusstep4 %> <% break; %>
+									<% case texts.status5: %> <%= texts.statusstep5 %> <% break; %>
+									<% case texts.status6: %> <%= texts.statusstep6 %> <% break; %>
+									<% } %>
+								</td>
 								<td><h3><a href="#"><%= issue.initiatives[0].title %></a></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
