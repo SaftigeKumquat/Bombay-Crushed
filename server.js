@@ -92,7 +92,9 @@ var showArea = function(state) {
 	}
 	// we need an area id
 	if(!state.url.query.area_id) {
-		// todo: error handling
+		console.log('Please provide area_id parameter');
+		invalidURL(state);
+		return;
 	}
 
 	var finish = function() {
