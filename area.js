@@ -31,6 +31,8 @@ var area = function(state, render) {
 		}
 	}
 
+	var issue_id;
+
 	// get the area
 	lf.query('/area', { 'area_id': area_id, 'include_units': 1 }, state, function(res) {
 		builtArea.name = res.result[0].name;
@@ -40,12 +42,15 @@ var area = function(state, render) {
 			for(var i = 0; i < issue_res.result.length; i++) {
 				issues.push(issue_res.result[i]);
 
-				lf.query('/interest', { 'issue_id': issue_res.result[i].id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(interest_res) {
+				issue_id = issue_res.result[i].id;
+				console.log('TEST:' + JSON.stringify(issue_res));
+				lf.query('/interest', { 'issue_id': issue_id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(interest_res) {
+					console.log('TEST:' + JSON.stringify(interest_res));
 					if(interest_res.result.length > 0) {
-						interest.push({ 'issue_id': issue_res.result[i].id, 'iwatchissue': true});
+						interest.push({ 'issue_id': issue_id, 'iwatchissue': true});
 					}
 					else {
-						interest.push({ 'issue_id': issue_res.result[i].id, 'iwatchissue': false});
+						interest.push({ 'issue_id': issue_id, 'iwatchissue': false});
 					}
 					finish();
 				});

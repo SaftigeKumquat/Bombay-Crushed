@@ -63,7 +63,7 @@ module.exports = function(serverError) {
 				'url': url.parse(req.url, true),
 				'app_prefix': app_prefix
 			};
-			state.local_path = state.url.path.substring(app_prefix.length);
+			state.local_path = state.url.pathname.substring(app_prefix.length);
 			if(state.local_path.length === 0) {
 				state.local_path = '/overview';
 			}
