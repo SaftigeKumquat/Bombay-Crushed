@@ -6,6 +6,7 @@
  */
 
 var ejs = require('./ejs.js');
+var delegations = require('./delegations');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -20,8 +21,14 @@ exports.show = function(state) {
 		return;
 	}
 
-	var ctx = state.context;
-	ctx.meta.currentpage = "contacts";
-	ejs.render(state, '/contacts.tpl');
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "contacts";
+		if(ctx.delegations !== undefined) {
+			ejs.render(state, '/contacts.tpl');
+		}
+	}
+
+	delegations.lastActions(state, finish);
 }
 
