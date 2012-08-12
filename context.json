@@ -444,6 +444,14 @@
 		"quorum": 10,
 		"iwatchissue": true,
 		"iwanttopostponeissue": true,
+		"pagination": {
+			"currentpostponers": 1,
+			"totalpostponers": 2,
+			"currentdelegations": 1,
+			"totaldelegations": 2,
+			"currentinterested": 2,
+			"totalinterested": 2
+		},
 		"initiatives": [
 			{"title": "Recht auf Nacktheit im Öffentlichen Raum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 25, "potential": 40, "uninvolved": 30, "isupportini": true},
 			{"title": "Recht auf relative Nacktheit im Raumzeitkontinuum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},

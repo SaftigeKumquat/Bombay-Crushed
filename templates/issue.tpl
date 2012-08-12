@@ -157,10 +157,16 @@
 
 				<div class="box-footer">
 					<ul class="pagination">
-						<li class="button button-backward-off"><%= texts.backshort %></li>
-						<li class="active">1</li>
-						<li><a href="?page=2">2</a></li>
-						<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentpostponers == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totalpostponers; a++) {
+							if(a == issue.pagination.currentpostponers) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentpostponers + 1;
+					if(issue.pagination.currentpostponers != issue.pagination.totalpostponers) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 					</ul>
 				</div>
 			</div>
@@ -184,10 +190,16 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off"><%= texts.backshort %></li>
-					<li class="active">1</li>
-					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentdelegations == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totaldelegations; a++) {
+							if(a == issue.pagination.currentdelegations) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentdelegations + 1;
+					if(issue.pagination.currentdelegations != issue.pagination.totaldelegations) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
@@ -216,10 +228,16 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off"><%= texts.backshort %></li>
-					<li class="active">1</li>
-					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentinterested == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totalinterested; a++) {
+							if(a == issue.pagination.currentinterested) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentinterested + 1;
+					if(issue.pagination.currentinterested != issue.pagination.totalinterested) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
