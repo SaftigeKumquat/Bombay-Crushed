@@ -17,8 +17,13 @@
 	<div class="row">
 
 		<div class="twocol nobox first">
-			<h2><%= texts.membership %></h2>
-			<div class="interestbox"><p><%= texts.youareinterestedvotelater %></p></div>
+			<% if(issue.iwatchissue) { %>
+				<h2><%= texts.membership %></h2>
+				<div class="interestbox"><p>
+					<% if(issue.iwanttopostponeissue) { %><%= texts.youareinterestedvotelater %>
+					<% } else { %><%= texts.youareinterested %> <% } %>
+				</p></div>
+			<% } %>
 
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
