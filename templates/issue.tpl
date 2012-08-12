@@ -27,15 +27,24 @@
 
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
+				<% if(!issue.iwatchissue) { %>
 				<li id="personal-menu-interest"><a href="#"><%= texts.declareinterest %></a></li>
-				<li id="personal-menu-later"><a href="#"><%= texts.votelater %></a></li>
+				<% } else { %>
 				<li id="personal-menu-nointerest"><a href="#"><%= texts.revokeinterest %></p></a></li>
+				<% } %>
+				<% if(!issue.iwanttopostponeissue) { %>
+				<li id="personal-menu-later"><a href="#"><%= texts.votelater %></a></li>
+				<% } else { %>
 				<li id="personal-menu-nolater"><a href="#"><%= texts.revokevotelater %></p></a></li>
+				<% } %>
+				<% if(!issue.delegate) { %>
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
-				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
+				<% } else { %>
 				<li  id="personal-menu-delegate"><a href="#"><img
                 src="content_img/profile_delegate_1.png" alt="<%=
                 texts.profilepic %>" /><p><%= issue.delegate %> <%= texts.removedelegation %></p></a></li>
+				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
+				<% } %>
 
 				<li><a href="#"><span>+</span> <%= texts.discusstopic %></a></li>
 
