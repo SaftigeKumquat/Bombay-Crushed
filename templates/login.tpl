@@ -7,7 +7,7 @@
 
 			<div class="box-footer box-editorial">
 			    <h3>Log In</h3>
-				<form method="post" action="/login" >
+				<form method="post" action="<%= meta.baseurl %>/login" >
     					<fieldset id="input-sub">
  						<input id="api-key" name="key" type="text" size="25" placeholder="API-Key eingeben" autofocus required />
    					</fieldset>
@@ -32,28 +32,28 @@
 
 
 			<div class="box-delegate-info profile-delegate">
-					<img src="content_img/profile_delegate_2.png" alt="Profilbild" />
+					<img src="<%= meta.baseurl %>/content_img/profile_delegate_2.png" alt="Profilbild" />
 					<div>
 						<h3><a href="#">Christophe Chan&nbsp;Hin</a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="https://twitter.com/#!/incredibul"><span class="unit">@incredibul</span></a></div>
 					</div>
 			</div>
 			<div class="box-delegate-info profile-delegate">
-					<img src="content_img/profile_delegate_1.png" alt="Profilbild" />
+					<img src="<%= meta.baseurl %>/content_img/profile_delegate_1.png" alt="Profilbild" />
 					<div>
 						<h3><a href="#">Christoph Fritzsche</a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="https://twitter.com/#!/cfritzsche"><span class="unit">@cfritzsche</span></a></div>
 					</div>
 			</div>
 			<div class="box-delegate-info profile-delegate">
-					<img src="content_img/profile_delegate_3.png" alt="Profilbild" />
+					<img src="<%= meta.baseurl %>/content_img/profile_delegate_3.png" alt="Profilbild" />
 					<div>
 						<h3><a href="#">Johannes Knopp</a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="https://twitter.com/#!/joknopp"><span class="unit">@joknopp</span></a></div>
 					</div>
 			</div>
 			<div class="box-delegate-info profile-delegate">
-					<img src="content_img/profile_delegate_4.png" alt="Profilbild" />
+					<img src="<%= meta.baseurl %>/content_img/profile_delegate_4.png" alt="Profilbild" />
 					<div>
 						<h3><a href="#">Matthias Bach</a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="https://twitter.com/#!/theMarix"><span class="unit">@themarix</span></a></div>

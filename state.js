@@ -9,8 +9,15 @@
 var Cookies = require('cookies');
 var url = require('url');
 var ejs = require('./ejs.js')
+var config = require('./config.js');
 
 module.exports = function(serverError) {
+	var app_prefix = '';
+	if(config.listen.baseurl) {
+		app_prefix = url.parse(config.listen.baseurl).pathname;
+		console.log('APP Prefix: ' + app_prefix);
+	}
+
 	return {
 		/**
 		 * Create an object that keeps the state during a full request / response
@@ -28,6 +35,10 @@ module.exports = function(serverError) {
 		 *  * `sendToLogin(message)`: Redirect the cycle to the login screen
 		 *  * `context`: POD into which to store the data for the rendering process.
 		 *  * `url`: The URL of the current request
+		 *  * `local_path`: The path of the current request, within the current application, e.g. always just
+		 *                  /overview for the start page, even if the app is run with the prefix /foo and the
+		 *                  actual URL was something like http://some.server/foo/overview.
+		 *  * `app_prefix`: Application prefix, the part of the path that's common to all pages
 		 *  * `session_key(key): Convenient access to the current session key. Leave key undefined to get.
 		 *  * `user_id(id): Convenient access to the current user id. Leave id undefined to get.
 		 */
@@ -44,10 +55,19 @@ module.exports = function(serverError) {
 					ejs.render(state, '/login.tpl');
 				},
 				'context': {
-						'meta': {'currentpage': ''}
+						'meta': {
+							'currentpage': '',
+							'baseurl': config.listen.baseurl ? config.listen.baseurl : ''
+						}
 				},
-				'url': url.parse(req.url, true)
+				'url': url.parse(req.url, true),
+				'app_prefix': app_prefix
 			};
+			state.local_path = state.url.path.substring(app_prefix.length);
+			if(state.local_path.length === 0) {
+				state.local_path = '/overview';
+			}
+				
 
 			var session_key, user_id;
 

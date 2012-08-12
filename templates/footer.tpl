@@ -25,7 +25,7 @@
 			<h3><%= texts.copyright %></h3>
 			<p><%= texts.copyrighttextbeforeterms %> <a href="#"><%= texts.copyrighttextterms %></a> <%= texts.copyrighttextafterterms %></p>
 
-			<a href="#"><img src="img/CC-BY-SA_icon.png" title="CC-BY-SA"></img></a>
+			<a href="#"><img src="<%= meta.baseurl %>/img/CC-BY-SA_icon.png" title="CC-BY-SA"></img></a>
 
 		</div>
 	</div>

@@ -31,7 +31,7 @@
 				<li id="personal-menu-green"><a href="#"><%- texts.supportini %></a></li>
 				<% } %>
 				<% if(initiative.delegate) { %>
-				<li  id="personal-menu-delegate"><a href="#"><img src="<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li>
+				<li  id="personal-menu-delegate"><a href="#"><img src="<%= meta.baseurl %>/<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li>
 				<% } else { %>
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } %>
@@ -51,7 +51,7 @@
 		<% for(var i = 0; i < initiative.authors.length; i++) { %>
 		<div class="profile-init">
 			<p>
-				<a href="#"><img src="<%= initiative.authors[i].picmini %>" alt="<%= texts.profilepic %>" /></a>
+				<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.authors[i].picmini %>" alt="<%= texts.profilepic %>" /></a>
 			</p>
 			 <h3><a href="#"><%= initiative.authors[i].name %></a></h3>
 			 <% if(initiative.authors[i].lastauthor) { %>
@@ -141,7 +141,7 @@
 
 				<% for(var i = 0; i < initiative.supporters.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(initiative.supporters[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
 					<h3><a href="#"><%= initiative.supporters[i].name %></a> <% if(initiative.supporters[i].power) { %><a href="" class="for">+<%= initiative.supporters[i].power %></a><% } %></h3>
 				</div>
 				<% } %>
@@ -292,7 +292,7 @@
 								<li class="bargraph-uninvolved" style="width:<%= initiative.alternativeinis[i].uninterestedwidth %>"></li>
 							</ul>
 						</td>
-						<td><% if(initiative.alternativeinis[i].isupport) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></td>
+						<td><% if(initiative.alternativeinis[i].isupport) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></td>
 					</tr>
 					<% if(odd) { odd = false; } else { odd = true; }
 					} %>

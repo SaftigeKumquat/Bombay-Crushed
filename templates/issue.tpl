@@ -41,7 +41,7 @@
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } else { %>
 				<li  id="personal-menu-delegate"><a href="#"><img
-                src="content_img/profile_delegate_1.png" alt="<%=
+                src="<%= meta.baseurl %>/content_img/profile_delegate_1.png" alt="<%=
                 texts.profilepic %>" /><p><%= issue.delegate %> <%= texts.removedelegation %></p></a></li>
 				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
 				<% } %>
@@ -78,7 +78,7 @@
 							</tr>
 
 							<tr class="odd">
-								<td><h3><a href="#"><%= issue.initiatives[0].title %></a><% if(issue.initiatives[0].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[0].title %></a><% if(issue.initiatives[0].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
@@ -91,7 +91,7 @@
 
 							<% for(var i = 1; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
-								<td><h3><a href="#"><%= issue.initiatives[i].title %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[i].title %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
@@ -150,17 +150,23 @@
 
 						<% for(var i = 0; i < issue.votelaterlist.length; i++) { %>
 				 		<div class="box-delegate-info box-supporters">
-							<a href="#"><img src="<%= issue.votelaterlist[i].picmini%>" alt="<%= texts.profilepic %>"/></a>
+							<a href="#"><img src="<%= meta.baseurl %>/<%= issue.votelaterlist[i].picmini%>" alt="<%= texts.profilepic %>"/></a>
 							<h3><a href="#"><%= issue.votelaterlist[i].name %></a></h3>
 						</div>
 						<% } %>
 
 				<div class="box-footer">
 					<ul class="pagination">
-						<li class="button button-backward-off"><%= texts.backshort %></li>
-						<li class="active">1</li>
-						<li><a href="?page=2">2</a></li>
-						<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentpostponers == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totalpostponers; a++) {
+							if(a == issue.pagination.currentpostponers) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentpostponers + 1;
+					if(issue.pagination.currentpostponers != issue.pagination.totalpostponers) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 					</ul>
 				</div>
 			</div>
@@ -174,20 +180,26 @@
 			<h2><%= texts.delegations %> (<%= issue.delegationnumber %>)</h2>
 				<% for(var i = 0; i < issue.delegations.length; i++) { %>
 				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="<%= issue.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegationstart.name %></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegationstart.name %></a>
 					<% for(var a = 0; a < issue.delegations[i].delegations.length; a++) { %>
-					<img class="delegate-arrow" src="img/arrow.png" alt="<%= texts.delegatesto %>"/>
-					<a href="#"><img src="<%= issue.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegations[a].name %></a>
+					<img class="delegate-arrow" src="<%= meta.baseurl %>/img/arrow.png" alt="<%= texts.delegatesto %>"/>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegations[a].name %></a>
 					<% } %>
 				</div>
 				<% } %>
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off"><%= texts.backshort %></li>
-					<li class="active">1</li>
-					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentdelegations == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totaldelegations; a++) {
+							if(a == issue.pagination.currentdelegations) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentdelegations + 1;
+					if(issue.pagination.currentdelegations != issue.pagination.totaldelegations) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
@@ -209,17 +221,23 @@
 
 				<% for(var i = 0; i < issue.members.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(issue.members[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= issue.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
 					<h3><a href="#"><%= issue.members[i].name %></a></h3>
 				</div>
 				<% } %>
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<li class="button button-backward-off"><%= texts.backshort %></li>
-					<li class="active">1</li>
-					<li><a href="?page=2">2</a></li>
-					<li><a class="button button-forward" href="#"><%= texts.forward %></a></li>
+						<% if(issue.pagination.currentinterested == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totalinterested; a++) {
+							if(a == issue.pagination.currentinterested) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentinterested + 1;
+					if(issue.pagination.currentinterested != issue.pagination.totalinterested) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
