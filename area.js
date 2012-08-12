@@ -1,5 +1,5 @@
 var lf = require('./lfcli.js');
-var texts = require('./texts.json');
+var issue = require('./issue.js');
 
 var area = function(state, render) {
 	var area_id = state.url.query.area_id;
@@ -29,32 +29,7 @@ var area = function(state, render) {
 				builtIssue = {};
 				builtIssue.id = issues[i].id;
 
-				switch(issues[i].state) {
-					case "calculation":
-					case "finished_with_winner":
-					case "finished_without_winner":
-						builtIssue.status = texts.statusstep5;
-						break;
-					case "verification":
-						builtIssue.status = texts.statusstep3;
-						break;
-					case "voting":
-						builtIssue.status = texts.statusstep4;
-						break;
-					case "discussion":
-						builtIssue.status = texts.statusstep2;
-						break;
-					case "admission":
-						builtIssue.status = texts.statusstep1;
-						break;
-					case "canceled_revoked_before_accepted":
-					case "canceled_issue_not_accepted":
-					case "canceled_after_revocation_during_discussion":
-					case "canceled_after_revocation_during_verification":
-					case "canceled_no_initiative_admitted":
-						builtIssue.status = texts.statusstep6;
-						break;
-				}
+				builtIssue.status = issue.getIssueStateText(issues[i].state);
 
 				for(var a = 0; a < interest.length; a++) {
 					if(interest[a].issue_id == builtIssue.id && interest[a].iwatchissue == true) {

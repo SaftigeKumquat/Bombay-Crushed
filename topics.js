@@ -62,26 +62,14 @@ var topics = function(state, render) {
 									status4++;
 									break;
 								case "canceled_revoked_before_accepted":
-									status6++;
-									break;
 								case "canceled_issue_not_accepted":
-									status6++;
-									break;
 								case "canceled_after_revocation_during_discussion":
-									status6++;
-									break;
 								case "canceled_after_revocation_during_verification":
-									status6++;
-									break;
-								case "calculation":
-									status5++;
-									break;
 								case "canceled_no_initiative_admitted":
 									status6++;
 									break;
+								case "calculation":
 								case "finished_without_winner":
-									status5++;
-									break;
 								case "finished_with_winner":
 									status5++;
 									break;
