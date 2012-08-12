@@ -304,13 +304,13 @@
 	},
 	"area": {
 		"name": "Innen, Recht, Demokratie, Sicherheit", "unit": "Baden-Württemberg",
-		"topics": [
+		"issues": [
 			{ "id": 1953, "title": "Für liberalisierte Ladenöffnungszeiten", "supporter": 365, "potsupporter": 15, "uninterested": 631, "status": "1.Neu",
 				"quorum": 5, "support": 30, "potential": 10, "uninvolved": 60, "iwatchissue": true, "isupportini": true },
 			{ "id": 1952, "title": "Für mehr Käsekuchen", "supporter": 365, "potsupporter": 15, "uninterested": 631, "status": "1.Neu",
 				"quorum": 10, "support": 25, "potential": 40, "uninvolved": 35, "alternativeinis": [
 					{ "title": "Für noch mehr Käsekuchen", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 25, "potential": 40, "uninvolved": 35 }
-				] 
+				]
 			},
 			{ "id": 1951, "title": "Recht auf Nacktheit im Öffentlichen Raum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "status": "2.Diskussion",
 				"quorum": 30, "support": 25, "potential": 40, "uninvolved": 35, "alternativeinis": [
@@ -333,7 +333,7 @@
 					{ "title": "Recht auf relative Nacktheit im Raumzeitkontinuum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 85 }
 				] 
 			}
-		], "topicspage": 1, "topicspages": 2,
+		], "issuespage": 1, "issuespages": 2,
 		"delegationnumber": 200, "delegations": [
 			{ "delegationstart": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png"}, "delegations": [
 					{ "nick": "afelia", "name": "Marina Weisband", "picsmall": "content_img/profile_delegate_7.png" },
@@ -395,7 +395,7 @@
 					{ "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png" }
 				] 
 			}
-		], "delegationpage": 1, "delegationpages": 2, "members": [
+		], "delegationpage": 1, "delegationpages": 2, "membernumber": 1200, "members": [
 			{ "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
 			{ "nick": "joknopp", "name": "Johannes Knopp Doppelgänger", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },
 			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "isdelegated": "true" },

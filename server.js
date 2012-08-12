@@ -27,6 +27,7 @@ var overview = require('./overview.js');
 var user = require('./user.js');
 var inis = require('./inis.js');
 var topics = require('./topics.js');
+var area = require('./area.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -106,10 +107,20 @@ var showArea = function(state) {
 		state.sendToLogin();
 		return;
 	}
+	// we need an area id
+	if(!state.url.query.area_id) {
+		// todo: error handling
+	}
 
-	var ctx = state.context;
-	ctx.meta.currentpage = "area";
-	ejs.render(state, '/area.tpl');
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "area";
+		if(ctx.area !== undefined) {
+			ejs.render(state, '/area.tpl');
+		}
+	}
+
+	area.show(state, finish);
 }
 
 /**

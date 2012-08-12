@@ -72,32 +72,32 @@
 					</tr>
 
 					<% var odd = true;
-					for(var i = 0; i < area.topics.length; i++) { %>
+					for(var i = 0; i < area.issues.length; i++) { %>
 					<tr <% if(odd) { %>class="odd"<% } else { %>class="even"<% } %>>
-						<td><a href=""><%= texts.issue %> #<%= area.topics[i].id %></a> <% if(area.topics[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="img/eye.png"/><% } %></td>
-						<td><%= area.topics[i].status %></td>
-						<td><h3><a href="#"><%= area.topics[i].title %></a><% if(area.topics[i].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+						<td><a href=""><%= texts.issue %> #<%= area.issues[i].id %></a> <% if(area.issues[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="img/eye.png"/><% } %></td>
+						<td><%= area.issues[i].status %></td>
+						<td><h3><a href="#"><%= area.issues[i].title %></a><% if(area.issues[i].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
 						<td>
-							<ul class="bargraph" title="<%= area.topics[i].supporter %> <%= texts.supporter %> / <%= area.topics[i].potsupporter %> <%= texts.potsupporter %> / <%= area.topics[i].uninterested %> <%= texts.uninterested %>">
-								<li class="bargraph-quorum" style="left:<%= area.topics[i].quorum %>%;"></li>
-								<li class="bargraph-support" style="width:<%= area.topics[i].support %>%"></li>
-								<li class="bargraph-potential" style="width:<%= area.topics[i].potential %>%"></li>
-								<li class="bargraph-uninvolved" style="width:<%= area.topics[i].uninvolved %>%"></li>	
+							<ul class="bargraph" title="<%= area.issues[i].supporter %> <%= texts.supporter %> / <%= area.issues[i].potsupporter %> <%= texts.potsupporter %> / <%= area.issues[i].uninterested %> <%= texts.uninterested %>">
+								<li class="bargraph-quorum" style="left:<%= area.issues[i].quorum %>%;"></li>
+								<li class="bargraph-support" style="width:<%= area.issues[i].support %>%"></li>
+								<li class="bargraph-potential" style="width:<%= area.issues[i].potential %>%"></li>
+								<li class="bargraph-uninvolved" style="width:<%= area.issues[i].uninvolved %>%"></li>	
 							</ul>
 						</td>	
 					</tr>
-					<% if(area.topics[i].alternativeinis) {						
-						for(var a = 0; a < area.topics[i].alternativeinis.length; a++) { %>
+					<% if(area.issues[i].alternativeinis) {						
+						for(var a = 0; a < area.issues[i].alternativeinis.length; a++) { %>
 					<tr class="table-alternateinitiative<% if(odd) { %> odd<% } %>">
 						<td></td>
 						<td></td>
-						<td><h3><a href="#"><%= area.topics[i].alternativeinis[a].title %></a><% if(area.topics[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+						<td><h3><a href="#"><%= area.issues[i].alternativeinis[a].title %></a><% if(area.issues[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
 						<td>
-							<ul class="bargraph" title="<%= area.topics[i].alternativeinis[a].supporter %> <%= texts.supporter %> / <%= area.topics[i].alternativeinis[a].potsupporter %> <%= texts.potsupporter %> / <%= area.topics[i].alternativeinis[a].uninterested %> <%= texts.uninterested %>">
-								<li class="bargraph-quorum" style="left:<%= area.topics[i].quorum %>%;"></li>
-								<li class="bargraph-support" style="width:<%= area.topics[i].alternativeinis[a].support %>%"></li>
-								<li class="bargraph-potential" style="width:<%= area.topics[i].alternativeinis[a].potential %>%"></li>
-								<li class="bargraph-uninvolved" style="width:<%= area.topics[i].alternativeinis[a].uninvolved %>%"></li>	
+							<ul class="bargraph" title="<%= area.issues[i].alternativeinis[a].supporter %> <%= texts.supporter %> / <%= area.issues[i].alternativeinis[a].potsupporter %> <%= texts.potsupporter %> / <%= area.issues[i].alternativeinis[a].uninterested %> <%= texts.uninterested %>">
+								<li class="bargraph-quorum" style="left:<%= area.issues[i].quorum %>%;"></li>
+								<li class="bargraph-support" style="width:<%= area.issues[i].alternativeinis[a].support %>%"></li>
+								<li class="bargraph-potential" style="width:<%= area.issues[i].alternativeinis[a].potential %>%"></li>
+								<li class="bargraph-uninvolved" style="width:<%= area.issues[i].alternativeinis[a].uninvolved %>%"></li>	
 							</ul>
 						</td>	
 					</tr>
@@ -109,17 +109,17 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(area.topicspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= area.topicspages; a++) {
-						if(a == area.topicspage) { %>
+					<% if(area.issuespage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+					for(var a = 1; a <= area.issuespages; a++) {
+						if(a == area.issuespage) { %>
 							<li class="active"><%= a %></li>
 						<% }
 						else { %>
 							<li><a href="#"><%= a %></a></li>
 						<% }
 					}
-					var nextpage = ( area.topicspage - 1 ) + 2;
-					if(area.topicspage != area.topicspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					var nextpage = ( area.issuespage - 1 ) + 2;
+					if(area.issuespage != area.issuespages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>	
 		</div>
@@ -157,7 +157,7 @@
 		</div>
 		
 		<div class="threecol box last">
-			<h2><%= texts.members %> (1200)</h2>
+			<h2><%= texts.members %> (<%= area.membernumber %>)</h2>
 			<div class="box-description">
 				<p><%= texts.areamembersinfo %></p>
 
