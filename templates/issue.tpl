@@ -42,7 +42,7 @@
 						   case texts.status1: %> <%= texts.statusstep1 %> <% break; %>
 						<% case texts.status2: %> <%= texts.statusstep2 %> <% break; %>
 						<% case texts.status3: %> <%= texts.statusstep3 %> <% break; %>
-						<% case texts.status4: %> <%= texts.statusstep4 %> <% break; %>
+						<% case texts.status4: %> <a href="#"><%= texts.statusstep4 %></a> <% break; %>
 						<% case texts.status5: %> <%= texts.statusstep5 %> <% break; %>
 						<% case texts.status6: %> <%= texts.statusstep6 %> <% break; %>
 						<% } %>
