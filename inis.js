@@ -3,6 +3,7 @@
  */
 
 var lf = require('./lfcli.js');
+var texts = require('./texts.json');
 
 /**
  * Retrieve all initiatives as required to build the table on the overview page.
@@ -92,22 +93,22 @@ var inis = function(state, render) {
 				}
 				switch(events[i].state) {
 					case "finished_with_winner":
-						ini.status = "5.Abgeschlossen";
+						ini.status = texts.statusstep5;
 						break;
 					case "verification":
-						ini.status = "3.Eingefroren";
+						ini.status = texts.statusstep3;
 						break;
 					case "voting":
-						ini.status = "4.Abstimmung";
+						ini.status = texts.statusstep4;
 						break;
 					case "discussion":
-						ini.status = "2.Diskussion";
+						ini.status = texts.statusstep2;
 						break;
 					case "admission":
-						ini.status = "1.Neu";
+						ini.status = texts.statusstep1;
 						break;
 					case "finished_without_winner":
-						ini.status = "Abgebrochen";
+						ini.status = texts.statusstep6;
 						break;
 				}
 				for(var j = 0; j < inis.length; j++) {

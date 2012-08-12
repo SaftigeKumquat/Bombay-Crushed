@@ -35,7 +35,7 @@
 				<% } else { %>
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } %>
-				<% if(initiative.state == texts.status4) { %>
+				<% if(initiative.state == texts.statusstep4) { %>
 				<li><a href="#"><span>+</span><%= texts.changevote %></a></li>
 				<% } %>
 				<li><a href="#"><span>+</span><%= texts.discusstopic %></a></li>
