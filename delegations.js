@@ -34,10 +34,12 @@ exports.lastActions = function(state, render) {
 		var links = res.result;
 		var i, resolved = 0;
 		var resolved_delegations = [];
+		var pending_resolves = 0;
 
 		// follow the delegations and resolve the user information
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
+				pending_resolves++; // don't finish until we know who it is and what he did
 				console.log('Query trustee name: ' + links[i].trustee_id);
 				lf.query('/member', {'member_id': links[i].trustee_id }, state, function(res) {
 					var delegate = res.result[0];
@@ -66,18 +68,17 @@ exports.lastActions = function(state, render) {
 							lfapi.query('/initiative', {'initiative_id': vote.initiative_id}, state, function(res) {
 								info_obj.title = res.res[0].name;
 								resolved_delegations.push(info_obj);
-								console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+								pending_resolves--; // we now know what she did
 								// if all delegations have been handled finish it up
-								if(resolved_delegations.length === links.length) {
+								if(pending_resolves === 0) {
 									delegations = resolved_delegations;
 									finish();
 								}
 							});
 						} else {
-							resolved_delegations.push(info_obj);
-							console.log('Resolved ' + resolved_delegations.length + ' of ' + links.length + ' delegations.');
+							pending_resolves--; // we now know that this guy didn't do anything
 							// if all delegations have been handled finish it up
-							if(resolved_delegations.length === links.length) {
+							if(pending_resolves === 0) {
 								delegations = resolved_delegations;
 								finish();
 							}
