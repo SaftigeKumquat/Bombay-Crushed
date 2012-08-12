@@ -27,6 +27,7 @@ var overview = require('./overview.js');
 var user = require('./user.js');
 var inis = require('./inis.js');
 var topics = require('./topics.js');
+var contacts = require('./contacts.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -74,24 +75,6 @@ var showProfile = function(state) {
 	}
 
 	user.get(state, finish);
-}
-
-/**
- * Takes care of retrieving data for and rendering the
- * user contacts page.
- *
- * @param state The state object of the current HTTP-Request
- */
-var showContacts = function(state) {
-	// we need a valid user session...
-	if(!state.session_key()) {
-		state.sendToLogin();
-		return;
-	}
-
-	var ctx = state.context;
-	ctx.meta.currentpage = "contacts";
-	ejs.render(state, '/contacts.tpl');
 }
 
 /**
@@ -340,7 +323,7 @@ var url_mapping = {
 	'/logout': performLogout,
 	'/topics': showTopics,
 	'/profile': showProfile,
-	'/contacts': showContacts,
+	'/contacts': contacts.show,
 	'/timeline': showTimeline,
 	'/update_inis': overview.updateInis,
 	'/update_news': overview.updateNews,
