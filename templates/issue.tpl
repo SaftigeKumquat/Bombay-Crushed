@@ -69,7 +69,7 @@
 							</tr>
 
 							<tr class="odd">
-								<td><h3><a href="#"><%= issue.initiatives[0].title %></a></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[0].title %></a><% if(issue.initiatives[0].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
@@ -82,7 +82,7 @@
 
 							<% for(var i = 1; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
-								<td><h3><a href="#"><%= issue.initiatives[i].title %></a></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[i].title %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
