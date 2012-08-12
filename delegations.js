@@ -35,8 +35,6 @@ exports.lastActions = function(state, render) {
 		var i, resolved = 0;
 		var resolved_delegations = [];
 
-		console.log('DELEGATIONS: ' + JSON.stringify(links));
-
 		// follow the delegations and resolve the user information
 		if(links.length) {
 			for(i = 0; i < links.length; i++) {
@@ -45,7 +43,7 @@ exports.lastActions = function(state, render) {
 					var delegate = res.result[0];
 					console.log(JSON.stringify(delegate));
 
-					info_obj = {
+					var info_obj = {
 						user: {
 							'name': delegate.name,
 							'picsmall': '/avatar/' + delegate.id
