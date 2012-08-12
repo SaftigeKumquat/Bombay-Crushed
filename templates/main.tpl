@@ -2,8 +2,8 @@
 	<div class="row">
 		<div class="twocol nobox">
 			<h2><%= user.nick %></h2>
-			<a href="profile" title="<%= texts.editprofile %>" id="profile-image">
- 				<img src="<%= user.picbig %>" alt="<%= texts.profilepic %>" />
+			<a href="<%= meta.baseurl %>/profile" title="<%= texts.editprofile %>" id="profile-image">
+ 				<img src="<%= meta.baseurl %>/<%= user.picbig %>" alt="<%= texts.profilepic %>" />
 			</a>
 			<ul id="personal-menu">
 				<li id="personal-menu-new"><a href="#"><span>+</span><%= texts.createtopic %></a></li>
@@ -55,24 +55,24 @@
 						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><%
 						if(inis[i].status == texts.tablevote) { %></span><% }
 						if(inis[i].delegate) {
-						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
+						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= meta.baseurl %>/<%= inis[i].delegate.picsmall %>"/></a></p><%
 						} %></td>
 					</tr><%
 					} %>
 				</table>
 			<div id="inipages" class="box-footer">
 				<ul class="pagination">
-					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
 						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>
+							<li><a href="<%= meta.baseurl %>/overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>
 						<% }
 					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 			</div>
 			<% for(var i = 0; i < delegations.length; i++) { %>
 			<div class="box-delegate-info">
-				<img src="<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
+				<img src="<%= meta.baseurl %>/<%= meta.baseurl %>/<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
 				<h3><a href="#"><%= delegations[i].user.name %></a><br /><span class="<%= delegations[i].action %>"><%
 		if(delegations[i].action == 'for') {
 		%><%= texts.for %><% }
@@ -135,7 +135,7 @@
 				</ul>
 			</div>
 			<div id="newspages" class="box-footer">
-				<% if(news.activepage < news.pages) { var nextpage = ( news.activepage - 1 ) + 2; %><a href="overview?page=<%= initable.activepage %>&newspage=<%= nextpage %>" class="button button-forward" onClick="update_news(<%= nextpage %>)"><%= texts.next %></a><% } else { %><a href="#" class="button button-forward"><%= texts.next %></a><% } %>
+				<% if(news.activepage < news.pages) { var nextpage = ( news.activepage - 1 ) + 2; %><a href="<%= meta.baseurl %>/overview?page=<%= initable.activepage %>&newspage=<%= nextpage %>" class="button button-forward" onClick="update_news(<%= nextpage %>)"><%= texts.next %></a><% } else { %><a href="#" class="button button-forward"><%= texts.next %></a><% } %>
 				<% if(news.activepage > 1) { %><a href="overview?page=<%= initable.activepage %>&newspage=<%= (news.activepage - 1) %>" class="button button-backward" onClick="update_news(<%= (news.activepage - 1) %>)"><%= texts.previous %></a></li><% } else { %><a href="#" class="button button-backward"><%= texts.previous %></a><% } %>
 			</div>
 		</div>

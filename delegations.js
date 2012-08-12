@@ -48,7 +48,7 @@ exports.lastActions = function(state, render) {
 					var info_obj = {
 						user: {
 							'name': delegate.name,
-							'picsmall': '/avatar/' + delegate.id
+							'picsmall': 'avatar/' + delegate.id
 						}
 					};
 					// get last action of user

@@ -240,7 +240,7 @@ var serveStatic = function(state) {
 
 	// stream from file to requestee
 	// TODO could probably be read chunkwise
-	filepath = __dirname + '/html' + state.request.url;
+	filepath = __dirname + '/html' + state.local_path;
 	console.log('Serving: ' + filepath);
 	fs.readFile(filepath, function(err, data) {
 		if(err) {
@@ -261,7 +261,7 @@ var serveStatic = function(state) {
  * @param state State object for the current HTTP-Request
  */
 var sendPicture = function(state) {
-	var user_id = state.request.url.slice('/picbig/'.length);
+	var user_id = state.local_path.slice('/picbig/'.length);
 	console.log('Retrieving portrait for user ' + user_id);
 	var query_obj = {
 		'type': 'photo',
@@ -290,7 +290,7 @@ var sendPicture = function(state) {
  * @param state State object for the current HTTP-Request
  */
 var sendAvatar = function(state) {
-	var user_id = state.request.url.slice('/avatar/'.length);
+	var user_id = state.local_path.slice('/avatar/'.length);
 	console.log('Retrieving avatar for user ' + user_id);
 	var query_obj = {
 		'type': 'avatar',
@@ -358,9 +358,17 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 	var i;
 	var mapped;
 
-	var path = state.url.pathname;
+	if(config.listen.baseurl) {
+		if(state.url.pathname.substring(0, state.app_prefix.length) != state.app_prefix) {
+			// this url is outside our app
+			console.log(state.url.pathname + ' does not start with ' + state.app_prefix);
+			invalidURL(state);
+			return;
+		}
+	}
+	var path = state.local_path;
 
-	console.log('Request url: ' + path);
+	console.log('Request url: ' + path + ' (APP Path is ' + state.app_prefix + ')');
 
 	// check whether the url has a direct mapping
 	mapped = url_mappings[path];
@@ -426,7 +434,7 @@ server = function() {
 		server.listen(config.listen.port);
 		console.log('Server running at port ' + config.listen.port + ' on all interfaces');
 	}
-
+	console.log('Server Base URL: ' + config.listen.baseurl);
 };
 
 // invoke main function

@@ -3,7 +3,7 @@
 		<div class="twocol nobox">
 			<h2><%= user.nick %></h2>
 			<p id="profile-image">
- 				<img src="<%= user.picbig %>" alt="<%= texts.profilepic %>" />
+ 				<img src="<%= meta.baseurl %>/<%= user.picbig %>" alt="<%= texts.profilepic %>" />
  				<a class="button" button-backward-off""><%= texts.changepic %></a>
 			</p>
 		</div>
@@ -45,7 +45,7 @@
 			</div>
 
 			<% for(var i=0; i < delegateactions.length; i++ ) { %><div class="box-delegate-info profile-delegate">
-					<img src="<%= delegateactions[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
+					<img src="<%= meta.baseurl %>/<%= delegateactions[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
 					<div>
 						<h3><a href="#"><%= delegateactions[i].user.name %></a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="#"><span class="unit"><%= delegateactions[i].unit %></span> <%= delegateactions[i].area %></a> <span class="for">(+<%= delegateactions[i].count %>)</span></div>
@@ -57,7 +57,7 @@
 			</div>
 
 			<% for(var i=0; i < strongestdelegates.length; i++ ) { %><div class="box-delegate-info profile-delegate">
-					<img src="<%= strongestdelegates[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
+					<img src="<%= meta.baseurl %>/<%= strongestdelegates[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
 					<div>
 						<h3><a href="#"><%= strongestdelegates[i].user.name %></a></h3>
 						<div class="profile-delegate-theme"><a class="hiddenlink" href="#"><span class="unit"><%= strongestdelegates[i].unit %></span> <%= strongestdelegates[i].area %></a> <span class="for">(+<%= strongestdelegates[i].count %>)</span></div>
@@ -72,7 +72,7 @@
 		<div class="eightcol last box">
 			<h2><%= texts.votingcomments %></h2>
 			<div class="box-description">
-				<form method="get" action="/search" id="search-sub">
+				<form method="get" action="search" id="search-sub">
  					<input name="q" type="text" size="40" placeholder="<%= texts.entersearch %>" />
 				</form>
 			</div>

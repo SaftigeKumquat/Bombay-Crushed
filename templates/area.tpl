@@ -22,7 +22,7 @@
 				
 				<% if(area.delegate) { %>
 				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
-				<li id="personal-menu-delegate"><a href="#"><img src="<%= area.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= area.delegate.name %> <%= texts.removedelegationarea %></p></a></li>
+				<li id="personal-menu-delegate"><a href="#"><img src="<%= meta.baseurl %>/<%= area.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= area.delegate.name %> <%= texts.removedelegationarea %></p></a></li>
 				<% } else { %>
 				<li><a href="#"><span>+</span><%= texts.delegatearea %></a></li>
 				<% } %>
@@ -74,9 +74,9 @@
 					<% var odd = true;
 					for(var i = 0; i < area.topics.length; i++) { %>
 					<tr <% if(odd) { %>class="odd"<% } else { %>class="even"<% } %>>
-						<td><a href=""><%= texts.issue %> #<%= area.topics[i].id %></a> <% if(area.topics[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="img/eye.png"/><% } %></td>
+						<td><a href=""><%= texts.issue %> #<%= area.topics[i].id %></a> <% if(area.topics[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="<%= meta.baseurl %>/img/eye.png"/><% } %></td>
 						<td><%= area.topics[i].status %></td>
-						<td><h3><a href="#"><%= area.topics[i].title %></a><% if(area.topics[i].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+						<td><h3><a href="#"><%= area.topics[i].title %></a><% if(area.topics[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= area.topics[i].supporter %> <%= texts.supporter %> / <%= area.topics[i].potsupporter %> <%= texts.potsupporter %> / <%= area.topics[i].uninterested %> <%= texts.uninterested %>">
 								<li class="bargraph-quorum" style="left:<%= area.topics[i].quorum %>%;"></li>
@@ -91,7 +91,7 @@
 					<tr class="table-alternateinitiative<% if(odd) { %> odd<% } %>">
 						<td></td>
 						<td></td>
-						<td><h3><a href="#"><%= area.topics[i].alternativeinis[a].title %></a><% if(area.topics[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="img/thumb-up.png"/><% } %></h3></td>
+						<td><h3><a href="#"><%= area.topics[i].alternativeinis[a].title %></a><% if(area.topics[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= area.topics[i].alternativeinis[a].supporter %> <%= texts.supporter %> / <%= area.topics[i].alternativeinis[a].potsupporter %> <%= texts.potsupporter %> / <%= area.topics[i].alternativeinis[a].uninterested %> <%= texts.uninterested %>">
 								<li class="bargraph-quorum" style="left:<%= area.topics[i].quorum %>%;"></li>
@@ -131,10 +131,10 @@
 			<h2><%= texts.delegations %> (<%= area.delegationnumber %>)</h2>
 				<% for(var i = 0; i < area.delegations.length; i++) { %>
 				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="<%= area.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= area.delegations[i].delegationstart.name %></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= area.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= area.delegations[i].delegationstart.name %></a>
 					<% for(var a = 0; a < area.delegations[i].delegations.length; a++) { %>
-					<img class="delegate-arrow" src="img/arrow.png" alt="<%= texts.delegatesto %>"/>
-					<a href="#"><img src="<%= area.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= area.delegations[i].delegations[a].name %></a>
+					<img class="delegate-arrow" src="<%= meta.baseurl %>/img/arrow.png" alt="<%= texts.delegatesto %>"/>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= area.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= area.delegations[i].delegations[a].name %></a>
 					<% } %>
 				</div>
 				<% } %>
@@ -173,7 +173,7 @@
 			
 				<% for(var i = 0; i < area.members.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(area.members[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= area.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= area.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
 					<h3><a href="#"><%= area.members[i].name %></a></h3>
 				</div>
 				<% } %>

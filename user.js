@@ -19,7 +19,7 @@ var user = function(state, finish) {
 		var date = new Date(lf_user.birthday);
 		state.context.user = {
 			'nick': lf_user.name,
-			'picbig': '/picbig/' + lf_user.id,
+			'picbig': 'picbig/' + lf_user.id,
 			'name': lf_user.realname,
 			'website': lf_user.website,
 			'profession': lf_user.profession,
