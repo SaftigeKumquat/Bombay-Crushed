@@ -30,8 +30,9 @@
 					<li class="bargraph-uninvolved" style="width:<%= inis[i].uninvolved %>%"></li>
 				</ul>
 			</td>
-			<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><%
-				if(inis[i].status == texts.tablevote) { %></span><% }
+			<td><% if(inis[i].status == texts.statusstep4) { %><span class="table-vote"><% } %><%= inis[i].status %><%
+				if(inis[i].status == texts.statusstep4) { %></span><% }
+				if(initable.isTimeline == "true") { %><br /><%= inis[i].lastaction.date %> <%= inis[i].lastaction.time %> <%= inis[i].lastaction.action %><% }
 				if(inis[i].delegate) {
 					%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
 				} %></td>
@@ -40,16 +41,16 @@
 </table>
 <div id="inipages" class="box-footer">
 	<ul class="pagination">
-		<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"  onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
+		<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"  onClick="update_inis(<%= ( initable.activepage - 1 ) %>, <%= initable.isTimeline %>)"><%= texts.backshort %></a></li><% }
 		for(var i = 1; i <= initable.pages; i++) {
 			if(i == initable.activepage) { %>
 				<li class="active"><%= i %></li>
 			<% }
 			else { %>
-				<li><a href="#" onClick="update_inis(<%= i %>)"><%= i %></a></li>
+				<li><a href="#" onClick="update_inis(<%= i %>, <%= initable.isTimeline %>)"><%= i %></a></li>
 			<% }
 		}
 		var nextpage = ( initable.activepage - 1 ) + 2;
-		if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="#" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+		if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="#" onClick="update_inis(<%= nextpage %>, <%= initable.isTimeline %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 	</ul>
 </div>

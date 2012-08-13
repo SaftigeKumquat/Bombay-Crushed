@@ -38,8 +38,8 @@ $(document).ready(function() {
  * get the update content from the server,
  * remove the old content and insert the new.
  */
-function update_inis(page) {
-	var url = "update_inis?page=" + page;
+function update_inis(page, timeline) {
+	var url = "update_inis?page=" + page + "&timeline=" + timeline;
 	$.ajax({ 
         	url: url,
         	type: "POST",

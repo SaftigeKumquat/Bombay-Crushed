@@ -33,6 +33,10 @@ var inis = function(state, render) {
 		state.context.initable.activepage = 1;
 	}
 
+	// check if timeline page
+	if(state.url.query.timeline !== undefined)
+		state.context.initable.isTimeline = state.url.query.timeline;
+
 	/**
 	 * Internal data collection callback.
 	 *
@@ -133,8 +137,10 @@ var inis = function(state, render) {
 				ini.potential = Math.floor(( ini.potsupporter / total ) * 100);
 				ini.uninvolved = Math.floor(( ini.uninterested / total ) * 100);
 				ini.quorum = Math.floor(total * quorum_num / quorum_den);
+
 				builtInis.push(ini);
 			}
+
 			state.context.inis = builtInis;
 			render();			
 		}
