@@ -31,7 +31,7 @@
 					for(var j = 0; j < units[i].areas.length; j++) { %><tr<%
 						if(odd == true) { odd = false; %> class="odd"<% }
 						else { odd = true; } %>>
-						<td><h3><a href="#"><%= units[i].areas[j].name %></a></td>
+						<td><h3><a href="<%= meta.baseurl %>/area?area_id=<%= units[i].areas[j].id %>"><%= units[i].areas[j].name %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status1 %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status2 %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status3 %></a></td>

@@ -47,6 +47,9 @@ var area = function(state, render) {
 				for(var a = 0; a < inis.length; a++) {
 					if(inis[a][0].issue_id == builtIssue.id) {
 
+						// bug fix: keep original table
+						original_inis = inis[a];
+
 						if(issues[i].ranks_available) {
 							// only keep admitted inis
 							admitted_inis = [];
@@ -77,6 +80,11 @@ var area = function(state, render) {
     								else 
         								return 0;
 							});
+						}
+
+						// TODO do something if no ini is admitted..
+						if(inis[a][0] == undefined) {
+							inis[a] = original_inis;
 						}
 
 						builtIssue.title = inis[a][0].name;						

@@ -79,6 +79,7 @@ var topics = function(state, render) {
 
 					builtArea = {
 						'name': area.name,
+						'id': area.id,
 						'topics': {
 							'status1': status1,
 							'status2': status2,

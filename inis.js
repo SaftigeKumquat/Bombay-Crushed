@@ -112,6 +112,7 @@ var inis = function(state, render) {
 						for(var b = 0; b < areas.length; b++) {
 							if(areas[b].id === issues[a].area_id) {
 								ini.area = areas[b].name;
+								ini.area_id = areas[b].id;
 								// TODO number for uninterested is sometimes negative?
 								ini.uninterested = ( areas[b].member_weight - ini.supporter ) - ini.potsupporter;
 								if(ini.uninterested < 0) {

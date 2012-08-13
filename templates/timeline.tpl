@@ -339,7 +339,7 @@
 					%>>
 						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
 						if(!inis[i].hasalternatives) {
-						%><a href='#'><%= inis[i].area %></a><% } %></td>
+						%><a href='<%= meta.baseurl %>/area?area_id=<%= inis[i].area_id %>'><%= inis[i].area %></a><% } %></td>
 						<td><%= inis[i].unit %></td>
 						<td>
 							<ul class="bargraph" title="<%= inis[i].supporter %> <%= texts.supporter %> / <%= inis[i].potsupporter %> <%= texts.potsupporter %> / <%= inis[i].uninterested %> <%= texts.uninterested %>">
