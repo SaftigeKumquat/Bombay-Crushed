@@ -1,6 +1,6 @@
 var lf = require('./lfcli.js');
 
-var user = function(state, finish) {
+var user = function(state, finish, allowOtherMember) {
 	var unit_count = -1;
 	var units = [];
 
@@ -14,7 +14,7 @@ var user = function(state, finish) {
 	}
 
 	var member_id;
-	if(state.url.query.user_id !== undefined) {
+	if(state.url.query.user_id !== undefined && allowOtherMember == true) {
 		member_id = state.url.query.user_id;
 	}
 	else {

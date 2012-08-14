@@ -392,7 +392,7 @@ exports.show = function(state) {
 		}
 	}
 
-	user.get(state, finish);
+	user.get(state, finish, false);
 	news(state, finish);
 	areas(state, finish);
 	delegations.lastActions(state, finish);

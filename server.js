@@ -75,7 +75,7 @@ var showProfile = function(state) {
 		}
 	}
 
-	user.get(state, finish);
+	user.get(state, finish, true);
 }
 
 /**
