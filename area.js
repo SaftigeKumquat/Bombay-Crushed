@@ -133,9 +133,7 @@ var area = function(state, render) {
 
 
 			// get members
-			console.log('MEMBERS:' + JSON.stringify(members));
-			console.log('USERS:' + JSON.stringify(users));
-			for(var i = 0; i < members.length; i++) {
+			for(var i = 0; i < members.length && i < 24; i++) {
 				var builtMember = {};
 				for(var a = 0; a < users.length; a++) {
 					if(users[a].id == members[i].member_id) {

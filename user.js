@@ -5,7 +5,6 @@ var user = function(state, finish) {
 	var units = [];
 
 	var check = function() {
-		console.log('TEST: ' + JSON.stringify(units) + ', unit_count: ' + unit_count);
 		if(state.context.user !== undefined && units.length === unit_count
 		&& unit_count !== -1) {
 			state.context.user.units = units;
@@ -15,7 +14,6 @@ var user = function(state, finish) {
 	}
 
 	var member_id;
-	console.log('USER_ID:' + state.url.query.user_id);
 	if(state.url.query.user_id !== undefined) {
 		member_id = state.url.query.user_id;
 	}
