@@ -173,7 +173,8 @@
 			
 				<% for(var i = 0; i < area.members.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(area.members[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= meta.baseurl %>/<%= area.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<!-- img size should probably not be forced to 24px like this -->
+					<a href="#"><img width="24" src="<%= meta.baseurl %>/<%= area.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
 					<h3><a href="#"><%= area.members[i].name %></a></h3>
 				</div>
 				<% } %>

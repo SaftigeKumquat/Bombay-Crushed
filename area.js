@@ -8,13 +8,16 @@ var area = function(state, render) {
 	var policies = [];
 	var interest = [];
 	var inis = [];
+	var members = [];
+	var users = [];
 	var membershipDone = false;
 	var issueDone = false;
 	var finish = function() {
 		if(builtArea.name && builtArea.unit
 			&& membershipDone == true && issueDone == true
 			&& interest.length == issues.length
-			&& inis.length == issues.length ) {
+			&& inis.length == issues.length
+			&& members.length == users.length ) {
 
 			builtArea.issues = [];			
 			builtArea.delegations = [];
@@ -90,7 +93,7 @@ var area = function(state, render) {
 						builtIssue.title = inis[a][0].name;						
 						builtIssue.supporter = inis[a][0].satisfied_supporter_count;
 						builtIssue.potsupporter = inis[a][0].supporter_count - inis[a][0].satisfied_supporter_count;
-						builtIssue.uninterested = ( builtArea.member_weight - builtIssue.supporter ) - builtIssue.potsupporter;
+						builtIssue.uninterested = ( builtArea.membernumber - builtIssue.supporter ) - builtIssue.potsupporter;
 						if(builtIssue.uninterested < 0) {
 							builtIssue.uninterested = 0;
 						}
@@ -109,7 +112,7 @@ var area = function(state, render) {
 							alternativeIni.title = inis[a][b].name;						
 							alternativeIni.supporter = inis[a][b].satisfied_supporter_count;
 							alternativeIni.potsupporter = inis[a][b].supporter_count - inis[a][b].satisfied_supporter_count;
-							alternativeIni.uninterested = ( builtArea.member_weight - alternativeIni.supporter ) - alternativeIni.potsupporter;
+							alternativeIni.uninterested = ( builtArea.membernumber - alternativeIni.supporter ) - alternativeIni.potsupporter;
 							if(alternativeIni.uninterested < 0) {
 								alternativeIni.uninterested = 0;
 							}
@@ -128,6 +131,27 @@ var area = function(state, render) {
 				builtArea.issues.push(builtIssue);
 			}
 
+
+			// get members
+			console.log('MEMBERS:' + JSON.stringify(members));
+			console.log('USERS:' + JSON.stringify(users));
+			for(var i = 0; i < members.length; i++) {
+				var builtMember = {};
+				for(var a = 0; a < users.length; a++) {
+					if(users[a].id == members[i].member_id) {
+						builtMember.nick = users[a].name;
+						if(users[a].realname == null || users[a].realname == '') {
+							builtMember.name = users[a].name;
+						}
+						else {
+							builtMember.name = users[a].realname;
+						}
+						builtMember.picmini = 'avatar/' + users[a].id;
+					}
+				}
+				builtArea.members.push(builtMember);
+			}
+
 			state.context.area = builtArea;
 			render();
 		}
@@ -139,7 +163,7 @@ var area = function(state, render) {
 	lf.query('/area', { 'area_id': area_id, 'include_units': 1 }, state, function(res) {
 		builtArea.name = res.result[0].name;
 		builtArea.unit = res.units[res.result[0].unit_id].name;
-		builtArea.member_weight = res.result[0].member_weight;
+		builtArea.membernumber = res.result[0].member_weight;
 
 		lf.query('/issue', { 'area_id': area_id, 'include_policies': 1 }, state, function(issue_res) {
 			for(var i = 0; i < issue_res.result.length; i++) {
@@ -172,6 +196,13 @@ var area = function(state, render) {
 
 		lf.query('/membership', { 'area_id': area_id }, state, function(member_res) {
 			for(var i = 0; i < member_res.result.length; i++) {
+				members.push(member_res.result[i]);
+
+				lf.query('/member', { 'member_id': member_res.result[i].member_id }, state, function(user_res) {
+					users.push(user_res.result[0]);
+					finish();
+				});
+
 				if(member_res.result[i].member_id == state.user_id()) {
 					builtArea.member = true;
 					break;
