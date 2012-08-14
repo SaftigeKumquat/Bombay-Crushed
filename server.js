@@ -98,10 +98,14 @@ var showArea = function(state) {
 		return;
 	}
 
-	// get page number
+	// get page numbers
 	var page = 1;
+	var memberpage = 1;
 	if(state.url.query.page) {
 		page = state.url.query.page;
+	}
+	if(state.url.query.memberpage) {
+		memberpage = state.url.query.memberpage;
 	}
 
 	var finish = function() {
@@ -112,7 +116,7 @@ var showArea = function(state) {
 		}
 	}
 
-	area.show(state, finish, page);
+	area.show(state, finish, page, memberpage);
 }
 
 /**

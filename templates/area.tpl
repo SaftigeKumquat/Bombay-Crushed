@@ -109,19 +109,19 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(area.issuespage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage - 1 %>"><%= texts.backshort %></a></li><% }
+					<% if(area.issuespage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage - 1 %>&memberpage=<%= area.memberspage %>"><%= texts.backshort %></a></li><% }
 					if(area.issuespages > 1) {				
 						for(var a = 1; a <= area.issuespages; a++) {
 							if(a == area.issuespage) { %>
 								<li class="active"><%= a %></li>
 							<% }
 							else { %>
-								<li><a href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= a %>"><%= a %></a></li>
+								<li><a href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= a %>&memberpage=<%= area.memberspage %>"><%= a %></a></li>
 							<% }
 						}
 					}
 					var nextpage = ( area.issuespage - 1 ) + 2;
-					if(area.issuespage != area.issuespages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(area.issuespage != area.issuespages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= nextpage %>&memberpage=<%= area.memberspage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>	
 		</div>
@@ -183,17 +183,19 @@
 				
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(area.memberspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= area.memberspages; a++) {
-						if(a == area.memberspage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#"><%= a %></a></li>
-						<% }
+					<% if(area.memberspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage %>&memberpage=<%= area.memberspage - 1 %>"><%= texts.backshort %></a></li><% }
+					if(area.memberspages > 1) {
+						for(var a = 1; a <= area.memberspages; a++) {
+							if(a == area.memberspage) { %>
+								<li class="active"><%= a %></li>
+							<% }
+							else { %>
+								<li><a href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage %>&memberpage=<%= a %>"><%= a %></a></li>
+							<% }
+						}
 					}
 					var nextpage = ( area.memberspage - 1 ) + 2;
-					if(area.memberspage != area.memberspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(area.memberspage != area.memberspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage %>&memberpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>	
 		</div>

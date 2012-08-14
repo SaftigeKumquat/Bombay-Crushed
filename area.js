@@ -1,7 +1,7 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 
-var area = function(state, render, page) {
+var area = function(state, render, page, memberpage) {
 	var area_id = state.url.query.area_id;
 	var builtArea = {};
 	var issues = [];
@@ -25,6 +25,7 @@ var area = function(state, render, page) {
 
 			var builtIssue = {};
 			var quorum_num, quorum_den;
+
 			var start_issue = 0;
 			var end_issue = 6;
 			if(page > 1) {
@@ -39,6 +40,22 @@ var area = function(state, render, page) {
 			
 			builtArea.issuespage = page;
 			builtArea.issuespages = pages;
+
+			var start_member = 0;
+			var end_member = 24;
+			if(memberpage > 1) {
+				start_member = (memberpage - 1) * 24;
+				end_member = memberpage * 24;
+			}
+
+			var memberpages = Math.ceil(members.length / 24);
+			if(memberpages == 0) {
+				memberpages = 1;
+			}
+
+			builtArea.memberspage = memberpage;
+			builtArea.memberspages = memberpages;
+
 			console.log('AREA:' + JSON.stringify(builtArea));
 
 			// only the first 6 issues
@@ -148,7 +165,7 @@ var area = function(state, render, page) {
 
 
 			// get members
-			for(var i = 0; i < members.length && i < 24; i++) {
+			for(var i = start_member; i < members.length && i < end_member; i++) {
 				var builtMember = {};
 				for(var a = 0; a < users.length; a++) {
 					if(users[a].id == members[i].member_id) {
