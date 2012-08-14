@@ -147,6 +147,7 @@ var area = function(state, render) {
 							builtMember.name = users[a].realname;
 						}
 						builtMember.picmini = 'avatar/' + users[a].id;
+						builtMember.id = users[a].id;
 					}
 				}
 				builtArea.members.push(builtMember);

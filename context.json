@@ -19,7 +19,8 @@
 		"units":[ { "name":"Bund" }, { "name":"Baden-Württemberg" }, { "name":"Mannheim" } ],
 		"offices":"Beisitzer Bezirksvorstand Karlsruhe",
 		"memberships":"Keine",
-		"statement":"Synapsen und so"
+		"statement":"Synapsen und so",
+		"isme": true
 	},
 	"filter": [
 		{"id": 1, "text": "Neue oder kürzlich geänderte Inititativen"},

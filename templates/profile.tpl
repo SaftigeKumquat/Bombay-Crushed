@@ -4,11 +4,17 @@
 			<h2><%= user.nick %></h2>
 			<p id="profile-image">
  				<img src="<%= meta.baseurl %>/<%= user.picbig %>" alt="<%= texts.profilepic %>" />
+				<% if(user.isme == true) { %>
  				<a class="button" button-backward-off""><%= texts.changepic %></a>
+				<% } %>
 			</p>
 		</div>
 		<div class="eightcol box">
+			<% if(user.isme == true) { %>
 			<h2><%= texts.yourdata %></h2>
+			<% } else { %>
+			<h2><%= texts.memberdata %></h2>
+			<% } %>
 
 			<div id="hcard-<%= user.divname %>" class="profile-data vcard">
 				<dl>
@@ -32,7 +38,9 @@
 					<% if(user.statement !== undefined) { %><dt><%= texts.statement %></dt><dd><%= user.statement %></dd><% } %>
 				</dl>
 			</div>
+			<% if(user.isme == true) { %>
 			<div class="box-footer"><a class="button" href="#"><%= texts.changedata %></a></div>
+			<% } %>
 		</div>
 		<div class="twocol last">
 		</div>

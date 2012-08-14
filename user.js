@@ -14,7 +14,16 @@ var user = function(state, finish) {
 		}
 	}
 
-	lf.query('/member', {'member_id': state.user_id()}, state, function(res) {
+	var member_id;
+	console.log('USER_ID:' + state.url.query.user_id);
+	if(state.url.query.user_id !== undefined) {
+		member_id = state.url.query.user_id;
+	}
+	else {
+		member_id = state.user_id();
+	}
+
+	lf.query('/member', {'member_id': member_id}, state, function(res) {
 		lf_user = res.result[0];
 		var date = new Date(lf_user.birthday);
 		state.context.user = {
@@ -32,6 +41,10 @@ var user = function(state, finish) {
 			'offices': lf_user.internal_posts,
 			'memberships': lf_user.external_memberships,
 		};
+
+		if(member_id == state.user_id()) {
+			state.context.user.isme = true;
+		}
 
 		check();
 	} );
