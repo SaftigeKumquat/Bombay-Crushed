@@ -90,11 +90,18 @@ var showArea = function(state) {
 		state.sendToLogin();
 		return;
 	}
+
 	// we need an area id
 	if(!state.url.query.area_id) {
 		console.log('Please provide area_id parameter');
 		invalidURL(state);
 		return;
+	}
+
+	// get page number
+	var page = 1;
+	if(state.url.query.page) {
+		page = state.url.query.page;
 	}
 
 	var finish = function() {
@@ -105,7 +112,7 @@ var showArea = function(state) {
 		}
 	}
 
-	area.show(state, finish);
+	area.show(state, finish, page);
 }
 
 /**
