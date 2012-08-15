@@ -11,7 +11,7 @@ var url = require('url');
 var ejs = require('./ejs.js')
 var config = require('./config.js');
 
-module.exports = function(serverError) {
+module.exports = function(serverError, invalidResource) {
 	var app_prefix = '';
 	if(config.listen.baseurl) {
 		app_prefix = url.parse(config.listen.baseurl).pathname;
@@ -48,6 +48,9 @@ module.exports = function(serverError) {
 				'result': res,
 				'fail': function(logmessage, errorcode) {
 					serverError(state, logmessage, errorcode);
+				},
+				'fail_invalidResource': function(logmessage, errorcode) {
+					invalidResource(state, logmessage, errorcode);
 				},
 				'cookies': new Cookies(req, res),
 				'sendToLogin': function(message) {

@@ -184,9 +184,18 @@ var showTimeline = function(state) {
  *
  * @state The state object representing the current HTTP-Request
  */
-var invalidURL = function(state) {
+var invalidURL = function(state, logmessage, errorcode) {
+	if(!logmessage) {
+		logmessage = 'Invalid resource requested';
+	}
+	if(!errorcode) {
+		errorcode = 404;
+	}
+
+	console.log('WARN: ' + logmessage + ' – Sent code ' + errorcode + ' to the client');
+
 	var res = state.result;
-	res.writeHead(404, {'Content-Type': 'text/plain'});
+	res.writeHead(errorcode, {'Content-Type': 'text/plain'});
 	res.end('Kuckst du woanders!\n');
 }
 
@@ -300,7 +309,7 @@ var sendPicture = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail('No image found for user ' + user_id, 404);
+			state.fail_invalidResource('No image found for user ' + user_id, 404);
 		}
 	});
 }
@@ -329,7 +338,7 @@ var sendAvatar = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail('No avatar found for user ' + user_id, 404);
+			state.fail_invalidResource('No avatar found for user ' + user_id, 404);
 		}
 	});
 }
@@ -422,7 +431,7 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 }
 
 // get the state object creation function
-var State = require('./state.js')(serverError);
+var State = require('./state.js')(serverError, invalidURL);
 
 /**
  * the main-function of the server
