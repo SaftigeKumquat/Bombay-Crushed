@@ -232,8 +232,8 @@
 
 						<td>
 							<ul>
-								<li><a class="marked" href="#"><%= texts.implemented %></a></li>
-								<li><a href="#"><%= texts.notimplemented %></a></li>
+								<li><a <% if(initiative.suggestions[i].isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.implemented %></a></li>
+								<li><a <% if(!initiative.suggestions[i].isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
 							</ul>
 						</td>
 						<td>

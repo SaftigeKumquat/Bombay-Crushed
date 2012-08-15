@@ -270,7 +270,7 @@
 				"notimplementedneutralsupporterwidth": "30%", "notimplementedshouldnotsupportwidth": "20%", "notimplementedmustnotsupportwidth": "10%", "implementedmustsupporter": 205, 
 				"implementedshouldsupporter": 100, "implementedneutralsupporter": 312, "implementedshouldnotsupporter": 50, "implementedmustnotsupporter": 100, 
 				"implementedmustsupporterwidth": "30%", "implementedshouldsupporterwidth": "10%", "implementedneutralsupporterwidth": "30%", 
-				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "1" },
+				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "1", "isayimplemented": true },
 			{ "name": "Keine Stufen, sondern klar nachvollziehbare Formeln", "mustsupporter": 205, "shouldsupporter": 100, "neutralsupporter": 312, "shouldnotsupporter": 50, 
 				"mustnotsupporter": 100, "mustsupportwidth": "30%", "shouldsupportwidth": "10%", "neutralsupportwidth": "30%", "shouldnotsupportwidth": "20%", 
 				"mustnotsupportwidth": "10%", "notimplementedmustsupporter": 205, "notimplementedshouldsupporter": 100, "notimplementedneutralsupporter": 312, 
@@ -278,7 +278,7 @@
 				"notimplementedneutralsupporterwidth": "30%", "notimplementedshouldnotsupportwidth": "20%", "notimplementedmustnotsupportwidth": "10%", "implementedmustsupporter": 205, 
 				"implementedshouldsupporter": 100, "implementedneutralsupporter": 312, "implementedshouldnotsupporter": 50, "implementedmustnotsupporter": 100, 
 				"implementedmustsupporterwidth": "30%", "implementedshouldsupporterwidth": "10%", "implementedneutralsupporterwidth": "30%", 
-				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "2" },
+				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "2", "isayimplemented": true },
 			{ "name": "Keine Stufen, sondern klar nachvollziehbare Formeln", "mustsupporter": 205, "shouldsupporter": 100, "neutralsupporter": 312, "shouldnotsupporter": 50, 
 				"mustnotsupporter": 100, "mustsupportwidth": "30%", "shouldsupportwidth": "10%", "neutralsupportwidth": "30%", "shouldnotsupportwidth": "20%", 
 				"mustnotsupportwidth": "10%", "notimplementedmustsupporter": 205, "notimplementedshouldsupporter": 100, "notimplementedneutralsupporter": 312, 
@@ -286,7 +286,7 @@
 				"notimplementedneutralsupporterwidth": "30%", "notimplementedshouldnotsupportwidth": "20%", "notimplementedmustnotsupportwidth": "10%", "implementedmustsupporter": 205, 
 				"implementedshouldsupporter": 100, "implementedneutralsupporter": 312, "implementedshouldnotsupporter": 50, "implementedmustnotsupporter": 100, 
 				"implementedmustsupporterwidth": "30%", "implementedshouldsupporterwidth": "10%", "implementedneutralsupporterwidth": "30%", 
-				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "3" },
+				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "3", "isayimplemented": true },
 			{ "name": "Keine Stufen, sondern klar nachvollziehbare Formeln", "mustsupporter": 205, "shouldsupporter": 100, "neutralsupporter": 312, "shouldnotsupporter": 50, 
 				"mustnotsupporter": 100, "mustsupportwidth": "30%", "shouldsupportwidth": "10%", "neutralsupportwidth": "30%", "shouldnotsupportwidth": "20%", 
 				"mustnotsupportwidth": "10%", "notimplementedmustsupporter": 205, "notimplementedshouldsupporter": 100, "notimplementedneutralsupporter": 312, 
@@ -294,7 +294,7 @@
 				"notimplementedneutralsupporterwidth": "30%", "notimplementedshouldnotsupportwidth": "20%", "notimplementedmustnotsupportwidth": "10%", "implementedmustsupporter": 205, 
 				"implementedshouldsupporter": 100, "implementedneutralsupporter": 312, "implementedshouldnotsupporter": 50, "implementedmustnotsupporter": 100, 
 				"implementedmustsupporterwidth": "30%", "implementedshouldsupporterwidth": "10%", "implementedneutralsupporterwidth": "30%", 
-				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "4" }
+				"implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "4", "isayimplemented": true }
 		], "suggestionspage": "1", "suggestionspages": "2", "alternativeinisnumber": 2, 
 		"alternativeinis": [
 			{ "name": "Keine Stufen, sondern klar nachvollziehbare Formeln", "supporter": 365, "potsupporter": 15, "uninterested": 631, "quorumwidth": "5%", "supporterwidth": "30%",
@@ -558,5 +558,27 @@
 			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
 			{ "nick": "joknopp", "name": "Doktor Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }
 		]
-    }
+    	},
+	"suggestion": {
+		"name": "Ergänzung im Waffenrecht", "author": { "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
+		"text": "<p>„Alle Waffen (unabhängig von Kaliber oder Verwendung) sind in gesicherte Verwahrung zu geben.</p><p>Die Kreispolizeibehörde bestimmt Ort und Beauftragte für die Verwahrung. Von dieser Verordnung sind Personen ausgenommen, denen das Führen von Waffen aus berufsmäßigen Gründen erlaubt ist.“</p><p>Mit diesem einfachen Zusatz ist allen geholfen. Wer im Verein schießen will holt die Waffe beim Waffenwart ab und gut is.</p>",
+		"mustsupporter": 205, "shouldsupporter": 100, "neutralsupporter": 312, "shouldnotsupporter": 50, "mustnotsupporter": 100, 
+		"mustsupportwidth": "30%", "shouldsupportwidth": "10%", "neutralsupportwidth": "30%", "shouldnotsupportwidth": "20%", "mustnotsupportwidth": "10%", 
+		"notimplementedmustsupporter": 205, "notimplementedshouldsupporter": 100, "notimplementedneutralsupporter": 312, "notimplementedshouldnotsupporter": 50, 
+		"notimplementedmustnotsupporter": 100, "notimplementedmustsupporterwidth": "30%", "notimplementedshouldsupporterwidth": "10%", "notimplementedneutralsupporterwidth": "30%", 
+		"notimplementedshouldnotsupportwidth": "20%", "notimplementedmustnotsupportwidth": "10%", "implementedmustsupporter": 205, "implementedshouldsupporter": 100, "implementedneutralsupporter": 312,  			"implementedshouldnotsupporter": 50, "implementedmustnotsupporter": 100, "implementedmustsupporterwidth": "30%", "implementedshouldsupporterwidth": "10%", 
+		"implementedneutralsupporterwidth": "30%", "implementedshouldnotsupportwidth": "20%", "implementedmustnotsupportwidth": "10%", "smiley": "1", "isayimplemented": true,
+		"initiative": {
+			"name": "Großkalibrige halbautomatische und automatische Waffen sind kein Sportgerät", "text": "<h3>Antrag:</h3><p>An geeigneter Stelle sei in das Wahlprogramm einzufügen:</p><p>„Wir sprechen uns gegen die Einordnung von Waffen, die für militärische und polizeiliche Zwecke entwickelt wurden, als Sportgeräte aus. Waffen mit großer Feuerrate und Munition mit großer Tödlichkeit und großer Mannstoppwirkung gehören nicht in private Hand. Solche Waffen sollen damit nur noch für Menschen erwerbbar sein, die sie aus beruflichen oder jagdlichen Gründen brauchen. Eine unabhängige Kommission mit kriminologischer Fachkompetenz soll festlegen, für welche Waffen das zutrifft.“</p><h3>Begründung:</h3><p>Sportschützen dürfen gerne auf Pappscheiben schießen, dafür braucht man aber weder große Kaliber noch halbautomatische Waffen. Erfurt und Winnenden haben gezeigt, dass es unverantwortlich ist, Waffen, die speziell für Polizei- oder Kriegsgebrauch entwickelt wurden, in private Hände zu geben. Die olympischen Schießwettbewerbe werden fast ausnahmslos mit Kleinkaliberwaffen geschossen, für andere Sportarten können Alternativen mit Farbkugeln oder gar virtuellen Schießständen entwickelt werden. Dass Privatbürger für den Sport annähernd beliebig viele Waffen, teilweise auch umgebaute Kriegswaffen, und dazu unbegrenzt viele Schuss Munition zu Hause lagern können, ist in der Risikoabwägung nicht nachvollziehbar.</p>"
+		}, "opinions": [
+			{ "user": { "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }, "action": "for",
+				"implemented": true, "smiley": 1 },
+			{ "user": { "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png", "picmini": "content_img/profile_small.png" }, "action": "against",
+				"implemented": false, "smiley": 2 },
+			{ "user": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png", "picmini": "content_img/profile_small.png" }, "action": "for",
+				"implemented": true, "smiley": 3 },
+			{ "user": { "nick": "themarix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png", "picmini": "content_img/profile_small.png" }, "action": "against",
+				"implemented": false, "smiley": 4 }
+		], "opinionpage": 1, "opinionpages": 2
+	}
 }

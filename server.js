@@ -157,6 +157,24 @@ var showIssue = function(state) {
 
 /**
  * Takes care of retrieving data for and rendering the
+ * suggestion page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+var showSuggestion = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var ctx = state.context;
+	ctx.meta.currentpage = "suggestion";
+	ejs.render(state, '/suggestion.tpl');
+}
+
+/**
+ * Takes care of retrieving data for and rendering the
  * timeline page.
  *
  * @param state The state object of the current HTTP-Request
@@ -363,7 +381,8 @@ var url_mapping = {
 	'/favicon.ico': serveStatic,
 	'/initiative': showInitiative,
 	'/area': showArea,
-	'/issue': showIssue
+	'/issue': showIssue,
+	'/suggestion': showSuggestion
 }
 
 /**
