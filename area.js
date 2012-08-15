@@ -1,6 +1,18 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 
+var getMemberSupport = function(support, issue, ini) {
+	for(var a = 0; a < support.length; a++) {
+		if(support[a].length > 0 && support[a][0].issue_id == issue) {
+			for(var b = 0; b < support[a].length; b++) {
+				if(support[a][b].initiative_id == ini) {
+					return true;
+				}
+			}
+		}
+	}
+}
+
 var area = function(state, render, page, memberpage) {
 	var area_id = state.url.query.area_id;
 	var builtArea = {};
@@ -10,6 +22,7 @@ var area = function(state, render, page, memberpage) {
 	var inis = [];
 	var members = [];
 	var users = [];
+	var support = [];
 	var membershipDone = false;
 	var issueDone = false;
 	var finish = function() {
@@ -17,7 +30,8 @@ var area = function(state, render, page, memberpage) {
 			&& membershipDone == true && issueDone == true
 			&& interest.length == issues.length
 			&& inis.length == issues.length
-			&& members.length == users.length ) {
+			&& members.length == users.length
+			&& support.length == issues.length ) {
 
 			builtArea.issues = [];			
 			builtArea.delegations = [];
@@ -136,6 +150,11 @@ var area = function(state, render, page, memberpage) {
 						builtIssue.uninvolved = Math.floor(( builtIssue.uninterested / total ) * 100);
 						builtIssue.quorum = Math.floor(total * quorum_num / quorum_den);
 
+						// check if member supports ini
+						if(getMemberSupport(support, builtIssue.id, inis[a][0].id)) {
+							builtIssue.isupportini = true;
+						}
+
 						builtIssue.alternativeinis = [];
 
 						for(var b = 1; b < inis[a].length; b++) {
@@ -154,7 +173,11 @@ var area = function(state, render, page, memberpage) {
 							alternativeIni.potential = Math.floor(( alternativeIni.potsupporter / total ) * 100);
 							alternativeIni.uninvolved = Math.floor(( alternativeIni.uninterested / total ) * 100);
 
-							console.log('ALT:' + JSON.stringify(alternativeIni));
+							// check if member supports ini
+							if(getMemberSupport(support, builtIssue.id, inis[a][b].id)) {
+								alternativeIni.isupportini = true;
+							}
+
 							builtIssue.alternativeinis.push(alternativeIni);
 						}
 					}
@@ -214,8 +237,12 @@ var area = function(state, render, page, memberpage) {
 
 				lf.query('/initiative', { 'issue_id': issue_id }, state, function(ini_res) {
 					inis.push(ini_res.result);
+					finish();
+				});
 
-					// TODO: support
+				lf.query('/supporter', { 'issue_id': issue_id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
+					support.push(support_res.result);
+					console.log('SUPPORT:' + JSON.stringify(support_res.result));
 					finish();
 				});
 
