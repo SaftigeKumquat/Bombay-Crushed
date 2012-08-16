@@ -260,5 +260,9 @@
 	"showtexttobechanged": "Zu ändernden Antragstext anzeigen",
 	"opinions": "Meinungen",
 	"opinion": "Meinung",
-	"opinioninfo": "Die Smileys zeigen, wie die Person zu dem Änderungsantrag steht."
+	"opinioninfo": "Die Smileys zeigen, wie die Person zu dem Änderungsantrag steht.",
+	"loginsuccessfull": "Du wurdest erfolgreich angemeldet",
+	"logoutsuccessfull": "Du wurdest erfolgreich abgemeldet",
+	"clickhere": "Hier klicken",
+	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst."
 }
