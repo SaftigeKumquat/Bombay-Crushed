@@ -280,7 +280,9 @@ var performLogout = function(state) {
 	state.session_key(null);
 	state.user_id(null);
 	// and run
-	overview.show(state);
+	state.context.meta.do_refresh = true;
+	state.context.meta.refresh_url = state.app_prefix + '/overview';
+	ejs.render(state, '/loggedOut.tpl');
 }
 
 /**
