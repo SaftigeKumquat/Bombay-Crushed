@@ -5,6 +5,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title><%= texts.title %></title>
+	<% if(meta.do_refresh) { %>
+		<meta http-equiv="refresh" content="2; URL=<%= meta.refresh_url %>" />
+	<% } %>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="<%= meta.baseurl %>/css/reset.css" type="text/css" media="screen" />
 

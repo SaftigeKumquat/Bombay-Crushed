@@ -8,7 +8,10 @@
 			<div class="box-footer box-editorial">
 			    <h3>Log In</h3>
 				<form method="post" action="<%= meta.baseurl %>/login" >
-    					<fieldset id="input-sub">
+    				<fieldset id="input-sub">
+						<% if(meta.refresh_url) { %>
+							<input name="refresh-url" type="hidden" value="<%= meta.refresh_url %>" />
+						<% } %>
  						<input id="api-key" name="key" type="text" size="25" placeholder="API-Key eingeben" autofocus required />
    					</fieldset>
   				  	<fieldset id="actions">

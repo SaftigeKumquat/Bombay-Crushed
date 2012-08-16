@@ -262,7 +262,9 @@ var performLogin = function(state) {
 
 			lf.query('/info', {}, state, function(res) {
 				state.user_id(res.current_member_id);
-				overview.show(state);
+				state.context.meta.do_refresh = true;
+				state.context.meta.refresh_url = data['refresh-url'] || (state.app_prefix + '/overview');
+				ejs.render(state, '/loggedIn.tpl');
 			});
 		});
 	});

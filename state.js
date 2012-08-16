@@ -55,10 +55,14 @@ module.exports = function(serverError, invalidResource) {
 				'cookies': new Cookies(req, res),
 				'sendToLogin': function(message) {
 					// TODO pass message to template
+					if(state.local_path != '/login') {
+						state.context.meta.refresh_url = req.url;
+					}
 					ejs.render(state, '/login.tpl');
 				},
 				'context': {
 						'meta': {
+							'do_refresh': false,
 							'currentpage': '',
 							'baseurl': config.listen.baseurl ? config.listen.baseurl : ''
 						}
