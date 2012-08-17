@@ -29,6 +29,7 @@ var inis = require('./inis.js');
 var topics = require('./topics.js');
 var area = require('./area.js');
 var contacts = require('./contacts.js');
+var initiative = require('./initiative.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -132,9 +133,22 @@ var showInitiative = function(state) {
 		return;
 	}
 
-	var ctx = state.context;
-	ctx.meta.currentpage = "initiative";
-	ejs.render(state, '/initiative.tpl');
+	// we need an initiative id
+	if(!state.url.query.initiative_id) {
+		console.log('Please provide initiative_id parameter');
+		invalidURL(state);
+		return;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "initiative";
+		if(ctx.initiative !== undefined) {
+			ejs.render(state, '/initiative.tpl');
+		}
+	}
+
+	initiative.show(state, finish);
 }
 
 /**

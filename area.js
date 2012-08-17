@@ -70,8 +70,6 @@ var area = function(state, render, page, memberpage) {
 			builtArea.memberspage = memberpage;
 			builtArea.memberspages = memberpages;
 
-			console.log('AREA:' + JSON.stringify(builtArea));
-
 			// only the first 6 issues
 			for(var i = start_issue; i < issues.length && i < end_issue; i++) {
 
