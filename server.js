@@ -30,6 +30,7 @@ var topics = require('./topics.js');
 var area = require('./area.js');
 var contacts = require('./contacts.js');
 var initiative = require('./initiative.js');
+var suggestion = require('./suggestion.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -167,24 +168,6 @@ var showIssue = function(state) {
 	var ctx = state.context;
 	ctx.meta.currentpage = "issue";
 	ejs.render(state, '/issue.tpl');
-}
-
-/**
- * Takes care of retrieving data for and rendering the
- * suggestion page.
- *
- * @param state The state object of the current HTTP-Request
- */
-var showSuggestion = function(state) {
-	// we need a valid user session...
-	if(!state.session_key()) {
-		state.sendToLogin();
-		return;
-	}
-
-	var ctx = state.context;
-	ctx.meta.currentpage = "suggestion";
-	ejs.render(state, '/suggestion.tpl');
 }
 
 /**
@@ -400,7 +383,7 @@ var url_mapping = {
 	'/initiative': showInitiative,
 	'/area': showArea,
 	'/issue': showIssue,
-	'/suggestion': showSuggestion
+	'/suggestion': suggestion.show
 }
 
 /**
