@@ -77,19 +77,7 @@
 								<th><%= texts.status %></th>
 							</tr>
 
-							<tr class="odd">
-								<td><h3><a href="#"><%= issue.initiatives[0].title %></a><% if(issue.initiatives[0].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
-								<td>
-									<ul class="bargraph" title="<%= issue.initiatives[0].supporter %> <%= texts.supporter %> / <%= issue.initiatives[0].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[0].uninterested %> <%= texts.uninterested %>">
-										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
-										<li class="bargraph-support" style="width:<%= issue.initiatives[0].support %>%"></li>
-										<li class="bargraph-potential" style="width:<%= issue.initiatives[0].potential %>%"></li>
-										<li class="bargraph-uninvolved" style="width:<%= issue.initiatives[0].uninvolved %>%"></li>
-									</ul>
-								</td>
-							</tr>
-
-							<% for(var i = 1; i < issue.initiatives.length; i++) { %>
+							<% for(var i = 0; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
 								<td><h3><a href="#"><%= issue.initiatives[i].title %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 								<td>
