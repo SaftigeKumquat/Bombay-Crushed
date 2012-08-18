@@ -18,15 +18,16 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var suggestion_info, opinions_info, i_say_implemented_info;
+	var suggestion_info, opinions_info, my_opinion_info;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(suggestion_info !== undefined && opinions_info !== undefined && i_say_implemented_info !== undefined) {
+		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined) {
 			ctx.suggestion = suggestion_info;
 			suggestion_info.opinions = opinions_info;
-			suggestion_info.isayimplemented = i_say_implemented_info;
+			suggestion_info.isayimplemented = my_opinion_info.i_say_implemented;
+			suggestion_info.smiley = my_opinion_info.smiley;
 
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
@@ -108,8 +109,31 @@ exports.show = function(state) {
 	});
 
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
+		/**
+		 * Calculate the hapiness smiley for the given opinion.
+		 * Result is 1 for very happy, 4 for very unhappy
+		 */
+		var calculate_smiley = function(lf_opinion) {
+			var smiley = 1; // if degree == 0 we don't care, so we are happy
+			if(lf_opinion.degree !== 0) {
+				// renormalize (map to 0...4 and then to 1...4)
+				smiley = lf_opinion.degree + 2;
+				if(smiley < 2) {
+					simley += 2;
+				}
+				// if fullfilled highest value is happy
+				if(lf_opinion.fulfilled) {
+					smiley = 5 - smiley;
+				}
+			}
+			return smiley;
+		}
+
 		console.log('OPINIONS:' + JSON.stringify(res));
-		var tmp_i_say_implemented = false;
+		tmp_my_opinion = {
+			i_say_implemented: false,
+			smiley: 1
+		};
 		var members_to_resolve = '';
 
 		// TODO handle opinion-pages
@@ -117,7 +141,8 @@ exports.show = function(state) {
 		for(var i = 0; i < res.result.length; i++) {
 			var lf_opinion = res.result[i];
 			if(lf_opinion.member_id == state.user_id()) {
-				tmp_i_say_implemented = lf_opinion.fulfilled;
+				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
+				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
 			}
 
 			if(members_to_resolve != '') {
@@ -125,7 +150,7 @@ exports.show = function(state) {
 			}
 			members_to_resolve += lf_opinion.member_id;
 		}
-		i_say_implemented_info = tmp_i_say_implemented;
+		my_opinion_info = tmp_my_opinion;
 
 		lf.query('/member', { 'member_id': members_to_resolve }, state, function(res) {
 			console.log('MEMBERS:' + JSON.stringify(res));
