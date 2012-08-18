@@ -328,7 +328,15 @@ var sendPicture = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail_invalidResource('No image found for user ' + user_id, 404);
+			// send placeholder pic
+			filepath = __dirname + '/html/img/no_profilepic.png';
+			fs.readFile(filepath, function(err, data) {
+				if(err) {
+					state.fail('Failed to get placeholder user image: ' + err);
+					return;
+				}
+				state.result.end(data);
+			});
 		}
 	});
 }
@@ -357,7 +365,15 @@ var sendAvatar = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail_invalidResource('No avatar found for user ' + user_id, 404);
+			// send placeholder pic
+			filepath = __dirname + '/html/img/no_profilepic.png';
+			fs.readFile(filepath, function(err, data) {
+				if(err) {
+					state.fail('Failed to get placeholder user avatar: ' + err);
+					return;
+				}
+				state.result.end(data);
+			});
 		}
 	});
 }
