@@ -28,6 +28,7 @@ exports.show = function(state) {
 			suggestion_info.opinions = opinions_info;
 			suggestion_info.isayimplemented = my_opinion_info.i_say_implemented;
 			suggestion_info.smiley = my_opinion_info.smiley;
+			suggestion_info.my_opinion = my_opinion_info.opinion;
 
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
@@ -119,7 +120,7 @@ exports.show = function(state) {
 				// renormalize (map to 0...4 and then to 1...4)
 				smiley = lf_opinion.degree + 2;
 				if(smiley < 2) {
-					simley += 2;
+					smiley += 2;
 				}
 				// if fullfilled highest value is happy
 				if(lf_opinion.fulfilled) {
@@ -132,7 +133,8 @@ exports.show = function(state) {
 		console.log('OPINIONS:' + JSON.stringify(res));
 		tmp_my_opinion = {
 			i_say_implemented: false,
-			smiley: 1
+			smiley: 1,
+			opinion: 0
 		};
 		var members_to_resolve = '';
 
@@ -143,6 +145,7 @@ exports.show = function(state) {
 			if(lf_opinion.member_id == state.user_id()) {
 				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
 				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
+				tmp_my_opinion.opinion = lf_opinion.degree;
 			}
 
 			if(members_to_resolve != '') {

@@ -40,11 +40,11 @@
 						</td>
 						<td>
 							<ul>
-								<li><a href="#"><%= texts.must %></a></li>
-								<li><a href="#"><%= texts.should %></a></li>
-								<li><a href="#"><%= texts.neutral %></a></li>
-								<li><a href="#"><%= texts.shouldnot %></a></li>
-								<li><a href="#"><%= texts.mustnot %></a></li>							
+								<li><a <% if(suggestion.my_opinion === 2) { %>class="marked"<% } %> href="#"><%= texts.must %></a></li>
+								<li><a <% if(suggestion.my_opinion === 1) { %>class="marked"<% } %> href="#"><%= texts.should %></a></li>
+								<li><a <% if(suggestion.my_opinion === 0) { %>class="marked"<% } %> href="#"><%= texts.neutral %></a></li>
+								<li><a <% if(suggestion.my_opinion === -1) { %>class="marked"<% } %> href="#"><%= texts.shouldnot %></a></li>
+								<li><a <% if(suggestion.my_opinion === -2) { %>class="marked"<% } %> href="#"><%= texts.mustnot %></a></li>
 							</ul>
 						</td>
 						<td>
