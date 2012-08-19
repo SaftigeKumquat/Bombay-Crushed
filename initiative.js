@@ -5,10 +5,13 @@ var issueFunc = require('./issue.js');
 var userFunc = require('./user.js');
 var suggFunc = require('./suggestion.js');
 
-/**
- * Basic functions on JS objects
- */
+// Basic functions on JS objects
 var registerFunctions = function() {
+/**
+ * checks if an object is contained in an array
+ *
+ * @param obj object to be checked
+ */
 	Array.prototype.contains = function(obj) {
     		for (var i = 0; i < this.length; i++) {
         		if (this[i] === obj) {
@@ -19,6 +22,12 @@ var registerFunctions = function() {
 	}
 }
 
+/**
+ * checks if the user supports an initiative
+ *
+ * @param support array with support query result
+ * @param ini id of initiative to be checked
+ */
 var getMemberSupport = function(support, ini) {
 	for(var a = 0; a < support.length; a++) {
 		if(support[a].length > 0 && support[a][0].initiative_id == ini) {
@@ -194,6 +203,7 @@ exports.show = function(state, render) {
 			builtIni.suggestions = [];
 			builtIni.suggestionsnumber = suggestions.length;
 
+			// calculate suggestion pagination
 			builtIni.suggestionspages = Math.ceil(suggestions.length / 4);
 			if(state.url.query.suggestionpage !== undefined && state.url.query.suggestionpage > 1) {
 				builtIni.suggestionspage = state.url.query.suggestionpage;

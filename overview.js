@@ -400,7 +400,7 @@ exports.show = function(state) {
 }
 
 /**
- * Collect and render news data of the overview page
+ * Collect and render news data of the login page
  *
  * @param state The HTTP-Request state object
  */
@@ -416,6 +416,11 @@ exports.showLogin = function(state) {
 	news(state, finish);
 }
 
+/**
+ * Collect and render updated ini table data
+ *
+ * @param state The HTTP-Request state object
+ */
 exports.updateInis = function(state) {
 	if(!state.session_key()) {
 		state.sendToLogin();
@@ -433,6 +438,11 @@ exports.updateInis = function(state) {
 	inis(state, finish);
 }
 
+/**
+ * Collect and render updated news data
+ *
+ * @param state The HTTP-Request state object
+ */
 exports.updateNews = function(state) {
 	if(!state.session_key()) {
 		state.sendToLogin();

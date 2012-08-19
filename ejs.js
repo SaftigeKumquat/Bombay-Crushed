@@ -59,6 +59,7 @@ fs.readdir(__dirname + '/templates/', function(err, files) {
  *
  * @param state A state object of the current HTTP Request
  * @param template Name of the template to render
+ * @param standAlone to indicate if head and foot should be included 
  *
  * @todo Somewhere document all the values expected on the state
  * object, e.g. state.context.meta.currentpage.
