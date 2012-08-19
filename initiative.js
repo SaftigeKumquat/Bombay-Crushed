@@ -18,6 +18,15 @@ var registerFunctions = function() {
 	}
 }
 
+var getMemberSupport = function(support, ini) {
+	for(var a = 0; a < support.length; a++) {
+		if(support[a].length > 0 && support[a][0].initiative_id == ini) {
+			return true;
+		}
+	}
+	return false;
+}
+
 /**
  * Takes care of retrieving data for and rendering the
  * initiative page.
@@ -50,6 +59,7 @@ exports.show = function(state, render) {
 	var authors = [];
 	var supporters = [];
 	var alternatives = [];
+	var support = [];
 	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
@@ -58,7 +68,8 @@ exports.show = function(state, render) {
 
 	var finish = function() {
 		if(iniDone && draftDone && supportDone && alternativesDone
-			&& drafts.length == authors.length) {
+			&& drafts.length == authors.length
+			&& alternatives.length == support.length) {
 
 			builtIni.id = initiative_id;
 			builtIni.name = initiative.name;
@@ -178,6 +189,9 @@ exports.show = function(state, render) {
 			builtIni.suggestions = [];
 
 			builtIni.alternativeinis = [];
+
+			builtIni.alternativeinisnumber = alternatives.length;
+
 			// sort alternative inis
 			if(issue.ranks_available) {
 				// sort inis by rank
@@ -222,15 +236,13 @@ exports.show = function(state, render) {
 				alternativeIni.quorumwidth = builtIni.requiredquorum;
 
 				// check if member supports ini
-				//if(getMemberSupport(support, issue.id, alternatives[i].id)) {
+				if(getMemberSupport(support, alternatives[i].id)) {
 					alternativeIni.isupport = true;
-				//}
+				}
 
 				builtIni.alternativeinis.push(alternativeIni);
 			}
-			
-			console.log('ALT' + JSON.stringify(alternatives));
-			
+						
 			state.context.initiative = builtIni;
 
 			state.context.meta.currentpage = "initiative";
@@ -251,6 +263,12 @@ exports.show = function(state, render) {
 			for(var i = 0; i < alt_res.result.length; i++) {
 				if(alt_res.result[i].id != initiative_id) {
 					alternatives.push(alt_res.result[i]);
+
+					// get supporters
+					lf.query('/supporter', { 'initiative_id': alt_res.result[i].id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
+						support.push(support_res.result);
+						finish();
+					});
 				}
 			}
 
