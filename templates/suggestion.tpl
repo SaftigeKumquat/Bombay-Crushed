@@ -9,7 +9,7 @@
 
 		<div class="eightcol box first">			
 			<h2><%= suggestion.name %></h2>
-			<p class="box-label"><%= texts.suggestionforinitiative %> <a href="#"><%= suggestion.initiative.name %></a></p>
+			<p class="box-label"><%= texts.suggestionforinitiative %> <a href="<% meta.baseurl %>/initiative?initiative_id=<%= suggestion.initiative.id %>"><%= suggestion.initiative.name %></a></p>
 			<div class="box-footer box-editorial">
 	
 				<h3><%= texts.changeproposal %></h3>			
@@ -17,7 +17,6 @@
 			</div> 
 				<table class="table-anregungen">
 					<tr>
-						<th><%= texts.suggestion %></th>
 						<th><%= texts.generalopinion %></th>
 						<th><%= texts.myopinion %></th>
 						<th><%= texts.suggestionnotimplemented %></th>
@@ -26,7 +25,6 @@
 						<th><%= texts.iam %></th>
 					</tr>
 					<tr class="odd">
-						<td><h3><a href="#"><%= suggestion.name %></a></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= suggestion.mustsupporter %> <%= texts.mustsupporterinfo %> / <%= suggestion.shouldsupporter %> <%= texts.shouldsupporterinfo %> / <%= suggestion.neutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.shouldnotsupporter %> <%= texts.shouldnotsupporterinfo %> / <%= suggestion.mustnotsupporter %> <%= texts.mustnotsupporterinfo %>">
 								
@@ -40,21 +38,21 @@
 						</td>
 						<td>
 							<ul>
-								<li><a href="#"><%= texts.must %></a></li>
-								<li><a href="#"><%= texts.should %></a></li>
-								<li><a href="#"><%= texts.neutral %></a></li>
-								<li><a href="#"><%= texts.shouldnot %></a></li>
-								<li><a href="#"><%= texts.mustnot %></a></li>							
+								<li><a <% if(suggestion.my_opinion === 2) { %>class="marked"<% } %> href="#"><%= texts.must %></a></li>
+								<li><a <% if(suggestion.my_opinion === 1) { %>class="marked"<% } %> href="#"><%= texts.should %></a></li>
+								<li><a <% if(suggestion.my_opinion === 0) { %>class="marked"<% } %> href="#"><%= texts.neutral %></a></li>
+								<li><a <% if(suggestion.my_opinion === -1) { %>class="marked"<% } %> href="#"><%= texts.shouldnot %></a></li>
+								<li><a <% if(suggestion.my_opinion === -2) { %>class="marked"<% } %> href="#"><%= texts.mustnot %></a></li>
 							</ul>
 						</td>
 						<td>
-							<ul class="bargraph" title="<%= suggestion.notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= suggestion.notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= suggestion.notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.notimplementedshoudnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= suggestion.notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
+							<ul class="bargraph" title="<%= suggestion.notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= suggestion.notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= suggestion.notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.notimplementedshouldnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= suggestion.notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
 
 								<li class="bargraph-support" style="width:<%= suggestion.notimplementedmustsupporterwidth %>"></li>
 								<li class="bargraph-pro" style="width:<%= suggestion.notimplementedshouldsupporterwidth %>"></li>
 								<li class="bargraph-uninvolved" style="width:<%= suggestion.notimplementedneutralsupporterwidth %>"></li>
-								<li class="bargraph-against" style="width:<%= suggestion.notimplementedmustnotsupportwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
-								<li class="bargraph-contra" style="width:<%= suggestion.notimplementedshouldnotsupportwidth %>"></li>
+								<li class="bargraph-against" style="width:<%= suggestion.notimplementedmustnotsupporterwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
+								<li class="bargraph-contra" style="width:<%= suggestion.notimplementedshouldnotsupporterwidth %>"></li>
 
 							</ul>
 						</td>
@@ -64,8 +62,8 @@
 								<li class="bargraph-support" style="width:<%= suggestion.implementedmustsupporterwidth %>"></li>
 								<li class="bargraph-pro" style="width:<%= suggestion.implementedshouldsupporterwidth %>"></li>
 								<li class="bargraph-uninvolved" style="width:<%= suggestion.implementedneutralsupporterwidth %>"></li>
-								<li class="bargraph-against" style="width:<%= suggestion.implementedmustnotsupportwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
-								<li class="bargraph-contra" style="width:<%= suggestion.implementedshouldnotsupportwidth %>"></li>
+								<li class="bargraph-against" style="width:<%= suggestion.implementedmustnotsupporterwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
+								<li class="bargraph-contra" style="width:<%= suggestion.implementedshouldnotsupporterwidth %>"></li>
 
 							</ul>
 						</td>	
@@ -73,7 +71,7 @@
 						<td>
 							<ul>
 								<li><a <% if(suggestion.isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.implemented %></a></li>
-								<li><a <% if(!suggestion.isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
+								<li><a <% if(suggestion.isayimplemented !== undefined && suggestion.isayimplemented == false) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
 							</ul>
 						</td>	
 						<td>
@@ -96,55 +94,58 @@
 			<h2><%= texts.author %></h2>
 			<div class="profile-init">
 				<p>
-					<a href="#"><img src="<%= meta.baseurl %>/<%= suggestion.author.picmini %>" alt="<%= texts.profilepic %>" /></a>
+					<a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><img src="<%= meta.baseurl %>/<%= suggestion.author.picmini %>" alt="<%= texts.profilepic %>" /></a>
 				</p>
-				 <h3><a href="#"><%= suggestion.author.name %></a></h3>
+				 <h3><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><%= suggestion.author.name %></a></h3>
 			</div>
 		</div>
 	</div>
 	<div class="row">
 
-		<div class="eightcol box first">
+		<div class="eightcol box first opiniondiv">
 			<h2><%= texts.opinions %></h2>
 			<div class="box-description">
 				<p><%= texts.opinioninfo %></p>
-			</div>	
+			</div>
 
-				<table class="table-meinungen">
-					<tr>
-						<th></th>
-						<th><%= texts.member %></th>
-						<th><%= texts.suggestionimplemented %></th>
-						<th><%= texts.opinion %></th>
+			<table class="table-meinungen opiniontable">
+				<tr>
+					<th></th>
+					<th><%= texts.member %></th>
+					<th><%= texts.suggestionimplemented %></th>
+					<th><%= texts.opinion %></th>
 
-					</tr>
+				</tr>
 
-					<% var odd = true;
-					for(var i = 0; i < suggestion.opinions.length; i++) { %>
-					<tr class="<% if(odd) { %>odd<% } else { %>even<% } %>">
-						<td><img src="<%= meta.baseurl %>/<%= suggestion.opinions[i].user.picmini %>" alt="<%= texts.profilepic %>"/></a></td>
-						<td><a href="#"><%= suggestion.opinions[i].user.name %></a></td>
-						<td><span href="" class="<%= suggestion.opinions[i].action %>"><% if(suggestion.opinions[i].implemented) { %><%= texts.implemented %><% } else { %><%= texts.notimplemented %><% } %></span></td>
-						<td> <p class="smiley smiley-<%= suggestion.opinions[i].smiley %>"></p></td>
-					</tr>
-					<% if(odd) { odd = false; } else { odd = true; }
-					} %>						
-				</table>	
+				<% var odd = true;
+				for(var i = 0; i < suggestion.opinions.length; i++) { %>
+				<tr class="<% if(odd) { %>odd<% } else { %>even<% } %>">
+					<td><img src="<%= meta.baseurl %>/<%= suggestion.opinions[i].user.picmini %>" alt="<%= texts.profilepic %>"/></a></td>
+					<td><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.opinions[i].user.id %>"><%= suggestion.opinions[i].user.name %></a></td>
+					<td><span href="" class="<%= suggestion.opinions[i].action %>"><% if(suggestion.opinions[i].implemented) { %><%= texts.implemented %><% } else { %><%= texts.notimplemented %><% } %></span></td>
+					<td> <p class="smiley smiley-<%= suggestion.opinions[i].smiley %>"></p></td>
+				</tr>
+				<% if(odd) { odd = false; } else { odd = true; }
+				} %>
+			</table>
 
-												
 			<div class="box-footer">
-				<ul class="pagination">
-					<% if(suggestion.opinionpage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= suggestion.opinionpages; a++) {
-						if(a == suggestion.opinionpage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#"><%= a %></a></li>
-						<% }
+				<ul class="pagination opinionpages">
+					<% if(suggestion.opinionpage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { 
+						var prevpage = suggestion.opinionpage - 1;
+					%><li><a class="button button-backward" href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= prevpage %>, <%= suggestion.id %>)"><%= texts.backshort %></a></li><% }
+					if(suggestion.opinionpages > 1) {
+						for(var a = 1; a <= suggestion.opinionpages; a++) {
+							if(a == suggestion.opinionpage) { %>
+								<li class="active"><%= a %></li>
+							<% }
+							else { %>
+								<li><a href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= a %>, <%= suggestion.id %>)"><%= a %></a></li>
+							<% }
+						}
 					}
-					var nextpage = ( suggestion.opinionpage - 1 ) + 2;
-					if(suggestion.opinionpage != suggestion.opinionpages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					var nextpage = suggestion.opinionpage + 1;
+					if(suggestion.opinionpage < suggestion.opinionpages) { %><li><a class="button button-forward" href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= nextpage %>, <%= suggestion.id %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>

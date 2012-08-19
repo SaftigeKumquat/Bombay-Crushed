@@ -1,5 +1,6 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
+var userFunc = require('./user.js');
 
 var getMemberSupport = function(support, issue, ini) {
 	for(var a = 0; a < support.length; a++) {
@@ -134,6 +135,7 @@ var area = function(state, render, page, memberpage) {
 							inis[a] = original_inis;
 						}
 
+						builtIssue.initiative_id = inis[a][0].id;
 						builtIssue.title = inis[a][0].name;						
 						builtIssue.supporter = inis[a][0].satisfied_supporter_count;
 						builtIssue.potsupporter = inis[a][0].supporter_count - inis[a][0].satisfied_supporter_count;
@@ -146,7 +148,7 @@ var area = function(state, render, page, memberpage) {
 						builtIssue.support = Math.floor(( builtIssue.supporter / total ) * 100);
 						builtIssue.potential = Math.floor(( builtIssue.potsupporter / total ) * 100);
 						builtIssue.uninvolved = Math.floor(( builtIssue.uninterested / total ) * 100);
-						builtIssue.quorum = Math.floor(total * quorum_num / quorum_den);
+						builtIssue.quorum = Math.floor(100 * quorum_num / quorum_den);
 
 						// check if member supports ini
 						if(getMemberSupport(support, builtIssue.id, inis[a][0].id)) {
@@ -158,6 +160,7 @@ var area = function(state, render, page, memberpage) {
 						for(var b = 1; b < inis[a].length; b++) {
 							alternativeIni = {};
 
+							alternativeIni.id = inis[a][b].id;
 							alternativeIni.title = inis[a][b].name;						
 							alternativeIni.supporter = inis[a][b].satisfied_supporter_count;
 							alternativeIni.potsupporter = inis[a][b].supporter_count - inis[a][b].satisfied_supporter_count;
@@ -190,15 +193,7 @@ var area = function(state, render, page, memberpage) {
 				var builtMember = {};
 				for(var a = 0; a < users.length; a++) {
 					if(users[a].id == members[i].member_id) {
-						builtMember.nick = users[a].name;
-						if(users[a].realname == null || users[a].realname == '') {
-							builtMember.name = users[a].name;
-						}
-						else {
-							builtMember.name = users[a].realname;
-						}
-						builtMember.picmini = 'avatar/' + users[a].id;
-						builtMember.id = users[a].id;
+						builtMember = userFunc.getUserBasic(users[a]);
 					}
 				}
 				builtArea.members.push(builtMember);
@@ -240,7 +235,6 @@ var area = function(state, render, page, memberpage) {
 
 				lf.query('/supporter', { 'issue_id': issue_id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
 					support.push(support_res.result);
-					console.log('SUPPORT:' + JSON.stringify(support_res.result));
 					finish();
 				});
 

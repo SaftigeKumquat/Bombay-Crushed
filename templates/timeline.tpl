@@ -337,7 +337,7 @@
 							odd = true; }
 					}
 					%>>
-						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= inis[i].id %>"><%= inis[i].title %></a></h3><% 
 						if(!inis[i].hasalternatives) {
 						%><a href='<%= meta.baseurl %>/area?area_id=<%= inis[i].area_id %>'><%= inis[i].area %></a><% } %></td>
 						<td><%= inis[i].unit %></td>
@@ -370,7 +370,7 @@
 						<% }
 					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/timeline?page=<%= nextpage %>" onClick="update_inis(<%= nextpage %>, true)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage < initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/timeline?page=<%= nextpage %>" onClick="update_inis(<%= nextpage %>, true)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>

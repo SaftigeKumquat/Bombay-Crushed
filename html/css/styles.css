@@ -1,7 +1,7 @@
 /*
 	Christophe Chan Hin for Piratenpartei Deutschland
 	Frontend Development for Liquid Feedback
-	Part of Bombay Crushed Project with Johannes Knopp, Christoph Fritzsche, Matthias Bach
+	Part of Bombay Crushed Project with Johannes Knopp, Christoph Fritzsche, Matthias Bach, Dominic Guhl
 
 	Licensed under GPL and MIT.
 */
@@ -58,11 +58,19 @@ dt {font-weight:bold; padding: 0px 5px 0px 0px; float:left;}
 	text-decoration:underline; 	
 }
 
+#metamenu-logout, #metamenu-login {
+	font-weight:bold;
+	padding-left:13px;
+}
+
+#metamenu-login {
+	background:url(../img/login_arrow.png) 0px 3px no-repeat;
+	color:#5aad03;
+}
+
 #metamenu-logout {
 	background:url(../img/logout_arrow.png) 0px 3px no-repeat;
 	color:#e40404;
-	font-weight:bold;
-	padding-left:13px;
 }
 
 #mainmenu {
@@ -170,7 +178,8 @@ dt {font-weight:bold; padding: 0px 5px 0px 0px; float:left;}
 }
 
 .box-supporters h3 {padding-left:0px!important}
-.box-supporters h3 a {font-weight:normal!important}
+.box-supporters h3 a, .box-supporters h3 em  {font-weight:normal!important}
+.box-supporters h3 em {color:#666}
 
 .box-supporter-delegate {opacity:.5}
 .box-description {
@@ -230,10 +239,10 @@ dt {font-weight:bold; padding: 0px 5px 0px 0px; float:left;}
 
 .unit {color:#4e4b40; font-weight:bold}
 
-.for {color:#49b214}
+.for {color:#297825}
 .against {color:#e41b18}
 .support {color:#555555}
-.for-delegated {color:#419417}
+.for-delegated {color:#297825}
 .against-delegated {color:#b21b18}
 
 .delegate-arrow {margin:0px 5px 0px 5px; vertical-align:middle}
@@ -261,12 +270,14 @@ dt {font-weight:bold; padding: 0px 5px 0px 0px; float:left;}
 
 .box-statements-statement p {padding-top:10px; font-size:12px; color:#333; line-height:18px}
 .box-editorial  {padding: 20px 20px;}
-.box-editorial h3 {padding-bottom:10px; font-size:15px; color:#222; }
-.box-editorial p {font-size:15px; color:#222; line-height:24px; padding-bottom:18px}
+.box-editorial h1 {padding:0px 0px 10px 0px; font-weight:normal; font-size:20px; color:#222}
+.box-editorial h2 {padding:0px 0px 10px 0px; font-size:18px; font-weight:normal; color:#222; background-color:transparent}
+.box-editorial h3 {padding-bottom:10px; font-size:13px; color:#222}
+.box-editorial h4 {padding-bottom:10px; font-size:12px; font-weight:bold; color:#222}
+.box-editorial p, .box-editorial ul, .box-editorial ol  {font-size:15px; color:#222; line-height:24px; padding-bottom:18px}
+.box-editorial ul {padding-left:34px; list-style-type:disc;}
+.box-editorial ol {padding-left:34px; list-style-type:decimal;}
 .box-editorial table {padding:0px -20px} 
-
-
-
 
 
 table {
@@ -458,6 +469,9 @@ h3 a:hover {text-decoration:underline}
 	word-wrap:break-word;
 }
 
+.profile-init {word-wrap:break-word;}
+
+
 /*footer*/
 
 #footer, #push {height:120px;}
@@ -520,15 +534,17 @@ h3 a:hover {text-decoration:underline}
 }
 
 #search input[type="text"]:focus {
-    width: 70px;
-    }
+	width: 140px;
+	background-color: white;
+	color: black;
+}
 
 #search-sub input[type="text"]:focus,  #input-sub input[type="text"]:focus {
     width: 157px;
-    }
+}
 
 #select-filter, #select-filter2, #select-filter3 {margin: 6px 0px 6px 6px;}
-#select-filter-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}
+#select-filter-big, #search-field-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}
 
 .table-label, .box-label {font: bold 12px Arial,Helvetica,Sans-serif; padding-left: 10px;} 
 .box-label {padding:8px 10px}
@@ -734,7 +750,28 @@ h1 {
 	padding: 20px 10px;
 }
 
-.initiative .minimenu {}
+.delegate-search select, .delegate-search input {max-width:110px;}
+.delegate-search label {display:inline-block; width:50px; margin: 10px 0px; text-align:right}
+.delegate-search input {margin:0px!important}
+.delegate-search .button {margin:10px 10px 20px 10px}
+.delegate-searchresult h3 {padding:10px}
+
+.delegation-view table {max-width:60%}
+.delegation-view select {max-width:110px;}
+.delegation-view label {display:inline-block; width:50px; text-align:right }
+.delegation-view tr  {background:none}
+.delegation-view td a {text-decoration:none}
+.delegation-view td {vertical-align:middle;}
+
+.delegation-view td:nth-child(1) {width:22%; text-align:right}
+.delegation-view td:nth-child(2) {width:15%; text-align:center}
+.delegation-view td:nth-child(3) {width:25%; text-align:center}
+.delegation-view td:nth-child(4) {width:15%; text-align:center}
+.delegation-view td:nth-child(5) {width:23%; text-align:left}
+
+.delegation-view .finaldelegate {background-color:#ededdf; border:1px solid #cdcdc0}
+.delegation-view tr:hover {background-color:transparent!important}
+.delegation-view td:hover  {background-color:#ffd988}
 
 /* ============================= */
 /* ! Layout for mobile version   */
@@ -745,6 +782,7 @@ h1 {
 body {
 	font:11px/18px Arial, sans-serif;
 }
+
 
 
 #mainmenu {
@@ -787,6 +825,7 @@ table th:nth-child(3), table td:nth-child(3) {width:55px;}
 .table-anregungen th:nth-child(4), .table-anregungen td:nth-child(4) {width:0px; display:none}
 .table-anregungen th:nth-child(5), .table-anregungen td:nth-child(5) {width:0px; display:none}
 .table-anregungen th:nth-child(6), .table-anregungen td:nth-child(6) {width:40px;}
+.delegation-view table {max-width:100%}
 
 #footer {
 	padding:30px 0px 300px 0px;
@@ -807,13 +846,20 @@ table th:nth-child(3), table td:nth-child(3) {width:55px;}
 .themetable-status5 {background:#d6d779 url('../img/theme-status-5.png') top left no-repeat;}
 .themetable-status6 {background-color:#b81827; border-left:5px solid #d0d0be; color:#fff;}
 
-
-
 .profile-data {
 	-moz-column-count: 1;
 	-webkit-column-count: 1;
 	column-count: 1;
 }
+
+
+/* ============================= */
+/* ! Layout for very small mobile version   */
+/* ============================= */
+
+@media handheld, only screen and (max-width: 310px) {
+
+.delegation-view label {text-align:left; padding-top:10px }
 
 /*font shrinks*/
 /*.table-label {font: bold 11px Arial,Helvetica,Sans-serif;} 

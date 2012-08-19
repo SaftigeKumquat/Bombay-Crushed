@@ -3,6 +3,11 @@ var lf = require('./lfcli.js');
 var ejs = require('./ejs.js');
 
 
+/**
+ * Returns the readable text for an API issue state
+ *
+ * @param issuestate Issue state as provided by the API
+ */
 getIssueStateText = function (issuestate) {
 	switch(issuestate) {
 		case "calculation":

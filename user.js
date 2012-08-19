@@ -1,5 +1,23 @@
 var lf = require('./lfcli.js');
 
+/**
+ * Returns the object required by templates for an API member object
+ *
+ * @param query_res member object as provided by API
+ */
+exports.getUserBasic = function(query_res) {
+	builtUser = {};
+	builtUser.nick = query_res.name;
+	builtUser.name = query_res.realname;
+	if(builtUser.name == "" || builtUser.name == null) {
+		builtUser.name = builtUser.nick;
+	}
+	builtUser.id = query_res.id;
+	builtUser.picmini = 'avatar/' + query_res.id;
+
+	return builtUser;
+}
+
 var user = function(state, finish, allowOtherMember) {
 	var unit_count = -1;
 	var units = [];
@@ -39,6 +57,11 @@ var user = function(state, finish, allowOtherMember) {
 			'offices': lf_user.internal_posts,
 			'memberships': lf_user.external_memberships,
 		};
+
+		// delete dummy content
+		state.context.delegateactions = [];
+		state.context.strongestdelegates = [];
+		state.context.votingcomments = [];
 
 		if(member_id == state.user_id()) {
 			state.context.user.isme = true;

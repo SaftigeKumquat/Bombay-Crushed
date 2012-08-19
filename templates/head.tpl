@@ -20,8 +20,6 @@
 	<!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="<%= meta.baseurl %>/js/canvas-graphics.js"></script>
-	<script type="text/javascript" src="<%= meta.baseurl %>/js/lqfb.js"></script>
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/user_actions.js"></script>
 </head>
 
@@ -34,7 +32,11 @@
  				 <img src="<%= meta.baseurl %>/img/logo.png" alt="LQFB logo" />
 			</a>
 			<ul id="metamenu">
+				<% if(loggedin) { %>
 				<li><a id="metamenu-logout" href="<%= meta.baseurl %>/logout"><%= texts.logout %></a></li>
+				<% } else { %>
+				<li><a id="metamenu-login" href="<%= meta.baseurl %>/login">einloggen</a></li>
+				<% } %>
 				<li><a href="#"><%= texts.terms %></a></li>
 				<li><a href="#"><%= texts.privacy %></a></li>
 				<li><a href="#"><%= texts.imprint %></a></li>
@@ -47,7 +49,8 @@
 			<ul id="mainmenu">
 				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="<%= meta.baseurl %>/overview"><%= texts.overview %></a></li>
 				<li><a <% if(meta.currentpage == "topics") { %>class="active" <% } %>href="<%= meta.baseurl %>/topics"><%= texts.topics %></a></li>
-				<li><a <% if(meta.currentpage == "contacts") { %>class="active" <% } %>href="<%= meta.baseurl %>/contacts"><%= texts.contacts %></a></li>
+				<!-- Removed empty delegates page for milestone 1
+				<li><a <% if(meta.currentpage == "contacts") { %>class="active" <% } %>href="<%= meta.baseurl %>/contacts"><%= texts.contacts %></a></li> -->
 				<li><a <% if(meta.currentpage == "profile") { %>class="active" <% } %>href="<%= meta.baseurl %>/profile"><%= texts.profile %></a></li>
 				<li><a <% if(meta.currentpage == "timeline") { %>class="active" <% } %>href="<%= meta.baseurl %>/timeline"><%= texts.timeline %></a></li>
 			</ul>

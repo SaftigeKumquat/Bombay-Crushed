@@ -83,6 +83,14 @@ exports.render = function(state, template, standAlone) {
 
 		context.texts = texts;
 
+		// check login
+		if(!state.session_key()) {
+			context.loggedin = false;
+		}
+		else {
+			context.loggedin = true;
+		}
+
 		var head = ejs.render(tpls[headtpl], context);
 		var main = ejs.render(tpls[maintpl], context);
 		var footer = ejs.render(tpls[footertpl], context);
