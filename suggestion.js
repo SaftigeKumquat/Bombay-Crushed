@@ -140,8 +140,9 @@ exports.show = function(state) {
 
 		// TODO handle opinion-pages
 
-		for(var i = 0; i < res.result.length; i++) {
-			var lf_opinion = res.result[i];
+		var lf_opinions = res.result;
+		for(var i = 0; i < lf_opinions.length; i++) {
+			var lf_opinion = lf_opinions[i];
 			if(lf_opinion.member_id == state.user_id()) {
 				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
 				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
@@ -156,19 +157,55 @@ exports.show = function(state) {
 		my_opinion_info = tmp_my_opinion;
 
 		lf.query('/member', { 'member_id': members_to_resolve }, state, function(res) {
-			console.log('MEMBERS:' + JSON.stringify(res));
-			opinions_info = []; // TODO
-			// format:
-			//, "opinions": [
-			//			{ "user": { "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }, "action": "for",
-			//				"implemented": true, "smiley": 1 },
-			//			{ "user": { "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png", "picmini": "content_img/profile_small.png" }, "action": "against",
-			//				"implemented": false, "smiley": 2 },
-			//			{ "user": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png", "picmini": "content_img/profile_small.png" }, "action": "for",
-			//				"implemented": true, "smiley": 3 },
-			//			{ "user": { "nick": "themarix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png", "picmini": "content_img/profile_small.png" }, "action": "against",
-			//				"implemented": false, "smiley": 4 }
-			//		], "opinionpage": 1, "opinionpages": 2
+			var i;
+			var lf_member;
+			var lf_members = res.result;
+			var lf_members_by_id = {};
+			for(i = 0; i < lf_members.length; i++) {
+				lf_member = lf_members[i];
+				lf_members_by_id[lf_member.id] = lf_member;
+			}
+
+			var tmp_opinion;
+			var tmp_opinions = [];
+
+			var calculate_action = function(lf_opinion) {
+				switch(lf_opinion.degree) {
+					case -2:
+					case -1:
+						return 'against';
+					case 1:
+					case 2:
+						return 'for';
+					default:
+						return '';
+				}
+			};
+
+			for(i = 0; i < lf_opinions.length; i++) {
+				lf_opinion = lf_opinions[i];
+				// TODO filter own opinion
+				console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
+				lf_member = lf_members_by_id[lf_opinion.member_id];
+				console.log('LF member: ' + JSON.stringify(lf_member));
+				tmp_opinion = {
+					user: {
+						nick: lf_member.name,
+						name: lf_member.realname,
+						picsmall: 'avatar/' + lf_member.id,
+						picmini: 'avatar/' + lf_member.id
+					},
+					action: calculate_action(lf_opinion),
+					implemented: lf_opinion.fulfilled,
+					smiley: calculate_smiley(lf_opinion)
+				}
+				tmp_opinions.push(tmp_opinion);
+			}
+			opinions_info = tmp_opinions;
+
+			// TODO paging
+			//	 "opinionpage": 1, "opinionpages": 2
+
 			finish();
 		});
 	});
