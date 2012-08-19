@@ -16,6 +16,9 @@ exports.show = function(state) {
 	}
 
 	var suggestion_id = state.url.query.suggestion_id;
+	if(suggestion_id === undefined) {
+		state.fail_invalidResource('No suggestion ID given.', 400);
+	}
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
@@ -44,12 +47,24 @@ exports.show = function(state) {
 	// get the initiative
 	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
 		console.log(JSON.stringify(res));
+		if(res.result.length === 0) {
+			state.fail_invalidResource('No suggestion with id ' + suggestion_id + ' found.', 404);
+			return;
+		}
 		var suggestion_res = res.result[0];
 		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
 		var initiative = res.initiatives[suggestion_res.initiative_id];
+		if(initiative === undefined) {
+			state.fail('Initiative ' + suggestion_res.initiative_id + ' for suggestion ' + suggestion_id + ' not included in reply.');
+			return;
+		}
 		console.log('INITIATIVE: ' + JSON.stringify(initiative));
 
 		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_content': 'html' }, state, function(res) {
+			if(res.result.length === 0) {
+				state.fail('No draft found for initiative ' + initiative.id + ' found.');
+				return;
+			}
 			var lf_draft = res.result[0];
 			initiative_text = lf_draft.content;
 			finish();
@@ -129,6 +144,10 @@ exports.show = function(state) {
 
 		// add author info
 		lf.query('/member', { 'member_id': suggestion_res.author_id }, state, function(res) {
+			if(res.result.length === 0) {
+				state.fail('No member found with id ' + suggestion_res.author_id + ' when looking for author of suggestion ' + suggestion_id);
+				return;
+			}
 			var author = res.result[0];
 			console.log("AUTHOR: " + JSON.stringify(author));
 
@@ -182,6 +201,10 @@ function opinions(state, finish) {
 	var OPINIONS_PER_PAGE = 4;
 
 	var suggestion_id = state.url.query.suggestion_id;
+	if(suggestion_id === undefined) {
+		state.fail_invalidResource('No suggestion ID given.', 400);
+	}
+
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
 		var lf_opinions = res.result;
 
@@ -272,6 +295,10 @@ function opinions(state, finish) {
 				if(lf_opinion.member_id != state.user_id()) {
 					console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
 					lf_member = lf_members_by_id[lf_opinion.member_id];
+					if(lf_member === undefined) {
+						console.log('ERROR: Failed to lookup user with ' + lf_opinion.member_id + ', owner of opinion for suggeston ' + suggestion_id);
+						continue; // skip
+					}
 					console.log('LF member: ' + JSON.stringify(lf_member));
 					tmp_opinion = {
 						user: {
