@@ -49,7 +49,7 @@ exports.show = function(state) {
 		var initiative = res.initiatives[suggestion_res.initiative_id];
 		console.log('INITIATIVE: ' + JSON.stringify(initiative));
 
-		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_string': true }, state, function(res) {
+		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_content': 'html' }, state, function(res) {
 			var lf_draft = res.result[0];
 			initiative_text = lf_draft.content;
 			finish();
