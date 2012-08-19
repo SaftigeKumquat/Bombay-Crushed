@@ -6,7 +6,7 @@
 				<select id="select-filter-big" name="filter">
 				<% for(var i = 0; i < filter.length; i++) { %>
 					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
-				<% } %> 
+				<% } %>
 				</select>
 				<a class="button buttonrow" href="#"><%= texts.managefilter %></a>
 				<a id="filterslide" class="button buttonrow" href="#"><%= texts.editfilter %></a>
@@ -17,13 +17,13 @@
 	<div class="row">
 		<div id="filter" class="twelvecol box last">
 			<h2><%= texts.editfilter %></h2>
-			<form method="get" action="/search" id="timeline-filter">
+			<form method="get" action="search" id="timeline-filter">
 				<div class="timeline-filter-timerange">
 				    <input type="radio" name="timerange" id="radio-1"/>
 				    	<label for="radio-1"><%= texts.last24hours %></label>
 				    <input type="radio" name="timerange" id="radio-2"/>
 				    	<label for="radio-2"><input name="age" type="text" size="14" placeholder="age: 40 days" /></label>
-			    </div>	
+			    </div>
 			   	<table class="filtertable">
 					<tr>
 						<th><%= texts.issueevents %></th>
@@ -44,7 +44,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence1-interested">
 								<label for="searchfilter-theme-occurence1-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -62,9 +62,9 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence2-interested">
 								<label for="searchfilter-theme-occurence2-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
-					</tr>					
+					</tr>
 					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">
@@ -80,7 +80,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence3-interested">
 								<label for="searchfilter-theme-occurence3-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -98,7 +98,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence4-interested">
 								<label for="searchfilter-theme-occurence4-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
 					</tr>
 					<tr class="odd">
@@ -116,7 +116,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence5-interested">
 								<label for="searchfilter-theme-occurence5-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -134,9 +134,9 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence6-interested">
 								<label for="searchfilter-theme-occurence6-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
-					</tr>		
+					</tr>
 					<tr class="odd">
 						<td>
 							<span class="searchfilter-theme-occurence">
@@ -152,7 +152,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-theme-occurence7-interested">
 								<label for="searchfilter-theme-occurence7-interested"><%= texts.interested %></label>
-							</span>							
+							</span>
 						</td>
 					</tr>
 
@@ -179,7 +179,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-support">
 								<label for="searchfilter-init-occurence1-support"><%= texts.supported %></label>
-							</span>		
+							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-possiblesupport">
 								<label for="searchfilter-init-occurence1-possiblesupport"><%= texts.potsupported %></label>
@@ -187,7 +187,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence1-init">
 								<label for="searchfilter-init-occurence1-init"><%= texts.initiated %></label>
-							</span>											
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -209,7 +209,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence2-support">
 								<label for="searchfilter-init-occurence2-support"><%= texts.supported %></label>
-							</span>		
+							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence2-possiblesupport">
 								<label for="searchfilter-init-occurence2-possiblesupport"><%= texts.potsupported %></label>
@@ -217,7 +217,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence2-init">
 								<label for="searchfilter-init-occurence2-init"><%= texts.initiated %></label>
-							</span>											
+							</span>
 						</td>
 					</tr>
 					<tr class="odd">
@@ -239,7 +239,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence3-support">
 								<label for="searchfilter-init-occurence3-support"><%= texts.supported %></label>
-							</span>		
+							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence3-possiblesupport">
 								<label for="searchfilter-init-occurence3-possiblesupport"><%= texts.potsupported %></label>
@@ -247,7 +247,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence3-init">
 								<label for="searchfilter-init-occurence3-init"><%= texts.initiated %></label>
-							</span>											
+							</span>
 						</td>
 					</tr>
 					<tr>
@@ -269,7 +269,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence4-support">
 								<label for="searchfilter-init-occurence4-support"><%= texts.supported %></label>
-							</span>		
+							</span>
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence4-possiblesupport">
 								<label for="searchfilter-init-occurence4-possiblesupport"><%= texts.potsupported %></label>
@@ -277,7 +277,7 @@
 							<span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-init-occurence4-init">
 								<label for="searchfilter-init-occurence4-init"><%= texts.initiated %></label>
-							</span>											
+							</span>
 						</td>
 					</tr>
 
@@ -290,7 +290,7 @@
 					</tr>
 					<tr class="odd">
 						<td>
-							<% for(var j = 0; j < units[a].areas.length; j++) { %><span class="searchfilter-theme-occurence">	
+							<% for(var j = 0; j < units[a].areas.length; j++) { %><span class="searchfilter-theme-occurence">
 								<input type="checkbox" id="searchfilter-ignore-occurence<%= occurence %>">
 								<label for="searchfilter-ignore-occurence<%= occurence %>"><%= units[a].areas[j].name %></label>
 							</span><% occurence++; } %>
@@ -303,11 +303,11 @@
 						<% } %></td>
 					</tr>
 					<% var a = a + 2;
-					} %>										
-				</table>	 				    	
-			
+					} %>
+				</table>
+
 			<div class="box-footer"><a class="button" href="#top"><%= texts.searchaction %></a><a class="button button-grey" href="#top"><%= texts.savefilter %></a></div>
-			</form>												
+			</form>
 		</div>
 
 	</div>
@@ -335,11 +335,11 @@
 							%> class="odd"<% } 
 						else { 
 							odd = true; }
-					}					
+					}
 					%>>
-						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= inis[i].id %>"><%= inis[i].title %></a></h3><% 
 						if(!inis[i].hasalternatives) {
-						%><a href='#'><%= inis[i].area %></a><% } %></td>
+						%><a href='<%= meta.baseurl %>/area?area_id=<%= inis[i].area_id %>'><%= inis[i].area %></a><% } %></td>
 						<td><%= inis[i].unit %></td>
 						<td>
 							<ul class="bargraph" title="<%= inis[i].supporter %> <%= texts.supporter %> / <%= inis[i].potsupporter %> <%= texts.potsupporter %> / <%= inis[i].uninterested %> <%= texts.uninterested %>">
@@ -349,29 +349,29 @@
 								<li class="bargraph-uninvolved" style="width:<%= inis[i].uninvolved %>%"></li>
 							</ul>
 						</td>
-						<td><% if(inis[i].status == texts.tablevote) { %><span class="table-vote"><% } %><%= inis[i].status %><% 
-						if(inis[i].status == texts.tablevote) { %></span><% }
+						<td><% if(inis[i].status == texts.statusstep4) { %><span class="table-vote"><% } %><%= inis[i].status %><% 
+						if(inis[i].status == texts.statusstep4) { %></span><% }
 						%><br /><%= inis[i].lastaction.date %> <%= inis[i].lastaction.time %> <%= inis[i].lastaction.action %><%
 						if(inis[i].delegate) { 
-						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= inis[i].delegate.picsmall %>"/></a></p><%
+						%><p class="table-delegate"><a href="#"><img title="<%= texts.delegationend %>" src="<%= meta.baseurl %>/<%= inis[i].delegate.picsmall %>"/></a></p><%
 						} %></td>
 					</tr><%
-					} %>														
+					} %>
 				</table>
-			<div id="inipages" class="box-footer">			
+			<div id="inipages" class="box-footer">
 				<ul class="pagination">
-					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="timeline?page=<%= ( initable.activepage - 1 ) %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>)"><%= texts.backshort %></a></li><% }
+					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/timeline?page=<%= ( initable.activepage - 1 ) %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>, true)"><%= texts.backshort %></a></li><% }
 					for(var i = 1; i <= initable.pages; i++) {
 						if(i == initable.activepage) { %>
 							<li class="active"><%= i %></li>
 						<% }
 						else { %>
-							<li><a href="timeline?page=<%= i %>" onClick="update_inis(<%= i %>)"><%= i %></a></li>	
-						<% } 
-					} 
+							<li><a href="<%= meta.baseurl %>/timeline?page=<%= i %>" onClick="update_inis(<%= i %>, true)"><%= i %></a></li>
+						<% }
+					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="timeline?page=<%= nextpage %>" onClick="update_inis(<%= nextpage %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
-				</ul>				 
+					if(initable.activepage < initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/timeline?page=<%= nextpage %>" onClick="update_inis(<%= nextpage %>, true)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+				</ul>
 			</div>
 		</div>
 	</div>

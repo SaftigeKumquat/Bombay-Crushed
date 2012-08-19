@@ -27,6 +27,10 @@ var overview = require('./overview.js');
 var user = require('./user.js');
 var inis = require('./inis.js');
 var topics = require('./topics.js');
+var area = require('./area.js');
+var contacts = require('./contacts.js');
+var initiative = require('./initiative.js');
+var suggestion = require('./suggestion.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -73,16 +77,57 @@ var showProfile = function(state) {
 		}
 	}
 
-	user.get(state, finish);
+	user.get(state, finish, true);
 }
 
 /**
  * Takes care of retrieving data for and rendering the
- * user contacts page.
+ * area page.
  *
  * @param state The state object of the current HTTP-Request
  */
-var showContacts = function(state) {
+var showArea = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	// we need an area id
+	if(!state.url.query.area_id) {
+		console.log('Please provide area_id parameter');
+		invalidURL(state);
+		return;
+	}
+
+	// get page numbers
+	var page = 1;
+	var memberpage = 1;
+	if(state.url.query.page) {
+		page = state.url.query.page;
+	}
+	if(state.url.query.memberpage) {
+		memberpage = state.url.query.memberpage;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "area";
+		if(ctx.area !== undefined) {
+			ejs.render(state, '/area.tpl');
+		}
+	}
+
+	area.show(state, finish, page, memberpage);
+}
+
+/**
+ * Takes care of retrieving data for and rendering the
+ * issue page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+var showIssue = function(state) {
 	// we need a valid user session...
 	if(!state.session_key()) {
 		state.sendToLogin();
@@ -90,8 +135,8 @@ var showContacts = function(state) {
 	}
 
 	var ctx = state.context;
-	ctx.meta.currentpage = "contacts";
-	ejs.render(state, '/contacts.tpl');
+	ctx.meta.currentpage = "issue";
+	ejs.render(state, '/issue.tpl');
 }
 
 /**
@@ -123,9 +168,18 @@ var showTimeline = function(state) {
  *
  * @state The state object representing the current HTTP-Request
  */
-var invalidURL = function(state) {
+var invalidURL = function(state, logmessage, errorcode) {
+	if(!logmessage) {
+		logmessage = 'Invalid resource requested';
+	}
+	if(!errorcode) {
+		errorcode = 404;
+	}
+
+	console.log('WARN: ' + logmessage + ' – Sent code ' + errorcode + ' to the client');
+
 	var res = state.result;
-	res.writeHead(404, {'Content-Type': 'text/plain'});
+	res.writeHead(errorcode, {'Content-Type': 'text/plain'});
 	res.end('Kuckst du woanders!\n');
 }
 
@@ -174,7 +228,9 @@ var performLogin = function(state) {
 
 			lf.query('/info', {}, state, function(res) {
 				state.user_id(res.current_member_id);
-				overview.show(state);
+				state.context.meta.do_refresh = true;
+				state.context.meta.refresh_url = data['refresh-url'] || (state.app_prefix + '/overview');
+				ejs.render(state, '/loggedIn.tpl');
 			});
 		});
 	});
@@ -190,7 +246,9 @@ var performLogout = function(state) {
 	state.session_key(null);
 	state.user_id(null);
 	// and run
-	overview.show(state);
+	state.context.meta.do_refresh = true;
+	state.context.meta.refresh_url = state.app_prefix + '/overview';
+	ejs.render(state, '/loggedOut.tpl');
 }
 
 /**
@@ -203,7 +261,7 @@ var serveStatic = function(state) {
 
 	// stream from file to requestee
 	// TODO could probably be read chunkwise
-	filepath = __dirname + '/html' + state.request.url;
+	filepath = __dirname + '/html' + state.local_path;
 	console.log('Serving: ' + filepath);
 	fs.readFile(filepath, function(err, data) {
 		if(err) {
@@ -224,7 +282,7 @@ var serveStatic = function(state) {
  * @param state State object for the current HTTP-Request
  */
 var sendPicture = function(state) {
-	var user_id = state.request.url.slice('/picbig/'.length);
+	var user_id = state.local_path.slice('/picbig/'.length);
 	console.log('Retrieving portrait for user ' + user_id);
 	var query_obj = {
 		'type': 'photo',
@@ -239,7 +297,15 @@ var sendPicture = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail('No image found for user ' + user_id, 404);
+			// send placeholder pic
+			filepath = __dirname + '/html/img/placeholder.png';
+			fs.readFile(filepath, function(err, data) {
+				if(err) {
+					state.fail('Failed to get placeholder user image: ' + err);
+					return;
+				}
+				state.result.end(data);
+			});
 		}
 	});
 }
@@ -253,7 +319,7 @@ var sendPicture = function(state) {
  * @param state State object for the current HTTP-Request
  */
 var sendAvatar = function(state) {
-	var user_id = state.request.url.slice('/avatar/'.length);
+	var user_id = state.local_path.slice('/avatar/'.length);
 	console.log('Retrieving avatar for user ' + user_id);
 	var query_obj = {
 		'type': 'avatar',
@@ -268,7 +334,15 @@ var sendAvatar = function(state) {
 			response.write(buf);
 			response.end();
 		} else {
-			state.fail('No avatar found for user ' + user_id, 404);
+			// send placeholder pic
+			filepath = __dirname + '/html/img/no_profilepic.png';
+			fs.readFile(filepath, function(err, data) {
+				if(err) {
+					state.fail('Failed to get placeholder user avatar: ' + err);
+					return;
+				}
+				state.result.end(data);
+			});
 		}
 	});
 }
@@ -276,7 +350,7 @@ var sendAvatar = function(state) {
 /**
  * Mapping from URLs to functions
  *
- * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
+ * For a detailed German explanation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var url_mapping = {
 	'/': overview.show,
@@ -286,17 +360,22 @@ var url_mapping = {
 	'/logout': performLogout,
 	'/topics': showTopics,
 	'/profile': showProfile,
-	'/contacts': showContacts,
+	'/contacts': contacts.show,
 	'/timeline': showTimeline,
 	'/update_inis': overview.updateInis,
 	'/update_news': overview.updateNews,
-	'/favicon.ico': serveStatic
+	'/favicon.ico': serveStatic,
+	'/initiative': initiative.show,
+	'/area': showArea,
+	'/issue': showIssue,
+	'/suggestion': suggestion.show,
+	'/update_opinions': suggestion.updateOpinions
 }
 
 /**
  * Mapping from patterns to functions
  *
- * For a detailed German explenation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
+ * For a detailed German explanation check http://www.marix.org/content/wie-man-nodejs-urls-auf-funktionen-abbildet
  */
 var pattern_mapping = [
 	{ pattern: '/picbig/', mapped: sendPicture },
@@ -318,9 +397,17 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 	var i;
 	var mapped;
 
-	var path = state.url.pathname;
+	if(config.listen.baseurl) {
+		if(state.url.pathname.substring(0, state.app_prefix.length) != state.app_prefix) {
+			// this url is outside our app
+			console.log(state.url.pathname + ' does not start with ' + state.app_prefix);
+			invalidURL(state);
+			return;
+		}
+	}
+	var path = state.local_path;
 
-	console.log('Request url: ' + path);
+	console.log('Request url: ' + path + ' (APP Path is ' + state.app_prefix + ')');
 
 	// check whether the url has a direct mapping
 	mapped = url_mappings[path];
@@ -350,7 +437,7 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 }
 
 // get the state object creation function
-var State = require('./state.js')(serverError);
+var State = require('./state.js')(serverError, invalidURL);
 
 /**
  * the main-function of the server
@@ -386,7 +473,7 @@ server = function() {
 		server.listen(config.listen.port);
 		console.log('Server running at port ' + config.listen.port + ' on all interfaces');
 	}
-
+	console.log('Server Base URL: ' + config.listen.baseurl);
 };
 
 // invoke main function

@@ -3,15 +3,15 @@
 
 		<div class="twelvecol box last">
 			<h2><%= texts.delegateview %></h2>
-				<label class="table-label" for="select_fiter"><%= texts.level %>:</label>	
-				<select id="select-filter" name="filter">							
+				<label class="table-label" for="select_fiter"><%= texts.level %>:</label>
+				<select id="select-filter" name="filter">
 					<option value="1"><%= texts.globallevel %></option>
 					<option value="2"><%= texts.unitlevel %></option>
 					<option value="3"><%= texts.arealevel %></option>
-					<option value="4"><%= texts.issuelevel %></option>		
+					<option value="4"><%= texts.issuelevel %></option>
 				</select>
 				
-			<div class="box-footer">			
+			<div class="box-footer">
 			 
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 			<h2><%= texts.yourdelegates %></h2>
 			<div class="box-description">
 				<p><%= texts.lastactions %>:</p>
-			</div>	
+			</div>
 
 			<% for(var i = 0; i < delegations.length; i++) { %><div class="box-delegate-info">
 				<img src="<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />

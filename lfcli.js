@@ -10,13 +10,11 @@
 
 var http = require('http');
 var querystring = require('querystring');
+// load configuration
+var config = require('./config.js');
 
 /// Define base URL of LQFB backend
-// TODO pass this in from outside
-var baseurl = {
-	host: 'apitest.liquidfeedback.org',
-	port: 25520
-};
+var baseurl = config.baseurl
 
 /**
  * Build up the request options for the given path.

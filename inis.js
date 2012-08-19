@@ -3,6 +3,7 @@
  */
 
 var lf = require('./lfcli.js');
+var issue = require('./issue.js');
 
 /**
  * Retrieve all initiatives as required to build the table on the overview page.
@@ -31,6 +32,10 @@ var inis = function(state, render) {
 		activepage = 0;
 		state.context.initable.activepage = 1;
 	}
+
+	// check if timeline page
+	if(state.url.query.timeline !== undefined)
+		state.context.initable.isTimeline = state.url.query.timeline;
 
 	/**
 	 * Internal data collection callback.
@@ -90,26 +95,9 @@ var inis = function(state, render) {
 						}
 						break;
 				}
-				switch(events[i].state) {
-					case "finished_with_winner":
-						ini.status = "5.Abgeschlossen";
-						break;
-					case "verification":
-						ini.status = "3.Eingefroren";
-						break;
-					case "voting":
-						ini.status = "4.Abstimmung";
-						break;
-					case "discussion":
-						ini.status = "2.Diskussion";
-						break;
-					case "admission":
-						ini.status = "1.Neu";
-						break;
-					case "finished_without_winner":
-						ini.status = "Abgebrochen";
-						break;
-				}
+
+				ini.status = issue.getIssueStateText(events[i].state);
+
 				for(var j = 0; j < inis.length; j++) {
 					if(inis[j].issue_id === events[i].issue_id) {
 						ini.id = inis[j].id;
@@ -124,6 +112,7 @@ var inis = function(state, render) {
 						for(var b = 0; b < areas.length; b++) {
 							if(areas[b].id === issues[a].area_id) {
 								ini.area = areas[b].name;
+								ini.area_id = areas[b].id;
 								// TODO number for uninterested is sometimes negative?
 								ini.uninterested = ( areas[b].member_weight - ini.supporter ) - ini.potsupporter;
 								if(ini.uninterested < 0) {
@@ -148,9 +137,11 @@ var inis = function(state, render) {
 				ini.support = Math.floor(( ini.supporter / total ) * 100);
 				ini.potential = Math.floor(( ini.potsupporter / total ) * 100);
 				ini.uninvolved = Math.floor(( ini.uninterested / total ) * 100);
-				ini.quorum = Math.floor(total * quorum_num / quorum_den);
+				ini.quorum = Math.floor(100 * quorum_num / quorum_den);
+
 				builtInis.push(ini);
 			}
+
 			state.context.inis = builtInis;
 			render();			
 		}

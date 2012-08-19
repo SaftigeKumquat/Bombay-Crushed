@@ -1,5 +1,5 @@
 <div id="contentcontainer" class="container">
-	
+
 	<div class="row">
 		<div class="twelvecol last">
 			<a name="top"></a>
@@ -12,8 +12,8 @@
 		<div class="twelvecol box last">
 			<a name="<%= units[i].id %>"></a>
 			<h2><%= units[i].description %></h2>
-				<label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
-				<select id="select-filter" name="filter">							
+				<label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>
+				<select id="select-filter" name="filter">
 					<option value="1"><%= texts.nummembers %></option>
 					<option value="2"><%= texts.alphabetical %></option>
 				</select>
@@ -28,10 +28,10 @@
 						<th class="themetable-status6"><%= texts.status6 %></th>
 					</tr>
 					<% var odd = true;
-					for(var j = 0; j < units[i].areas.length; j++) { %><tr<% 
+					for(var j = 0; j < units[i].areas.length; j++) { %><tr<%
 						if(odd == true) { odd = false; %> class="odd"<% }
 						else { odd = true; } %>>
-						<td><h3><a href="#"><%= units[i].areas[j].name %></a></td>
+						<td><h3><a href="<%= meta.baseurl %>/area?area_id=<%= units[i].areas[j].id %>"><%= units[i].areas[j].name %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status1 %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status2 %></a></td>
 						<td><a href="#"><%= units[i].areas[j].topics.status3 %></a></td>
