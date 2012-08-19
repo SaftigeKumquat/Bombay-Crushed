@@ -46,13 +46,13 @@
 							</ul>
 						</td>
 						<td>
-							<ul class="bargraph" title="<%= suggestion.notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= suggestion.notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= suggestion.notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.notimplementedshoudnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= suggestion.notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
+							<ul class="bargraph" title="<%= suggestion.notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= suggestion.notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= suggestion.notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.notimplementedshouldnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= suggestion.notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
 
 								<li class="bargraph-support" style="width:<%= suggestion.notimplementedmustsupporterwidth %>"></li>
 								<li class="bargraph-pro" style="width:<%= suggestion.notimplementedshouldsupporterwidth %>"></li>
 								<li class="bargraph-uninvolved" style="width:<%= suggestion.notimplementedneutralsupporterwidth %>"></li>
-								<li class="bargraph-against" style="width:<%= suggestion.notimplementedmustnotsupportwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
-								<li class="bargraph-contra" style="width:<%= suggestion.notimplementedshouldnotsupportwidth %>"></li>
+								<li class="bargraph-against" style="width:<%= suggestion.notimplementedmustnotsupporterwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
+								<li class="bargraph-contra" style="width:<%= suggestion.notimplementedshouldnotsupporterwidth %>"></li>
 
 							</ul>
 						</td>
@@ -62,8 +62,8 @@
 								<li class="bargraph-support" style="width:<%= suggestion.implementedmustsupporterwidth %>"></li>
 								<li class="bargraph-pro" style="width:<%= suggestion.implementedshouldsupporterwidth %>"></li>
 								<li class="bargraph-uninvolved" style="width:<%= suggestion.implementedneutralsupporterwidth %>"></li>
-								<li class="bargraph-against" style="width:<%= suggestion.implementedmustnotsupportwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
-								<li class="bargraph-contra" style="width:<%= suggestion.implementedshouldnotsupportwidth %>"></li>
+								<li class="bargraph-against" style="width:<%= suggestion.implementedmustnotsupporterwidth %>"></li><!--Vorsicht: diese und die nächste Zeile müssen wegen float in umgekehrter Reihenfolge hier stehen. Eigentlich ist bargraph-against die absolute Ablehnung und bargraph-contra die moderate -->
+								<li class="bargraph-contra" style="width:<%= suggestion.implementedshouldnotsupporterwidth %>"></li>
 
 							</ul>
 						</td>	
