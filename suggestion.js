@@ -201,22 +201,24 @@ exports.show = function(state) {
 
 		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 				lf_opinion = lf_opinions[i];
-				// TODO filter own opinion
-				console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
-				lf_member = lf_members_by_id[lf_opinion.member_id];
-				console.log('LF member: ' + JSON.stringify(lf_member));
-				tmp_opinion = {
-					user: {
-						nick: lf_member.name,
-						name: lf_member.realname,
-						picsmall: 'avatar/' + lf_member.id,
-						picmini: 'avatar/' + lf_member.id
-					},
-					action: calculate_action(lf_opinion),
-					implemented: lf_opinion.fulfilled,
-					smiley: calculate_smiley(lf_opinion)
+				// filter own opinion
+				if(lf_opinion.member_id != state.user_id()) {
+					console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
+					lf_member = lf_members_by_id[lf_opinion.member_id];
+					console.log('LF member: ' + JSON.stringify(lf_member));
+					tmp_opinion = {
+						user: {
+							nick: lf_member.name,
+							name: lf_member.realname,
+							picsmall: 'avatar/' + lf_member.id,
+							picmini: 'avatar/' + lf_member.id
+						},
+						action: calculate_action(lf_opinion),
+						implemented: lf_opinion.fulfilled,
+						smiley: calculate_smiley(lf_opinion)
+					}
+					tmp_opinions.push(tmp_opinion);
 				}
-				tmp_opinions.push(tmp_opinion);
 			}
 			opinions_info = tmp_opinions;
 
