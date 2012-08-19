@@ -58,6 +58,11 @@ var user = function(state, finish, allowOtherMember) {
 			'memberships': lf_user.external_memberships,
 		};
 
+		// delete dummy content
+		state.context.delegateactions = [];
+		state.context.strongestdelegates = [];
+		state.context.votingcomments = [];
+
 		if(member_id == state.user_id()) {
 			state.context.user.isme = true;
 		}
