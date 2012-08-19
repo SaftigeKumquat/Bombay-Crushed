@@ -137,7 +137,7 @@ var inis = function(state, render) {
 				ini.support = Math.floor(( ini.supporter / total ) * 100);
 				ini.potential = Math.floor(( ini.potsupporter / total ) * 100);
 				ini.uninvolved = Math.floor(( ini.uninterested / total ) * 100);
-				ini.quorum = Math.floor(total * quorum_num / quorum_den);
+				ini.quorum = Math.floor(100 * quorum_num / quorum_den);
 
 				builtInis.push(ini);
 			}

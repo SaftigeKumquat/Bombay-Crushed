@@ -1,7 +1,26 @@
+var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var issueFunc = require('./issue.js');
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * initiative page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
 exports.show = function(state, render) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	// we need an initiative id
+	if(!state.url.query.initiative_id) {
+		state.fail_invalidResource('Please provide initiative_id parameter');
+		return;
+	}
+
 	var initiative_id = state.url.query.initiative_id;
 	var builtIni = {};
 	var initiative;
@@ -25,7 +44,14 @@ exports.show = function(state, render) {
 			builtIni.policy = policy.name;
 			builtIni.text = draft.content;
 			builtIni.state = issueFunc.getIssueStateText(issue.state);
+
+			var date = new Date(initiative.created);
+			builtIni.createdat = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
 			
+			quorum_num = policy.issue_quorum_num;
+			quorum_den = policy.issue_quorum_den;
+			builtIni.requiredquorum = (quorum_num / quorum_den * 100) + '%';
+
 			builtIni.authors = [];
 			builtIni.drafts = [];
 			builtIni.supporters = [];
@@ -33,7 +59,9 @@ exports.show = function(state, render) {
 			builtIni.alternativeinis = [];
 			
 			state.context.initiative = builtIni;
-			render();
+
+			state.context.meta.currentpage = "initiative";
+			ejs.render(state, '/initiative.tpl');
 		}
 	}
 

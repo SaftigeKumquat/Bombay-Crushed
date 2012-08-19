@@ -68,7 +68,7 @@
 			<p class="box-label"><a href="#"><%= initiative.area.name %></a> · <a href="#"><%= texts.issue %> #<%= initiative.issue.id %></a> · <%= initiative.state %></p>
 			<div class="box-footer box-editorial">
 
-				<%- initiative.text %>
+				<p><%- initiative.text %></p>
 
 				<p><a href="#"><%= texts.discusswithauthors %></a></p>
 				<div id="initiative-history">

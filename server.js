@@ -123,37 +123,6 @@ var showArea = function(state) {
 
 /**
  * Takes care of retrieving data for and rendering the
- * initiative page.
- *
- * @param state The state object of the current HTTP-Request
- */
-var showInitiative = function(state) {
-	// we need a valid user session...
-	if(!state.session_key()) {
-		state.sendToLogin();
-		return;
-	}
-
-	// we need an initiative id
-	if(!state.url.query.initiative_id) {
-		console.log('Please provide initiative_id parameter');
-		invalidURL(state);
-		return;
-	}
-
-	var finish = function() {
-		var ctx = state.context;
-		ctx.meta.currentpage = "initiative";
-		if(ctx.initiative !== undefined) {
-			ejs.render(state, '/initiative.tpl');
-		}
-	}
-
-	initiative.show(state, finish);
-}
-
-/**
- * Takes care of retrieving data for and rendering the
  * issue page.
  *
  * @param state The state object of the current HTTP-Request
@@ -396,7 +365,7 @@ var url_mapping = {
 	'/update_inis': overview.updateInis,
 	'/update_news': overview.updateNews,
 	'/favicon.ico': serveStatic,
-	'/initiative': showInitiative,
+	'/initiative': initiative.show,
 	'/area': showArea,
 	'/issue': showIssue,
 	'/suggestion': suggestion.show

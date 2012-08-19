@@ -146,7 +146,7 @@ var area = function(state, render, page, memberpage) {
 						builtIssue.support = Math.floor(( builtIssue.supporter / total ) * 100);
 						builtIssue.potential = Math.floor(( builtIssue.potsupporter / total ) * 100);
 						builtIssue.uninvolved = Math.floor(( builtIssue.uninterested / total ) * 100);
-						builtIssue.quorum = Math.floor(total * quorum_num / quorum_den);
+						builtIssue.quorum = Math.floor(100 * quorum_num / quorum_den);
 
 						// check if member supports ini
 						if(getMemberSupport(support, builtIssue.id, inis[a][0].id)) {
