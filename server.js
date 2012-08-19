@@ -31,6 +31,7 @@ var area = require('./area.js');
 var contacts = require('./contacts.js');
 var initiative = require('./initiative.js');
 var suggestion = require('./suggestion.js');
+var issue = require('./issue.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -152,6 +153,7 @@ var showInitiative = function(state) {
 	initiative.show(state, finish);
 }
 
+//TODO remove
 /**
  * Takes care of retrieving data for and rendering the
  * issue page.
@@ -382,7 +384,7 @@ var url_mapping = {
 	'/favicon.ico': serveStatic,
 	'/initiative': showInitiative,
 	'/area': showArea,
-	'/issue': showIssue,
+	'/issue': issue.show,//TODO delete showIssue,
 	'/suggestion': suggestion.show
 }
 

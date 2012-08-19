@@ -454,13 +454,13 @@
 			"totalinterested": 2
 		},
 		"initiatives": [
-			{"title": "Recht auf Nacktheit im Öffentlichen Raum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 25, "potential": 40, "uninvolved": 30, "isupportini": true},
-			{"title": "Recht auf relative Nacktheit im Raumzeitkontinuum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
-			{"title": "Recht auf relative Nacktheit einfach Überall", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
-			{"title": "Recht auf relative Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
-			{"title": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
-			{"title": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60, "isupportini": true},
-			{"title": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60}
+			{"name": "Recht auf Nacktheit im Öffentlichen Raum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 25, "potential": 40, "uninvolved": 30, "isupportini": true},
+			{"name": "Recht auf relative Nacktheit im Raumzeitkontinuum", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
+			{"name": "Recht auf relative Nacktheit einfach Überall", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
+			{"name": "Recht auf relative Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
+			{"name": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60},
+			{"name": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60, "isupportini": true},
+			{"name": "Recht auf absolute Nacktheit im hier und jetzt", "supporter": 365, "potsupporter": 15, "uninterested": 631, "support": 5, "potential": 10, "uninvolved": 60}
 		],
 		"votelaterlist": [
 			{"name": "Johannes Knopp", "picmini": "content_img/profile_small.png"},

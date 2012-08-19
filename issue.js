@@ -1,6 +1,9 @@
 var texts = require('./texts.json');
+var lf = require('./lfcli.js');
+var ejs = require('./ejs.js');
 
-exports.getIssueStateText = function (issuestate) {
+
+getIssueStateText = function (issuestate) {
 	switch(issuestate) {
 		case "calculation":
 		case "finished_with_winner":
@@ -27,5 +30,117 @@ exports.getIssueStateText = function (issuestate) {
 			return texts.statusstep6;
 			break;
 	}
-}				
+}
 
+/**
+ * Takes care of retrieving data for and rendering the
+ * issue page.
+ *
+ * @param state The state object of the current HTTP-Request
+ */
+exports.show = function(state) {
+	// we need a valid user session...
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var issue_id = state.url.query.issue_id;
+
+	// the variables to that will be set by the data retrievers
+	// and if set the page will be rendered
+	var issue_info, initiative_info;
+
+	var finish = function() {
+		var ctx = state.context;
+
+		if(issue_info !== undefined && initiative_info !== undefined) {
+			ctx.issue = issue_info;
+			issue_info.initiatives = initiative_info;
+
+			ctx.meta.currentpage = "issue";
+			ejs.render(state, '/issue.tpl');
+		}
+	}
+
+	//get issue
+	//issue_id=1&include_areas=1&include_units=1&include_policies=1
+	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1 }, state, function(res)
+		{
+			//console.log(JSON.stringify(res));
+			//TODO handle empty result
+			var issue_res = res.result[0];
+			//fill directly available issue information
+			var tmp_issue_info = {
+				id: issue_id,
+				population: issue_res.population,
+				createdat: issue_res.created,
+				accepted: issue_res.accepted,
+				halffrozenat: issue_res.half_frozen,
+				frozenat: issue_res.fully_frozen,
+				timeforadmission: issue_res.admission_time,
+				timefordiscussion: issue_res.discussion_time,
+				timeforrevision: issue_res.verification_time,
+				timeforvote: issue_res.voting_time,
+				status: getIssueStateText(issue_res.state),
+				//"votenow": "0",
+				//"open": true,
+				//"castvote": false,
+				//"delegationnumber": 200,
+				//"delegate": "Christoph Fritzsche",
+				//"quorum": 10,
+				//"iwatchissue": true,
+				//"iwanttopostponeissue": true,
+//{"result":[{"policy_id":1,"closed":"2011-10-30T17:34:37.901Z","ranks_available":true,"cleaned":null,"voter_count":0,"status_quo_schulze_rank":1}],"units":{},"policies":{"1":{"id":1,"index":1,"active":true,"name":"amendment of the statutes (solar system)","admission_time":{"days":8},"discussion_time":{"days":15},"verification_time":{"days":8},"voting_time":{"days":15},"issue_quorum_num":10,"issue_quorum_den":100,"initiative_quorum_num":10,"initiative_quorum_den":100,"direct_majority_num":1,"direct_majority_den":2,"direct_majority_strict":true,"direct_majority_positive":0,"direct_majority_non_negative":0,"indirect_majority_num":2,"indirect_majority_den":3,"indirect_majority_strict":false,"indirect_majority_positive":0,"indirect_majority_non_negative":0,"no_reverse_beat_path":true,"no_multistage_majority":false}},"status":"ok"}
+
+			};
+			lf.query('/area', { 'area_id': issue_res.area_id, 'include_units': 1 }, state, function(res) {
+				tmp_issue_info.area = res.result[0].name;
+				tmp_issue_info.unit = res.units[res.result[0].unit_id].name;
+				tmp_issue_info.areamembernumber = res.result[0].member_weight;
+			});
+			console.log(tmp_issue_info);
+
+			//get initiatives
+			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
+				var tmp_initiatives_info = [];
+				var tmp_ini_ids = [];
+				for(var i = 0; i < res.result.length; i++) {
+					tmp_ini_ids.push(res.result[i].id);
+					var tmp_initiative = {
+						name: res.result[i].name,
+						supporter: res.result[i].satisfied_supporter_count,
+						id: res.result[i].id
+					}
+
+					tmp_initiative.potsupporter = (res.result[i].supporter_count - res.result[i].satisfied_supporter_count);
+					tmp_initiative.uninterested = (tmp_issue_info.areamembernumber - tmp_initiative.supporter ) - tmp_initiative.potsupporter;
+					var total = tmp_initiative.supporter + tmp_initiative.potsupporter + tmp_initiative.uninterested;
+					tmp_initiative.support = Math.floor(( tmp_initiative.supporter / total ) * 100);
+					tmp_initiative.potential = Math.floor(( tmp_initiative.potsupporter / total ) * 100);
+					tmp_initiative.uninvolved = Math.floor(( tmp_initiative.uninterested / total ) * 100);
+
+					tmp_initiatives_info.push(tmp_initiative);
+				}
+
+				//add isupportini information
+//				lf.query('/supporter', { 'initiative_id': tmp_ini_ids, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
+//					for(var j=0; j < res.result.length; j++) {
+//						for(var i=0; i < tmp_initiatives_info.length; i++){
+//							//TODO include case informed = false (needs issue.tpl changes as well)
+//							if(tmp_initatives_info[i].id == res.result[j].initiative_id && res.result[j].informed == true) {
+//								tmp_initiatives_info[i].isupportini = true;
+//							}
+//						}
+//					}
+//				});
+				console.log(tmp_initiatives_info);
+			});
+			//
+			//issue_info = tmp_issue_info;
+			//finish();
+	});
+}
+
+
+exports.getIssueStateText = getIssueStateText;

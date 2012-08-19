@@ -79,7 +79,7 @@
 
 							<% for(var i = 0; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
-								<td><h3><a href="#"><%= issue.initiatives[i].title %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
+								<td><h3><a href="#"><%= issue.initiatives[i].name %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>
