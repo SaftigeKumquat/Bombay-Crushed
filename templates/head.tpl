@@ -34,7 +34,11 @@
  				 <img src="<%= meta.baseurl %>/img/logo.png" alt="LQFB logo" />
 			</a>
 			<ul id="metamenu">
+				<% if(loggedin) { %>
 				<li><a id="metamenu-logout" href="<%= meta.baseurl %>/logout"><%= texts.logout %></a></li>
+				<% } else { %>
+				<li><a id="metamenu-login" href="<%= meta.baseurl %>/login">einloggen</a></li>
+				<% } %>
 				<li><a href="#"><%= texts.terms %></a></li>
 				<li><a href="#"><%= texts.privacy %></a></li>
 				<li><a href="#"><%= texts.imprint %></a></li>
