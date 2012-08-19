@@ -8,8 +8,6 @@ var lf = require('./lfcli.js');
  * @param state The state object of the current HTTP-Request
  */
 exports.show = function(state) {
-	// configuration stuff
-	var OPINIONS_PER_PAGE = 4;
 
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -60,6 +58,7 @@ exports.show = function(state) {
 		var total_supporters = initiative.supporter_count;
 
 		var tmp_suggestion = {
+			id: suggestion_id,
 			initiative: {
 				name: initiative.name
 			},
@@ -145,6 +144,44 @@ exports.show = function(state) {
 		});
 	});
 
+	opinions(state, function(tmp_opinions, tmp_paging, tmp_my_opinion) {
+		opinions_info = tmp_opinions;
+		paging_info = tmp_paging;
+		my_opinion_info = tmp_my_opinion;
+		console.log('OPINIONS FINISHED!');
+		finish();
+	});
+}
+
+exports.updateOpinions = function(state) {
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var finish = function(opinions, paging) {
+		var ctx = state.context;
+		ctx.meta.currentpage = "suggestion";
+
+		ctx.suggestion = {
+			id: state.url.query.suggestion_id,
+			opinions: opinions,
+			opinionpage: paging.opinionpage,
+			opinionpages: paging.opinionpages
+		}
+
+		console.log('Sending out opinions!');
+		ejs.render(state, '/update_opinions.tpl', true);
+	}
+
+	opinions(state, finish);
+}
+
+function opinions(state, finish) {
+	// configuration stuff
+	var OPINIONS_PER_PAGE = 4;
+
+	var suggestion_id = state.url.query.suggestion_id;
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
 		var lf_opinions = res.result;
 
@@ -169,14 +206,14 @@ exports.show = function(state) {
 		}
 
 		console.log('OPINIONS:' + JSON.stringify(res));
-		tmp_my_opinion = {
+		var my_opinion_info = {
 			i_say_implemented: false,
 			smiley: 1,
 			opinion: 0
 		};
 		var members_to_resolve = '';
 
-		paging_info = function() {
+		var paging_info = function() {
 			var tmp = {
 				opinionpages: Math.floor(lf_opinions.length / OPINIONS_PER_PAGE) + 1,
 				opinionpage: state.url.query.opinionpage || 1
@@ -192,9 +229,9 @@ exports.show = function(state) {
 		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 			var lf_opinion = lf_opinions[i];
 			if(lf_opinion.member_id == state.user_id()) {
-				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
-				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
-				tmp_my_opinion.opinion = lf_opinion.degree;
+				my_opinion_info.i_say_implemented = lf_opinion.fulfilled;
+				my_opinion_info.smiley = calculate_smiley(lf_opinion);
+				my_opinion_info.opinion = lf_opinion.degree;
 			}
 
 			if(members_to_resolve != '') {
@@ -202,7 +239,6 @@ exports.show = function(state) {
 			}
 			members_to_resolve += lf_opinion.member_id;
 		}
-		my_opinion_info = tmp_my_opinion;
 
 		lf.query('/member', { 'member_id': members_to_resolve }, state, function(res) {
 			var i;
@@ -251,9 +287,8 @@ exports.show = function(state) {
 					tmp_opinions.push(tmp_opinion);
 				}
 			}
-			opinions_info = tmp_opinions;
 
-			finish();
+			finish(tmp_opinions, paging_info, my_opinion_info);
 		});
 	});
 }

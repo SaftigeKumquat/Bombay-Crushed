@@ -368,7 +368,8 @@ var url_mapping = {
 	'/initiative': initiative.show,
 	'/area': showArea,
 	'/issue': showIssue,
-	'/suggestion': suggestion.show
+	'/suggestion': suggestion.show,
+	'/update_opinions': suggestion.updateOpinions
 }
 
 /**
