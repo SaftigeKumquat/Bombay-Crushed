@@ -1,5 +1,10 @@
 var texts = require('./texts.json');
 
+/**
+ * Returns the readable text for an API issue state
+ *
+ * @param issuestate Issue state as provided by the API
+ */
 exports.getIssueStateText = function (issuestate) {
 	switch(issuestate) {
 		case "calculation":

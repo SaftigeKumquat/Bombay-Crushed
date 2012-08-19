@@ -74,9 +74,9 @@
 					<% var odd = true;
 					for(var i = 0; i < area.issues.length; i++) { %>
 					<tr <% if(odd) { %>class="odd"<% } else { %>class="even"<% } %>>
-						<td><a href=""><%= texts.issue %> #<%= area.issues[i].id %></a> <% if(area.issues[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="<%= meta.baseurl %>/img/eye.png"/><% } %></td>
+						<td><a href="#"><%= texts.issue %> #<%= area.issues[i].id %></a> <% if(area.issues[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="<%= meta.baseurl %>/img/eye.png"/><% } %></td>
 						<td><%= area.issues[i].status %></td>
-						<td><h3><a href="#"><%= area.issues[i].title %></a><% if(area.issues[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= area.issues[i].initiative_id %>"><%= area.issues[i].title %></a><% if(area.issues[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= area.issues[i].supporter %> <%= texts.supporter %> / <%= area.issues[i].potsupporter %> <%= texts.potsupporter %> / <%= area.issues[i].uninterested %> <%= texts.uninterested %>">
 								<li class="bargraph-quorum" style="left:<%= area.issues[i].quorum %>%;"></li>
@@ -91,7 +91,7 @@
 					<tr class="table-alternateinitiative<% if(odd) { %> odd<% } %>">
 						<td></td>
 						<td></td>
-						<td><h3><a href="#"><%= area.issues[i].alternativeinis[a].title %></a><% if(area.issues[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= area.issues[i].alternativeinis[a].id %>"><%= area.issues[i].alternativeinis[a].title %></a><% if(area.issues[i].alternativeinis[a].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= area.issues[i].alternativeinis[a].supporter %> <%= texts.supporter %> / <%= area.issues[i].alternativeinis[a].potsupporter %> <%= texts.potsupporter %> / <%= area.issues[i].alternativeinis[a].uninterested %> <%= texts.uninterested %>">
 								<li class="bargraph-quorum" style="left:<%= area.issues[i].quorum %>%;"></li>

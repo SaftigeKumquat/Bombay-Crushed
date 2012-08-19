@@ -337,7 +337,7 @@
 							odd = true; }
 					}
 					%>>
-						<td><h3><a href="#"><%= inis[i].title %></a></h3><% 
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= inis[i].id %>"><%= inis[i].title %></a></h3><% 
 						if(!inis[i].hasalternatives) {
 						%><a href='<%= meta.baseurl %>/area?area_id=<%= inis[i].area_id %>'><%= inis[i].area %></a><% } %></td>
 						<td><%= inis[i].unit %></td>

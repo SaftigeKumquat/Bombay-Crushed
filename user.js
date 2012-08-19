@@ -1,5 +1,10 @@
 var lf = require('./lfcli.js');
 
+/**
+ * Returns the object required by templates for an API member object
+ *
+ * @param query_res member object as provided by API
+ */
 exports.getUserBasic = function(query_res) {
 	builtUser = {};
 	builtUser.nick = query_res.name;

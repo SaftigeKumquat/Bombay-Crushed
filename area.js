@@ -135,6 +135,7 @@ var area = function(state, render, page, memberpage) {
 							inis[a] = original_inis;
 						}
 
+						builtIssue.initiative_id = inis[a][0].id;
 						builtIssue.title = inis[a][0].name;						
 						builtIssue.supporter = inis[a][0].satisfied_supporter_count;
 						builtIssue.potsupporter = inis[a][0].supporter_count - inis[a][0].satisfied_supporter_count;
@@ -159,6 +160,7 @@ var area = function(state, render, page, memberpage) {
 						for(var b = 1; b < inis[a].length; b++) {
 							alternativeIni = {};
 
+							alternativeIni.id = inis[a][b].id;
 							alternativeIni.title = inis[a][b].name;						
 							alternativeIni.supporter = inis[a][b].satisfied_supporter_count;
 							alternativeIni.potsupporter = inis[a][b].supporter_count - inis[a][b].satisfied_supporter_count;
@@ -233,7 +235,6 @@ var area = function(state, render, page, memberpage) {
 
 				lf.query('/supporter', { 'issue_id': issue_id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
 					support.push(support_res.result);
-					console.log('SUPPORT:' + JSON.stringify(support_res.result));
 					finish();
 				});
 
