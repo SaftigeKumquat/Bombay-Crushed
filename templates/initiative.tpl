@@ -190,7 +190,7 @@
 					<% var odd = true;
 					for(var i = 0; i < initiative.suggestions.length; i++) { %>
 					<tr class="<% if(odd) { %>odd<% } else { %>even<% } %>">
-						<td><h3><a href="#"><%= initiative.suggestions[i].name %></a></h3></td>
+						<td><h3><a href="<%= meta.baseurl %>/suggestion?suggestion_id=<%= initiative.suggestions[i].id %>"><%= initiative.suggestions[i].name %></a></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= initiative.suggestions[i].mustsupporter %> <%= texts.mustsupporterinfo %> / <%= initiative.suggestions[i].shouldsupporter %> <%= texts.shouldsupporterinfo %> / <%= initiative.suggestions[i].neutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= initiative.suggestions[i].shouldnotsupporter %> <%= texts.shouldnotsupporterinfo %> / <%= initiative.suggestions[i].mustnotsupporter %> <%= texts.mustnotsupporterinfo %>">
 
