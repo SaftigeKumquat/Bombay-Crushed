@@ -237,7 +237,7 @@
 						<td>
 							<ul>
 								<li><a <% if(initiative.suggestions[i].isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.implemented %></a></li>
-								<li><a <% if(!initiative.suggestions[i].isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
+								<li><a <% if(initiative.suggestions[i].isayimplemented !== undefined && initiative.suggestions[i].isayimplemented == false) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
 							</ul>
 						</td>
 						<td>

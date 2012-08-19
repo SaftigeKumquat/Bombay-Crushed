@@ -3,6 +3,7 @@ var lf = require('./lfcli.js');
 var texts = require('./texts.json');
 var issueFunc = require('./issue.js');
 var userFunc = require('./user.js');
+var suggFunc = require('./suggestion.js');
 
 /**
  * Basic functions on JS objects
@@ -25,22 +26,6 @@ var getMemberSupport = function(support, ini) {
 		}
 	}
 	return false;
-}
-
-var calculate_smiley = function(lf_opinion) {
-	var smiley = 1; // if degree == 0 we don't care, so we are happy
-	if(lf_opinion.degree !== 0) {
-		// renormalize (map to 0...4 and then to 1...4)
-		smiley = lf_opinion.degree + 2;
-		if(smiley < 2) {
-			smiley += 2;
-		}
-		// if fullfilled highest value is happy
-		if(lf_opinion.fulfilled) {
-			smiley = 5 - smiley;
-		}
-	}
-	return smiley;
 }
 
 /**
@@ -271,7 +256,7 @@ exports.show = function(state, render) {
 				// get my opinion
 				for(var a = 0; a < opinions.length; a++) {
 					if(opinions[a].length > 0 && opinions[a][0].suggestion_id == builtSugg.id) {
-						builtSugg.smiley = calculate_smiley(opinions[a][0]);
+						builtSugg.smiley = suggFunc.calculate_smiley(opinions[a][0]);
 						builtSugg.isayimplemented = opinions[a][0].fulfilled;
 						builtSugg.my_opinion = opinions[a][0].degree;
 					}

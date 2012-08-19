@@ -71,7 +71,7 @@
 						<td>
 							<ul>
 								<li><a <% if(suggestion.isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.implemented %></a></li>
-								<li><a <% if(!suggestion.isayimplemented) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
+								<li><a <% if(suggestion.isayimplemented !== undefined && suggestion.isayimplemented == false) { %>class="marked"<% } %> href="#"><%= texts.notimplemented %></a></li>
 							</ul>
 						</td>	
 						<td>

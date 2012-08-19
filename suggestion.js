@@ -2,6 +2,28 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 
 /**
+ * Calculate the happiness smiley for the given opinion.
+ * Result is 1 for very happy, 4 for very unhappy
+ */
+var calculate_smiley = function(lf_opinion) {
+	var smiley = 1; // if degree == 0 we don't care, so we are happy
+	if(lf_opinion.degree !== 0) {
+		// renormalize (map to 0...4 and then to 1...4)
+		smiley = lf_opinion.degree + 2;
+		if(smiley < 2) {
+			smiley += 2;
+		}
+		// if fullfilled highest value is happy
+		if(lf_opinion.fulfilled) {
+			smiley = 5 - smiley;
+		}
+	}
+	return smiley;
+}
+
+exports.calculate_smiley = calculate_smiley;
+
+/**
  * Takes care of retrieving data for and rendering the
  * suggestion page.
  *
@@ -202,28 +224,7 @@ function opinions(state, finish) {
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
 		var lf_opinions = res.result;
 
-		/**
-		 * Calculate the happiness smiley for the given opinion.
-		 * Result is 1 for very happy, 4 for very unhappy
-		 */
-		var calculate_smiley = function(lf_opinion) {
-			var smiley = 1; // if degree == 0 we don't care, so we are happy
-			if(lf_opinion.degree !== 0) {
-				// renormalize (map to 0...4 and then to 1...4)
-				smiley = lf_opinion.degree + 2;
-				if(smiley < 2) {
-					smiley += 2;
-				}
-				// if fullfilled highest value is happy
-				if(lf_opinion.fulfilled) {
-					smiley = 5 - smiley;
-				}
-			}
-			return smiley;
-		}
-
 		var my_opinion_info = {
-			i_say_implemented: false,
 			smiley: 1,
 			opinion: 0
 		};
