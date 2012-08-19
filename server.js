@@ -438,6 +438,17 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 // get the state object creation function
 var State = require('./state.js')(serverError, invalidURL);
 
+var registerFunctions = function() {
+	Array.prototype.contains = function(a, obj) {
+    		for (var i = 0; i < a.length; i++) {
+        		if (a[i] === obj) {
+            			return true;
+        		}
+    		}
+    		return false;
+	}
+}
+
 /**
  * the main-function of the server
  */
@@ -474,6 +485,9 @@ server = function() {
 	}
 	console.log('Server Base URL: ' + config.listen.baseurl);
 };
+
+// register core functions
+//registerFunctions();
 
 // invoke main function
 server();

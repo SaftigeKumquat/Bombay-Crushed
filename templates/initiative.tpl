@@ -168,7 +168,7 @@
 			<div class="twocol nobox"></div>
 
 		<div class="tencol box last">
-			<h2 id="Anregungen"><a href=""><%= texts.suggestionsforthisini %> (6)</a></h2>
+			<h2 id="Anregungen"><a href=""><%= texts.suggestionsforthisini %> (<%= initiative.suggestionsnumber %>)</a></h2>
 			<div class="box-description">
 				<p><%= texts.suggestioninfo %></p>
 			</div>

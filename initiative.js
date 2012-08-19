@@ -29,7 +29,8 @@ exports.show = function(state, render) {
 	var area;
 	var unit;
 	var policy;
-	var draft;
+	var drafts = [];
+	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
 
@@ -43,12 +44,13 @@ exports.show = function(state, render) {
 			builtIni.issue = {};
 			builtIni.issue.id = issue.id;
 			builtIni.policy = policy.name;
-			builtIni.text = draft.content;
+			builtIni.text = current_draft.content;
 			builtIni.state = issueFunc.getIssueStateText(issue.state);
 
 			var date = new Date(initiative.created);
 			builtIni.createdat = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
 			
+			// calculate quorum
 			quorum_num = policy.issue_quorum_num;
 			quorum_den = policy.issue_quorum_den;
 			builtIni.requiredquorum = (quorum_num / quorum_den * 100) + '%';
@@ -60,6 +62,15 @@ exports.show = function(state, render) {
 			else {
 				builtIni.admitted = texts.no;
 			}
+
+			// get authors
+			var authors = [];
+			for(var i = 0; i < drafts.length; i++) {
+				//if(!authors.contains(drafts[i].author_id)) {
+					authors.push(drafts[i].author_id);
+				//}
+			}
+			console.log('AUTHORS' + JSON.stringify(authors));
 
 			builtIni.authors = [];
 			builtIni.drafts = [];
@@ -86,8 +97,15 @@ exports.show = function(state, render) {
 		finish();
 	});
 
-	lf.query('/draft', { 'initiative_id': initiative_id, 'current_draft': 1, 'render_content': 'html' }, state, function(draft_res) {
-		draft = draft_res.result[0];
+	lf.query('/draft', { 'initiative_id': initiative_id, 'render_content': 'html' }, state, function(draft_res) {
+		var highest_id = 0;
+		for(var i = 0; i < draft_res.result.length; i++) {
+			drafts.push(draft_res.result[i]);
+			if(draft_res.result[i].id > highest_id) {
+				highest_id = draft_res.result[i].id;
+				current_draft = draft_res.result[i];
+			}
+		}
 		
 		draftDone = true;
 		finish();

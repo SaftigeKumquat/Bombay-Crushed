@@ -261,7 +261,7 @@
 			{ "nick": "joknopp", "name": "Johannes Knopp 2", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" },
 			{ "nick": "joknopp", "name": "Hans Dampf", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png", "power": "1" },
 			{ "nick": "joknopp", "name": "Doktor Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }
-		], "supporterspage": "1", "supporterspages": "2",
+		], "supporterspage": "1", "supporterspages": "2", "suggestionsnumber": "6",
 		"suggestions": [
 			{ "name": "Keine Stufen, sondern klar nachvollziehbare Formeln", "mustsupporter": 205, "shouldsupporter": 100, "neutralsupporter": 312, "shouldnotsupporter": 50, 
 				"mustnotsupporter": 100, "mustsupportwidth": "30%", "shouldsupportwidth": "10%", "neutralsupportwidth": "30%", "shouldnotsupportwidth": "20%", 
