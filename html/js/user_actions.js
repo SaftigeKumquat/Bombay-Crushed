@@ -85,7 +85,7 @@ var draw_pie = function() {
 	    }
 	    return 'rgb(' + rgb.join(',') + ')';
 	}
-}
+} 
 
 /**
  * If an initable pagination link is clicked,
@@ -178,6 +178,8 @@ $(document).ready(function() {
 	$("#historyslide").click(function(){
   	$("#initiative-history").slideToggle("slow");
   	return false;
+
+	});
 	
 	draw_pie();
 });
