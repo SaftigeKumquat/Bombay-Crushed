@@ -279,7 +279,7 @@
 			</div>
 			<table class="table-initiatives">
 					<tr>
-						<th><%= texts.suggestion %></th>
+						<th><%= texts.ini %></th>
 						<th><%= texts.support %></th>
 						<th></th>
 					</tr>
@@ -287,7 +287,7 @@
 					<% var odd = true;
 					for(var i = 0; i < initiative.alternativeinis.length; i++) { %>
 					<tr <% if(odd) { %>class="odd"<% } %>>
-						<td><h3><a href="#"><%= initiative.alternativeinis[i].name %></a></h3></td>
+						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.alternativeinis[i].id %>"><%= initiative.alternativeinis[i].name %></a></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= initiative.alternativeinis[i].supporter %> <%= texts.supporter %> / <%= initiative.alternativeinis[i].potsupporter %> <%= texts.potsupporter %> / <%= initiative.alternativeinis[i].uninterested %> <%= texts.uninterested %>">
 								<li class="bargraph-quorum" style="left:<%= initiative.alternativeinis[i].quorumwidth %>;"></li>

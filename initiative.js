@@ -178,7 +178,57 @@ exports.show = function(state, render) {
 			builtIni.suggestions = [];
 
 			builtIni.alternativeinis = [];
+			// sort alternative inis
+			if(issue.ranks_available) {
+				// sort inis by rank
+				Array.prototype.sort.call(alternatives, function(a,b) {
+    					if (a.rank < b.rank)
+        					return -1;
+    					else if (a.rank > b.rank)
+        					return 1;
+    					else 
+        					return 0;
+				});
+			}
+			else {
+				// sort inis by supporter
+				Array.prototype.sort.call(alternatives, function(a,b) {
+    					if (a.satisfied_supporter_count > b.satisfied_supporter_count)
+        					return -1;
+    					else if (a.satisfied_supporter_count < b.satisfied_supporter_count)
+        					return 1;
+    					else 
+        					return 0;
+				});
+			}
+
 			// get alternative inis
+			for(var i = 0; i < alternatives.length; i++) {
+				alternativeIni = {};
+
+				alternativeIni.id = alternatives[i].id;
+				alternativeIni.name = alternatives[i].name;						
+				alternativeIni.supporter = alternatives[i].satisfied_supporter_count;
+				alternativeIni.potsupporter = alternatives[i].supporter_count - alternatives[i].satisfied_supporter_count;
+				alternativeIni.uninterested = ( area.member_weight - alternativeIni.supporter ) - alternativeIni.potsupporter;
+				if(alternativeIni.uninterested < 0) {
+					alternativeIni.uninterested = 0;
+				}
+
+				var total = alternativeIni.supporter + alternativeIni.potsupporter + alternativeIni.uninterested;
+				alternativeIni.supporterwidth = Math.floor(( alternativeIni.supporter / total ) * 100) + '%';
+				alternativeIni.potsupporterwidth = Math.floor(( alternativeIni.potsupporter / total ) * 100) + '%';
+				alternativeIni.uninterestedwidth = Math.floor(( alternativeIni.uninterested / total ) * 100) + '%';
+				alternativeIni.quorumwidth = builtIni.requiredquorum;
+
+				// check if member supports ini
+				//if(getMemberSupport(support, issue.id, alternatives[i].id)) {
+					alternativeIni.isupport = true;
+				//}
+
+				builtIni.alternativeinis.push(alternativeIni);
+			}
+			
 			console.log('ALT' + JSON.stringify(alternatives));
 			
 			state.context.initiative = builtIni;
