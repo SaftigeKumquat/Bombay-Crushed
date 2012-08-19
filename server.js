@@ -298,7 +298,7 @@ var sendPicture = function(state) {
 			response.end();
 		} else {
 			// send placeholder pic
-			filepath = __dirname + '/html/img/no_profilepic.png';
+			filepath = __dirname + '/html/img/placeholder.png';
 			fs.readFile(filepath, function(err, data) {
 				if(err) {
 					state.fail('Failed to get placeholder user image: ' + err);
