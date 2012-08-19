@@ -1,5 +1,6 @@
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
+var texts = require('./texts.json');
 var issueFunc = require('./issue.js');
 
 /**
@@ -51,6 +52,14 @@ exports.show = function(state, render) {
 			quorum_num = policy.issue_quorum_num;
 			quorum_den = policy.issue_quorum_den;
 			builtIni.requiredquorum = (quorum_num / quorum_den * 100) + '%';
+			builtIni.requiredrightnow = Math.ceil(quorum_num / quorum_den * (area.member_weight));
+
+			if(initiative.admitted) {
+				builtIni.admitted = texts.yes;
+			}
+			else {
+				builtIni.admitted = texts.no;
+			}
 
 			builtIni.authors = [];
 			builtIni.drafts = [];
@@ -77,7 +86,7 @@ exports.show = function(state, render) {
 		finish();
 	});
 
-	lf.query('/draft', { 'initiative_id': initiative_id, 'current_draft': 1 }, state, function(draft_res) {
+	lf.query('/draft', { 'initiative_id': initiative_id, 'current_draft': 1, 'render_content': 'html' }, state, function(draft_res) {
 		draft = draft_res.result[0];
 		
 		draftDone = true;
