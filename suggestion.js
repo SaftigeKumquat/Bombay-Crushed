@@ -8,6 +8,9 @@ var lf = require('./lfcli.js');
  * @param state The state object of the current HTTP-Request
  */
 exports.show = function(state) {
+	// configuration stuff
+	var OPINIONS_PER_PAGE = 4;
+
 	// we need a valid user session...
 	if(!state.session_key()) {
 		state.sendToLogin();
@@ -18,17 +21,19 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var suggestion_info, opinions_info, my_opinion_info;
+	var suggestion_info, opinions_info, my_opinion_info, paging_info;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined) {
+		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined && paging_info !== undefined) {
 			ctx.suggestion = suggestion_info;
 			suggestion_info.opinions = opinions_info;
 			suggestion_info.isayimplemented = my_opinion_info.i_say_implemented;
 			suggestion_info.smiley = my_opinion_info.smiley;
 			suggestion_info.my_opinion = my_opinion_info.opinion;
+			suggestion_info.opinionpage = paging_info.opinionpage;
+			suggestion_info.opinionpages = paging_info.opinionpages;
 
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
@@ -110,6 +115,8 @@ exports.show = function(state) {
 	});
 
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
+		var lf_opinions = res.result;
+
 		/**
 		 * Calculate the hapiness smiley for the given opinion.
 		 * Result is 1 for very happy, 4 for very unhappy
@@ -138,10 +145,20 @@ exports.show = function(state) {
 		};
 		var members_to_resolve = '';
 
-		// TODO handle opinion-pages
+		paging_info = function() {
+			var tmp = {
+				opinionpages: Math.floor(lf_opinions.length / OPINIONS_PER_PAGE) + 1,
+				opinionpage: state.url.query.opinionpage || 1
+			}
+			if(tmp.opinionpage < 1 || tmp.opinionpage > tmp.opinionpages) {
+				console.log('WARNING: Opinion page ' + tmp.opinionpage + ' requested, but only pages 1 to ' + tmp.opinionpages + ' valid for suggestion ' + suggestion_id);
+				tmp.opinionpage = 1;
+			}
+			return tmp;
+		}();
+		console.log('PAGING INFO ' + JSON.stringify(paging_info));
 
-		var lf_opinions = res.result;
-		for(var i = 0; i < lf_opinions.length; i++) {
+		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 			var lf_opinion = lf_opinions[i];
 			if(lf_opinion.member_id == state.user_id()) {
 				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
@@ -182,7 +199,7 @@ exports.show = function(state) {
 				}
 			};
 
-			for(i = 0; i < lf_opinions.length; i++) {
+		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 				lf_opinion = lf_opinions[i];
 				// TODO filter own opinion
 				console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
@@ -202,9 +219,6 @@ exports.show = function(state) {
 				tmp_opinions.push(tmp_opinion);
 			}
 			opinions_info = tmp_opinions;
-
-			// TODO paging
-			//	 "opinionpage": 1, "opinionpages": 2
 
 			finish();
 		});
