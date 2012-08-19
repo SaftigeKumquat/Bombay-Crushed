@@ -261,12 +261,14 @@ dt {font-weight:bold; padding: 0px 5px 0px 0px; float:left;}
 
 .box-statements-statement p {padding-top:10px; font-size:12px; color:#333; line-height:18px}
 .box-editorial  {padding: 20px 20px;}
-.box-editorial h3 {padding-bottom:10px; font-size:15px; color:#222; }
-.box-editorial p {font-size:15px; color:#222; line-height:24px; padding-bottom:18px}
+.box-editorial h1 {padding:0px 0px 10px 0px; font-weight:normal; font-size:20px; color:#222}
+.box-editorial h2 {padding:0px 0px 10px 0px; font-size:18px; font-weight:normal; color:#222; background-color:transparent}
+.box-editorial h3 {padding-bottom:10px; font-size:13px; color:#222}
+.box-editorial h4 {padding-bottom:10px; font-size:12px; font-weight:bold; color:#222}
+.box-editorial p, .box-editorial ul, .box-editorial ol  {font-size:15px; color:#222; line-height:24px; padding-bottom:18px}
+.box-editorial ul {padding-left:34px; list-style-type:disc;}
+.box-editorial ol {padding-left:34px; list-style-type:decimal;}
 .box-editorial table {padding:0px -20px} 
-
-
-
 
 
 table {
@@ -528,7 +530,7 @@ h3 a:hover {text-decoration:underline}
     }
 
 #select-filter, #select-filter2, #select-filter3 {margin: 6px 0px 6px 6px;}
-#select-filter-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}
+#select-filter-big, #search-field-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}
 
 .table-label, .box-label {font: bold 12px Arial,Helvetica,Sans-serif; padding-left: 10px;} 
 .box-label {padding:8px 10px}

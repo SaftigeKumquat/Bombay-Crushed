@@ -4,6 +4,20 @@ var texts = require('./texts.json');
 var issueFunc = require('./issue.js');
 
 /**
+ * Basic functions on JS objects
+ */
+var registerFunctions = function() {
+	Array.prototype.contains = function(obj) {
+    		for (var i = 0; i < this.length; i++) {
+        		if (this[i] === obj) {
+            			return true;
+        		}
+    		}
+    		return false;
+	}
+}
+
+/**
  * Takes care of retrieving data for and rendering the
  * initiative page.
  *
@@ -22,6 +36,8 @@ exports.show = function(state, render) {
 		return;
 	}
 
+	registerFunctions();
+
 	var initiative_id = state.url.query.initiative_id;
 	var builtIni = {};
 	var initiative;
@@ -30,12 +46,15 @@ exports.show = function(state, render) {
 	var unit;
 	var policy;
 	var drafts = [];
+	var authors = [];
 	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
 
 	var finish = function() {
-		if(iniDone && draftDone) {
+		if(iniDone && draftDone
+			&& drafts.length == authors.length) {
+
 			builtIni.id = initiative_id;
 			builtIni.name = initiative.name;
 			builtIni.area = {};
@@ -64,13 +83,13 @@ exports.show = function(state, render) {
 			}
 
 			// get authors
-			var authors = [];
-			for(var i = 0; i < drafts.length; i++) {
-				//if(!authors.contains(drafts[i].author_id)) {
-					authors.push(drafts[i].author_id);
-				//}
+			var author_ids = [];
+			for(var i = 0; i < authors.length; i++) {
+				if(!author_ids.contains(authors[i].id)) {
+					author_ids.push(authors[i].id);
+				}
 			}
-			console.log('AUTHORS' + JSON.stringify(authors));
+			console.log(JSON.stringify(author_ids));
 
 			builtIni.authors = [];
 			builtIni.drafts = [];
@@ -97,6 +116,7 @@ exports.show = function(state, render) {
 		finish();
 	});
 
+	// get drafts
 	lf.query('/draft', { 'initiative_id': initiative_id, 'render_content': 'html' }, state, function(draft_res) {
 		var highest_id = 0;
 		for(var i = 0; i < draft_res.result.length; i++) {
@@ -105,6 +125,12 @@ exports.show = function(state, render) {
 				highest_id = draft_res.result[i].id;
 				current_draft = draft_res.result[i];
 			}
+
+			// get authors
+			lf.query('/member', { 'member_id': draft_res.result[i].author_id }, state, function(member_res) {
+				authors.push(member_res.result[0]);
+				finish();
+			});
 		}
 		
 		draftDone = true;
