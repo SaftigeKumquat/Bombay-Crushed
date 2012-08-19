@@ -37,8 +37,6 @@ exports.show = function(state) {
 			suggestion_info.opinionpages = paging_info.opinionpages;
 			suggestion_info.initiative.text = initiative_text;
 
-			console.log('Final context for rendering: ' + JSON.stringify(ctx.suggestion));
-
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
 		}
@@ -46,19 +44,16 @@ exports.show = function(state) {
 
 	// get the initiative
 	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
-		console.log(JSON.stringify(res));
 		if(res.result.length === 0) {
 			state.fail_invalidResource('No suggestion with id ' + suggestion_id + ' found.', 404);
 			return;
 		}
 		var suggestion_res = res.result[0];
-		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
 		var initiative = res.initiatives[suggestion_res.initiative_id];
 		if(initiative === undefined) {
 			state.fail('Initiative ' + suggestion_res.initiative_id + ' for suggestion ' + suggestion_id + ' not included in reply.');
 			return;
 		}
-		console.log('INITIATIVE: ' + JSON.stringify(initiative));
 
 		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_content': 'html' }, state, function(res) {
 			if(res.result.length === 0) {
@@ -149,7 +144,6 @@ exports.show = function(state) {
 				return;
 			}
 			var author = res.result[0];
-			console.log("AUTHOR: " + JSON.stringify(author));
 
 			tmp_suggestion.author = {
 				nick: author.name,
@@ -167,7 +161,6 @@ exports.show = function(state) {
 		opinions_info = tmp_opinions;
 		paging_info = tmp_paging;
 		my_opinion_info = tmp_my_opinion;
-		console.log('OPINIONS FINISHED!');
 		finish();
 	});
 }
@@ -189,7 +182,6 @@ exports.updateOpinions = function(state) {
 			opinionpages: paging.opinionpages
 		}
 
-		console.log('Sending out opinions!');
 		ejs.render(state, '/update_opinions.tpl', true);
 	}
 
@@ -228,7 +220,6 @@ function opinions(state, finish) {
 			return smiley;
 		}
 
-		console.log('OPINIONS:' + JSON.stringify(res));
 		var my_opinion_info = {
 			i_say_implemented: false,
 			smiley: 1,
@@ -247,7 +238,6 @@ function opinions(state, finish) {
 			}
 			return tmp;
 		}();
-		console.log('PAGING INFO ' + JSON.stringify(paging_info));
 
 		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 			var lf_opinion = lf_opinions[i];
@@ -293,13 +283,11 @@ function opinions(state, finish) {
 				lf_opinion = lf_opinions[i];
 				// filter own opinion
 				if(lf_opinion.member_id != state.user_id()) {
-					console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
 					lf_member = lf_members_by_id[lf_opinion.member_id];
 					if(lf_member === undefined) {
-						console.log('ERROR: Failed to lookup user with ' + lf_opinion.member_id + ', owner of opinion for suggeston ' + suggestion_id);
+						console.error('ERROR: Failed to lookup user with ' + lf_opinion.member_id + ', owner of opinion for suggeston ' + suggestion_id);
 						continue; // skip
 					}
-					console.log('LF member: ' + JSON.stringify(lf_member));
 					tmp_opinion = {
 						user: {
 							nick: lf_member.name,
