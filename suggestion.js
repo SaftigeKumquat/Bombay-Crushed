@@ -36,13 +36,15 @@ exports.show = function(state) {
 			suggestion_info.opinionpages = paging_info.opinionpages;
 			suggestion_info.initiative.text = initiative_text;
 
+			console.log('Final context for rendering: ' + JSON.stringify(ctx.suggestion));
+
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
 		}
 	}
 
 	// get the initiative
-	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true }, state, function(res) {
+	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
 		console.log(JSON.stringify(res));
 		var suggestion_res = res.result[0];
 		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
@@ -84,8 +86,8 @@ exports.show = function(state) {
 			implementedshouldnotsupporter: suggestion_res.minus1_fulfilled_count,
 			implementedmustnotsupporter: suggestion_res.minus2_fulfilled_count,
 		};
-		notimplementedneutralsupporter = tmp_suggestion.neutralsupporter;
-		implementedneutralsupporter = tmp_suggestion.neutralsupporter;
+		tmp_suggestion.notimplementedneutralsupporter = tmp_suggestion.neutralsupporter;
+		tmp_suggestion.implementedneutralsupporter = tmp_suggestion.neutralsupporter;
 
 		tmp_suggestion.mustsupportwidth = tmp_suggestion.mustsupporter * 100 / total_supporters + "%";
 		tmp_suggestion.shouldsupportwidth = tmp_suggestion.shouldsupporter * 100 / total_supporters + "%";
@@ -93,16 +95,38 @@ exports.show = function(state) {
 		tmp_suggestion.shouldnotsupportwidth = tmp_suggestion.shouldnotsupporter * 100 / total_supporters + "%";
 		tmp_suggestion.mustnotsupportwidth = tmp_suggestion.mustnotsupporter * 100 / total_supporters + "%";
 
-		tmp_suggestion.notimplementedmustsupportwidth = tmp_suggestion.notimplementedmustsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.notimplementedshouldsupportwidth = tmp_suggestion.notimplementedshouldsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.notimplementedneutralsupportwidth = tmp_suggestion.notimplementedneutralsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.notimplementedshouldnotsupportwidth = tmp_suggestion.notimplementedshouldnotsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.notimplementedmustnotsupportwidth = tmp_suggestion.notimplementedmustnotsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.implementedmustsupportwidth = tmp_suggestion.notimplementedmustsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.implementedshouldsupportwidth = tmp_suggestion.notimplementedshouldsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.implementedneutralsupportwidth = tmp_suggestion.notimplementedneutralsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.implementedshouldnotsupportwidth = tmp_suggestion.notimplementedshouldnotsupporter * 100 / total_supporters + "%";
-		tmp_suggestion.implementedmustnotsupportwidth = tmp_suggestion.notimplementedmustnotsupporter * 100 / total_supporters + "%";
+		var total_notimplemented = tmp_suggestion.notimplementedmustsupporter
+		                         + tmp_suggestion.notimplementedshouldsupporter
+		                         + tmp_suggestion.notimplementedneutralsupporter
+		                         + tmp_suggestion.notimplementedshouldnotsupporter
+		                         + tmp_suggestion.notimplementedmustnotsupporter;
+		if(total_notimplemented == 0) {
+			total_notimplemented = 1; // avoid devision by 0
+			tmp_suggestion.notimplementedneutralsupporterwidth = '100%';
+		} else {
+			tmp_suggestion.notimplementedneutralsupporterwidth = tmp_suggestion.notimplementedneutralsupporter * 100 / total_notimplemented + "%";
+		}
+		tmp_suggestion.notimplementedmustsupporterwidth = tmp_suggestion.notimplementedmustsupporter * 100 / total_notimplemented + "%";
+		tmp_suggestion.notimplementedshouldsupporterwidth = tmp_suggestion.notimplementedshouldsupporter * 100 / total_notimplemented + "%";
+		tmp_suggestion.notimplementedneutralsupporterwidth = tmp_suggestion.notimplementedneutralsupporter * 100 / total_notimplemented + "%";
+		tmp_suggestion.notimplementedshouldnotsupporterwidth = tmp_suggestion.notimplementedshouldnotsupporter * 100 / total_notimplemented + "%";
+		tmp_suggestion.notimplementedmustnotsupporterwidth = tmp_suggestion.notimplementedmustnotsupporter * 100 / total_notimplemented + "%";
+
+		var total_implemented = tmp_suggestion.implementedmustsupporter
+		                         + tmp_suggestion.implementedshouldsupporter
+		                         + tmp_suggestion.implementedneutralsupporter
+		                         + tmp_suggestion.implementedshouldnotsupporter
+		                         + tmp_suggestion.implementedmustnotsupporter;
+		if(total_implemented == 0) {
+			total_implemented = 1; // avoid devision by 0
+			tmp_suggestion.implementedneutralsupporterwidth = '100%';
+		} else {
+			tmp_suggestion.implementedneutralsupporterwidth = tmp_suggestion.implementedneutralsupporter * 100 / total_implemented + "%";
+		}
+		tmp_suggestion.implementedmustsupporterwidth = tmp_suggestion.implementedmustsupporter * 100 / total_implemented + "%";
+		tmp_suggestion.implementedshouldsupporterwidth = tmp_suggestion.implementedshouldsupporter * 100 / total_implemented + "%";
+		tmp_suggestion.implementedshouldnotsupporterwidth = tmp_suggestion.implementedshouldnotsupporter * 100 / total_implemented + "%";
+		tmp_suggestion.implementedmustnotsupporterwidth = tmp_suggestion.implementedmustnotsupporter * 100 / total_implemented + "%";
 
 		// add author info
 		lf.query('/member', { 'member_id': suggestion_res.author_id }, state, function(res) {
