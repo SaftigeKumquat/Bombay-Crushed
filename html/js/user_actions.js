@@ -75,3 +75,24 @@ function update_news(page) {
     	});	
 	return false;
 }
+
+/**
+ * If an opinion pagination link is clicked,
+ * get the update content from the server,
+ * remove the old content and insert the new.
+ */
+function update_opinions(page, suggestion_id) {
+	var url = "update_opinions?opinionspage=" + page + '&suggestion_id=' + suggestion_id;
+	$.ajax({
+		url: url,
+		type: "POST",
+		data: { opinionspage: page },
+		dataType: "text",
+		success: function(data) {
+			var $container = $('#opiniondiv');
+			$container.empty();
+			$container.append(data);
+		}
+	});
+	return false;
+}

@@ -8,8 +8,6 @@ var lf = require('./lfcli.js');
  * @param state The state object of the current HTTP-Request
  */
 exports.show = function(state) {
-	// configuration stuff
-	var OPINIONS_PER_PAGE = 4;
 
 	// we need a valid user session...
 	if(!state.session_key()) {
@@ -18,6 +16,9 @@ exports.show = function(state) {
 	}
 
 	var suggestion_id = state.url.query.suggestion_id;
+	if(suggestion_id === undefined) {
+		state.fail_invalidResource('No suggestion ID given.', 400);
+	}
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
@@ -36,8 +37,6 @@ exports.show = function(state) {
 			suggestion_info.opinionpages = paging_info.opinionpages;
 			suggestion_info.initiative.text = initiative_text;
 
-			console.log('Final context for rendering: ' + JSON.stringify(ctx.suggestion));
-
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
 		}
@@ -45,13 +44,22 @@ exports.show = function(state) {
 
 	// get the initiative
 	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
-		console.log(JSON.stringify(res));
+		if(res.result.length === 0) {
+			state.fail_invalidResource('No suggestion with id ' + suggestion_id + ' found.', 404);
+			return;
+		}
 		var suggestion_res = res.result[0];
-		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
 		var initiative = res.initiatives[suggestion_res.initiative_id];
-		console.log('INITIATIVE: ' + JSON.stringify(initiative));
+		if(initiative === undefined) {
+			state.fail('Initiative ' + suggestion_res.initiative_id + ' for suggestion ' + suggestion_id + ' not included in reply.');
+			return;
+		}
 
 		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_content': 'html' }, state, function(res) {
+			if(res.result.length === 0) {
+				state.fail('No draft found for initiative ' + initiative.id + ' found.');
+				return;
+			}
 			var lf_draft = res.result[0];
 			initiative_text = lf_draft.content;
 			finish();
@@ -60,6 +68,7 @@ exports.show = function(state) {
 		var total_supporters = initiative.supporter_count;
 
 		var tmp_suggestion = {
+			id: suggestion_id,
 			initiative: {
 				name: initiative.name
 			},
@@ -130,8 +139,11 @@ exports.show = function(state) {
 
 		// add author info
 		lf.query('/member', { 'member_id': suggestion_res.author_id }, state, function(res) {
+			if(res.result.length === 0) {
+				state.fail('No member found with id ' + suggestion_res.author_id + ' when looking for author of suggestion ' + suggestion_id);
+				return;
+			}
 			var author = res.result[0];
-			console.log("AUTHOR: " + JSON.stringify(author));
 
 			tmp_suggestion.author = {
 				nick: author.name,
@@ -144,6 +156,46 @@ exports.show = function(state) {
 			finish();
 		});
 	});
+
+	opinions(state, function(tmp_opinions, tmp_paging, tmp_my_opinion) {
+		opinions_info = tmp_opinions;
+		paging_info = tmp_paging;
+		my_opinion_info = tmp_my_opinion;
+		finish();
+	});
+}
+
+exports.updateOpinions = function(state) {
+	if(!state.session_key()) {
+		state.sendToLogin();
+		return;
+	}
+
+	var finish = function(opinions, paging) {
+		var ctx = state.context;
+		ctx.meta.currentpage = "suggestion";
+
+		ctx.suggestion = {
+			id: state.url.query.suggestion_id,
+			opinions: opinions,
+			opinionpage: paging.opinionpage,
+			opinionpages: paging.opinionpages
+		}
+
+		ejs.render(state, '/update_opinions.tpl', true);
+	}
+
+	opinions(state, finish);
+}
+
+function opinions(state, finish) {
+	// configuration stuff
+	var OPINIONS_PER_PAGE = 4;
+
+	var suggestion_id = state.url.query.suggestion_id;
+	if(suggestion_id === undefined) {
+		state.fail_invalidResource('No suggestion ID given.', 400);
+	}
 
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
 		var lf_opinions = res.result;
@@ -168,15 +220,14 @@ exports.show = function(state) {
 			return smiley;
 		}
 
-		console.log('OPINIONS:' + JSON.stringify(res));
-		tmp_my_opinion = {
+		var my_opinion_info = {
 			i_say_implemented: false,
 			smiley: 1,
 			opinion: 0
 		};
 		var members_to_resolve = '';
 
-		paging_info = function() {
+		var paging_info = function() {
 			var tmp = {
 				opinionpages: Math.floor(lf_opinions.length / OPINIONS_PER_PAGE) + 1,
 				opinionpage: state.url.query.opinionpage || 1
@@ -187,14 +238,13 @@ exports.show = function(state) {
 			}
 			return tmp;
 		}();
-		console.log('PAGING INFO ' + JSON.stringify(paging_info));
 
 		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
 			var lf_opinion = lf_opinions[i];
 			if(lf_opinion.member_id == state.user_id()) {
-				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
-				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
-				tmp_my_opinion.opinion = lf_opinion.degree;
+				my_opinion_info.i_say_implemented = lf_opinion.fulfilled;
+				my_opinion_info.smiley = calculate_smiley(lf_opinion);
+				my_opinion_info.opinion = lf_opinion.degree;
 			}
 
 			if(members_to_resolve != '') {
@@ -202,7 +252,6 @@ exports.show = function(state) {
 			}
 			members_to_resolve += lf_opinion.member_id;
 		}
-		my_opinion_info = tmp_my_opinion;
 
 		lf.query('/member', { 'member_id': members_to_resolve }, state, function(res) {
 			var i;
@@ -234,9 +283,11 @@ exports.show = function(state) {
 				lf_opinion = lf_opinions[i];
 				// filter own opinion
 				if(lf_opinion.member_id != state.user_id()) {
-					console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
 					lf_member = lf_members_by_id[lf_opinion.member_id];
-					console.log('LF member: ' + JSON.stringify(lf_member));
+					if(lf_member === undefined) {
+						console.error('ERROR: Failed to lookup user with ' + lf_opinion.member_id + ', owner of opinion for suggeston ' + suggestion_id);
+						continue; // skip
+					}
 					tmp_opinion = {
 						user: {
 							nick: lf_member.name,
@@ -251,9 +302,8 @@ exports.show = function(state) {
 					tmp_opinions.push(tmp_opinion);
 				}
 			}
-			opinions_info = tmp_opinions;
 
-			finish();
+			finish(tmp_opinions, paging_info, my_opinion_info);
 		});
 	});
 }
