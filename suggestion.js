@@ -21,12 +21,12 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var suggestion_info, opinions_info, my_opinion_info, paging_info;
+	var suggestion_info, opinions_info, my_opinion_info, paging_info, initiative_text;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined && paging_info !== undefined) {
+		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined && paging_info !== undefined && initiative_text !== undefined) {
 			ctx.suggestion = suggestion_info;
 			suggestion_info.opinions = opinions_info;
 			suggestion_info.isayimplemented = my_opinion_info.i_say_implemented;
@@ -34,6 +34,7 @@ exports.show = function(state) {
 			suggestion_info.my_opinion = my_opinion_info.opinion;
 			suggestion_info.opinionpage = paging_info.opinionpage;
 			suggestion_info.opinionpages = paging_info.opinionpages;
+			suggestion_info.initiative.text = initiative_text;
 
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
@@ -47,6 +48,12 @@ exports.show = function(state) {
 		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
 		var initiative = res.initiatives[suggestion_res.initiative_id];
 		console.log('INITIATIVE: ' + JSON.stringify(initiative));
+
+		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_string': true }, state, function(res) {
+			var lf_draft = res.result[0];
+			initiative_text = lf_draft.content;
+			finish();
+		});
 
 		var total_supporters = initiative.supporter_count;
 
