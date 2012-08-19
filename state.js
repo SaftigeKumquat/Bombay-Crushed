@@ -10,6 +10,7 @@ var Cookies = require('cookies');
 var url = require('url');
 var ejs = require('./ejs.js')
 var config = require('./config.js');
+var news = require('./overview.js');
 
 module.exports = function(serverError, invalidResource) {
 	var app_prefix = '';
@@ -53,13 +54,6 @@ module.exports = function(serverError, invalidResource) {
 					invalidResource(state, logmessage, errorcode);
 				},
 				'cookies': new Cookies(req, res),
-				'sendToLogin': function(message) {
-					// TODO pass message to template
-					if(state.local_path != '/login') {
-						state.context.meta.refresh_url = req.url;
-					}
-					ejs.render(state, '/login.tpl');
-				},
 				'context': {
 						'meta': {
 							'do_refresh': false,
@@ -102,6 +96,15 @@ module.exports = function(serverError, invalidResource) {
 					state.cookies.set('user_id', user_id);
 					return user_id;
 				}
+			}
+
+			state.sendToLogin = function(message) {
+					// TODO pass message to template
+					if(state.local_path != '/login') {
+						state.context.meta.refresh_url = req.url;
+					}
+					news.showLogin(state);
+					//ejs.render(state, '/login.tpl');
 			}
 
 			return state;

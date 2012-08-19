@@ -399,6 +399,23 @@ exports.show = function(state) {
 	inis(state, finish);
 }
 
+/**
+ * Collect and render news data of the overview page
+ *
+ * @param state The HTTP-Request state object
+ */
+exports.showLogin = function(state) {
+	var finish = function() {
+		var ctx = state.context;
+		ctx.meta.currentpage = "login";
+		if(ctx.news !== undefined) {
+			ejs.render(state, '/login.tpl');
+		}
+	}
+
+	news(state, finish);
+}
+
 exports.updateInis = function(state) {
 	if(!state.session_key()) {
 		state.sendToLogin();
