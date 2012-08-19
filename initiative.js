@@ -27,6 +27,22 @@ var getMemberSupport = function(support, ini) {
 	return false;
 }
 
+var calculate_smiley = function(lf_opinion) {
+	var smiley = 1; // if degree == 0 we don't care, so we are happy
+	if(lf_opinion.degree !== 0) {
+		// renormalize (map to 0...4 and then to 1...4)
+		smiley = lf_opinion.degree + 2;
+		if(smiley < 2) {
+			smiley += 2;
+		}
+		// if fullfilled highest value is happy
+		if(lf_opinion.fulfilled) {
+			smiley = 5 - smiley;
+		}
+	}
+	return smiley;
+}
+
 /**
  * Takes care of retrieving data for and rendering the
  * initiative page.
@@ -60,16 +76,20 @@ exports.show = function(state, render) {
 	var supporters = [];
 	var alternatives = [];
 	var support = [];
+	var suggestions = [];
+	var opinions = [];
 	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
 	var supportDone = false;
 	var alternativesDone = false;
+	var suggestionsDone = false;
 
 	var finish = function() {
-		if(iniDone && draftDone && supportDone && alternativesDone
+		if(iniDone && draftDone && supportDone && alternativesDone && suggestionsDone
 			&& drafts.length == authors.length
-			&& alternatives.length == support.length) {
+			&& alternatives.length == support.length
+			&& opinions.length == suggestions.length) {
 
 			builtIni.id = initiative_id;
 			builtIni.name = initiative.name;
@@ -187,6 +207,78 @@ exports.show = function(state, render) {
 			builtIni.potsupporter = potsupporternumber;
 
 			builtIni.suggestions = [];
+			builtIni.suggestionsnumber = suggestions.length;
+
+			builtIni.suggestionspages = Math.ceil(suggestions.length / 4);
+			if(state.url.query.suggestionpage !== undefined && state.url.query.suggestionpage > 1) {
+				builtIni.suggestionspage = state.url.query.suggestionpage;
+				start_sugg = (builtIni.suggestionspage - 1) * 4;
+				end_sugg = builtIni.suggestionspage * 4;
+			}
+			else {
+				builtIni.suggestionspage = 1;
+				start_sugg = 0;
+				end_sugg = 4;
+			}
+
+			var total_supporters = initiative.supporter_count;
+			// get suggestions
+			for(var i = start_sugg; i < suggestions.length && i < end_sugg; i++) {
+				builtSugg = {};
+				builtSugg.id = suggestions[i].id;
+				builtSugg.name = suggestions[i].name;
+
+				builtSugg.mustsupporter = suggestions[i].plus2_unfulfilled_count + suggestions[i].plus2_fulfilled_count;
+				builtSugg.shouldsupporter = suggestions[i].plus1_unfulfilled_count + suggestions[i].plus1_fulfilled_count;
+				builtSugg.neutralsupporter = total_supporters
+			                  - (suggestions[i].plus2_unfulfilled_count + suggestions[i].plus2_fulfilled_count)
+			                  - (suggestions[i].plus1_unfulfilled_count + suggestions[i].plus1_fulfilled_count)
+			                  - (suggestions[i].minus2_unfulfilled_count + suggestions[i].minus2_fulfilled_count)
+			                  - (suggestions[i].minus1_unfulfilled_count + suggestions[i].minus1_fulfilled_count);
+				builtSugg.shouldnotsupporter = suggestions[i].minus1_unfulfilled_count + suggestions[i].minus1_fulfilled_count;
+				builtSugg.mustnotsupporter = suggestions[i].minus2_unfulfilled_count + suggestions[i].minus2_fulfilled_count;
+
+				builtSugg.mustsupportwidth = ( builtSugg.mustsupporter / total_supporters * 100) + '%'
+				builtSugg.shouldsupportwidth = ( builtSugg.shouldsupporter / total_supporters * 100) + '%'
+				builtSugg.neutralsupportwidth = ( builtSugg.neutralsupporter / total_supporters * 100) + '%'
+				builtSugg.shouldnotsupportwidth = ( builtSugg.shouldnotsupporter / total_supporters * 100) + '%'
+				builtSugg.mustnotsupportwidth = ( builtSugg.mustnotsupporter / total_supporters * 100) + '%'
+
+				builtSugg.notimplementedmustsupporter = suggestions[i].plus2_unfulfilled_count;
+				builtSugg.notimplementedshouldsupporter = suggestions[i].plus1_unfulfilled_count;
+				builtSugg.notimplementedneutralsupporter = builtSugg.neutralsupporter;
+				builtSugg.notimplementedshouldnotsupporter = suggestions[i].minus1_unfulfilled_count;
+				builtSugg.notimplementedmustnotsupporter = suggestions[i].minus2_unfulfilled_count;
+
+				builtSugg.notimplementedmustsupporterwidth = ( builtSugg.notimplementedmustsupporter / total_supporters * 100) + '%'
+				builtSugg.notimplementedshouldsupporterwidth = ( builtSugg.notimplementedshouldsupporter / total_supporters * 100) + '%'
+				builtSugg.notimplementedneutralsupporterwidth = ( builtSugg.notimplementedneutralsupporter / total_supporters * 100) + '%'
+				builtSugg.notimplementedshouldnotsupportwidth = ( builtSugg.notimplementedshouldnotsupporter / total_supporters * 100) + '%'
+				builtSugg.notimplementedmustnotsupportwidth = ( builtSugg.notimplementedmustnotsupporter / total_supporters * 100) + '%'
+
+				builtSugg.implementedmustsupporter = suggestions[i].plus2_fulfilled_count;
+				builtSugg.implementedshouldsupporter = suggestions[i].plus1_fulfilled_count;
+				builtSugg.implementedneutralsupporter = builtSugg.neutralsupporter;
+				builtSugg.implementedshouldnotsupporter = suggestions[i].minus1_fulfilled_count;
+				builtSugg.implementedmustnotsupporter = suggestions[i].minus2_fulfilled_count;
+
+				builtSugg.implementedmustsupporterwidth = ( builtSugg.implementedmustsupporter / total_supporters * 100) + '%'
+				builtSugg.implementedshouldsupporterwidth = ( builtSugg.implementedshouldsupporter / total_supporters * 100) + '%'
+				builtSugg.implementedneutralsupporterwidth = ( builtSugg.implementedneutralsupporter / total_supporters * 100) + '%'
+				builtSugg.implementedshouldnotsupportwidth = ( builtSugg.implementedshouldnotsupporter / total_supporters * 100) + '%'
+				builtSugg.implementedmustnotsupportwidth = ( builtSugg.implementedmustnotsupporter / total_supporters * 100) + '%'
+
+				// get my opinion
+				for(var a = 0; a < opinions.length; a++) {
+					if(opinions[a].length > 0 && opinions[a][0].suggestion_id == builtSugg.id) {
+						builtSugg.smiley = calculate_smiley(opinions[a][0]);
+						builtSugg.isayimplemented = opinions[a][0].fulfilled;
+						builtSugg.my_opinion = opinions[a][0].degree;
+					}
+				}
+
+				builtIni.suggestions.push(builtSugg);
+			}
 
 			builtIni.alternativeinis = [];
 
@@ -312,6 +404,22 @@ exports.show = function(state, render) {
 		} 
 
 		supportDone = true;
+		finish();
+	});
+
+	// get suggestions
+	lf.query('/suggestion', { 'initiative_id': initiative_id, 'render_content': 'html' }, state, function(res) {
+		for(var i = 0; i < res.result.length; i++) {
+			suggestions.push(res.result[i]);
+
+			// get my opinion
+			lf.query('/opinion', { 'suggestion_id': res.result[i].id, 'member_id': state.user_id() }, state, function(op_res) {
+				opinions.push(op_res.result);
+				finish()
+			});
+		}
+
+		suggestionsDone = true;
 		finish();
 	});
 }

@@ -134,16 +134,18 @@
 					<% if(suggestion.opinionpage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { 
 						var prevpage = suggestion.opinionpage - 1;
 					%><li><a class="button button-backward" href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= prevpage %>, <%= suggestion.id %>)"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= suggestion.opinionpages; a++) {
-						if(a == suggestion.opinionpage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= a %>, <%= suggestion.id %>)"><%= a %></a></li>
-						<% }
+					if(suggestion.opinionpages > 1) {
+						for(var a = 1; a <= suggestion.opinionpages; a++) {
+							if(a == suggestion.opinionpage) { %>
+								<li class="active"><%= a %></li>
+							<% }
+							else { %>
+								<li><a href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= a %>, <%= suggestion.id %>)"><%= a %></a></li>
+							<% }
+						}
 					}
 					var nextpage = suggestion.opinionpage + 1;
-					if(suggestion.opinionpage != suggestion.opinionpages) { %><li><a class="button button-forward" href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= nextpage %>, <%= suggestion.id %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(suggestion.opinionpage < suggestion.opinionpages) { %><li><a class="button button-forward" href="#&suggestion_id?<%= suggestion.id %>&opinionpage=<%= a %>" onclick="update_opinions(<%= nextpage %>, <%= suggestion.id %>)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>

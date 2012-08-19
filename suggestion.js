@@ -42,7 +42,7 @@ exports.show = function(state) {
 		}
 	}
 
-	// get the initiative
+	// get the suggestion
 	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
 		if(res.result.length === 0) {
 			state.fail_invalidResource('No suggestion with id ' + suggestion_id + ' found.', 404);
@@ -203,7 +203,7 @@ function opinions(state, finish) {
 		var lf_opinions = res.result;
 
 		/**
-		 * Calculate the hapiness smiley for the given opinion.
+		 * Calculate the happiness smiley for the given opinion.
 		 * Result is 1 for very happy, 4 for very unhappy
 		 */
 		var calculate_smiley = function(lf_opinion) {

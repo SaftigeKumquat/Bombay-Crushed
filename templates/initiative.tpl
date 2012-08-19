@@ -150,19 +150,19 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(initiative.supporterspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage - 1 %>"><%= texts.backshort %></a></li><% }
+					<% if(initiative.supporterspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage - 1 %>&suggestionpage=<%= initiative.suggestionspage %>"><%= texts.backshort %></a></li><% }
 					if(initiative.suppoerterspages > 1) {
 						for(var a = 1; a <= initiative.supporterspages; a++) {
 							if(a == initiative.supporterspage) { %>
 								<li class="active"><%= a %></li>
 							<% }
 							else { %>
-								<li><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= a %>"><%= a %></a></li>
+								<li><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= a %>&suggestionpage=<%= initiative.suggestionspage %>"><%= a %></a></li>
 							<% }
 						}
 					}
 					var nextpage = ( initiative.supporterspage - 1 ) + 2;
-					if(initiative.supporterspage < initiative.supporterspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initiative.supporterspage < initiative.supporterspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= nextpage %>&suggestionpage=<%= initiative.suggestionspage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
@@ -204,15 +204,15 @@
 						</td>
 						<td>
 							<ul>
-								<li><a href="#"><%= texts.must %></a></li>
-								<li><a href="#"><%= texts.should %></a></li>
-								<li><a href="#"><%= texts.neutral %></a></li>
-								<li><a href="#"><%= texts.shouldnot %></a></li>
-								<li><a href="#"><%= texts.mustnot %></a></li>
+								<li><a <% if(initiative.suggestions[i].my_opinion === 2) { %>class="marked"<% } %> href="#"><%= texts.must %></a></li>
+								<li><a <% if(initiative.suggestions[i].my_opinion === 1) { %>class="marked"<% } %> href="#"><%= texts.should %></a></li>
+								<li><a <% if(initiative.suggestions[i].my_opinion === 0) { %>class="marked"<% } %> href="#"><%= texts.neutral %></a></li>
+								<li><a <% if(initiative.suggestions[i].my_opinion === -1) { %>class="marked"<% } %> href="#"><%= texts.shouldnot %></a></li>
+								<li><a <% if(initiative.suggestions[i].my_opinion === -2) { %>class="marked"<% } %> href="#"><%= texts.mustnot %></a></li>
 							</ul>
 						</td>
 						<td>
-							<ul class="bargraph" title="<%= initiative.suggestions[i].notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= initiative.suggestions[i].notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= initiative.suggestions[i].notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= initiative.suggestions[i].notimplementedshoudnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= initiative.suggestions[i].notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
+							<ul class="bargraph" title="<%= initiative.suggestions[i].notimplementedmustsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustsupporterinfo %> / <%= initiative.suggestions[i].notimplementedshouldsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldsupporterinfo %> / <%= initiative.suggestions[i].notimplementedneutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= initiative.suggestions[i].notimplementedshouldnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andshouldnotsupporterinfo %> / <%= initiative.suggestions[i].notimplementedmustnotsupporter %> <%= texts.notimplementedsupporterinfo %> <%= texts.andmustnotsupporterinfo %>">
 
 								<li class="bargraph-support" style="width:<%= initiative.suggestions[i].notimplementedmustsupporterwidth %>"></li>
 								<li class="bargraph-pro" style="width:<%= initiative.suggestions[i].notimplementedshouldsupporterwidth %>"></li>
@@ -250,17 +250,19 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(initiative.suggestionspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= initiative.suggestionspages; a++) {
-						if(a == initiative.suggestionspage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#"><%= a %></a></li>
-						<% }
+					<% if(initiative.suggestionspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage %>&suggestionpage=<%= initiative.suggestionspage - 1 %>"><%= texts.backshort %></a></li><% }
+					if(initiative.suggestionspages > 1) {
+						for(var a = 1; a <= initiative.suggestionspages; a++) {
+							if(a == initiative.suggestionspage) { %>
+								<li class="active"><%= a %></li>
+							<% }
+							else { %>
+								<li><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage %>&suggestionpage=<%= a %>"><%= a %></a></li>
+							<% }
+						}
 					}
 					var nextpage = ( initiative.suggestionspage - 1 ) + 2;
-					if(initiative.suggestionspage < initiative.suggestionspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initiative.suggestionspage < initiative.suggestionspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage %>&suggestionpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 				<a class="button button-nextpagination" href="#"><%= texts.createsuggestion %></a>
 			</div>
@@ -302,21 +304,6 @@
 					} %>
 			</table>
 			<div class="box-footer">
-				<% if(initiative.alternativeinispages > 1) { %>
-				<ul class="pagination">
-					<% if(initiative.alternativeinispage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= initiative.alternativeinispages; a++) {
-						if(a == initiative.alternativeinispage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#"><%= a %></a></li>
-						<% }
-					}
-					var nextpage = ( initiative.alternativeinispage - 1 ) + 2;
-					if(initiative.alternativeinispage < initiative.alternativeinispages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
-				</ul>
-				<% } %>
 				<a class="button" href="#"><%= texts.createalternativeini %></a>
 				</div>
 			</div>

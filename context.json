@@ -301,7 +301,7 @@
 				"potsupporterwidth": "10%", "uninterestedwidth": "60%" },
 			{ "name": "Einbeziehung von Renten und Pensionen", "supporter": 365, "potsupporter": 15, "uninterested": 631, "quorumwidth": "5%", "supporterwidth": "40%",
 				"potsupporterwidth": "10%", "uninterestedwidth": "50%", "isupport": true }
-		], "alternativeinispage": "1", "alternativeinispages": "1"
+		]
 	},
 	"area": {
 		"name": "Innen, Recht, Demokratie, Sicherheit", "unit": "Baden-Württemberg",
