@@ -1,7 +1,7 @@
 /*
 	Christophe Chan Hin for Piratenpartei Deutschland
 	Frontend Development for Liquid Feedback
-	Part of Bombay Crushed Project with Johannes Knopp, Christoph Fritzsche, Matthias Bach
+	Part of Bombay Crushed Project with Johannes Knopp, Christoph Fritzsche, Matthias Bach, Dominic Guhl
 
 	Licensed under GPL and MIT.
 */
@@ -363,12 +363,13 @@ h3 a:hover {text-decoration:underline}
 }
 
 #search input[type="text"]:focus {
-    width: 70px;
-    }
-
+	width: 140px;
+	background-color: white;
+	color: black;
+}
 #search-sub input[type="text"]:focus {
     width: 157px;
-    }
+}
 
 #select-filter {margin: 6px 0px 6px 6px;}
 #select-filter-big {margin: 0px 8px 10px 8px; width:50%; padding:4px}

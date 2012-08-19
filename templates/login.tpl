@@ -46,6 +46,13 @@
 					</div>
 			</div>
 			<div class="box-delegate-info profile-delegate">
+					<img src="content_img/profile_delegate_8.png" alt="Profilbild" />
+					<div>
+						<h3><a href="#">Dominic Guhl</a></h3>
+						<div class="profile-delegate-theme"><a class="hiddenlink" href="https://twitter.com/#!/mylittlevillain"><span class="unit">@mylittlevillain</span></a></div>
+					</div>
+			</div>
+			<div class="box-delegate-info profile-delegate">
 					<img src="content_img/profile_delegate_3.png" alt="Profilbild" />
 					<div>
 						<h3><a href="#">Johannes Knopp</a></h3>
