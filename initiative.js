@@ -84,14 +84,30 @@ exports.show = function(state, render) {
 
 			// get authors
 			var author_ids = [];
+			builtIni.authors = [];
 			for(var i = 0; i < authors.length; i++) {
+				builtAuthor = {};
 				if(!author_ids.contains(authors[i].id)) {
 					author_ids.push(authors[i].id);
+
+					builtAuthor.nick = authors[i].name;
+					builtAuthor.name = authors[i].realname;
+					if(builtAuthor.name == "" || builtAuthor.name == null) {
+						builtAuthor.name = builtAuthor.nick;
+					}
+
+					builtAuthor.id = authors[i].id;
+					builtAuthor.picmini = 'avatar/' + authors[i].id;
+
+					if(builtAuthor.id == current_draft.author_id) {
+						builtAuthor.lastauthor = true;
+					}
+
+					builtIni.authors.push(builtAuthor);
 				}
 			}
-			console.log(JSON.stringify(author_ids));
+			console.log(JSON.stringify(builtIni.authors));
 
-			builtIni.authors = [];
 			builtIni.drafts = [];
 			builtIni.supporters = [];
 			builtIni.suggestions = [];
