@@ -49,13 +49,15 @@ exports.show = function(state, render) {
 	var drafts = [];
 	var authors = [];
 	var supporters = [];
+	var alternatives = [];
 	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
 	var supportDone = false;
+	var alternativesDone = false;
 
 	var finish = function() {
-		if(iniDone && draftDone && supportDone
+		if(iniDone && draftDone && supportDone && alternativesDone
 			&& drafts.length == authors.length) {
 
 			builtIni.id = initiative_id;
@@ -174,7 +176,10 @@ exports.show = function(state, render) {
 			builtIni.potsupporter = potsupporternumber;
 
 			builtIni.suggestions = [];
+
 			builtIni.alternativeinis = [];
+			// get alternative inis
+			console.log('ALT' + JSON.stringify(alternatives));
 			
 			state.context.initiative = builtIni;
 
@@ -190,6 +195,18 @@ exports.show = function(state, render) {
 		area = ini_res.areas[issue.area_id];
 		unit = ini_res.units[area.unit_id];
 		policy = ini_res.policies[issue.policy_id];
+
+		// get alternative inis
+		lf.query('/initiative', { 'issue_id': initiative.issue_id }, state, function(alt_res) {
+			for(var i = 0; i < alt_res.result.length; i++) {
+				if(alt_res.result[i].id != initiative_id) {
+					alternatives.push(alt_res.result[i]);
+				}
+			}
+
+			alternativesDone = true;
+			finish();
+		});
 
 		iniDone = true;
 		finish();

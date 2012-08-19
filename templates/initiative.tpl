@@ -66,7 +66,7 @@
 
 
 			<h2><%= initiative.name %></h2>
-			<p class="box-label"><a href="#"><%= initiative.area.name %></a> · <a href="#"><%= texts.issue %> #<%= initiative.issue.id %></a> · <%= initiative.state %></p>
+			<p class="box-label"><a href="<%= meta.baseurl %>/area?area_id=<%= initiative.area.id %>"><%= initiative.area.name %></a> · <a href="#"><%= texts.issue %> #<%= initiative.issue.id %></a> · <%= initiative.state %></p>
 			<div class="box-footer box-editorial">
 
 				<%- initiative.text %>
