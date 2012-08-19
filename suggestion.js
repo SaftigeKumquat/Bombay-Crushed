@@ -8,6 +8,9 @@ var lf = require('./lfcli.js');
  * @param state The state object of the current HTTP-Request
  */
 exports.show = function(state) {
+	// configuration stuff
+	var OPINIONS_PER_PAGE = 4;
+
 	// we need a valid user session...
 	if(!state.session_key()) {
 		state.sendToLogin();
@@ -18,17 +21,20 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var suggestion_info, opinions_info, my_opinion_info;
+	var suggestion_info, opinions_info, my_opinion_info, paging_info, initiative_text;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined) {
+		if(suggestion_info !== undefined && opinions_info !== undefined && my_opinion_info !== undefined && paging_info !== undefined && initiative_text !== undefined) {
 			ctx.suggestion = suggestion_info;
 			suggestion_info.opinions = opinions_info;
 			suggestion_info.isayimplemented = my_opinion_info.i_say_implemented;
 			suggestion_info.smiley = my_opinion_info.smiley;
 			suggestion_info.my_opinion = my_opinion_info.opinion;
+			suggestion_info.opinionpage = paging_info.opinionpage;
+			suggestion_info.opinionpages = paging_info.opinionpages;
+			suggestion_info.initiative.text = initiative_text;
 
 			ctx.meta.currentpage = "suggestion";
 			ejs.render(state, '/suggestion.tpl');
@@ -42,6 +48,12 @@ exports.show = function(state) {
 		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
 		var initiative = res.initiatives[suggestion_res.initiative_id];
 		console.log('INITIATIVE: ' + JSON.stringify(initiative));
+
+		lf.query('/draft', { 'initiative_id': initiative.id, 'current_draft': true, 'render_string': true }, state, function(res) {
+			var lf_draft = res.result[0];
+			initiative_text = lf_draft.content;
+			finish();
+		});
 
 		var total_supporters = initiative.supporter_count;
 
@@ -110,6 +122,8 @@ exports.show = function(state) {
 	});
 
 	lf.query('/opinion', { 'suggestion_id': suggestion_id }, state, function(res) {
+		var lf_opinions = res.result;
+
 		/**
 		 * Calculate the hapiness smiley for the given opinion.
 		 * Result is 1 for very happy, 4 for very unhappy
@@ -138,10 +152,21 @@ exports.show = function(state) {
 		};
 		var members_to_resolve = '';
 
-		// TODO handle opinion-pages
+		paging_info = function() {
+			var tmp = {
+				opinionpages: Math.floor(lf_opinions.length / OPINIONS_PER_PAGE) + 1,
+				opinionpage: state.url.query.opinionpage || 1
+			}
+			if(tmp.opinionpage < 1 || tmp.opinionpage > tmp.opinionpages) {
+				console.log('WARNING: Opinion page ' + tmp.opinionpage + ' requested, but only pages 1 to ' + tmp.opinionpages + ' valid for suggestion ' + suggestion_id);
+				tmp.opinionpage = 1;
+			}
+			return tmp;
+		}();
+		console.log('PAGING INFO ' + JSON.stringify(paging_info));
 
-		for(var i = 0; i < res.result.length; i++) {
-			var lf_opinion = res.result[i];
+		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
+			var lf_opinion = lf_opinions[i];
 			if(lf_opinion.member_id == state.user_id()) {
 				tmp_my_opinion.i_say_implemented = lf_opinion.fulfilled;
 				tmp_my_opinion.smiley = calculate_smiley(lf_opinion);
@@ -156,19 +181,54 @@ exports.show = function(state) {
 		my_opinion_info = tmp_my_opinion;
 
 		lf.query('/member', { 'member_id': members_to_resolve }, state, function(res) {
-			console.log('MEMBERS:' + JSON.stringify(res));
-			opinions_info = []; // TODO
-			// format:
-			//, "opinions": [
-			//			{ "user": { "nick": "joknopp", "name": "Johannes Knopp", "picsmall": "content_img/profile_delegate_3.png", "picmini": "content_img/profile_small.png" }, "action": "for",
-			//				"implemented": true, "smiley": 1 },
-			//			{ "user": { "nick": "incredibul", "name": "Christophe Chan Hin", "picsmall": "content_img/profile_delegate_2.png", "picmini": "content_img/profile_small.png" }, "action": "against",
-			//				"implemented": false, "smiley": 2 },
-			//			{ "user": { "nick": "cfritzsche", "name": "Christoph Fritzsche", "picsmall": "content_img/profile_delegate_1.png", "picmini": "content_img/profile_small.png" }, "action": "for",
-			//				"implemented": true, "smiley": 3 },
-			//			{ "user": { "nick": "themarix", "name": "Matthias Bach", "picsmall": "content_img/profile_delegate_4.png", "picmini": "content_img/profile_small.png" }, "action": "against",
-			//				"implemented": false, "smiley": 4 }
-			//		], "opinionpage": 1, "opinionpages": 2
+			var i;
+			var lf_member;
+			var lf_members = res.result;
+			var lf_members_by_id = {};
+			for(i = 0; i < lf_members.length; i++) {
+				lf_member = lf_members[i];
+				lf_members_by_id[lf_member.id] = lf_member;
+			}
+
+			var tmp_opinion;
+			var tmp_opinions = [];
+
+			var calculate_action = function(lf_opinion) {
+				switch(lf_opinion.degree) {
+					case -2:
+					case -1:
+						return 'against';
+					case 1:
+					case 2:
+						return 'for';
+					default:
+						return '';
+				}
+			};
+
+		for(var i = OPINIONS_PER_PAGE * (paging_info.opinionpage - 1); i < lf_opinions.length && i < OPINIONS_PER_PAGE * (paging_info.opinionpage); i++) {
+				lf_opinion = lf_opinions[i];
+				// filter own opinion
+				if(lf_opinion.member_id != state.user_id()) {
+					console.log('LF OPINION: ' + JSON.stringify(lf_opinion));
+					lf_member = lf_members_by_id[lf_opinion.member_id];
+					console.log('LF member: ' + JSON.stringify(lf_member));
+					tmp_opinion = {
+						user: {
+							nick: lf_member.name,
+							name: lf_member.realname,
+							picsmall: 'avatar/' + lf_member.id,
+							picmini: 'avatar/' + lf_member.id
+						},
+						action: calculate_action(lf_opinion),
+						implemented: lf_opinion.fulfilled,
+						smiley: calculate_smiley(lf_opinion)
+					}
+					tmp_opinions.push(tmp_opinion);
+				}
+			}
+			opinions_info = tmp_opinions;
+
 			finish();
 		});
 	});

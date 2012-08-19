@@ -17,7 +17,6 @@
 			</div> 
 				<table class="table-anregungen">
 					<tr>
-						<th><%= texts.suggestion %></th>
 						<th><%= texts.generalopinion %></th>
 						<th><%= texts.myopinion %></th>
 						<th><%= texts.suggestionnotimplemented %></th>
@@ -26,7 +25,6 @@
 						<th><%= texts.iam %></th>
 					</tr>
 					<tr class="odd">
-						<td><h3><a href="#"><%= suggestion.name %></a></h3></td>
 						<td>
 							<ul class="bargraph" title="<%= suggestion.mustsupporter %> <%= texts.mustsupporterinfo %> / <%= suggestion.shouldsupporter %> <%= texts.shouldsupporterinfo %> / <%= suggestion.neutralsupporter %> <%= texts.neutralsupporterinfo %> / <%= suggestion.shouldnotsupporter %> <%= texts.shouldnotsupporterinfo %> / <%= suggestion.mustnotsupporter %> <%= texts.mustnotsupporterinfo %>">
 								
