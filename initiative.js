@@ -2,6 +2,7 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var texts = require('./texts.json');
 var issueFunc = require('./issue.js');
+var userFunc = require('./user.js');
 
 /**
  * Basic functions on JS objects
@@ -47,12 +48,14 @@ exports.show = function(state, render) {
 	var policy;
 	var drafts = [];
 	var authors = [];
+	var supporters = [];
 	var current_draft;
 	var iniDone = false;
 	var draftDone = false;
+	var supportDone = false;
 
 	var finish = function() {
-		if(iniDone && draftDone
+		if(iniDone && draftDone && supportDone
 			&& drafts.length == authors.length) {
 
 			builtIni.id = initiative_id;
@@ -90,14 +93,7 @@ exports.show = function(state, render) {
 				if(!author_ids.contains(authors[i].id)) {
 					author_ids.push(authors[i].id);
 
-					builtAuthor.nick = authors[i].name;
-					builtAuthor.name = authors[i].realname;
-					if(builtAuthor.name == "" || builtAuthor.name == null) {
-						builtAuthor.name = builtAuthor.nick;
-					}
-
-					builtAuthor.id = authors[i].id;
-					builtAuthor.picmini = 'avatar/' + authors[i].id;
+					builtAuthor = userFunc.getUserBasic(authors[i]);
 
 					if(builtAuthor.id == current_draft.author_id) {
 						builtAuthor.lastauthor = true;
@@ -130,14 +126,7 @@ exports.show = function(state, render) {
 				// get author
 				for(var a = 0; a < authors.length; a++) {
 					if(authors[a].id == drafts[i].author_id) {
-						builtDraft.author.nick = authors[a].name;
-						builtDraft.author.name = authors[a].realname;
-						if(builtDraft.author.name == "" || builtDraft.author.name == null) {
-							builtDraft.author.name = builtDraft.author.nick;
-						}
-
-						builtDraft.author.id = authors[a].id;
-						builtDraft.author.picmini = 'avatar/' + authors[a].id;
+						builtDraft.author = userFunc.getUserBasic(authors[a]);
 					}
 				}
 
@@ -145,6 +134,45 @@ exports.show = function(state, render) {
 			}
 
 			builtIni.supporters = [];
+			supporternumber = 0;
+			potsupporternumber = 0;
+
+			var supporterpages = Math.ceil(supporters.length / 24);
+			builtIni.supporterspages = supporterpages;
+			builtIni.supporterspage = 1;
+
+			var start_support = 0;
+			var end_support = 24;
+
+			if(state.url.query.supporterpage !== undefined && state.url.query.supporterpage > 1) {
+				start_support = (state.url.query.supporterpage - 1) * 24;
+				end_support = state.url.query.supporterpage * 24;
+				builtIni.supporterspage = state.url.query.supporterpage;
+			}
+
+			// get supporters
+			for(var i = 0; i < supporters.length; i++) {
+				builtMember = userFunc.getUserBasic(supporters[i].member);
+
+				// limit to 24
+				if(i >= start_support && i < end_support) {
+					builtIni.supporters.push(builtMember);
+				}
+
+				if(supporters[i].member.id == state.user_id()) {
+					builtIni.isupport = true;
+				}
+				
+				if(supporters[i].supporter.satisfied) {
+					supporternumber++;
+				}
+				else {
+					potsupporternumber++;
+				}
+			}
+			builtIni.supporter = supporternumber;
+			builtIni.potsupporter = potsupporternumber;
+
 			builtIni.suggestions = [];
 			builtIni.alternativeinis = [];
 			
@@ -185,6 +213,20 @@ exports.show = function(state, render) {
 		}
 		
 		draftDone = true;
+		finish();
+	});
+
+	// get supporters
+	lf.query('/supporter', { 'initiative_id': initiative_id, 'snapshot': 'latest', 'include_members': 1 }, state, function(support_res) {
+		for(var i = 0; i < support_res.result.length; i++) {
+			fetchedSupporter = {
+				"supporter": support_res.result[i],
+				"member": support_res.members[support_res.result[i].member_id]
+			};
+			supporters.push(fetchedSupporter);
+		} 
+
+		supportDone = true;
 		finish();
 	});
 }

@@ -72,7 +72,7 @@
 						<% }
 					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
-					if(initable.activepage != initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>, false)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initable.activepage < initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>, false)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>

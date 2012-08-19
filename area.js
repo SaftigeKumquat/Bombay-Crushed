@@ -1,5 +1,6 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
+var userFunc = require('./user.js');
 
 var getMemberSupport = function(support, issue, ini) {
 	for(var a = 0; a < support.length; a++) {
@@ -190,15 +191,7 @@ var area = function(state, render, page, memberpage) {
 				var builtMember = {};
 				for(var a = 0; a < users.length; a++) {
 					if(users[a].id == members[i].member_id) {
-						builtMember.nick = users[a].name;
-						if(users[a].realname == null || users[a].realname == '') {
-							builtMember.name = users[a].name;
-						}
-						else {
-							builtMember.name = users[a].realname;
-						}
-						builtMember.picmini = 'avatar/' + users[a].id;
-						builtMember.id = users[a].id;
+						builtMember = userFunc.getUserBasic(users[a]);
 					}
 				}
 				builtArea.members.push(builtMember);

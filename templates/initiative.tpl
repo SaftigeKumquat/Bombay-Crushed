@@ -43,8 +43,8 @@
 
 			<h2><%= texts.suggestionsandalternatives %></h2>
 			<ul>
-				<li><a href="#Anregungen"><%= texts.suggestions %> (5)</a></li>
-				<li><a href="#Alternativen"><%= texts.alternativeinitiatives %> (2)</a></li>
+				<li><a href="#Anregungen"><%= texts.suggestions %> (<%= initiative.suggestionsnumber %>)</a></li>
+				<li><a href="#Alternativen"><%= texts.alternativeinitiatives %> (<%= initiative.alternativeinisnumber %>)</a></li>
 			</ul>
 
 		<h2><%= texts.authors %></h2>
@@ -54,7 +54,7 @@
 				<!-- TODO: do not force this to 24px in html -->
 				<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.authors[i].picmini %>" width="24px" alt="<%= texts.profilepic %>" /></a>
 			</p>
-			 <h3><a href="#"><%= initiative.authors[i].name %></a></h3>
+			 <h3><a href="<%= meta.baseurl %>/profile?user_id=<%= initiative.authors[i].id %>"><%= initiative.authors[i].name %></a></h3>
 			 <% if(initiative.authors[i].lastauthor) { %>
 			 <p>(<%= texts.lastauthor %>)</p>
 			 <% } %>
@@ -142,24 +142,27 @@
 
 				<% for(var i = 0; i < initiative.supporters.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(initiative.supporters[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
-					<h3><a href="#"><%= initiative.supporters[i].name %></a> <% if(initiative.supporters[i].power) { %><a href="" class="for">+<%= initiative.supporters[i].power %></a><% } %></h3>
+					<!-- img size should probably not be forced to 24px like this -->
+					<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>" width="24px" /></a>
+					<h3><a href="<%= meta.baseurl %>/profile?user_id=<%= initiative.supporters[i].id %>"><%= initiative.supporters[i].name %></a> <% if(initiative.supporters[i].power) { %><a href="" class="for">+<%= initiative.supporters[i].power %></a><% } %></h3>
 				</div>
 				<% } %>
 
 			<div class="box-footer">
 				<ul class="pagination">
-					<% if(initiative.supporterspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-					for(var a = 1; a <= initiative.supporterspages; a++) {
-						if(a == initiative.supporterspage) { %>
-							<li class="active"><%= a %></li>
-						<% }
-						else { %>
-							<li><a href="#"><%= a %></a></li>
-						<% }
+					<% if(initiative.supporterspage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage - 1 %>"><%= texts.backshort %></a></li><% }
+					if(initiative.suppoerterspages > 1) {
+						for(var a = 1; a <= initiative.supporterspages; a++) {
+							if(a == initiative.supporterspage) { %>
+								<li class="active"><%= a %></li>
+							<% }
+							else { %>
+								<li><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= a %>"><%= a %></a></li>
+							<% }
+						}
 					}
 					var nextpage = ( initiative.supporterspage - 1 ) + 2;
-					if(initiative.supporterspage != initiative.supporterspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initiative.supporterspage < initiative.supporterspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
@@ -257,7 +260,7 @@
 						<% }
 					}
 					var nextpage = ( initiative.suggestionspage - 1 ) + 2;
-					if(initiative.suggestionspage != initiative.suggestionspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initiative.suggestionspage < initiative.suggestionspages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 				<a class="button button-nextpagination" href="#"><%= texts.createsuggestion %></a>
 			</div>
@@ -311,7 +314,7 @@
 						<% }
 					}
 					var nextpage = ( initiative.alternativeinispage - 1 ) + 2;
-					if(initiative.alternativeinispage != initiative.alternativeinispages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(initiative.alternativeinispage < initiative.alternativeinispages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 				<% } %>
 				<a class="button" href="#"><%= texts.createalternativeini %></a>

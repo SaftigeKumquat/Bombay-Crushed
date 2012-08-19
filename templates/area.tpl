@@ -121,7 +121,7 @@
 						}
 					}
 					var nextpage = ( area.issuespage - 1 ) + 2;
-					if(area.issuespage != area.issuespages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= nextpage %>&memberpage=<%= area.memberspage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(area.issuespage < area.issuespages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= nextpage %>&memberpage=<%= area.memberspage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>	
 		</div>
@@ -153,7 +153,7 @@
 						<% }
 					}
 					var nextpage = ( area.delegationpage - 1 ) + 2;
-					if(area.delegationpage != area.delegationpages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(area.delegationpage < area.delegationpages) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>			
 		</div>
@@ -195,7 +195,7 @@
 						}
 					}
 					var nextpage = ( area.memberspage - 1 ) + 2;
-					if(area.memberspage != area.memberspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage %>&memberpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(area.memberspage < area.memberspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= area.issuespage %>&memberpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>	
 		</div>
