@@ -20,7 +20,6 @@
 	<!--css3-mediaqueries-js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="<%= meta.baseurl %>/js/lqfb.js"></script>
 	<script type="text/javascript" src="<%= meta.baseurl %>/js/user_actions.js"></script>
 </head>
 
