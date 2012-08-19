@@ -42,7 +42,7 @@ exports.show = function(state) {
 	}
 
 	// get the initiative
-	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true }, state, function(res) {
+	lf.query('/suggestion', { 'suggestion_id': suggestion_id, 'include_initiatives': true, 'render_content': 'html' }, state, function(res) {
 		console.log(JSON.stringify(res));
 		var suggestion_res = res.result[0];
 		console.log('SUGGESTION: ' + JSON.stringify(suggestion_res));
