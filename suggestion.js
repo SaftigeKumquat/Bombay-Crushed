@@ -70,6 +70,7 @@ exports.show = function(state) {
 		var tmp_suggestion = {
 			id: suggestion_id,
 			initiative: {
+				id: initiative.id,
 				name: initiative.name
 			},
 			name: suggestion_res.name,
@@ -146,6 +147,7 @@ exports.show = function(state) {
 			var author = res.result[0];
 
 			tmp_suggestion.author = {
+				id: author.id,
 				nick: author.name,
 				name: author.realname || author.name,
 				picsmall: "avatar/" + author.id,
@@ -290,6 +292,7 @@ function opinions(state, finish) {
 					}
 					tmp_opinion = {
 						user: {
+							id: lf_member.id,
 							nick: lf_member.name,
 							name: lf_member.realname,
 							picsmall: 'avatar/' + lf_member.id,

@@ -16,7 +16,7 @@
 	for(var i = 0; i < suggestion.opinions.length; i++) { %>
 	<tr class="<% if(odd) { %>odd<% } else { %>even<% } %>">
 		<td><img src="<%= meta.baseurl %>/<%= suggestion.opinions[i].user.picmini %>" alt="<%= texts.profilepic %>"/></a></td>
-		<td><a href="#"><%= suggestion.opinions[i].user.name %></a></td>
+		<td><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.opinions[i].user.id %>"><%= suggestion.opinions[i].user.name %></a></td>
 		<td><span href="" class="<%= suggestion.opinions[i].action %>"><% if(suggestion.opinions[i].implemented) { %><%= texts.implemented %><% } else { %><%= texts.notimplemented %><% } %></span></td>
 		<td> <p class="smiley smiley-<%= suggestion.opinions[i].smiley %>"></p></td>
 	</tr>

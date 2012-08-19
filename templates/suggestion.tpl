@@ -9,7 +9,7 @@
 
 		<div class="eightcol box first">			
 			<h2><%= suggestion.name %></h2>
-			<p class="box-label"><%= texts.suggestionforinitiative %> <a href="#"><%= suggestion.initiative.name %></a></p>
+			<p class="box-label"><%= texts.suggestionforinitiative %> <a href="<% meta.baseurl %>/initiative?initiative_id=<%= suggestion.initiative.id %>"><%= suggestion.initiative.name %></a></p>
 			<div class="box-footer box-editorial">
 	
 				<h3><%= texts.changeproposal %></h3>			
@@ -94,9 +94,9 @@
 			<h2><%= texts.author %></h2>
 			<div class="profile-init">
 				<p>
-					<a href="#"><img src="<%= meta.baseurl %>/<%= suggestion.author.picmini %>" alt="<%= texts.profilepic %>" /></a>
+					<a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><img src="<%= meta.baseurl %>/<%= suggestion.author.picmini %>" alt="<%= texts.profilepic %>" /></a>
 				</p>
-				 <h3><a href="#"><%= suggestion.author.name %></a></h3>
+				 <h3><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><%= suggestion.author.name %></a></h3>
 			</div>
 		</div>
 	</div>
@@ -121,7 +121,7 @@
 				for(var i = 0; i < suggestion.opinions.length; i++) { %>
 				<tr class="<% if(odd) { %>odd<% } else { %>even<% } %>">
 					<td><img src="<%= meta.baseurl %>/<%= suggestion.opinions[i].user.picmini %>" alt="<%= texts.profilepic %>"/></a></td>
-					<td><a href="#"><%= suggestion.opinions[i].user.name %></a></td>
+					<td><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.opinions[i].user.id %>"><%= suggestion.opinions[i].user.name %></a></td>
 					<td><span href="" class="<%= suggestion.opinions[i].action %>"><% if(suggestion.opinions[i].implemented) { %><%= texts.implemented %><% } else { %><%= texts.notimplemented %><% } %></span></td>
 					<td> <p class="smiley smiley-<%= suggestion.opinions[i].smiley %>"></p></td>
 				</tr>
