@@ -106,9 +106,44 @@ exports.show = function(state, render) {
 					builtIni.authors.push(builtAuthor);
 				}
 			}
-			console.log(JSON.stringify(builtIni.authors));
 
 			builtIni.drafts = [];
+			// sort drafts by date
+			Array.prototype.sort.call(drafts, function(a,b) {
+    				if (a.created > b.created)
+        				return -1;
+    				else if (a.created < b.created)
+        				return 1;
+    				else 
+        				return 0;
+			});
+
+			// build drafts
+			for(var i = 0; i < drafts.length; i++) {
+				builtDraft = {};
+				builtDraft.id = drafts[i].id;
+
+				var date = new Date(drafts[i].created);
+				builtDraft.createdat = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+			
+				builtDraft.author = {};
+				// get author
+				for(var a = 0; a < authors.length; a++) {
+					if(authors[a].id == drafts[i].author_id) {
+						builtDraft.author.nick = authors[a].name;
+						builtDraft.author.name = authors[a].realname;
+						if(builtDraft.author.name == "" || builtDraft.author.name == null) {
+							builtDraft.author.name = builtDraft.author.nick;
+						}
+
+						builtDraft.author.id = authors[a].id;
+						builtDraft.author.picmini = 'avatar/' + authors[a].id;
+					}
+				}
+
+				builtIni.drafts.push(builtDraft);
+			}
+
 			builtIni.supporters = [];
 			builtIni.suggestions = [];
 			builtIni.alternativeinis = [];

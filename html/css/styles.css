@@ -460,6 +460,9 @@ h3 a:hover {text-decoration:underline}
 	word-wrap:break-word;
 }
 
+.profile-init {word-wrap:break-word;}
+
+
 /*footer*/
 
 #footer, #push {height:120px;}
