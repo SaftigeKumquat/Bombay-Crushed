@@ -153,6 +153,36 @@ function update_opinions(page, suggestion_id) {
 }
 
 /**
+ * Update the topics for a certain unit, taking into account
+ * sorting.
+ */
+function update_areas_table(unit_id, sorting_criteria) {
+	var url = 'update_areas_table?unit_id=' + unit_id;
+	var data = {
+		unit_id: unit_id
+	};
+
+	if(sorting_criteria !== undefined) {
+		url += '&sort=' + sorting_criteria;
+		data.sort = sorting_criteria;
+	}
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		data: data,
+		dataType: "text",
+		success: function(data) {
+			var $a = $('a[name="' + unit_id + '"]');
+			var $table = $a.siblings().filter('table');
+			$table.replaceWith(data);
+		}
+	});
+
+	return false;
+}
+
+/**
  * Delete the links from the ini and news table pagination,
  * so onClick on these will be triggered, if JS is active.
  * 
