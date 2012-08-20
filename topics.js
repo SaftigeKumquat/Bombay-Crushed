@@ -91,7 +91,7 @@ exports.update_areas_table = function(state) {
 
 	var finish = function() {
 		if(lf_areas !== undefined && lf_issues_by_areaid !== undefined) {
-			var areas = build_areas(lf_areas, lf_issues_by_areaid);
+			var areas = build_areas(lf_areas, lf_issues_by_areaid, sort_id);
 			state.context.areas = areas;
 			ejs.render(state, '/update_area_table.tpl', true);
 		}
@@ -129,12 +129,12 @@ exports.update_areas_table = function(state) {
  * @param unit The liquid feedback API object of the unit
  * @param areas The liquid feedback API objects of all areas in the unit as array
  */
-function build_unit(unit, areas, issues_by_areaid) {
+function build_unit(unit, areas, issues_by_areaid, sort_id) {
 	var builtUnit = {
 		'id': unit.id,
 		'name': unit.name,
 		'description': unit.description,
-		'areas': build_areas(areas, issues_by_areaid)
+		'areas': build_areas(areas, issues_by_areaid, sort_id)
 	};
 	// if description is empty, at least show the name
 	if(unit.description === "") {
@@ -144,7 +144,7 @@ function build_unit(unit, areas, issues_by_areaid) {
 	return builtUnit;
 }
 
-function build_areas(areas, issues_by_areaid) {
+function build_areas(areas, issues_by_areaid, sort_id) {
 	var i_area, i_issue;
 	var area;
 	var status1, status2, status3, status4, status5, status6;
@@ -154,7 +154,7 @@ function build_areas(areas, issues_by_areaid) {
 	var builtAreas = [];
 
 	// sort areas by direct members
-	areas.sort(function(a,b){return b.direct_member_count - a.direct_member_count;});
+	areas.sort(area_sort_function(sort_id));
 	for(i_area = 0; i_area < areas.length; i_area++) {
 		area = areas[i_area];
 
@@ -207,4 +207,19 @@ function build_areas(areas, issues_by_areaid) {
 		builtAreas.push(builtArea);
 	}
 	return builtAreas;
+}
+
+function area_sort_function(sort_id) {
+	console.log('SORT FUNCTION SELECTION: ' + sort_id);
+	if(sort_id == 2) { // we want implicit conversion between int and string, therefore == instead of ===
+		console.log('Returning sort function 2');
+		return function(a,b){
+			var A = a.name;
+			var B = b.name;
+			return (A==B) ? 0 :((A < B) ? -1 : 1);
+		};
+	} else {
+		console.log('Returtning sort function 1');
+		return function(a,b){return b.direct_member_count - a.direct_member_count;}
+	}
 }
