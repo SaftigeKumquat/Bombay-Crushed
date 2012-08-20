@@ -402,7 +402,8 @@ var url_mapping = {
 	'/area': showArea,
 	'/issue': issue.show,//TODO delete showIssue,
 	'/suggestion': suggestion.show,
-	'/update_opinions': suggestion.updateOpinions
+	'/update_opinions': suggestion.updateOpinions,
+	'/update_areas_table': topics.update_areas_table
 }
 
 /**
