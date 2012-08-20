@@ -14,6 +14,8 @@ exports.getUserBasic = function(query_res) {
 	}
 	builtUser.id = query_res.id;
 	builtUser.picmini = 'avatar/' + query_res.id;
+	builtUser.picsmall = 'avatar/' + query_res.id;
+	builtUser.picbig = 'picbig/' + query_res.id;
 
 	return builtUser;
 }

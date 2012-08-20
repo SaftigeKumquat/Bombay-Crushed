@@ -94,7 +94,7 @@
 			<h2><%= texts.author %></h2>
 			<div class="profile-init">
 				<p>
-					<a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><img src="<%= meta.baseurl %>/<%= suggestion.author.picmini %>" alt="<%= texts.profilepic %>" /></a>
+					<a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><img src="<%= meta.baseurl %>/<%= suggestion.author.picbig %>" alt="<%= texts.profilepic %>" /></a>
 				</p>
 				 <h3><a href="<%= meta.baseurl %>/profile?user_id=<%= suggestion.author.id %>"><%= suggestion.author.name %></a></h3>
 			</div>

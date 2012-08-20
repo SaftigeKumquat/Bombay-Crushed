@@ -1,5 +1,6 @@
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
+var user = require('./user.js');
 
 /**
  * Calculate the happiness smiley for the given opinion.
@@ -168,13 +169,7 @@ exports.show = function(state) {
 			}
 			var author = res.result[0];
 
-			tmp_suggestion.author = {
-				id: author.id,
-				nick: author.name,
-				name: author.realname || author.name,
-				picsmall: "avatar/" + author.id,
-				picmini: "picbig/" + author.id
-			}
+			tmp_suggestion.author = user.getUserBasic(author);
 
 			suggestion_info = tmp_suggestion;
 			finish();
@@ -292,17 +287,14 @@ function opinions(state, finish) {
 						continue; // skip
 					}
 					tmp_opinion = {
-						user: {
-							id: lf_member.id,
-							nick: lf_member.name,
-							name: lf_member.realname,
-							picsmall: 'avatar/' + lf_member.id,
-							picmini: 'avatar/' + lf_member.id
-						},
 						action: calculate_action(lf_opinion),
 						implemented: lf_opinion.fulfilled,
 						smiley: calculate_smiley(lf_opinion)
 					}
+
+					// get user info
+					tmp_opinion.user = user.getUserBasic(lf_member);
+
 					tmp_opinions.push(tmp_opinion);
 				}
 			}
