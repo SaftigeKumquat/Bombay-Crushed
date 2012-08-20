@@ -24,7 +24,7 @@
 				<p>Schrittweise nähern wir uns dem Ziel. Die technischen und politischen Einschränkungen lassen leider keinen Schreibzugriff zu, wir wollen euch aber so früh wie möglich mit der neuen Oberfläche konfrontieren. Mit dieser read-only beta könnt ihr alles anschauen, leider aber selbst keine Aktionen machen. Bis dahin ist es noch viel Arbeit. Die gute Nachricht: das ganze liegt auf <a href="https://github.com/SaftigeKumquat/Bombay-Crushed/">github</a> und wir freuen uns über jeden, der mit uns am Quellcode arbeitet.</p>
 				<p>Habt Verständnis dafür, dass wir einige Veränderungswünsche auf die nahe Zukunft verschieben werden. Es gilt für uns zwar die Maxime „It's done when it's done“, aber in alle Ewigkeit wollen wir das Release auch nicht herauszögern, und solange es LQFB gibt wird es wohl auch neue Ideen geben.</p>
 				<p></p>
-				<p>Einen API-Key bekommst du, in dem du dich in <a href="http://www.lqfb.piratenpartei.de">Liquid Feedback</a> einloggst und dann rechts oben auf deinen Namen › Einstellungen › Einstellungen für Entwickler klickst.</p>
+				<p>Einen API-Key bekommst du, in dem du dich in <a href="http://lqfb.piratenpartei.de">Liquid Feedback</a> einloggst und dann rechts oben auf deinen Namen › Einstellungen › Einstellungen für Entwickler klickst.</p>
 				<p>Alles Liebe, <br />Eure&nbsp;Saftige Kumquat</p><br /> 
 
 			</div>
