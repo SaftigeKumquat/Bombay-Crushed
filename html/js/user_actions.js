@@ -194,21 +194,22 @@ $(document).ready(function() {
 	$("#newspages").find("a").attr("href", "#newscontent");
 
 	$("#filterslide").click(function(){
-  	$("#filter").slideToggle("slow");
-  	return false;
-
+        $("#filter").slideToggle("slow");
+        return false;
 	});
 
+    $("#initiative-detail").css('height', $("#initiative-detail").height());
+    $("#initiative-detail").hide();
 	$("#detailslide").click(function(){
-  	$("#initiative-detail").slideToggle("slow");
-  	return false;
-
+        $("#initiative-detail").slideToggle("slow");
+        return false;
 	});
 
+    $("#initiative-history").css('height', $("#initiative-history").height());
+    $("#initiative-history").hide();
 	$("#historyslide").click(function(){
-  	$("#initiative-history").slideToggle("slow");
-  	return false;
-
+  	    $("#initiative-history").slideToggle("slow");
+  	    return false;
 	});
 	
 	draw_pie();
