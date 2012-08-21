@@ -34,7 +34,7 @@ var area = function(state, render, page, memberpage) {
 			&& members.length == users.length
 			&& support.length == issues.length ) {
 
-			builtArea.issues = [];			
+			builtArea.issues = [];
 			builtArea.delegations = [];
 			builtArea.members = [];
 
@@ -110,23 +110,23 @@ var area = function(state, render, page, memberpage) {
 
 							// sort inis by rank
 							Array.prototype.sort.call(inis[a], function(a,b) {
-    								if (a.rank < b.rank)
-        								return -1;
-    								else if (a.rank > b.rank)
-        								return 1;
-    								else 
-        								return 0;
+								if (a.rank < b.rank)
+									return -1;
+								else if (a.rank > b.rank)
+									return 1;
+								else
+									return 0;
 							});
 						}
 						else {
 							// sort inis by supporter
 							Array.prototype.sort.call(inis[a], function(a,b) {
-    								if (a.satisfied_supporter_count > b.satisfied_supporter_count)
-        								return -1;
-    								else if (a.satisfied_supporter_count < b.satisfied_supporter_count)
-        								return 1;
-    								else 
-        								return 0;
+								if (a.satisfied_supporter_count > b.satisfied_supporter_count)
+									return -1;
+								else if (a.satisfied_supporter_count < b.satisfied_supporter_count)
+									return 1;
+								else
+									return 0;
 							});
 						}
 
@@ -136,7 +136,7 @@ var area = function(state, render, page, memberpage) {
 						}
 
 						builtIssue.initiative_id = inis[a][0].id;
-						builtIssue.title = inis[a][0].name;						
+						builtIssue.title = inis[a][0].name;
 						builtIssue.supporter = inis[a][0].satisfied_supporter_count;
 						builtIssue.potsupporter = inis[a][0].supporter_count - inis[a][0].satisfied_supporter_count;
 						builtIssue.uninterested = ( builtArea.membernumber - builtIssue.supporter ) - builtIssue.potsupporter;
@@ -161,7 +161,7 @@ var area = function(state, render, page, memberpage) {
 							alternativeIni = {};
 
 							alternativeIni.id = inis[a][b].id;
-							alternativeIni.title = inis[a][b].name;						
+							alternativeIni.title = inis[a][b].name;
 							alternativeIni.supporter = inis[a][b].satisfied_supporter_count;
 							alternativeIni.potsupporter = inis[a][b].supporter_count - inis[a][b].satisfied_supporter_count;
 							alternativeIni.uninterested = ( builtArea.membernumber - alternativeIni.supporter ) - alternativeIni.potsupporter;
@@ -239,7 +239,7 @@ var area = function(state, render, page, memberpage) {
 				});
 
 				policies.push(issue_res.policies[issue_res.result[i].policy_id]);
-			}			
+			}
 
 			issueDone = true;
 			finish();
