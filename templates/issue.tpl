@@ -126,6 +126,8 @@
 
 		</div>
 
+<!-- It looks like vote later is not available in the API, maybe completely missing in LQFB 2.0?
+
 		<div id="secondbox" class="box">
 				<h2><%= texts.memberswhowanttovotelater %> (<%= issue.votelaterlist.length.toString() %>) (<%=  Math.round(((issue.votelaterlist.length/issue.population)*100)).toString() %>%)</h2>
 				 		<label class="table-label" for="select_fiter_later"><%= texts.sortedby %>:</label>
@@ -159,6 +161,7 @@
 				</div>
 			</div>
 		</div>
+-->
 
 	</div>
 	<div class="row">
