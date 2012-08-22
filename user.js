@@ -13,7 +13,7 @@ exports.getUserBasic = function(query_res) {
 		builtUser.name = builtUser.nick;
 	}
 	builtUser.id = query_res.id;
-	builtUser.picmini = 'avatar/' + query_res.id;
+	builtUser.picmini = 'picmini/' + query_res.id;
 	builtUser.picsmall = 'avatar/' + query_res.id;
 	builtUser.picbig = 'picbig/' + query_res.id;
 
