@@ -25,4 +25,4 @@ Requirements
  * cookies
  * canvas
 
-Canvas requires Cairo to be installed.
+Canvas requires Cairo to be installed. See [here](https://github.com/LearnBoost/node-canvas/wiki) for more information about canvas.
