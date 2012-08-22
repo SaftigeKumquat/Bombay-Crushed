@@ -37,6 +37,41 @@ getIssueStateText = function (issuestate) {
 	}
 }
 
+
+/**
+ * Returns the API issue state
+ *
+ * @param issuestate Issue state as provided by the API
+ */
+getIssueState = function (issuestate) {
+	switch(issuestate) {
+		case "calculation":
+		case "finished_with_winner":
+		case "finished_without_winner":
+			return texts.status5;
+			break;
+		case "verification":
+			return texts.status3;
+			break;
+		case "voting":
+			return texts.status4;
+			break;
+		case "discussion":
+			return texts.status2;
+			break;
+		case "admission":
+			return texts.status1;
+			break;
+		case "canceled_revoked_before_accepted":
+		case "canceled_issue_not_accepted":
+		case "canceled_after_revocation_during_discussion":
+		case "canceled_after_revocation_during_verification":
+		case "canceled_no_initiative_admitted":
+			return texts.status6;
+			break;
+	}
+}
+
 /**
  * Takes care of retrieving data for and rendering the
  * issue page.
@@ -93,7 +128,7 @@ exports.show = function(state) {
 				timefordiscussion: issue_res.discussion_time,
 				timeforrevision: issue_res.verification_time,
 				timeforvote: issue_res.voting_time,
-				status: getIssueStateText(issue_res.state),
+				status: getIssueState(issue_res.state),
 				
 				//TODO
 				"votenow": "0",
