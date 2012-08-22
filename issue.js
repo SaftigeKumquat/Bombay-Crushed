@@ -134,7 +134,8 @@ exports.show = function(state) {
 				"votenow": "0",
 				"castvote": false,
 				"delegationnumber": 200,
-				"delegate": "Christoph Fritzsche",
+				/*"delegate": { "name": "Christoph Fritzsche",
+						"picsmall": "content_img/profile_delegate_1.png" },*/
 				"iwatchissue": true,
 				//postpone is not available in the API (maybe completely missing in LQFB 2.0?)
 				//"iwanttopostponeissue": true,

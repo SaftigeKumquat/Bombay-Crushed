@@ -41,8 +41,8 @@
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } else { %>
 				<li  id="personal-menu-delegate"><a href="#"><img
-                src="<%= meta.baseurl %>/content_img/profile_delegate_1.png" alt="<%=
-                texts.profilepic %>" /><p><%= issue.delegate %> <%= texts.removedelegation %></p></a></li>
+                src="<%= meta.baseurl %>/<%= issue.delegate.picsmall %>" alt="<%=
+                texts.profilepic %>" /><p><%= issue.delegate.name %> <%= texts.removedelegation %></p></a></li>
 				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
 				<% } %>
 
