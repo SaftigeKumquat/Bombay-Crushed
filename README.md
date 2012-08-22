@@ -26,3 +26,9 @@ Requirements
  * canvas
 
 Canvas requires Cairo to be installed.
+
+In case you get an error Cannot find module '../build/default/canvas', follow these steps to resolve it:
+ * npm install node-gyp -g
+ * change to the canvas module directory
+ * node-gyp configure
+ * node-gyp build
