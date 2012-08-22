@@ -102,10 +102,11 @@ exports.show = function(state) {
 				"delegationnumber": 200,
 				"delegate": "Christoph Fritzsche",
 				"iwatchissue": true,
-				"iwanttopostponeissue": true,
+				//postpone is not available in the API (maybe completely missing in LQFB 2.0?)
+				//"iwanttopostponeissue": true,
 				"pagination": {
-					"currentpostponers": 1,
-					"totalpostponers": 2,
+					//"currentpostponers": 1,
+					//"totalpostponers": 2,
 					"currentdelegations": 1,
 					"totaldelegations": 2,
 					"currentinterested": 2,

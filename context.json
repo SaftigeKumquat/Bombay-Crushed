@@ -446,8 +446,9 @@
 		"iwatchissue": true,
 		"iwanttopostponeissue": true,
 		"pagination": {
-			"currentpostponers": 1,
-			"totalpostponers": 2,
+			//postpone is not available in the API (maybe completely missing in LQFB 2.0?)
+			//"currentpostponers": 1,
+			//"totalpostponers": 2,
 			"currentdelegations": 1,
 			"totaldelegations": 2,
 			"currentinterested": 2,
