@@ -396,7 +396,7 @@ exports.show = function(state) {
 	news(state, finish);
 	areas(state, finish);
 	delegations.lastActions(state, finish);
-	inis(state, finish);
+	inis.lastInis(state, finish);
 }
 
 /**
@@ -435,7 +435,7 @@ exports.updateInis = function(state) {
 		}
 	}
 
-	inis(state, finish);
+	inis.lastInis(state, finish);
 }
 
 /**

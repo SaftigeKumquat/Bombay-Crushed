@@ -51,8 +51,7 @@
 		<% for(var i = 0; i < initiative.authors.length; i++) { %>
 		<div class="profile-init">
 			<p>
-				<!-- TODO: do not force this to 24px in html -->
-				<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.authors[i].picmini %>" width="24px" alt="<%= texts.profilepic %>" /></a>
+				<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.authors[i].picmini %>" alt="<%= texts.profilepic %>" /></a>
 			</p>
 			 <h3><a href="<%= meta.baseurl %>/profile?user_id=<%= initiative.authors[i].id %>"><%= initiative.authors[i].name %></a></h3>
 			 <% if(initiative.authors[i].lastauthor) { %>
@@ -142,8 +141,7 @@
 
 				<% for(var i = 0; i < initiative.supporters.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(initiative.supporters[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<!-- img size should probably not be forced to 24px like this -->
-					<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>" width="24px" /></a>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= initiative.supporters[i].picmini %>" alt="<%= texts.profilepic %>" /></a>
 					<h3><a href="<%= meta.baseurl %>/profile?user_id=<%= initiative.supporters[i].id %>"><%= initiative.supporters[i].name %></a> <% if(initiative.supporters[i].power) { %><a href="" class="for">+<%= initiative.supporters[i].power %></a><% } %></h3>
 				</div>
 				<% } %>

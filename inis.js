@@ -6,6 +6,54 @@ var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 
 /**
+ * get event text for event code
+ *
+ * @param event event object
+ */
+
+var getTextForEvent = function(event) {
+	switch(event.event) {
+		case "initiative_created_in_existing_issue":
+			return "Neue Initiative";
+			break;
+		case "initiative_created_in_new_issue":
+			return "Neues Thema";
+			break;
+		case "suggestion_created":
+			return "Neue Anregung";
+			break;
+		case "new_draft_created":
+			return "Neuer Entwurf";
+			break;
+		case "initiative_revoked":
+			return "Initative zurückgezogen";
+			break;
+		case "issue_state_changed":
+			switch(event.state) {
+				case "finished_with_winner":
+					return "Abstimmung beendet";
+					break;
+				case "verification":
+					return "Thema eingefroren";
+					break;
+				case "voting":
+					return "Abstimmung begonnen";
+					break;
+				case "discussion":
+					return "Thema zugelassen";
+					break;
+				case "admission":
+					return "Neues Thema";
+					break;
+				case "finished_without_winner":
+					return "Thema Abgebrochen";
+					break;
+			}
+			break;
+	}
+};
+
+/**
  * Retrieve all initiatives as required to build the table on the overview page.
  * The resulting data is stored in `state.context.initable`.
  * Parameters of the current HTTP-Query used:
@@ -56,45 +104,7 @@ var inis = function(state, render) {
 				date = new Date(events[i].occurrence);
 				ini.lastaction.date = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear();
 				ini.lastaction.time = date.getHours() + ':' + date.getMinutes();
-				switch(events[i].event) {
-					case "initiative_created_in_existing_issue":
-						ini.lastaction.action = "Neue Initiative";
-						break;
-					case "initiative_created_in_new_issue":
-						ini.lastaction.action = "Neues Thema";
-						break;
-					case "suggestion_created":
-						ini.lastaction.action = "Neue Anregung";
-						break;
-					case "new_draft_created":
-						ini.lastaction.action = "Neuer Entwurf";
-						break;
-					case "initiative_revoked":
-						ini.lastaction.action = "Initative zurückgezogen";
-						break;
-					case "issue_state_changed":
-						switch(events[i].state) {
-							case "finished_with_winner":
-								ini.lastaction.action = "Abstimmung beendet";
-								break;
-							case "verification":
-								ini.lastaction.action = "Thema eingefroren";
-								break;
-							case "voting":
-								ini.lastaction.action = "Abstimmung begonnen";
-								break;
-							case "discussion":
-								ini.lastaction.action = "Thema zugelassen";
-								break;
-							case "admission":
-								ini.lastaction.action = "Neues Thema";
-								break;
-							case "finished_without_winner":
-								ini.lastaction.action = "Thema Abgebrochen";
-								break;
-						}
-						break;
-				}
+				ini.lastaction.action = getTextForEvent(events[i]);
 
 				ini.status = issue.getIssueStateText(events[i].state);
 
@@ -237,4 +247,70 @@ var inis = function(state, render) {
  * exported functions of this module
  */
 
-module.exports = inis;
+module.exports.lastInis = inis;
+
+module.exports.mySupportedInis = function(state, render) {
+
+	var inisDone = false;
+	var inis = [];
+	var events = [];
+
+	var finish = function() {
+		if(inisDone && inis.length == events.length) {
+
+			state.context.initable = [];
+
+			for(var i = 0; i < inis.length && i < 5; i++) {
+
+				builtIni = {};
+
+				// get event
+				for(var a = 0; a < events.length; a++) {
+					if(events[a].initiative_id == inis[i].id) {
+						builtIni.lastaction = {};
+						date = new Date(events[a].occurrence);
+						builtIni.lastaction.date = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear();
+						builtIni.lastaction.time = date.getHours() + ':' + date.getMinutes();
+						builtIni.lastaction.action = getTextForEvent(events[a]);
+					}
+				}
+				
+				builtIni.status = issue.getIssueStateText(ini.issue.state);
+
+				state.context.initable.push(builtIni);
+			}
+
+			render();
+		}
+	}
+
+	// get all my supported initiatives
+	lf.query('/initiative', {'supporter_member_id': state.user_id(), 'include_issues': 1, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(ini_res) {
+		for(var i = 0; i < ini_res.result.length; i++) {
+			// get last event per initiative
+			lf.query('/event', {'initiative_id': ini_res.result[i].id}, state, function(event_res) {
+				// sort events by date
+				Array.prototype.sort.call(event_res.result, function(a,b) {
+    					if (a.created > b.created)
+        					return -1;
+    					else if (a.created < b.created)
+        					return 1;
+    					else 
+        					return 0;
+				});
+				events.push(event_res.result[0]);
+				finish();
+			});
+			ini = ini_res.result[i];
+			ini.issue = ini_res.issues[ini.issue_id];
+			ini.area = ini_res.areas[ini.issue.area_id];
+			ini.unit = ini_res.units[ini.area.unit_id];
+			ini.policy = ini_res.policies[ini.issue.policy_id];
+
+			inis.push(ini_res.result[i]);
+		}
+		inisDone = true;
+		finish()
+	});
+
+}

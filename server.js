@@ -18,6 +18,7 @@ var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var querystring = require('querystring');
 var fs = require('fs');
+var Canvas = require('canvas');
 
 // load configuration
 var config = require('./config.js');
@@ -193,7 +194,7 @@ var showTimeline = function(state) {
 		}
 	}
 
-	inis(state, finish);
+	inis.lastInis(state, finish);
 }
 
 /**
@@ -380,6 +381,50 @@ var sendAvatar = function(state) {
 	});
 }
 
+var sendSmallPicture = function(state) {
+	var Image = Canvas.Image;
+	var img = new Image;
+	img.onerror = function(err) {
+		throw err;
+	};
+	img.onload = function() {
+		var max = Math.max(img.width, img.height)
+		 , width = img.width * 24 / max
+		 , height = img.height * 24 / max
+		 , canvas = new Canvas(width, height)
+		 , ctx = canvas.getContext('2d');
+		ctx.drawImage(img, 0, 0, width, height);
+		canvas.toBuffer(function(err, buf) {
+			var response = state.result;
+			response.write(buf);
+			response.end();
+		});
+	};
+	var user_id = state.local_path.slice('/picmini/'.length);
+	console.log('Retrieving smallpic for user ' + user_id);
+	var query_obj = {
+		'type': 'avatar',
+		'member_id': user_id
+	};
+	lf.query('/member_image', query_obj, state, function(result) {
+		if (result.status === 'ok' && result.result.length) {
+			var image = result.result[0];
+			state.result.setHeader("Content-Type", image.content_type);
+			img.src = new Buffer(image.data, 'base64');
+		} else {
+			// send placeholder pic
+			filepath = __dirname + '/html/img/no_profilepic24.png';
+			fs.readFile(filepath, function(err, data) {
+				if(err) {
+					state.fail('Failed to get placeholder user avatar: ' + err);
+					return;
+				}
+				state.result.end(data);
+			});
+		}
+	});
+}
+
 /**
  * Mapping from URLs to functions
  *
@@ -414,6 +459,7 @@ var url_mapping = {
 var pattern_mapping = [
 	{ pattern: '/picbig/', mapped: sendPicture },
 	{ pattern: '/avatar/', mapped: sendAvatar },
+	{ pattern: '/picmini/', mapped: sendSmallPicture },
 	{ pattern: '/css/', mapped: serveStatic },
 	{ pattern: '/js/', mapped: serveStatic },
 	{ pattern: '/img/', mapped: serveStatic },
