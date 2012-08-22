@@ -54,14 +54,20 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var issue_info, initiative_info;
+	var issue_info, initiatives_info;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(issue_info !== undefined && initiative_info !== undefined) {
+		if(issue_info !== undefined && initiatives_info !== undefined) {
 			ctx.issue = issue_info;
-			issue_info.initiatives = initiative_info;
+			issue_info.initiatives = initiatives_info;
+			//TODO
+			issue_info.votelaterlist = [];
+			//TODO
+			issue_info.delegations = [];
+			//TODO
+			issue_info.members = [];
 
 			ctx.meta.currentpage = "issue";
 			ejs.render(state, '/issue.tpl');
@@ -88,14 +94,25 @@ exports.show = function(state) {
 				timeforrevision: issue_res.verification_time,
 				timeforvote: issue_res.voting_time,
 				status: getIssueStateText(issue_res.state),
-				//"votenow": "0",
-				//"open": true,
-				//"castvote": false,
-				//"delegationnumber": 200,
-				//"delegate": "Christoph Fritzsche",
-				//"quorum": 10,
-				//"iwatchissue": true,
-				//"iwanttopostponeissue": true,
+				
+				//TODO
+				"votenow": "0",
+				"open": true,
+				"castvote": false,
+				"delegationnumber": 200,
+				"delegate": "Christoph Fritzsche",
+				"quorum": 10,
+				"iwatchissue": true,
+				"iwanttopostponeissue": true,
+				"pagination": {
+					"currentpostponers": 1,
+					"totalpostponers": 2,
+					"currentdelegations": 1,
+					"totaldelegations": 2,
+					"currentinterested": 2,
+					"totalinterested": 2
+				},
+				// /TODO
 //{"result":[{"policy_id":1,"closed":"2011-10-30T17:34:37.901Z","ranks_available":true,"cleaned":null,"voter_count":0,"status_quo_schulze_rank":1}],"units":{},"policies":{"1":{"id":1,"index":1,"active":true,"name":"amendment of the statutes (solar system)","admission_time":{"days":8},"discussion_time":{"days":15},"verification_time":{"days":8},"voting_time":{"days":15},"issue_quorum_num":10,"issue_quorum_den":100,"initiative_quorum_num":10,"initiative_quorum_den":100,"direct_majority_num":1,"direct_majority_den":2,"direct_majority_strict":true,"direct_majority_positive":0,"direct_majority_non_negative":0,"indirect_majority_num":2,"indirect_majority_den":3,"indirect_majority_strict":false,"indirect_majority_positive":0,"indirect_majority_non_negative":0,"no_reverse_beat_path":true,"no_multistage_majority":false}},"status":"ok"}
 
 			};
@@ -104,7 +121,6 @@ exports.show = function(state) {
 				tmp_issue_info.unit = res.units[res.result[0].unit_id].name;
 				tmp_issue_info.areamembernumber = res.result[0].member_weight;
 			});
-			console.log(tmp_issue_info);
 
 			//get initiatives
 			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
@@ -129,21 +145,36 @@ exports.show = function(state) {
 				}
 
 				//add isupportini information
-//				lf.query('/supporter', { 'initiative_id': tmp_ini_ids, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(support_res) {
-//					for(var j=0; j < res.result.length; j++) {
-//						for(var i=0; i < tmp_initiatives_info.length; i++){
-//							//TODO include case informed = false (needs issue.tpl changes as well)
-//							if(tmp_initatives_info[i].id == res.result[j].initiative_id && res.result[j].informed == true) {
-//								tmp_initiatives_info[i].isupportini = true;
-//							}
-//						}
-//					}
-//				});
-				console.log(tmp_initiatives_info);
+				lf.query('/supporter', { 'initiative_id': tmp_ini_ids.toString(), 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(res) {
+					var supported_inis = [];
+					console.log("SUPPORTER RES: " + JSON.stringify(res));
+					for(var j=0; j < res.result.length; j++) {
+						//TODO is a check for informed needed?
+						//if(res.result[j].informed == true) {
+						supported_inis.push(res.result[j].initiative_id);
+						//}
+					}
+					console.log("SUPPORTED INI IDs: " + supported_inis.toString());
+
+					for(var i=0; i < tmp_initiatives_info.length; i++) {
+						if(supported_inis.length==0) {
+							tmp_initiatives_info[i].isupportini = false;
+							continue;
+						}
+						for(var j=0; j<supported_inis.length; j++)
+							if(tmp_initiatives_info[i].id == supported_inis[j]) {
+								tmp_initiatives_info[i].isupportini = true;
+								}
+							else {
+								tmp_initiatives_info[i].isupportini = false;
+							}
+					}
+					initiatives_info = tmp_initiatives_info;
+					finish();
+				});
 			});
-			//
-			//issue_info = tmp_issue_info;
-			//finish();
+			issue_info = tmp_issue_info;
+			finish();
 	});
 }
 
