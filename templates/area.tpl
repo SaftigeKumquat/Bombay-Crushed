@@ -74,7 +74,7 @@
 					<% var odd = true;
 					for(var i = 0; i < area.issues.length; i++) { %>
 					<tr <% if(odd) { %>class="odd"<% } else { %>class="even"<% } %>>
-						<td><a href="#"><%= texts.issue %> #<%= area.issues[i].id %></a> <% if(area.issues[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="<%= meta.baseurl %>/img/eye.png"/><% } %></td>
+						<td><a href="<%= meta.baseurl %>/issue?issue_id=<%= area.issues[i].id %>"><%= texts.issue %> #<%= area.issues[i].id %></a> <% if(area.issues[i].iwatchissue) { %><img title="<%= texts.iwatchissue %>" src="<%= meta.baseurl %>/img/eye.png"/><% } %></td>
 						<td><%= area.issues[i].status %></td>
 						<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= area.issues[i].initiative_id %>"><%= area.issues[i].title %></a><% if(area.issues[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 						<td>
