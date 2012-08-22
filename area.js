@@ -213,7 +213,12 @@ var area = function(state, render, page, memberpage) {
 		builtArea.id = res.result[0].id;
 		builtArea.membernumber = res.result[0].member_weight;
 
-		lf.query('/issue', { 'area_id': area_id, 'include_policies': 1 }, state, function(issue_res) {
+		var issue_params = { 'area_id': area_id, 'include_policies': 1 };
+		var issue_state = state.url.query.issue_state;
+		if(issue_state) { // TODO check if in whitelist
+			issue_params.issue_state = issue_state;
+		}
+		lf.query('/issue', issue_params, state, function(issue_res) {
 			for(var i = 0; i < issue_res.result.length; i++) {
 				issues.push(issue_res.result[i]);
 
