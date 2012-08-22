@@ -33,14 +33,14 @@
 				<div class="multiple-filter">
 					<label class="table-label" for="select_fiter"><%= texts.state %>:</label>	
 					<select id="select-filter" name="filter">							
-						<option value="1"><%= texts.open %></option>
-						<option value="2"><%= texts.status1 %></option>
-						<option value="3"><%= texts.status2 %></option>
-						<option value="4"><%= texts.status3 %></option>		
-						<option value="5"><%= texts.status4 %></option>		
-						<option value="6"><%= texts.status5 %></option>		
-						<option value="7"><%= texts.status6 %></option>		
-						<option value="8"><%= texts.all %></option>		
+						<option <% if(selected_issue_state == '1') { %> selected="selected" <% } %> value="1"><%= texts.open %></option>
+						<option <% if(selected_issue_state == '2') { %> selected="selected" <% } %> value="2"><%= texts.status1 %></option>
+						<option <% if(selected_issue_state == '3') { %> selected="selected" <% } %> value="3"><%= texts.status2 %></option>
+						<option <% if(selected_issue_state == '4') { %> selected="selected" <% } %> value="4"><%= texts.status3 %></option>		
+						<option <% if(selected_issue_state == '5') { %> selected="selected" <% } %> value="5"><%= texts.status4 %></option>		
+						<option <% if(selected_issue_state == '6') { %> selected="selected" <% } %> value="6"><%= texts.status5 %></option>		
+						<option <% if(selected_issue_state == '7') { %> selected="selected" <% } %> value="7"><%= texts.status6 %></option>		
+						<option <% if(selected_issue_state == '8') { %> selected="selected" <% } %> value="8"><%= texts.all %></option>		
 					</select>
 				</div>
 				<div class="multiple-filter">

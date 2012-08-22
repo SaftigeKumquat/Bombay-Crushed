@@ -215,9 +215,10 @@ var area = function(state, render, page, memberpage) {
 
 		var issue_params = { 'area_id': area_id, 'include_policies': 1 };
 		var issue_state = state.url.query.issue_state;
-		if(issue_state) { // TODO check if in whitelist
-			issue_params.issue_state = issue_state;
+		if(issue_state && issue_state) {
+			issue_params.issue_state = map_issue_states_to_lf(issue_state);
 		}
+		state.context.selected_issue_state = issue_state || '8';
 		lf.query('/issue', issue_params, state, function(issue_res) {
 			for(var i = 0; i < issue_res.result.length; i++) {
 				issues.push(issue_res.result[i]);
@@ -274,3 +275,26 @@ var area = function(state, render, page, memberpage) {
 }
 
 exports.show = area;
+
+function map_issue_states_to_lf(bc_state) {
+	switch('' + bc_state) {
+		case '1':
+			return 'open';
+		case '2':
+			return 'admission';
+		case '3':
+			return 'discussion';
+		case '4':
+			return 'verification';
+		case '5':
+			return 'voting';
+		case '6':
+			return 'finished_without_winner,finished_with_winner'
+		case '7':
+			return 'canceled_revoked_before_accepted,canceled_issue_not_accepted,canceled_after_revocation_during_discussion,canceled_after_revocation_during_verification,canceled_no_initiative_admitted';
+		case '8':
+			return '';
+		default:
+			return 'open';
+	}
+}
