@@ -132,7 +132,6 @@ exports.show = function(state) {
 				
 				//TODO
 				"votenow": "0",
-				"open": true,
 				"castvote": false,
 				"delegationnumber": 200,
 				"delegate": "Christoph Fritzsche",
@@ -153,6 +152,12 @@ exports.show = function(state) {
 			};
 
 			tmp_issue_info.quorum = res.policies[issue_res.policy_id].issue_quorum_num;
+			if(issue_res.closed === undefined) {
+				tmp_issue_info.open = true;
+			}
+			else {
+				tmp_issue_info.open = false;
+			}
 
 			lf.query('/area', { 'area_id': issue_res.area_id, 'include_units': 1 }, state, function(res) {
 				tmp_issue_info.area = res.result[0].name;
