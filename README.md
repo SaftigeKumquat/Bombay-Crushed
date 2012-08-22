@@ -23,3 +23,6 @@ Requirements
 * [npm](http://npmjs.org/) modules:
  * EJS
  * cookies
+ * canvas
+
+Canvas requires Cairo to be installed.
