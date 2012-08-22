@@ -258,9 +258,9 @@ module.exports.mySupportedInis = function(state, render) {
 	var finish = function() {
 		if(inisDone && inis.length == events.length) {
 
-			state.context.initable = [];
+			state.context.inis = [];
 
-			for(var i = 0; i < inis.length && i < 5; i++) {
+			for(var i = 0; i < inis.length; i++) {
 
 				builtIni = {};
 
@@ -274,17 +274,23 @@ module.exports.mySupportedInis = function(state, render) {
 						builtIni.lastaction.action = getTextForEvent(events[a]);
 					}
 				}
-				
+
+				builtIni.id = inis[i].id;
+				builtIni.title = inis[i].name;
+				builtIni.supporter = inis[i].satisfied_supporter_count;
+				builtIni.potsupporter = inis[i].supporter_count - inis[i].satisfied_supporter_count;
 				builtIni.status = issue.getIssueStateText(ini.issue.state);
 
-				state.context.initable.push(builtIni);
+				// continue filling attributes..
+
+				state.context.inis.push(builtIni);
 			}
 
 			render();
 		}
 	}
 
-	// get all my supported initiatives
+	// get all my supported initiatives, this is currently not working in the API..
 	lf.query('/initiative', {'supporter_member_id': state.user_id(), 'include_issues': 1, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(ini_res) {
 		for(var i = 0; i < ini_res.result.length; i++) {
 			// get last event per initiative
