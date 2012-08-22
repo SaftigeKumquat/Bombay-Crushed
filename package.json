@@ -6,7 +6,8 @@
 	"ejs": "", 
 	"cookies": "",
 	"querystring": "",
-	"url": ""
+	"url": "",
+	"canvas": ""
   },
   "main": "server.js"
 }
