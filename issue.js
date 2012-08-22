@@ -111,7 +111,7 @@ exports.show = function(state) {
 
 	//get issue
 	//issue_id=1&include_areas=1&include_units=1&include_policies=1
-	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1 }, state, function(res)
+	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1, 'include_areas': 1 }, state, function(res)
 		{
 			//console.log(JSON.stringify(res));
 			//TODO handle empty result
@@ -159,11 +159,10 @@ exports.show = function(state) {
 				tmp_issue_info.open = false;
 			}
 
-			lf.query('/area', { 'area_id': issue_res.area_id, 'include_units': 1 }, state, function(res) {
-				tmp_issue_info.area = res.result[0].name;
-				tmp_issue_info.unit = res.units[res.result[0].unit_id].name;
-				tmp_issue_info.areamembernumber = res.result[0].member_weight;
-			});
+			tmp_issue_info.area = res.areas[issue_res.area_id].name;
+			tmp_issue_info.unit = res.units[res.areas[issue_res.area_id].unit_id].name;
+			// member_weight can be wrong at the moment. API bug is known.
+			tmp_issue_info.areamembernumber = res.areas[issue_res.area_id].member_weight;
 
 			//get initiatives
 			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
