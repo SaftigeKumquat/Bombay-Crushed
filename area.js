@@ -1,6 +1,7 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 var userFunc = require('./user.js');
+var ejs = require('./ejs.js');
 
 var getMemberSupport = function(support, issue, ini) {
 	for(var a = 0; a < support.length; a++) {
@@ -298,3 +299,33 @@ function map_issue_states_to_lf(bc_state) {
 			return 'open';
 	}
 }
+
+exports.update_issues_table = function(state) {
+	// we need an area id
+	if(!state.url.query.area_id) {
+		console.log('Please provide area_id parameter');
+		invalidURL(state);
+		return;
+	}
+
+	// get page numbers
+	var page = 1;
+	var memberpage = 1;
+	if(state.url.query.page) {
+		page = state.url.query.page;
+	}
+	if(state.url.query.memberpage) {
+		memberpage = state.url.query.memberpage;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		if(ctx.area !== undefined) {
+			ejs.render(state, '/area_issues_table.tpl', true);
+		}
+	}
+
+	// TODO refactor to avoid querying members
+	exports.show(state, finish, page, memberpage);
+};
+

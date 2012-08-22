@@ -28,11 +28,11 @@
 				<% } %>
 			</ul>
 		</div>
-		<div class="tencol box last">
+		<div class="tencol box last" id="issues-table">
 			<h2><%= texts.area %> „<%= area.name %>“ <%= area.unit %></h2>
 				<div class="multiple-filter">
 					<label class="table-label" for="select_fiter"><%= texts.state %>:</label>	
-					<select id="select-filter" name="filter">							
+					<select id="select-filter" name="filter" onchange="update_issues_table(<%= area.id %>, this.value, 1, <%= area.memberspage %>);">
 						<option <% if(selected_issue_state == '1') { %> selected="selected" <% } %> value="1"><%= texts.open %></option>
 						<option <% if(selected_issue_state == '2') { %> selected="selected" <% } %> value="2"><%= texts.status1 %></option>
 						<option <% if(selected_issue_state == '3') { %> selected="selected" <% } %> value="3"><%= texts.status2 %></option>
