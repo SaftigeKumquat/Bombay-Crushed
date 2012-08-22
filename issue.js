@@ -178,6 +178,12 @@ exports.show = function(state) {
 
 					tmp_initiative.potsupporter = (res.result[i].supporter_count - res.result[i].satisfied_supporter_count);
 					tmp_initiative.uninterested = (tmp_issue_info.areamembernumber - tmp_initiative.supporter ) - tmp_initiative.potsupporter;
+
+					// if uninterested is negative (API bug), set it to 0
+					if(tmp_initiative.uninterested < 0) {
+						tmp_initiative.uninterested = 0;
+					} 
+
 					var total = tmp_initiative.supporter + tmp_initiative.potsupporter + tmp_initiative.uninterested;
 					tmp_initiative.support = Math.floor(( tmp_initiative.supporter / total ) * 100);
 					tmp_initiative.potential = Math.floor(( tmp_initiative.potsupporter / total ) * 100);
