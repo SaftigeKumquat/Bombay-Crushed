@@ -193,7 +193,7 @@ var showTimeline = function(state) {
 		}
 	}
 
-	inis(state, finish);
+	inis.lastInis(state, finish);
 }
 
 /**
