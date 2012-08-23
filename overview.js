@@ -170,6 +170,7 @@ var news = function(state, render) {
 				}
 
 				news.chart = {
+					'id': lastBallot.id,
 					'title': lastBallot.name,
 					'for': pDirect,
 					'fordelegated': pIndirect,
@@ -310,6 +311,7 @@ var news = function(state, render) {
 								var quorum = policy.initiative_quorum_num / policy.initiative_quorum_den * 100;
 
 								criticalQuorum = {
+									'id': oldest_ini.id,
 									'title': oldest_ini.name,
 									'quorum': Math.floor(quorum),
 									'support': Math.floor(supporters / total * 100),
