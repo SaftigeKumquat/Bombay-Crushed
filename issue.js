@@ -193,14 +193,12 @@ exports.show = function(state) {
 				//add isupportini information
 				lf.query('/supporter', { 'initiative_id': tmp_ini_ids.toString(), 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(res) {
 					var supported_inis = [];
-					console.log("SUPPORTER RES: " + JSON.stringify(res));
 					for(var j=0; j < res.result.length; j++) {
 						//TODO is a check for informed needed?
 						//if(res.result[j].informed == true) {
 						supported_inis.push(res.result[j].initiative_id);
 						//}
 					}
-					console.log("SUPPORTED INI IDs: " + supported_inis.toString());
 
 					for(var i=0; i < tmp_initiatives_info.length; i++) {
 						if(supported_inis.length==0) {

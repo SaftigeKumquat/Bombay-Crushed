@@ -124,43 +124,6 @@
 
 		</div>
 
-<!-- It looks like vote later is not available in the API, maybe completely missing in LQFB 2.0?
-
-		<div id="secondbox" class="box">
-				<h2><%= texts.memberswhowanttovotelater %> (<%= issue.votelaterlist.length.toString() %>) (<%=  Math.round(((issue.votelaterlist.length/issue.population)*100)).toString() %>%)</h2>
-				 		<label class="table-label" for="select_fiter_later"><%= texts.sortedby %>:</label>
-						<select id="select-filter_later" name="filter">
-							<option value="1"><%= texts.atoz %></option>
-							<option value="2"><%= texts.ztoa %></option>
-							<option value="3"><%= texts.newest %></option>
-							<option value="3"><%= texts.oldest %></option>
-						</select>
-
-						<% for(var i = 0; i < issue.votelaterlist.length; i++) { %>
-				 		<div class="box-delegate-info box-supporters">
-							<a href="#"><img src="<%= meta.baseurl %>/<%= issue.votelaterlist[i].picmini%>" alt="<%= texts.profilepic %>"/></a>
-							<h3><a href="#"><%= issue.votelaterlist[i].name %></a></h3>
-						</div>
-						<% } %>
-
-				<div class="box-footer">
-					<ul class="pagination">
-						<% if(issue.pagination.currentpostponers == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-						for(var a = 1; a <= issue.pagination.totalpostponers; a++) {
-							if(a == issue.pagination.currentpostponers) { %>
-								<li class="active"><%= a %></li>
-							<% } else { %>
-								<li><a href="#"><%= a %></a></li>
-							<% }
-					}
-					var nextpage = issue.pagination.currentpostponers + 1;
-					if(issue.pagination.currentpostponers != issue.pagination.totalpostponers) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
-					</ul>
-				</div>
-			</div>
-		</div>
--->
-
 	</div>
 	<div class="row">
 		<div class="twocol nobox">
