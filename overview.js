@@ -284,8 +284,9 @@ var news = function(state, render) {
 							var oldest_ini = initiatives[oldest_i];
 							var supporters = oldest_ini.satisfied_supporter_count;
 							var potentials = oldest_ini.supporter_count - oldest_ini.satisfied_supporter_count;
-							lf.query('/issue', {'id': oldest_ini.issue_id}, state, function(res) {
+							lf.query('/issue', {'issue_id': oldest_ini.issue_id, 'include_areas': true}, state, function(res) {
 								var issue = res.result[0];
+								var area = res.areas[issue.area_id];
 
 								var policy, unit;
 								for(i = 0; i < policies.length; ++i) {
@@ -299,24 +300,26 @@ var news = function(state, render) {
 									}
 								}
 
-								// TODO is population really sufficient for quorum?
-								var quorum = issue.population * policy.initiative_quorum_num / policy.initiative_quorum_den;
-								var not_involved = issue.population - supporters - potentials;
+								var not_involved = area.member_weight - supporters - potentials;
+								if(not_involved < 0) {
+									not_invovled = 0;
+								}
 
-								console.log(quorum + ' ' + issue.population);
+								// TODO is population really sufficient for quorum?
+								var total = supporters + potentials + not_involved;
+								var quorum = policy.initiative_quorum_num / policy.initiative_quorum_den * 100;
 
 								criticalQuorum = {
 									'title': oldest_ini.name,
-									'quorum': quorum / issue.population * 100,
-									'support': supporters / issue.population * 100,
-									'potential': potentials / issue.population * 100,
-									'uninvolved': not_involved / issue.population * 100,
+									'quorum': Math.floor(quorum),
+									'support': Math.floor(supporters / total * 100),
+									'potential': Math.floor(potentials / total * 100),
+									'uninvolved': Math.floor(not_involved / total * 100),
 									'supporter': supporters,
 									'potsupporter': potentials,
 									'uninterested': not_involved
 								}
 
-								console.log(JSON.stringify(criticalQuorum));
 								finish();
 							});
 						}

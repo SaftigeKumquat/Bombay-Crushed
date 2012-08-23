@@ -256,17 +256,30 @@ var performLogin = function(state) {
 		body += chunk;
 	});
 
+	var finish = function(state, successfull, message) {
+		state.context.meta.do_refresh = true;
+		state.context.meta.refresh_url = data['refresh-url'] || (state.app_prefix + '/overview');
+		state.context.login = {
+			success: successfull,
+			message: message
+		};
+		ejs.render(state, '/loggedIn.tpl');
+	}
+
 	state.request.on('end', function() {
 		data = querystring.parse(body);
 		lf.perform('/session', { key: data.key }, state, function(res) {
-			state.session_key(res.session_key);
+			// only log in if we got a session key AND query was marked as success
+			if(res.session_key && res.status == 'ok') {
+				state.session_key(res.session_key);
 
-			lf.query('/info', {}, state, function(res) {
-				state.user_id(res.current_member_id);
-				state.context.meta.do_refresh = true;
-				state.context.meta.refresh_url = data['refresh-url'] || (state.app_prefix + '/overview');
-				ejs.render(state, '/loggedIn.tpl');
-			});
+				lf.query('/info', {}, state, function(res) {
+					state.user_id(res.current_member_id);
+					finish(state, true);
+				});
+			} else {
+				finish(state, false, res.error);
+			}
 		});
 	});
 }
