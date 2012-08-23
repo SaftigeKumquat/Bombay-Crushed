@@ -1,6 +1,7 @@
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 var userFunc = require('./user.js');
+var ejs = require('./ejs.js');
 
 var getMemberSupport = function(support, issue, ini) {
 	for(var a = 0; a < support.length; a++) {
@@ -213,7 +214,13 @@ var area = function(state, render, page, memberpage) {
 		builtArea.id = res.result[0].id;
 		builtArea.membernumber = res.result[0].member_weight;
 
-		lf.query('/issue', { 'area_id': area_id, 'include_policies': 1 }, state, function(issue_res) {
+		var issue_params = { 'area_id': area_id, 'include_policies': 1 };
+		var issue_state = state.url.query.issue_state;
+		if(issue_state && issue_state) {
+			issue_params.issue_state = map_issue_states_to_lf(issue_state);
+		}
+		state.context.selected_issue_state = issue_state || '8';
+		lf.query('/issue', issue_params, state, function(issue_res) {
 			for(var i = 0; i < issue_res.result.length; i++) {
 				issues.push(issue_res.result[i]);
 
@@ -269,3 +276,56 @@ var area = function(state, render, page, memberpage) {
 }
 
 exports.show = area;
+
+function map_issue_states_to_lf(bc_state) {
+	switch('' + bc_state) {
+		case '1':
+			return 'open';
+		case '2':
+			return 'admission';
+		case '3':
+			return 'discussion';
+		case '4':
+			return 'verification';
+		case '5':
+			return 'voting';
+		case '6':
+			return 'finished_without_winner,finished_with_winner'
+		case '7':
+			return 'canceled_revoked_before_accepted,canceled_issue_not_accepted,canceled_after_revocation_during_discussion,canceled_after_revocation_during_verification,canceled_no_initiative_admitted';
+		case '8':
+			return '';
+		default:
+			return 'open';
+	}
+}
+
+exports.update_issues_table = function(state) {
+	// we need an area id
+	if(!state.url.query.area_id) {
+		console.log('Please provide area_id parameter');
+		invalidURL(state);
+		return;
+	}
+
+	// get page numbers
+	var page = 1;
+	var memberpage = 1;
+	if(state.url.query.page) {
+		page = state.url.query.page;
+	}
+	if(state.url.query.memberpage) {
+		memberpage = state.url.query.memberpage;
+	}
+
+	var finish = function() {
+		var ctx = state.context;
+		if(ctx.area !== undefined) {
+			ejs.render(state, '/area_issues_table.tpl', true);
+		}
+	}
+
+	// TODO refactor to avoid querying members
+	exports.show(state, finish, page, memberpage);
+};
+

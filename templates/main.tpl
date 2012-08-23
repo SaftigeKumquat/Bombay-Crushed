@@ -7,8 +7,8 @@
 			</a>
 			<ul id="personal-menu">
 				<li id="personal-menu-new"><a href="#"><span>+</span><%= texts.createtopic %></a></li>
-				<li><a href="#"><span>+</span><%= texts.myinis %></a></li>
-				<li><a href="#"><span>+</span><%= texts.supportedinis %></a></li>
+				<li><a href="<%= meta.baseurl %>/search?filter=initiated"><span>+</span><%= texts.myinis %></a></li>
+				<li><a href="<%= meta.baseurl %>/search?filter=supported"><span>+</span><%= texts.supportedinis %></a></li>
 
 			</ul>
 		</div>
@@ -110,7 +110,7 @@
 				<p><%= texts.newstext %></p>
 			</div>
 			<div id="newschart" class="box-news-piechart">
-				<h3><a href="#"><%= news.chart.title %></a></h3>
+				<h3><a href="<% if(news.chart.id !== undefined) { %><%= meta.baseurl %>/initiative?initiative_id=<%= news.chart.id %><% } else { %>#<% } %>"><%= news.chart.title %></a></h3>
 				<canvas id="piechart" width="110px" height="110px">Piechart</canvas>
 				<table id="piechart-table"><tbody>
 				    <tr><td class="piechart-number"><%= news.chart.for %></td><td class="for"><%= texts.chartfor %></td></tr>
@@ -121,7 +121,7 @@
 
 			</div>
 			<div id="newsgraph" class="box-news-bargraph">
-				<h3><a href="#"><%= news.graph.title %></a></h3>
+				<h3><a href="<% if(news.graph.id !== undefined) { %><%= meta.baseurl %>/initiative?initiative_id=<%= news.graph.id %><% } else { %>#<% } %>"><%= news.graph.title %></a></h3>
 				<ul class="bargraph bargraph-big" title="<%= news.graph.supporter %> <%= texts.supporter %> / <%= news.graph.potsupporter %> <%= texts.potsupporter %> / <%= news.graph.uninterested %> <%= texts.uninterested %>">
 					<li class="bargraph-quorum" style="left:<%= news.graph.quorum %>%;"></li>
 					<li class="bargraph-support" style="width:<%= news.graph.support %>%"></li>

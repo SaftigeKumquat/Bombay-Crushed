@@ -5,7 +5,8 @@
 			<h2>Bombay Crushed Authentication</h2>
 
 			<div class="box-footer box-editorial">
-				<h3><%= texts.loginsuccessfull %></h3>
+				<h3><% if(login.success) { %><%= texts.loginsuccessfull %><% } else { %><%= texts.loginfailed %><% } %></h3>
+				<% if(login.message) { %><p><%= login.message %></p><% } %>
 				<p><a href="<%= meta.refresh_url %>"><%= texts.clickhere %></a> <%= texts.ifnotredirected %></a></p>
 			</div>
 

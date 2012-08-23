@@ -261,8 +261,15 @@
 	"opinions": "Meinungen",
 	"opinion": "Meinung",
 	"opinioninfo": "Die Smileys zeigen, wie die Person zu dem Änderungsantrag steht.",
-	"loginsuccessfull": "Du wurdest erfolgreich angemeldet",
-	"logoutsuccessfull": "Du wurdest erfolgreich abgemeldet",
+	"loginsuccessfull": "Du wurdest erfolgreich angemeldet.",
+	"loginfailed": "Die Anmeldung ist fehlgeschlagen.",
+	"logoutsuccessfull": "Du wurdest erfolgreich abgemeldet.",
 	"clickhere": "Hier klicken",
-	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst."
+	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst.",
+	"searchresultissues": "Suchergebnis: Themen",
+	"noresultinfo": "Das tut uns sehr leid. Hoffentlich wirst du noch fündig.",
+	"yoursearchfor": "Deine Suche nach",
+	"yieldednoresult": "lieferte kein Ergebnis.",
+	"initiatedinis": "Meine Initiativen",
+	"supportedinis": "Unterstützte Initiativen"
 }

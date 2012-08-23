@@ -109,7 +109,7 @@ exports.show = function(state) {
 
 	//get issue
 	//issue_id=1&include_areas=1&include_units=1&include_policies=1
-	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1 }, state, function(res)
+	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1, 'include_areas': 1 }, state, function(res)
 		{
 			//console.log(JSON.stringify(res));
 			//TODO handle empty result
@@ -131,7 +131,8 @@ exports.show = function(state) {
 				//TODO
 				"castvote": false,
 				"delegationnumber": 200,
-				"delegate": "Christoph Fritzsche",
+				/*"delegate": { "name": "Christoph Fritzsche",
+						"picsmall": "content_img/profile_delegate_1.png" },*/
 				"iwatchissue": true,
 				//postpone is not available in the API (maybe completely missing in LQFB 2.0?)
 				//"iwanttopostponeissue": true,
@@ -156,11 +157,10 @@ exports.show = function(state) {
 				tmp_issue_info.open = false;
 			}
 
-			lf.query('/area', { 'area_id': issue_res.area_id, 'include_units': 1 }, state, function(res) {
-				tmp_issue_info.area = res.result[0].name;
-				tmp_issue_info.unit = res.units[res.result[0].unit_id].name;
-				tmp_issue_info.areamembernumber = res.result[0].member_weight;
-			});
+			tmp_issue_info.area = res.areas[issue_res.area_id].name;
+			tmp_issue_info.unit = res.units[res.areas[issue_res.area_id].unit_id].name;
+			// member_weight can be wrong at the moment. API bug is known.
+			tmp_issue_info.areamembernumber = res.areas[issue_res.area_id].member_weight;
 
 			//get initiatives
 			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
@@ -176,6 +176,12 @@ exports.show = function(state) {
 
 					tmp_initiative.potsupporter = (res.result[i].supporter_count - res.result[i].satisfied_supporter_count);
 					tmp_initiative.uninterested = (tmp_issue_info.areamembernumber - tmp_initiative.supporter ) - tmp_initiative.potsupporter;
+
+					// if uninterested is negative (API bug), set it to 0
+					if(tmp_initiative.uninterested < 0) {
+						tmp_initiative.uninterested = 0;
+					} 
+
 					var total = tmp_initiative.supporter + tmp_initiative.potsupporter + tmp_initiative.uninterested;
 					tmp_initiative.support = Math.floor(( tmp_initiative.supporter / total ) * 100);
 					tmp_initiative.potential = Math.floor(( tmp_initiative.potsupporter / total ) * 100);

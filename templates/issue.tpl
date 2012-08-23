@@ -41,8 +41,8 @@
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } else { %>
 				<li  id="personal-menu-delegate"><a href="#"><img
-                src="<%= meta.baseurl %>/content_img/profile_delegate_1.png" alt="<%=
-                texts.profilepic %>" /><p><%= issue.delegate %> <%= texts.removedelegation %></p></a></li>
+                src="<%= meta.baseurl %>/<%= issue.delegate.picsmall %>" alt="<%=
+                texts.profilepic %>" /><p><%= issue.delegate.name %> <%= texts.removedelegation %></p></a></li>
 				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
 				<% } %>
 
@@ -79,7 +79,7 @@
 
 							<% for(var i = 0; i < issue.initiatives.length; i++) { %>
 							<tr class="table-alternateinitiative odd">
-								<td><h3><a href="#"><%= issue.initiatives[i].name %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
+								<td><h3><a href="<%= meta.baseurl %>/initiative?initiative_id=<%= issue.initiatives[i].id %>"><%= issue.initiatives[i].name %></a><% if(issue.initiatives[i].isupportini) { %><img title="<%= texts.isupportini %>" src="<%= meta.baseurl %>/img/thumb-up.png"/><% } %></h3></td>
 								<td>
 									<ul class="bargraph" title="<%= issue.initiatives[i].supporter %> <%= texts.supporter %> / <%= issue.initiatives[i].potsupporter %> <%= texts.potsupporter %> / <%= issue.initiatives[i].uninterested %> <%= texts.uninterested %>">
 										<li class="bargraph-quorum" style="left:<%= issue.quorum %>%;"></li>

@@ -53,6 +53,8 @@ var getTextForEvent = function(event) {
 	}
 };
 
+module.exports.getTextForEvent = getTextForEvent;
+
 /**
  * Retrieve all initiatives as required to build the table on the overview page.
  * The resulting data is stored in `state.context.initable`.
@@ -248,69 +250,3 @@ var inis = function(state, render) {
  */
 
 module.exports.lastInis = inis;
-
-module.exports.mySupportedInis = function(state, render) {
-
-	var inisDone = false;
-	var inis = [];
-	var events = [];
-
-	var finish = function() {
-		if(inisDone && inis.length == events.length) {
-
-			state.context.initable = [];
-
-			for(var i = 0; i < inis.length && i < 5; i++) {
-
-				builtIni = {};
-
-				// get event
-				for(var a = 0; a < events.length; a++) {
-					if(events[a].initiative_id == inis[i].id) {
-						builtIni.lastaction = {};
-						date = new Date(events[a].occurrence);
-						builtIni.lastaction.date = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear();
-						builtIni.lastaction.time = date.getHours() + ':' + date.getMinutes();
-						builtIni.lastaction.action = getTextForEvent(events[a]);
-					}
-				}
-				
-				builtIni.status = issue.getIssueStateText(ini.issue.state);
-
-				state.context.initable.push(builtIni);
-			}
-
-			render();
-		}
-	}
-
-	// get all my supported initiatives
-	lf.query('/initiative', {'supporter_member_id': state.user_id(), 'include_issues': 1, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(ini_res) {
-		for(var i = 0; i < ini_res.result.length; i++) {
-			// get last event per initiative
-			lf.query('/event', {'initiative_id': ini_res.result[i].id}, state, function(event_res) {
-				// sort events by date
-				Array.prototype.sort.call(event_res.result, function(a,b) {
-    					if (a.created > b.created)
-        					return -1;
-    					else if (a.created < b.created)
-        					return 1;
-    					else 
-        					return 0;
-				});
-				events.push(event_res.result[0]);
-				finish();
-			});
-			ini = ini_res.result[i];
-			ini.issue = ini_res.issues[ini.issue_id];
-			ini.area = ini_res.areas[ini.issue.area_id];
-			ini.unit = ini_res.units[ini.area.unit_id];
-			ini.policy = ini_res.policies[ini.issue.policy_id];
-
-			inis.push(ini_res.result[i]);
-		}
-		inisDone = true;
-		finish()
-	});
-
-}

@@ -183,6 +183,34 @@ function update_areas_table(unit_id, sorting_criteria) {
 }
 
 /**
+ * Update the issues for a certain area
+ * sorting.
+ */
+function update_issues_table(area_id, state_filter, issue_page, member_page) {
+	var url = 'update_issues_table?area_id=' + area_id + '&issue_state=' + state_filter
+	          + '&page=' + issue_page + '&member_page=' + member_page;
+	var data = {
+		area_id: area_id,
+		issue_state: state_filter,
+		page: issue_page,
+		member_page: member_page
+	};
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		data: data,
+		dataType: "text",
+		success: function(data) {
+			var $table = $('#issues-table');
+			$table.replaceWith(data);
+		}
+	});
+
+	return false;
+}
+
+/**
  * Delete the links from the ini and news table pagination,
  * so onClick on these will be triggered, if JS is active.
  * 

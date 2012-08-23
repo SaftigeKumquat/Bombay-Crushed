@@ -13,12 +13,12 @@
 		if(odd == true) { odd = false; %> class="odd"<% }
 		else { odd = true; } %>>
 		<td><h3><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>"><%= areas[j].name %></a></td>
-		<td><a href="#"><%= areas[j].topics.status1 %></a></td>
-		<td><a href="#"><%= areas[j].topics.status2 %></a></td>
-		<td><a href="#"><%= areas[j].topics.status3 %></a></td>
-		<td><a href="#"><%= areas[j].topics.status4 %></a></td>
-		<td><a href="#"><%= areas[j].topics.status5 %></a></td>
-		<td><a href="#"><%= areas[j].topics.status6 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=2"><%= areas[j].topics.status1 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=3"><%= areas[j].topics.status2 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=4"><%= areas[j].topics.status3 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=5"><%= areas[j].topics.status4 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=6"><%= areas[j].topics.status5 %></a></td>
+		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=7"><%= areas[j].topics.status6 %></a></td>
 	</tr><% } %>
 </table>
 
