@@ -18,24 +18,24 @@
 
 			<div id="hcard-<%= user.divname %>" class="profile-data vcard">
 				<dl>
-					<% if(user.nick !== undefined) { %><dt><%= texts.pseudonym %></dt><dd><%= user.nick %></dd><% } %>
-					<% if(user.name !== undefined) { %><dt><%= texts.realname %></dt><dd><%= user.name %></dd><% } %>
-					<% if(user.website !== undefined) { %><dt><%= texts.website %></dt><dd><a href="http://<%= user.website %>"><%= user.website %></a></dd><% } %>
-					<% if(user.profession !== undefined) { %><dt><%= texts.profession %></dt><dd><%= user.profession %></dd><% } %>
-					<% if(user.birthdate !== undefined) { %><dt><%= texts.birthdate %></dt><dd><%= user.birthdate %></dd><% } %>
+					<% if(user.nick !== undefined && user.nick !== null && user.nick !== '') { %><dt><%= texts.pseudonym %></dt><dd><%= user.nick %></dd><% } %>
+					<% if(user.name !== undefined && user.name !== null && user.name !== '') { %><dt><%= texts.realname %></dt><dd><%= user.name %></dd><% } %>
+					<% if(user.website !== undefined && user.website !== null && user.website !== '') { %><dt><%= texts.website %></dt><dd><a href="http://<%= user.website %>"><%= user.website %></a></dd><% } %>
+					<% if(user.profession !== undefined && user.profession !== null && user.profession !== '') { %><dt><%= texts.profession %></dt><dd><%= user.profession %></dd><% } %>
+					<% if(user.birthdate !== undefined && user.birthdate !== null && user.birthdate !== '') { %><dt><%= texts.birthdate %></dt><dd><%= user.birthdate %></dd><% } %>
 					<br />
-					<% if(user.email !== undefined) { %><dt><%= texts.email %></dt><dd><a href="mailto:<%= user.email %>"><%= user.email %></a></dd><% } %>
-					<% if(user.twitter !== undefined) { %><dt><%= texts.twitter %></dt><dd><a href="http://www.twitter.com/<%= user.twitter %>">@<%= user.twitter %></a></dd><% } %>
-					<% if(user.facebook !== undefined) { %><dt><%= texts.facebook %></dt><dd><a href="http://www.facebook.com/<%= user.facebook %>">http://www.facebook.com/<%= user.facebook %></a></dd><% } %>
-					<% if(user.googleplus !== undefined) { %><dt><%= texts.googleplus %></dt><dd><a href="http://plus.google.com/<%= user.googleplus %>">http://plus.google.com/<%= user.googleplus %></a></dd><% } %>
-					<% if(user.jabber !== undefined) { %><dt><%= texts.jabber %></dt><dd><a href="#"><%= user.jabber %></a></dd><% } %>
-					<% if(user.phone !== undefined) { %><dt><%= texts.phone %></dt><dd><%= user.phone %></dd><% } %>
-					<% if(user.mobile !== undefined) { %><dt><%= texts.mobile %></dt><dd><%= user.mobile %></dd><% } %>
+					<% if(user.email !== undefined && user.email !== null && user.email !== '') { %><dt><%= texts.email %></dt><dd><a href="mailto:<%= user.email %>"><%= user.email %></a></dd><% } %>
+					<% if(user.twitter !== undefined && user.twitter !== null && user.twitter !== '') { %><dt><%= texts.twitter %></dt><dd><a href="http://www.twitter.com/<%= user.twitter %>">@<%= user.twitter %></a></dd><% } %>
+					<% if(user.facebook !== undefined && user.facebook !== null && user.facebook !== '') { %><dt><%= texts.facebook %></dt><dd><a href="http://www.facebook.com/<%= user.facebook %>">http://www.facebook.com/<%= user.facebook %></a></dd><% } %>
+					<% if(user.googleplus !== undefined && user.googleplus !== null && user.googleplus !== '') { %><dt><%= texts.googleplus %></dt><dd><a href="http://plus.google.com/<%= user.googleplus %>">http://plus.google.com/<%= user.googleplus %></a></dd><% } %>
+					<% if(user.jabber !== undefined && user.jabber !== null && user.jabber !== '') { %><dt><%= texts.jabber %></dt><dd><a href="#"><%= user.jabber %></a></dd><% } %>
+					<% if(user.phone !== undefined && user.phone !== null && user.phone !== '') { %><dt><%= texts.phone %></dt><dd><%= user.phone %></dd><% } %>
+					<% if(user.mobile !== undefined && user.mobile !== null && user.mobile !== '') { %><dt><%= texts.mobile %></dt><dd><%= user.mobile %></dd><% } %>
 					<br />
 					<% if(user.units.length != 0) { %><dt><%= texts.units %></dt><dd><% for(var i=0; i < user.units.length; i++) { %><% if(i > 0) { %>, <% } %><%= user.units[i].name %><% } %></dd><% } %>
-					<% if(user.offices !== undefined) { %><dt><%= texts.offices %></dt><dd><%= user.offices %></dd><% } %>
-					<% if(user.memberships !== undefined) { %><dt><%= texts.memberships %></dt><dd><%= user.memberships %></dd><% } %>		
-					<% if(user.statement !== undefined) { %><dt><%= texts.statement %></dt><dd><%= user.statement %></dd><% } %>
+					<% if(user.offices !== undefined && user.offices !== null && user.offices !== '') { %><dt><%= texts.offices %></dt><dd><%= user.offices %></dd><% } %>
+					<% if(user.memberships !== undefined && user.memberships !== null && user.memberships !== '') { %><dt><%= texts.memberships %></dt><dd><%= user.memberships %></dd><% } %>		
+					<% if(user.statement !== undefined && user.statement !== null && user.statement !== '') { %><dt><%= texts.statement %></dt><dd><%= user.statement %></dd><% } %>
 				</dl>
 			</div>
 			<% if(user.isme == true) { %>
