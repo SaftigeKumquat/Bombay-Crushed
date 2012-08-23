@@ -32,11 +32,6 @@
 				<% } else { %>
 				<li id="personal-menu-nointerest"><a href="#"><%= texts.revokeinterest %></p></a></li>
 				<% } %>
-				<% if(!issue.iwanttopostponeissue) { %>
-				<li id="personal-menu-later"><a href="#"><%= texts.votelater %></a></li>
-				<% } else { %>
-				<li id="personal-menu-nolater"><a href="#"><%= texts.revokevotelater %></p></a></li>
-				<% } %>
 				<% if(!issue.delegate) { %>
 				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } else { %>
@@ -116,12 +111,12 @@
 							<br />
 							<dt><%= texts.closed %></dt><dd><% if(issue.open) { %> <%= texts.no %> <% } else { %><%= texts.yes %><% } %></dd>
 						</dl>
-					 	</div>
+					 </div>
 
 				<div class="box-footer">
 					<a class="button" href="#"><%= texts.addalternativeinitiative %></a><a id="detailslide" class="button" href="#"><%= texts.details %></a>
 			</div>
-
+			</div>
 		</div>
 
 	</div>
