@@ -89,14 +89,15 @@ exports.show = function(state) {
 
 	// the variables to that will be set by the data retrievers
 	// and if set the page will be rendered
-	var issue_info, initiatives_info;
+	var issue_info, initiatives_info, castvote_info;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(issue_info !== undefined && initiatives_info !== undefined) {
+		if(issue_info !== undefined && initiatives_info !== undefined && castvote_info !== undefined) {
 			ctx.issue = issue_info;
 			issue_info.initiatives = initiatives_info;
+			issue_info.castvote = castvote_info;
 			//TODO
 			issue_info.delegations = [];
 			//TODO
@@ -129,7 +130,6 @@ exports.show = function(state) {
 				status: getIssueState(issue_res.state),
 				
 				//TODO
-				"castvote": false,
 				"delegationnumber": 200,
 				/*"delegate": { "name": "Christoph Fritzsche",
 						"picsmall": "content_img/profile_delegate_1.png" },*/
@@ -161,6 +161,17 @@ exports.show = function(state) {
 			tmp_issue_info.unit = res.units[res.areas[issue_res.area_id].unit_id].name;
 			// member_weight can be wrong at the moment. API bug is known.
 			tmp_issue_info.areamembernumber = res.areas[issue_res.area_id].member_weight;
+
+			//get info if vote is cast already
+			lf.query('/voter', {'issue_id': issue_id, 'member_id': state.user_id()}, state, function(res) {
+				if(res.result.length>0){
+					castvote_info = true;
+				}
+				else {
+					castvote_info = false;
+				}
+				finish();
+			});
 
 			//get initiatives
 			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
