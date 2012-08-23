@@ -98,8 +98,6 @@ exports.show = function(state) {
 			ctx.issue = issue_info;
 			issue_info.initiatives = initiatives_info;
 			//TODO
-			issue_info.votelaterlist = [];
-			//TODO
 			issue_info.delegations = [];
 			//TODO
 			issue_info.members = [];
@@ -131,7 +129,6 @@ exports.show = function(state) {
 				status: getIssueState(issue_res.state),
 				
 				//TODO
-				"votenow": "0",
 				"castvote": false,
 				"delegationnumber": 200,
 				"delegate": "Christoph Fritzsche",

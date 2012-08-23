@@ -435,7 +435,6 @@
 		"timeforrevision": "15",
 		"timeforvote": "15",
 		"status": "Abstimmung",
-		"votenow": "0",
 		"open": true,
 		"castvote": false,
 		"delegationnumber": 200,

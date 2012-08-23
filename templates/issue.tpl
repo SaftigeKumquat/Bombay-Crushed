@@ -114,8 +114,6 @@
 							<dt><%= texts.issuequorum %></dt><dd><%= issue.quorum.toString() %>%</dd>
 							<dt><%= texts.currentlyneedeforissue %></dt><dd><%= Math.round(issue.population * (issue.quorum / 100.0)).toString() %></dd>
 							<br />
-							<dt><%= texts.votenow %></dt><dd><%= issue.votenow %></dd>
-							<dt><%= texts.votelater %></dt><dd><%= issue.votelaterlist.length.toString() %></dd>
 							<dt><%= texts.closed %></dt><dd><% if(issue.open) { %> <%= texts.no %> <% } else { %><%= texts.yes %><% } %></dd>
 						</dl>
 					 	</div>
