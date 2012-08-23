@@ -39,11 +39,12 @@ module.exports.show = function(state) {
 
 			state.context.inis = [];
 
+			// collect ini data
 			for(var i = start_ini; i < inis.length && i < end_ini; i++) {
 
 				builtIni = {};
 
-				// get event
+				// get event data
 				for(var a = 0; a < events.length; a++) {
 					if(events[a].initiative_id == inis[i].id) {
 						builtIni.lastaction = {};
@@ -54,6 +55,7 @@ module.exports.show = function(state) {
 					}
 				}
 
+				// collect ini, area, unit, policy and issue data
 				builtIni.id = inis[i].id;
 				builtIni.title = inis[i].name;
 				builtIni.supporter = inis[i].satisfied_supporter_count;
@@ -76,8 +78,6 @@ module.exports.show = function(state) {
 				builtIni.potential = Math.floor(( builtIni.potsupporter / total ) * 100);
 				builtIni.uninvolved = Math.floor(( builtIni.uninterested / total ) * 100);
 				builtIni.quorum = Math.floor(100 * quorum_num / quorum_den);
-
-				// continue filling attributes..
 
 				state.context.inis.push(builtIni);
 			}
