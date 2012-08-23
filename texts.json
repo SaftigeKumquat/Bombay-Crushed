@@ -264,5 +264,6 @@
 	"loginsuccessfull": "Du wurdest erfolgreich angemeldet",
 	"logoutsuccessfull": "Du wurdest erfolgreich abgemeldet",
 	"clickhere": "Hier klicken",
-	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst."
+	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst.",
+	"searchresultissues": "Suchergebnis: Themen"
 }

@@ -33,6 +33,7 @@ var contacts = require('./contacts.js');
 var initiative = require('./initiative.js');
 var suggestion = require('./suggestion.js');
 var issue = require('./issue.js');
+var search = require('./search.js');
 
 /**
  * Takes care of retrieving data for and rendering the
@@ -447,6 +448,7 @@ var url_mapping = {
 	'/area': showArea,
 	'/issue': issue.show,//TODO delete showIssue,
 	'/suggestion': suggestion.show,
+	'/search': search.show,
 	'/update_opinions': suggestion.updateOpinions,
 	'/update_areas_table': topics.update_areas_table,
 	'/update_issues_table': area.update_issues_table

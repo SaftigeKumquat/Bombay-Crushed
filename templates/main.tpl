@@ -7,8 +7,8 @@
 			</a>
 			<ul id="personal-menu">
 				<li id="personal-menu-new"><a href="#"><span>+</span><%= texts.createtopic %></a></li>
-				<li><a href="#"><span>+</span><%= texts.myinis %></a></li>
-				<li><a href="#"><span>+</span><%= texts.supportedinis %></a></li>
+				<li><a href="<%= meta.baseurl %>/search?filter=initiated"><span>+</span><%= texts.myinis %></a></li>
+				<li><a href="<%= meta.baseurl %>/search?filter=supported"><span>+</span><%= texts.supportedinis %></a></li>
 
 			</ul>
 		</div>
