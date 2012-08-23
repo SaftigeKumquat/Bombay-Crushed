@@ -266,5 +266,10 @@
 	"logoutsuccessfull": "Du wurdest erfolgreich abgemeldet.",
 	"clickhere": "Hier klicken",
 	"ifnotredirected": "falls du nicht automatisch weitergeleitet wirst.",
-	"searchresultissues": "Suchergebnis: Themen"
+	"searchresultissues": "Suchergebnis: Themen",
+	"noresultinfo": "Das tut uns sehr leid. Hoffentlich wirst du noch fündig.",
+	"yoursearchfor": "Deine Suche nach",
+	"yieldednoresult": "lieferte kein Ergebnis.",
+	"initiatedinis": "Meine Initiativen",
+	"supportedinis": "Unterstützte Initiativen"
 }

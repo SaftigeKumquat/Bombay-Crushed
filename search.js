@@ -39,6 +39,17 @@ module.exports.show = function(state) {
 
 			state.context.inis = [];
 
+			// fill alert box
+			if(inis.length == 0) {
+				state.context.alert = {
+					'show': true,
+					'filter': state.url.query.filter
+				};
+			}
+			else {
+				state.context.alert = { 'show': false };
+			}
+
 			// collect ini data
 			for(var i = start_ini; i < inis.length && i < end_ini; i++) {
 
@@ -115,35 +126,42 @@ module.exports.show = function(state) {
 			ini_ids.push(res.result[i].initiative_id);
 		}
 
-		// query the initiative data
-		lf.query('/initiative', {'initiative_id': ini_ids.toString(), 'include_issues': 1, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(ini_res) {
-			for(var i = 0; i < ini_res.result.length; i++) {
-				// get last event per initiative
-				lf.query('/event', {'initiative_id': ini_res.result[i].id}, state, function(event_res) {
-					// sort events by date
-					Array.prototype.sort.call(event_res.result, function(a,b) {
-    						if (a.created > b.created)
-        						return -1;
-    						else if (a.created < b.created)
-        						return 1;
-    						else 
-        						return 0;
+		if(ini_ids.length > 0) {
+			// query the initiative data
+			lf.query('/initiative', {'initiative_id': ini_ids.toString(), 'include_issues': 1, 'include_areas': 1, 'include_units': 1, 'include_policies': 1}, state, function(ini_res) {
+
+				for(var i = 0; i < ini_res.result.length; i++) {
+					// get last event per initiative
+					lf.query('/event', {'initiative_id': ini_res.result[i].id}, state, function(event_res) {
+						// sort events by date
+						Array.prototype.sort.call(event_res.result, function(a,b) {
+    							if (a.created > b.created)
+        							return -1;
+    							else if (a.created < b.created)
+        							return 1;
+    							else 
+        							return 0;
+						});
+						events.push(event_res.result[0]);
+						finish();
 					});
-					events.push(event_res.result[0]);
-					finish();
-				});
-				ini = ini_res.result[i];
-				ini.issue = ini_res.issues[ini.issue_id];
-				ini.area = ini_res.areas[ini.issue.area_id];
-				ini.unit = ini_res.units[ini.area.unit_id];
-				ini.policy = ini_res.policies[ini.issue.policy_id];
+					ini = ini_res.result[i];
+					ini.issue = ini_res.issues[ini.issue_id];
+					ini.area = ini_res.areas[ini.issue.area_id];
+					ini.unit = ini_res.units[ini.area.unit_id];
+					ini.policy = ini_res.policies[ini.issue.policy_id];
 
-				inis.push(ini_res.result[i]);
-			}
+					inis.push(ini_res.result[i]);
+				}
+				inisDone = true;
+				finish()
+			});
+		}
+		else {
+			// there will be no result, mark that query is complete
 			inisDone = true;
-			finish()
-		});
-
+		}
+		finish();
 	});
 
 }

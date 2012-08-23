@@ -1,12 +1,15 @@
 <div id="contentcontainer" class="container">
-	<!-- Search not relevant for 0.1.0
+	
+	<% if(alert.show) { %>
 	<div class="row">
 			<div class="sevencol alertbox first last">
-			<h2>Deine Suche nach „Free Porn“ lieferte kein Ergebnis.</h2>
-				<p>Das tut uns sehr leid. Hoffentlich wirst du noch fündig.</p>
+			<h2><%= texts.yoursearchfor %> „<% if(alert.filter == 'initiated') { %><%= texts.initiatedinis %><% } else if(alert.filter == 'supported') { %><%= texts.supportedinis %><% } %>“ <%= texts.yieldednoresult %></h2>
+				<p><%= texts.noresultinfo %></p>
 			</div>			
 	</div>
+	<% } %>
 
+	<!-- Search not relevant for 0.1.0
 	<div class="row">
 		<div class="twelvecol last">
 			<h1>Suche</h1>
