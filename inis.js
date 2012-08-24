@@ -56,6 +56,16 @@ var getTextForEvent = function(event) {
 module.exports.getTextForEvent = getTextForEvent;
 
 /**
+ * get configured number of inis per page
+ */
+
+var getInisPerPage = function() {
+	return 7;
+}
+
+module.exports.getInisPerPage = getInisPerPage;
+
+/**
  * Retrieve all initiatives as required to build the table on the overview page.
  * The resulting data is stored in `state.context.initable`.
  * Parameters of the current HTTP-Query used:
@@ -176,13 +186,13 @@ var inis = function(state, render) {
 			}
 		}
 
-		state.context.initable.pages = Math.ceil(foundissues.length / 5);
-		var end = ( activepage * 5 ) + 5;
+		state.context.initable.pages = Math.ceil(foundissues.length / getInisPerPage());
+		var end = ( activepage * getInisPerPage() ) + getInisPerPage();
 		var found = false;
 		var foundpage = false;
-		for(var i = activepage * 5; i < res.result.length && i < end; i++) {
+		for(var i = activepage * getInisPerPage(); i < res.result.length && i < end; i++) {
 			// start with first found issue on the page
-			if(foundpage == false && res.result[i].issue_id != foundissues[activepage * 5]) {
+			if(foundpage == false && res.result[i].issue_id != foundissues[activepage * getInisPerPage()]) {
 				end = end + 1;
 				continue;
 			}

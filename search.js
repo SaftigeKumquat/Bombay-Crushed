@@ -26,15 +26,15 @@ module.exports.show = function(state) {
 			state.context.initable = {};
 			if(state.url.query.page !== undefined && state.url.query.page > 1) {
 				state.context.initable.activepage = state.url.query.page;
-				start_ini = (state.url.query.page - 1 ) * 6;
-				end_ini = state.url.query.page * 6;
+				start_ini = (state.url.query.page - 1 ) * inisFunc.getInisPerPage();
+				end_ini = state.url.query.page * inisFunc.getInisPerPage();
 			}
 			else {
 				state.context.initable.activepage = 1;
 				start_ini = 0;
-				end_ini = 6;
+				end_ini = inisFunc.getInisPerPage();
 			}
-			state.context.initable.pages = Math.ceil(inis.length / 6);
+			state.context.initable.pages = Math.ceil(inis.length / inisFunc.getInisPerPage());
 			state.context.initable.filter = state.url.query.filter;
 
 			state.context.inis = [];
