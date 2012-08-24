@@ -38,7 +38,9 @@
 				<% if(initiative.state == texts.statusstep4) { %>
 				<li><a href="#"><span>+</span><%= texts.changevote %></a></li>
 				<% } %>
-				<li><a href="#"><span>+</span><%= texts.discusstopic %></a></li>
+				<% if(initiative.discussionurl) { %>
+				<li><a href="<%= initiative.discussionurl %>"><span>+</span><%= texts.discusstopic %></a></li>
+				<% } %>
 			</ul>
 
 			<h2><%= texts.suggestionsandalternatives %></h2>

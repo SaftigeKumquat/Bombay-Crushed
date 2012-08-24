@@ -87,6 +87,7 @@ exports.show = function(state, render) {
 
 			builtIni.id = initiative_id;
 			builtIni.name = initiative.name;
+			builtIni.discussionurl = initiative.discussion_url;
 			builtIni.area = {};
 			builtIni.area.id = area.id;
 			builtIni.area.name = area.name;
