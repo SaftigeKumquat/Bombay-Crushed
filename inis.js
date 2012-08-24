@@ -170,7 +170,9 @@ var inis = function(state, render) {
 			state.context.filter = [ { 'id': 1, 'text': 'Filter aktuell nicht implementiert' } ];
 
 			// add dummy unit
-			state.context.units = [];
+			if(state.context.units == undefined) {
+				state.context.units = [];
+			}
 
 			render();			
 		}
