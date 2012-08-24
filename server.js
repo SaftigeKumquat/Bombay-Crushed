@@ -553,6 +553,7 @@ server = function() {
 		console.log('Connected to ' + server.host + ':' + server.port);
 		console.log('Core Version: ' + res.core_version);
 		console.log('API Version:  ' + res.api_version);
+		console.log('Bombay Crushed Version: 0.1.0');
 	});
 
 	// create the HTTP-Server
