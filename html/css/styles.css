@@ -328,7 +328,7 @@ table td {
 
 .filtertable th:nth-child(2), .filtertable td:nth-child(2) {width:50%;}
 .filtertable td {overflow:hidden;}
-#filter {display:none;}
+#filter, #initiative-detail, #initiative-history {display:none;}
 .multiple-filter {display:inline-block; padding:3px 0px;}
 
 .themetable-status1,.themetable-status2,.themetable-status3,.themetable-status4,.themetable-status5,.themetable-status6 {
@@ -770,6 +770,8 @@ h1 {
 .delegation-view .finaldelegate {background-color:#ededdf; border:1px solid #cdcdc0}
 .delegation-view tr:hover {background-color:transparent!important}
 .delegation-view td:hover  {background-color:#ffd988}
+
+.unavailable {visibility:hidden;}
 
 /* ============================= */
 /* ! Layout for mobile version   */

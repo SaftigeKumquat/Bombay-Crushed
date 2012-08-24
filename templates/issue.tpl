@@ -3,7 +3,7 @@
 		<div class="twocol noxbox first">
 			</div>
  			<% if(issue.status == texts.status4) { %>
-				<div class="sevencol alertbox last">
+				<!-- <div class="sevencol alertbox last">
 				<% if(issue.castvote) { %>
 				<h2><%= texts.youalreadyvoted %></h2>
 					<p><a class="button" href=""><%= texts.revokevote %></a></p>
@@ -11,7 +11,7 @@
 				<h2><%= texts.issuevotingopen %></h2>
 					<p><a class="button" href=""><%= texts.votenow %></a></p>
 				<% } %>
-				</div>
+				</div> -->
 			<% } %>
 	</div>
 	<div class="row">
@@ -25,6 +25,7 @@
 				</p></div>
 			<% } %>
 
+			<!--
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
 				<% if(!issue.iwatchissue) { %>
@@ -43,7 +44,7 @@
 
 				<li><a href="#"><span>+</span> <%= texts.discusstopic %></a></li>
 
-			</ul>
+			</ul> -->
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
@@ -57,7 +58,7 @@
 						<% } %>
 					| <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
 
-						<div class="filtertable">
+						<!-- <div class="filtertable">
 							<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>
 							<select id="select-filter2" name="filter">
 								<option value="1"><%= texts.potsupport %></option>
@@ -65,7 +66,7 @@
 								<option value="3"><%= texts.newest %></option>
 								<option value="4"><%= texts.oldest %></option>
 							</select>
-						</div>
+						</div> -->
 						<table class="table-area">
 							<tr>
 								<th><%= texts.inis %></th>
@@ -114,7 +115,7 @@
 					 </div>
 
 				<div class="box-footer">
-					<a class="button" href="#"><%= texts.addalternativeinitiative %></a><a id="detailslide" class="button" href="#"><%= texts.details %></a>
+					<!-- <a class="button" href="#"><%= texts.addalternativeinitiative %></a> --><a id="detailslide" class="button" href="#"><%= texts.details %></a>
 			</div>
 			</div>
 		</div>
@@ -123,7 +124,7 @@
 	<div class="row">
 		<div class="twocol nobox">
 		</div>
-		<div class="sevencol box">
+		<div class="sevencol box unavailable">
 			<h2><%= texts.delegations %> (<%= issue.delegationnumber %>)</h2>
 				<% for(var i = 0; i < issue.delegations.length; i++) { %>
 				<div class="box-delegate-info box-delegation">
@@ -156,13 +157,13 @@
 			<div class="box-description">
 				<p><%= texts.areamembersinfo %></p>
 
-				<label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
+				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
 				<select id="select-filter" name="filter">							
 					<option value="1"><%= texts.atoz %></option>
 					<option value="2"><%= texts.ztoa %></option>
 					<option value="3"><%= texts.newest %></option>
 					<option value="3"><%= texts.oldest %></option>
-				</select>
+				</select> -->
 
 			</div>
 

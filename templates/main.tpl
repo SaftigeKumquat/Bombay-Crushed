@@ -6,7 +6,7 @@
  				<img src="<%= meta.baseurl %>/<%= user.picbig %>" alt="<%= texts.profilepic %>" />
 			</a>
 			<ul id="personal-menu">
-				<li id="personal-menu-new"><a href="#"><span>+</span><%= texts.createtopic %></a></li>
+				<!-- <li id="personal-menu-new"><a href="#"><span>+</span><%= texts.createtopic %></a></li> -->
 				<li><a href="<%= meta.baseurl %>/search?filter=initiated"><span>+</span><%= texts.myinis %></a></li>
 				<li><a href="<%= meta.baseurl %>/search?filter=supported"><span>+</span><%= texts.supportedinis %></a></li>
 
@@ -14,12 +14,12 @@
 		</div>
 		<div id="inicontent" class="tencol box last">
 			<h2><%= texts.currentinis %></h2>
-				<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
+				<!-- <label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
 				<select id="select-filter" name="filter">
 				<% for(var i = 0; i < filter.length; i++) { %>
 					<option value="<%= filter[i].id %>"><%= filter[i].text %></option>
 				<% } %>
-				</select>
+				</select> -->
 				<table id="initable">
 					<tr>
 						<th><%= texts.ini %></th>

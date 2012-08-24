@@ -1,7 +1,6 @@
 <div id="contentcontainer" class="container">
 
-	<!-- filter not relevant for 0.1.0
-	<div class="row">
+	<div class="row unavailable">
 		<div class="twelvecol last">
 				<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
 				<select id="select-filter-big" name="filter">
@@ -15,7 +14,7 @@
 		
 	</div>
 
-	<div class="row">
+	<div class="row unavailable">
 		<div id="filter" class="twelvecol box last">
 			<h2><%= texts.editfilter %></h2>
 			<form method="get" action="search" id="timeline-filter">
@@ -311,7 +310,7 @@
 			</form>
 		</div>
 
-	</div> -->
+	</div>
 		
 	<div class="row">
 		<div id="inicontent" class="twelvecol box last">

@@ -5,7 +5,7 @@
 			<p id="profile-image">
  				<img src="<%= meta.baseurl %>/<%= user.picbig %>" alt="<%= texts.profilepic %>" />
 				<% if(user.isme == true) { %>
- 				<a class="button" button-backward-off""><%= texts.changepic %></a>
+ 				<a class="button unavailable" button-backward-off""><%= texts.changepic %></a>
 				<% } %>
 			</p>
 		</div>
@@ -39,14 +39,14 @@
 				</dl>
 			</div>
 			<% if(user.isme == true) { %>
-			<div class="box-footer"><a class="button" href="#"><%= texts.changedata %></a></div>
+			<!-- <div class="box-footer"><a class="button" href="#"><%= texts.changedata %></a></div> -->
 			<% } %>
 		</div>
 		<div class="twocol last">
 		</div>
 	</div>
 	<div class="row">
-		<div class="twocol box">
+		<div class="twocol box unavailable">
 			<h2><%= texts.delegations %></h2>
 			<div class="box-description">
 				<p><%= user.nick %> <%= texts.mostvotes %></p>
@@ -77,7 +77,7 @@
 			</div>
 
 		</div>
-		<div class="eightcol last box">
+		<div class="eightcol last box unavailable">
 			<h2><%= texts.votingcomments %></h2>
 			<div class="box-description">
 				<form method="get" action="search" id="search-sub">

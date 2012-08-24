@@ -12,6 +12,7 @@
 			<div class="memberbox"><p><%= texts.iammember %></p></div>
 			<% } %>
 
+			<!-- none of this works in 0.1.0
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
 				<% if(area.member) { %>
@@ -26,7 +27,7 @@
 				<% } else { %>
 				<li><a href="#"><span>+</span><%= texts.delegatearea %></a></li>
 				<% } %>
-			</ul>
+			</ul> -->
 		</div>
 		<div class="tencol box last" id="issues-table">
 			<h2><%= texts.area %> „<%= area.name %>“ <%= area.unit %></h2>
@@ -43,7 +44,7 @@
 						<option <% if(selected_issue_state == '8') { %> selected="selected" <% } %> value="8"><%= texts.all %></option>		
 					</select>
 				</div>
-				<div class="multiple-filter">
+				<div class="multiple-filter unavailable">
 					<label class="table-label" for="select_fiter2"><%= texts.mystatus %>:</label>	
 					<select id="select-filter2" name="filter">							
 						<option value="1"><%= texts.all %></option>
@@ -53,7 +54,7 @@
 						<option value="5"><%= texts.initiated %></option>		
 					</select>
 				</div>	
-				<div class="multiple-filter">			
+				<div class="multiple-filter unavailable">			
 					<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>	
 					<select id="select-filter2" name="filter">							
 						<option value="1"><%= texts.maxpotsupporter %></option>
@@ -129,7 +130,7 @@
 	<div class="row">
 		<div class="twocol nobox">
 		</div>
-		<div class="sevencol box">
+		<div class="sevencol box unavailable">
 			<h2><%= texts.delegations %> (<%= area.delegationnumber %>)</h2>
 				<% for(var i = 0; i < area.delegations.length; i++) { %>
 				<div class="box-delegate-info box-delegation">
@@ -163,13 +164,13 @@
 			<div class="box-description">
 				<p><%= texts.areamembersinfo %></p>
 
-				<label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
+				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
 				<select id="select-filter" name="filter">							
 					<option value="1"><%= texts.atoz %></option>
 					<option value="2"><%= texts.ztoa %></option>
 					<option value="3"><%= texts.newest %></option>
 					<option value="3"><%= texts.oldest %></option>
-				</select>
+				</select> -->
 
 			</div>	
 			

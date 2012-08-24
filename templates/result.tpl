@@ -9,8 +9,8 @@
 	</div>
 	<% } %>
 
-	<!-- Search not relevant for 0.1.0
-	<div class="row">
+	<!-- only using the unavailable attribute still takes a lot of space up here
+	<div class="row unavailable">
 		<div class="twelvecol last">
 			<h1>Suche</h1>
 				<p id="search-sub">
@@ -35,13 +35,13 @@
 			<h2><%= texts.searchresultissues %></h2>
 
 				<table>
-				<label class="table-label" for="select_fiter"><%= texts.sortedby %></label>	
+				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %></label>	
 				<select id="select-filter" name="filter">							
 					<option value="1"><%= texts.newest %></option>
 					<option value="2"><%= texts.oldest %></option>
 					<option value="3"><%= texts.atoz %></option>
 					<option value="3"><%= texts.ztoa %></option>
-				</select>
+				</select> -->
 					<tr>
 						<th><%= texts.ini %></th>
 						<th><%= texts.unit %></th>
@@ -101,8 +101,7 @@
 				</ul>
 			</div>
 		</div>
-		<!-- Member search for 0.1.0
-		<div class="threecol box last">
+		<div class="threecol box last unavailable">
 			<h2>Suchergebnis: Personen</h2>
 			<div class="box-description">
 
@@ -186,7 +185,7 @@
 					<li><a class="button button-forward" href="#">weiter</a></li>
 				</ul>			 
 			</div>
-		</div> -->		
+		</div>		
 	</div>
 	
 	<div id="push"></div>
