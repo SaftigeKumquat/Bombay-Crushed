@@ -4,6 +4,7 @@
 
 var lf = require('./lfcli.js');
 var issue = require('./issue.js');
+var iniFunc = require('./initiative.js');
 
 /**
  * get event text for event code
@@ -149,8 +150,7 @@ var inis = function(state, render) {
 						}
 						for(var k = 0; k < policies.length; k++) {
 							if(issues[a].policy_id === policies[k].id) {
-								quorum_num = policies[k].issue_quorum_num;
-								quorum_den = policies[k].issue_quorum_den;
+								ini.quorum = Math.floor(100 * iniFunc.getQuorum(policies[k]));
 							}
 						}
 					}
@@ -158,8 +158,7 @@ var inis = function(state, render) {
 				var total = ini.supporter + ini.potsupporter + ini.uninterested;
 				ini.support = Math.floor(( ini.supporter / total ) * 100);
 				ini.potential = Math.floor(( ini.potsupporter / total ) * 100);
-				ini.uninvolved = Math.floor(( ini.uninterested / total ) * 100);
-				ini.quorum = Math.floor(100 * quorum_num / quorum_den);
+				ini.uninvolved = Math.floor(( ini.uninterested / total ) * 100);				
 
 				builtInis.push(ini);
 			}

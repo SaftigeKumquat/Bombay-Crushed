@@ -38,6 +38,22 @@ var getMemberSupport = function(support, ini) {
 }
 
 /**
+ * gets the quorum from a policy
+ *
+ * @param policy the policy to be used
+ */
+var getQuorum = function(policy) {
+	if(policy.issue_quorum_num != null) {
+		return (policy.issue_quorum_num / policy.issue_quorum_den);
+	}
+	else {
+		return (policy.initiative_quorum_num / policy.initiative_quorum_den);
+	}
+}
+
+module.exports.getQuorum = getQuorum;
+
+/**
  * Takes care of retrieving data for and rendering the
  * initiative page.
  *
@@ -101,10 +117,8 @@ exports.show = function(state, render) {
 			builtIni.createdat = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
 			
 			// calculate quorum
-			quorum_num = policy.issue_quorum_num;
-			quorum_den = policy.issue_quorum_den;
-			builtIni.requiredquorum = (quorum_num / quorum_den * 100) + '%';
-			builtIni.requiredrightnow = Math.ceil(quorum_num / quorum_den * (area.member_weight));
+			builtIni.requiredquorum = (getQuorum(policy) * 100) + '%';
+			builtIni.requiredrightnow = Math.ceil(getQuorum(policy) * (area.member_weight));
 
 			if(initiative.admitted) {
 				builtIni.admitted = texts.yes;
