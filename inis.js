@@ -169,6 +169,9 @@ var inis = function(state, render) {
 			// add dummy filter
 			state.context.filter = [ { 'id': 1, 'text': 'Filter aktuell nicht implementiert' } ];
 
+			// add dummy unit
+			state.context.units = [];
+
 			render();			
 		}
 	}
