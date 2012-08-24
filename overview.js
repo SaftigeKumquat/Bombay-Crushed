@@ -10,6 +10,7 @@ var lf = require('./lfcli.js');
 var user = require('./user.js');
 var inis = require('./inis.js');
 var delegations = require('./delegations');
+var texts = require('./texts.json');
 
 /**
  * Get the list of areas including membership information.
@@ -184,7 +185,7 @@ var news = function(state, render) {
 			// handle critical quorum default
 			if(!criticalQuorum) {
 				news.graph = {
-					'title': 'Currently no initiative is close to the quorum',
+					'title': texts.nocriticalquorum,
 					'quorum': 0,
 					'support': 0,
 					'potential': 0,

@@ -271,5 +271,6 @@
 	"yoursearchfor": "Deine Suche nach",
 	"yieldednoresult": "lieferte kein Ergebnis.",
 	"initiatedinis": "Meine Initiativen",
-	"supportedinis": "Unterstützte Initiativen"
+	"supportedinis": "Unterstützte Initiativen",
+	"nocriticalquorum": "Im Moment ist keine Initiative nah am Quorum"
 }
