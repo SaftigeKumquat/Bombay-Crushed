@@ -165,6 +165,10 @@ var inis = function(state, render) {
 			}
 
 			state.context.inis = builtInis;
+
+			// add dummy filter
+			state.context.filter = [ { 'id': 1, 'text': 'Filter aktuell nicht implementiert' } ];
+
 			render();			
 		}
 	}

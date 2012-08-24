@@ -1,5 +1,6 @@
 <div id="contentcontainer" class="container">
 
+	<!-- filter not relevant for 0.1.0
 	<div class="row">
 		<div class="twelvecol last">
 				<label class="table-label" for="select_fiter"><%= texts.filter %>:</label>	
@@ -310,7 +311,7 @@
 			</form>
 		</div>
 
-	</div>
+	</div> -->
 		
 	<div class="row">
 		<div id="inicontent" class="twelvecol box last">
