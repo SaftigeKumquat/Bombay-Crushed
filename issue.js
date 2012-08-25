@@ -1,6 +1,7 @@
 var texts = require('./texts.json');
 var lf = require('./lfcli.js');
 var ejs = require('./ejs.js');
+var userFunc = require('./user.js');
 
 
 /**
@@ -180,11 +181,24 @@ exports.show = function(state) {
 			//get information about interested members
 			lf.query('/interest', {'issue_id': issue_id, 'snapshot': 'latest'}, state, function(res) {
 				var tmp_members_info = [];
+				var members_ids = [];
+				//gather member ids
 				for(var i = 0; i < res.result.length; i++) {
 					if(res.result[i].member_id == state.user_id()) {
 						tmp_issue_info.iwatchissue = true;
+						members_ids.push(res.result[i].member_id);
+					}
+					else {
+						members_ids.push(res.result[i].member_id);
 					}
 				}
+
+				//get member informations: nick, name, picsmall, picmini
+				lf.query('/member', {'member_id': members_ids.toString()}, state, function(res) {
+					for(var j = 0; j < res.result.length; j++) {
+							tmp_members_info.push(userFunc.getUserBasic(res.result[j]));
+						}
+				});
 
 				members_info = tmp_members_info;
 				finish();
