@@ -58,6 +58,7 @@ var user = function(state, finish, allowOtherMember) {
 			'statement': lf_user.statement,
 			'offices': lf_user.internal_posts,
 			'memberships': lf_user.external_memberships,
+			'lastactive': lf_user.last_activity
 		};
 
 		// delete dummy content

@@ -95,8 +95,9 @@ var inis = function(state, render) {
 	}
 
 	// check if timeline page
-	if(state.url.query.timeline !== undefined)
+	if(state.url.query.timeline !== undefined) {
 		state.context.initable.isTimeline = state.url.query.timeline;
+	}
 
 	/**
 	 * Internal data collection callback.
@@ -180,10 +181,10 @@ var inis = function(state, render) {
 	// get last events
  	lf.query('/event', {}, state, function(res) {
 		// calculate number of pages
-		var foundissues = [];
-		var foundissue = false;
-		for(var i = 0; i < res.result.length; i++) {
+		foundissues = [];
+		for(var i = 0; i < res.result.length; i++) {			
 			foundissue = false;
+
 			for(var j = 0; j < foundissues.length; j++) {
 				if(foundissues[j] == res.result[i].issue_id) {
 					foundissue = true;

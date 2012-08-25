@@ -63,13 +63,15 @@
 			<div id="inipages" class="box-footer">
 				<ul class="pagination">
 					<% if(initable.activepage == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/overview?page=<%= ( initable.activepage - 1 ) %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= ( initable.activepage - 1 ) %>, false)"><%= texts.backshort %></a></li><% }
-					for(var i = 1; i <= initable.pages; i++) {
-						if(i == initable.activepage) { %>
-							<li class="active"><%= i %></li>
-						<% }
-						else { %>
-							<li><a href="<%= meta.baseurl %>/overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>, false)"><%= i %></a></li>
-						<% }
+					if(initable.pages > 1) {					
+						for(var i = 1; i <= initable.pages; i++) {
+							if(i == initable.activepage) { %>
+								<li class="active"><%= i %></li>
+							<% }
+							else { %>
+								<li><a href="<%= meta.baseurl %>/overview?page=<%= i %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= i %>, false)"><%= i %></a></li>
+							<% }
+						}
 					}
 					var nextpage = ( initable.activepage - 1 ) + 2;
 					if(initable.activepage < initable.pages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/overview?page=<%= nextpage %>&newspage=<%= news.activepage %>" onClick="update_inis(<%= nextpage %>, false)"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
