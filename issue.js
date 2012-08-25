@@ -89,18 +89,20 @@ exports.show = function(state) {
 
 	// the variables that will be set by the data retrievers
 	// If they are finally filled with data the page will be rendered
+	var issue_info, initiatives_info, castvote_info, members_info;
 
 	var finish = function() {
 		var ctx = state.context;
 
-		if(issue_info !== undefined && initiatives_info !== undefined && castvote_info !== undefined) {
+		if(issue_info !== undefined && initiatives_info !== undefined &&
+				castvote_info !== undefined && members_info !== undefined)
+		{
 			ctx.issue = issue_info;
 			issue_info.initiatives = initiatives_info;
 			issue_info.castvote = castvote_info;
 			//TODO (api funcitonality missing)
 			issue_info.delegations = [];
-			//TODO
-			issue_info.members = [];
+			issue_info.members = members_info;
 
 			ctx.meta.currentpage = "issue";
 			ejs.render(state, '/issue.tpl');
@@ -125,12 +127,12 @@ exports.show = function(state) {
 				timeforrevision: issue_res.verification_time.days,
 				timeforvote: issue_res.voting_time.days,
 				status: getIssueState(issue_res.state),
+				"iwatchissue": false, //default value, may become true later
 				
 				//TODO
 				"delegationnumber": 200,
 				/*"delegate": { "name": "Christoph Fritzsche",
 						"picsmall": "content_img/profile_delegate_1.png" },*/
-				"iwatchissue": true,
 				"pagination": {
 					"currentdelegations": 1,
 					"totaldelegations": 2,
@@ -172,6 +174,19 @@ exports.show = function(state) {
 				else {
 					castvote_info = false;
 				}
+				finish();
+			});
+
+			//get information about interested members
+			lf.query('/interest', {'issue_id': issue_id, 'snapshot': 'latest'}, state, function(res) {
+				var tmp_members_info = [];
+				for(var i = 0; i < res.result.length; i++) {
+					if(res.result[i].member_id == state.user_id()) {
+						tmp_issue_info.iwatchissue = true;
+					}
+				}
+
+				members_info = tmp_members_info;
 				finish();
 			});
 
