@@ -110,7 +110,9 @@ exports.show = function(state, render) {
 			builtIni.issue = {};
 			builtIni.issue.id = issue.id;
 			builtIni.policy = policy.name;
-			builtIni.text = current_draft.content;
+			if(current_draft) {
+				builtIni.text = current_draft.content;
+			}
 			builtIni.state = issueFunc.getIssueStateText(issue.state);
 
 			var date = new Date(initiative.created);
