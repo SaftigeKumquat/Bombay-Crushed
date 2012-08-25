@@ -115,14 +115,42 @@ exports.show = function(state) {
 		{
 			//TODO handle empty result
 			var issue_res = res.result[0];
+			
+			createdDate = new Date(issue_res.created);
+			createdat = createdDate.getDate() + '.' + ( createdDate.getMonth() + 1 ) + '.' + createdDate.getFullYear() + ' ' + createdDate.getHours() + ':' + createdDate.getMinutes();
+			if(issue_res.accepted != null) {
+				acceptedDate = new Date(issue_res.accepted);
+				acceptedat = acceptedDate.getDate() + '.' + ( acceptedDate.getMonth() + 1 ) + '.' + acceptedDate.getFullYear() + ' ' + acceptedDate.getHours() + ':' + acceptedDate.getMinutes();
+			}
+			else {
+				acceptedat = '-';
+			}
+			
+			if(issue_res.half_frozen != null) {
+				halffrozenDate = new Date(issue_res.half_frozen);
+				halffrozenat = halffrozenDate.getDate() + '.' + ( halffrozenDate.getMonth() + 1 ) + '.' + halffrozenDate.getFullYear() + ' ' + halffrozenDate.getHours() + ':' + halffrozenDate.getMinutes();
+			}
+			else {
+				halffrozenat = '-';
+			}
+			
+			if(issue_res.frozen != null) {
+				frozenDate = new Date(issue_res.frozen);
+				frozenat = frozenDate.getDate() + '.' + ( frozenDate.getMonth() + 1 ) + '.' + frozenDate.getFullYear() + ' ' + frozenDate.getHours() + ':' + frozenDate.getMinutes();
+			}
+			else {
+				frozenat = '-';
+			}
+			
+
 			//fill directly available issue information
 			var tmp_issue_info = {
 				id: issue_id,
 				population: issue_res.population,
-				createdat: issue_res.created,
-				acceptedat: issue_res.accepted,
-				halffrozenat: issue_res.half_frozen,
-				frozenat: issue_res.fully_frozen,
+				createdat: createdat,
+				acceptedat: acceptedat,
+				halffrozenat: halffrozenat,
+				frozenat: frozenat,
 				timeforadmission: issue_res.admission_time.days,
 				timefordiscussion: issue_res.discussion_time.days,
 				timeforrevision: issue_res.verification_time.days,
@@ -150,17 +178,6 @@ exports.show = function(state) {
 				tmp_issue_info.pagination.currentinterested = 1;
 				start_interest = 0;
 				end_interest = 24;
-			}
-
-			//fill undefined values
-			if(tmp_issue_info.acceptedat === null){
-				tmp_issue_info.acceptedat = '-';
-			}
-			if(tmp_issue_info.halffrozenat === null){
-				tmp_issue_info.halffrozenat = '-';
-			}
-			if(tmp_issue_info.frozenat === null){
-				tmp_issue_info.frozenat = '-';
 			}
 
 			tmp_issue_info.quorum = res.policies[issue_res.policy_id].issue_quorum_num;
@@ -192,6 +209,7 @@ exports.show = function(state) {
 				var tmp_members_info = [];
 				var members_ids = [];
 				tmp_issue_info.pagination.totalinterested = Math.ceil(res.result.length / 24);
+				tmp_issue_info.interested_members = res.result.length;
 				//gather member ids
 				for(var i = start_interest; i < res.result.length && i < end_interest; i++) {
 					if(res.result[i].member_id == state.user_id()) {

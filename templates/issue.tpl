@@ -45,8 +45,8 @@
 				-->
 			</ul>
 		</div>
-		<div class="tencol last doublebox">
-			<div class="box">
+		<div class="tencol last doublebox"> 
+			<div class="box"> 
 				<h2><%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %> / <% switch(issue.status) {
 						   case texts.status1: %> <%= texts.statusstep1 %> <% break; %>
 						<% case texts.status2: %> <%= texts.statusstep2 %> <% break; %>
@@ -114,44 +114,11 @@
 
 				<div class="box-footer">
 					<a class="button unavailable" href="#"><%= texts.addalternativeinitiative %></a><a id="detailslide" class="button" href="#"><%= texts.details %></a>
-			</div>
-			</div>
-		</div>
-
-	</div>
-	<div class="row">
-		<div class="twocol nobox">
-		</div>
-		<div class="sevencol box unavailable">
-			<h2><%= texts.delegations %> (<%= issue.delegationnumber %>)</h2>
-				<% for(var i = 0; i < issue.delegations.length; i++) { %>
-				<div class="box-delegate-info box-delegation">
-					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegationstart.name %></a>
-					<% for(var a = 0; a < issue.delegations[i].delegations.length; a++) { %>
-					<img class="delegate-arrow" src="<%= meta.baseurl %>/img/arrow.png" alt="<%= texts.delegatesto %>"/>
-					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegations[a].name %></a>
-					<% } %>
 				</div>
-				<% } %>
-
-			<div class="box-footer">
-				<ul class="pagination">
-						<% if(issue.pagination.currentdelegations == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
-						for(var a = 1; a <= issue.pagination.totaldelegations; a++) {
-							if(a == issue.pagination.currentdelegations) { %>
-								<li class="active"><%= a %></li>
-							<% } else { %>
-								<li><a href="#"><%= a %></a></li>
-							<% }
-					}
-					var nextpage = issue.pagination.currentdelegations + 1;
-					if(issue.pagination.currentdelegations != issue.pagination.totaldelegations) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
-				</ul>
 			</div>
-		</div>
 
-		<div class="threecol box last">
-			<h2><%= texts.interestedmembers %> (<%= issue.members.length %>)</h2>
+		<div id="secondbox" class="box">
+			<h2><%= texts.interestedmembers %> (<%= issue.interested_members %>)</h2>
 			<div class="box-description">
 				<p><%= texts.issuemembersinfo %></p>
 
@@ -186,6 +153,42 @@
 					}
 					var nextpage = issue.pagination.currentinterested + 1;
 					if(issue.pagination.currentinterested < issue.pagination.totalinterested) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/issue?issue_id=<%= issue.id %>&interestpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+				</ul>
+			</div>
+		</div>
+
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="twocol nobox">
+		</div>
+
+
+		<div class="tencol box last unavailable">
+			<h2><%= texts.delegations %> (<%= issue.delegationnumber %>)</h2>
+				<% for(var i = 0; i < issue.delegations.length; i++) { %>
+				<div class="box-delegate-info box-delegation">
+					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegationstart.picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegationstart.name %></a>
+					<% for(var a = 0; a < issue.delegations[i].delegations.length; a++) { %>
+					<img class="delegate-arrow" src="<%= meta.baseurl %>/img/arrow.png" alt="<%= texts.delegatesto %>"/>
+					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.delegations[i].delegations[a].picsmall %>" alt="<%= texts.profilepic %>"/><%= issue.delegations[i].delegations[a].name %></a>
+					<% } %>
+				</div>
+				<% } %>
+
+			<div class="box-footer">
+				<ul class="pagination">
+						<% if(issue.pagination.currentdelegations == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						for(var a = 1; a <= issue.pagination.totaldelegations; a++) {
+							if(a == issue.pagination.currentdelegations) { %>
+								<li class="active"><%= a %></li>
+							<% } else { %>
+								<li><a href="#"><%= a %></a></li>
+							<% }
+					}
+					var nextpage = issue.pagination.currentdelegations + 1;
+					if(issue.pagination.currentdelegations != issue.pagination.totaldelegations) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>
