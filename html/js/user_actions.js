@@ -226,14 +226,12 @@ $(document).ready(function() {
         return false;
 	});
 
-    $("#initiative-detail").css('height', $("#initiative-detail").height());
     $("#initiative-detail").hide();
 	$("#detailslide").click(function(){
         $("#initiative-detail").slideToggle("slow");
         return false;
 	});
 
-    $("#initiative-history").css('height', $("#initiative-history").height());
     $("#initiative-history").hide();
 	$("#historyslide").click(function(){
   	    $("#initiative-history").slideToggle("slow");
