@@ -3,7 +3,7 @@
 		<div class="twocol noxbox first">
 			</div>
  			<% if(issue.status == texts.status4) { %>
-				<div class="sevencol alertbox last unavailable">
+				<div class="sevencol alertbox last">
 				<% if(issue.castvote) { %>
 				<h2><%= texts.youalreadyvoted %></h2>
 					<p><a class="button unavailable" href=""><%= texts.revokevote %></a></p>
@@ -47,15 +47,14 @@
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
-				<h2><% switch(issue.status) {
+				<h2><%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %> / <% switch(issue.status) {
 						   case texts.status1: %> <%= texts.statusstep1 %> <% break; %>
 						<% case texts.status2: %> <%= texts.statusstep2 %> <% break; %>
 						<% case texts.status3: %> <%= texts.statusstep3 %> <% break; %>
 						<% case texts.status4: %> <a href="#"><%= texts.statusstep4 %></a> <% break; %>
 						<% case texts.status5: %> <%= texts.statusstep5 %> <% break; %>
 						<% case texts.status6: %> <%= texts.statusstep6 %> <% break; %>
-						<% } %>
-					| <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
+						<% } %></h2>
 
 						<div class="filtertable unavailable">
 							<label class="table-label unavailable" for="select_fiter3"><%= texts.sortedby %>:</label>
