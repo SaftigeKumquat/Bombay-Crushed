@@ -154,7 +154,7 @@
 		<div class="threecol box last">
 			<h2><%= texts.interestedmembers %> (<%= issue.members.length %>)</h2>
 			<div class="box-description">
-				<p><%= texts.areamembersinfo %></p>
+				<p><%= texts.issuemembersinfo %></p>
 
 				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %>:</label>
 				<select class="unavailable" id="select-filter" name="filter">
