@@ -50,7 +50,6 @@ var user = function(state, finish, allowOtherMember) {
 			'name': lf_user.realname,
 			'website': lf_user.website,
 			'profession': lf_user.profession,
-			'birthdate': date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear(),
 			'email': lf_user.email,
 			'jabber': lf_user.xmpp_address,
 			'phone': lf_user.phone,
