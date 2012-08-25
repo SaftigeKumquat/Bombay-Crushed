@@ -98,7 +98,7 @@ exports.show = function(state) {
 			ctx.issue = issue_info;
 			issue_info.initiatives = initiatives_info;
 			issue_info.castvote = castvote_info;
-			//TODO
+			//TODO (api funcitonality missing)
 			issue_info.delegations = [];
 			//TODO
 			issue_info.members = [];
@@ -134,18 +134,12 @@ exports.show = function(state) {
 				/*"delegate": { "name": "Christoph Fritzsche",
 						"picsmall": "content_img/profile_delegate_1.png" },*/
 				"iwatchissue": true,
-				//postpone is not available in the API (maybe completely missing in LQFB 2.0?)
-				//"iwanttopostponeissue": true,
 				"pagination": {
-					//"currentpostponers": 1,
-					//"totalpostponers": 2,
 					"currentdelegations": 1,
 					"totaldelegations": 2,
 					"currentinterested": 2,
 					"totalinterested": 2
 				}
-				// /TODO
-//{"result":[{"policy_id":1,"closed":"2011-10-30T17:34:37.901Z","ranks_available":true,"cleaned":null,"voter_count":0,"status_quo_schulze_rank":1}],"units":{},"policies":{"1":{"id":1,"index":1,"active":true,"name":"amendment of the statutes (solar system)","admission_time":{"days":8},"discussion_time":{"days":15},"verification_time":{"days":8},"voting_time":{"days":15},"issue_quorum_num":10,"issue_quorum_den":100,"initiative_quorum_num":10,"initiative_quorum_den":100,"direct_majority_num":1,"direct_majority_den":2,"direct_majority_strict":true,"direct_majority_positive":0,"direct_majority_non_negative":0,"indirect_majority_num":2,"indirect_majority_den":3,"indirect_majority_strict":false,"indirect_majority_positive":0,"indirect_majority_non_negative":0,"no_reverse_beat_path":true,"no_multistage_majority":false}},"status":"ok"}
 
 			};
 
@@ -174,7 +168,7 @@ exports.show = function(state) {
 			});
 
 			//get initiatives
-			lf.query('/initiative', {'issue_id': issue_id, }, state, function(res) {
+			lf.query('/initiative', {'issue_id': issue_id}, state, function(res) {
 				var tmp_initiatives_info = [];
 				var tmp_ini_ids = [];
 				for(var i = 0; i < res.result.length; i++) {
