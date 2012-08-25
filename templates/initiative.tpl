@@ -23,28 +23,26 @@
 			<h2><%= texts.support %></h2>
 			<div class="supportbox"><p><%= texts.isupportinfo %></p></div>
 			<% } %>
-			<% // for 0.1.0, only the discuss button is here. If no URL is present, hide the whole section
-			if(initiative.discussionurl) { %>
+
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
 				<% if(initiative.isupport) { %>
-				<!-- <li id="personal-menu-support"><a href="#"><%= texts.removesupport %></p></a></li> -->
+				<li class="unavailable" id="personal-menu-support"><a href="#"><%= texts.removesupport %></p></a></li>
 				<% } else { %>
-				<!-- <li id="personal-menu-green"><a href="#"><%- texts.supportini %></a></li> -->
+				<li class="unavailable" id="personal-menu-green"><a href="#"><%- texts.supportini %></a></li>
 				<% } %>
 				<% if(initiative.delegate) { %>
-				<!-- <li id="personal-menu-delegate"><a href="#"><img src="<%= meta.baseurl %>/<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li> -->
+				<li class="unavailable" id="personal-menu-delegate"><a href="#"><img src="<%= meta.baseurl %>/<%= initiative.delegate.picsmall %>" alt="<%= texts.profilepic %>" /><p><%= initiative.delegate.name %> <%= texts.removedelegation %></p></a></li>
 				<% } else { %>
-				<!-- <li><a href="#"><span>+</span><%= texts.delegateissue %></a></li> -->
+				<li class="unavailable"><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } %>
 				<% if(initiative.state == texts.statusstep4) { %>
-				<!-- <li><a href="#"><span>+</span><%= texts.changevote %></a></li> -->
+				<li class="unavailable"><a href="#"><span>+</span><%= texts.changevote %></a></li>
 				<% } %>
 				<% if(initiative.discussionurl) { %>
 				<li><a href="<%= initiative.discussionurl %>"><span>+</span><%= texts.discusstopic %></a></li>
 				<% } %>
 			</ul>
-			<% } %>
 
 			<h2><%= texts.suggestionsandalternatives %></h2>
 			<ul>
@@ -84,21 +82,21 @@
 						<tr>
 							<th><%= texts.createdat %></th>
 							<th><%= texts.author %></th>
-							<!-- <th><%= texts.show %></th>
-							<th><%= texts.compare %></th> -->
+							<th class="unavailable"><%= texts.show %></th>
+							<th class="unavailable"><%= texts.compare %></th>
 						</tr>
 						<% for(var i = 0; i < initiative.drafts.length; i++) { %>
 						<tr class="odd">
 							<td><%= initiative.drafts[i].createdat %></td>
 							<td><a href="#"><%= initiative.drafts[i].author.name %> (<%= initiative.drafts[i].author.nick %>)</a></td>
-							<!-- <td><a href="#"><%= texts.showversion %></a></td>
-							<td>
+							<td class="unavailable"><a href="#"><%= texts.showversion %></a></td>
+							<td class="unavailable">
 
 					    			<input type="radio" name="version1" id="radio-1"/>
 					    			<label for="radio-1"></label>
 					    			<input type="radio" name="version2" id="radio-2"/>
 					    			<label for="radio-2"></label>
-							</td> -->
+							</td>
 						</tr>
 						<% } %>
 					</table>
@@ -129,20 +127,20 @@
 			<div class="box-description">
 				<p><%= texts.supportinfo %></p>
 
-				<!-- <div class="timeline-filter-timerange">
-				    <input type="radio" name="timerange" id="radio-1" checked/>
+				<div class="timeline-filter-timerange unavailable">
+				    <input class="unavailable" type="radio" name="timerange" id="radio-1" checked/>
 				    	<label for="radio-1"><%= texts.support %> (<%= initiative.supporter %>)</label><br />
-				    <input type="radio" name="timerange" id="radio-2"/>
+				    <input class="unavailable" type="radio" name="timerange" id="radio-2"/>
 				    	<label for="radio-2"><%= texts.potsupport %> (<%= initiative.potsupporter %>)</label>
-			    </div> -->
+			    </div>
 
-				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
-				<select id="select-filter" name="filter">
+				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %>:</label>	
+				<select class="unavailable" id="select-filter" name="filter">
 					<option value="1"><%= texts.atoz %></option>
 					<option value="2"><%= texts.ztoa %></option>
 					<option value="3"><%= texts.delegationpower %></option>
 					<option value="3"><%= texts.new %></option>
-				</select> -->
+				</select>
 
 			</div>
 
@@ -269,7 +267,7 @@
 					var nextpage = ( initiative.suggestionspage - 1 ) + 2;
 					if(initiative.suggestionspage < initiative.suggestionspages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/initiative?initiative_id=<%= initiative.id %>&supporterpage=<%= initiative.supporterspage %>&suggestionpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
-				<!-- <a class="button button-nextpagination" href="#"><%= texts.createsuggestion %></a> -->
+				<a class="button button-nextpagination unavailable" href="#"><%= texts.createsuggestion %></a>
 			</div>
 
 		</div>
@@ -309,7 +307,7 @@
 					} %>
 			</table>
 			<div class="box-footer">
-				<!-- <a class="button" href="#"><%= texts.createalternativeini %></a> -->
+				<a class="button unavailable" href="#"><%= texts.createalternativeini %></a>
 				</div>
 			</div>
 	</div>

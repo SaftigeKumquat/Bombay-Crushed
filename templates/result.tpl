@@ -9,7 +9,6 @@
 	</div>
 	<% } %>
 
-	<!-- only using the unavailable attribute still takes a lot of space up here
 	<div class="row unavailable">
 		<div class="twelvecol last">
 			<h1>Suche</h1>
@@ -28,20 +27,20 @@
 				</p>
 		</div>
 		
-	</div> -->
+	</div>
 		
 	<div class="row">
 		<div class="ninecol box first">
-			<h2><%= texts.searchresultissues %></h2>
+			<h2><% if(initable.filter == 'initiated') { %><%= texts.myinis %><% } else if(initable.filter == 'supported') { %><%= texts.supportedinis %><% } %></h2>
 
 				<table>
-				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %></label>	
-				<select id="select-filter" name="filter">							
+				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %></label>	
+				<select class="unavailable" id="select-filter" name="filter">							
 					<option value="1"><%= texts.newest %></option>
 					<option value="2"><%= texts.oldest %></option>
 					<option value="3"><%= texts.atoz %></option>
 					<option value="3"><%= texts.ztoa %></option>
-				</select> -->
+				</select>
 					<tr>
 						<th><%= texts.ini %></th>
 						<th><%= texts.unit %></th>

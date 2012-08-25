@@ -3,15 +3,15 @@
 		<div class="twocol noxbox first">
 			</div>
  			<% if(issue.status == texts.status4) { %>
-				<!-- <div class="sevencol alertbox last">
+				<div class="sevencol alertbox last unavailable">
 				<% if(issue.castvote) { %>
 				<h2><%= texts.youalreadyvoted %></h2>
-					<p><a class="button" href=""><%= texts.revokevote %></a></p>
+					<p><a class="button unavailable" href=""><%= texts.revokevote %></a></p>
 				<% } else { %>
 				<h2><%= texts.issuevotingopen %></h2>
-					<p><a class="button" href=""><%= texts.votenow %></a></p>
+					<p><a class="button unavailable" href=""><%= texts.votenow %></a></p>
 				<% } %>
-				</div> -->
+				</div>
 			<% } %>
 	</div>
 	<div class="row">
@@ -25,26 +25,25 @@
 				</p></div>
 			<% } %>
 
-			<!--
 			<h2><%= texts.options %></h2>
 			<ul id="personal-menu">
 				<% if(!issue.iwatchissue) { %>
-				<li id="personal-menu-interest"><a href="#"><%= texts.declareinterest %></a></li>
+				<li class="unavailable" id="personal-menu-interest"><a href="#"><%= texts.declareinterest %></a></li>
 				<% } else { %>
-				<li id="personal-menu-nointerest"><a href="#"><%= texts.revokeinterest %></p></a></li>
+				<li class="unavailable" id="personal-menu-nointerest"><a href="#"><%= texts.revokeinterest %></p></a></li>
 				<% } %>
 				<% if(!issue.delegate) { %>
-				<li><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
+				<li class="unavailable"><a href="#"><span>+</span><%= texts.delegateissue %></a></li>
 				<% } else { %>
-				<li  id="personal-menu-delegate"><a href="#"><img
+				<li class="unavailable" id="personal-menu-delegate"><a href="#"><img
                 src="<%= meta.baseurl %>/<%= issue.delegate.picsmall %>" alt="<%=
                 texts.profilepic %>" /><p><%= issue.delegate.name %> <%= texts.removedelegation %></p></a></li>
-				<li><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
+				<li class="unavailable"><a href="#"><span>+</span><%= texts.changedelegation %></a></li>
 				<% } %>
-
+				<!--
 				<li><a href="#"><span>+</span> <%= texts.discusstopic %></a></li>
-
-			</ul> -->
+				-->
+			</ul>
 		</div>
 		<div class="tencol last doublebox">
 			<div class="box">
@@ -58,15 +57,15 @@
 						<% } %>
 					| <%= texts.issue %> #<%= issue.id %> <%= texts.in %> „<%= issue.area%>“ / <%= issue.unit %></h2>
 
-						<!-- <div class="filtertable">
-							<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>
-							<select id="select-filter2" name="filter">
+						<div class="filtertable unavailable">
+							<label class="table-label unavailable" for="select_fiter3"><%= texts.sortedby %>:</label>
+							<select class="unavailable" id="select-filter2" name="filter">
 								<option value="1"><%= texts.potsupport %></option>
 								<option value="2"><%= texts.support %></option>
 								<option value="3"><%= texts.newest %></option>
 								<option value="4"><%= texts.oldest %></option>
 							</select>
-						</div> -->
+						</div>
 						<table class="table-area">
 							<tr>
 								<th><%= texts.inis %></th>
@@ -115,7 +114,7 @@
 					 </div>
 
 				<div class="box-footer">
-					<!-- <a class="button" href="#"><%= texts.addalternativeinitiative %></a> --><a id="detailslide" class="button" href="#"><%= texts.details %></a>
+					<a class="button unavailable" href="#"><%= texts.addalternativeinitiative %></a><a id="detailslide" class="button" href="#"><%= texts.details %></a>
 			</div>
 			</div>
 		</div>
@@ -157,13 +156,13 @@
 			<div class="box-description">
 				<p><%= texts.areamembersinfo %></p>
 
-				<!-- <label class="table-label" for="select_fiter"><%= texts.sortedby %>:</label>	
-				<select id="select-filter" name="filter">							
+				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %>:</label>	
+				<select class="unavailable" id="select-filter" name="filter">							
 					<option value="1"><%= texts.atoz %></option>
 					<option value="2"><%= texts.ztoa %></option>
 					<option value="3"><%= texts.newest %></option>
 					<option value="3"><%= texts.oldest %></option>
-				</select> -->
+				</select>
 
 			</div>
 

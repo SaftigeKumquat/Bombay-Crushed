@@ -39,7 +39,7 @@
 				</dl>
 			</div>
 			<% if(user.isme == true) { %>
-			<!-- <div class="box-footer"><a class="button" href="#"><%= texts.changedata %></a></div> -->
+			<div class="box-footer unavailable"><a class="button" href="#"><%= texts.changedata %></a></div>
 			<% } %>
 		</div>
 		<div class="twocol last">

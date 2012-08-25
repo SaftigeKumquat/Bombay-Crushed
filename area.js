@@ -38,6 +38,7 @@ var area = function(state, render, page, memberpage) {
 			builtArea.issues = [];
 			builtArea.delegations = [];
 			builtArea.members = [];
+			builtArea.delegationnumber = 0;
 
 			var builtIssue = {};
 			var quorum_num, quorum_den;

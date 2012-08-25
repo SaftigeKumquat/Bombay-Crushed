@@ -771,7 +771,7 @@ h1 {
 .delegation-view tr:hover {background-color:transparent!important}
 .delegation-view td:hover  {background-color:#ffd988}
 
-.unavailable {visibility:hidden;}
+.unavailable {opacity:.4}
 
 /* ============================= */
 /* ! Layout for mobile version   */
