@@ -18,7 +18,7 @@
 	</div>
 	<div class="row">
 
-		<div class="twelvecol box last unavailable">
+		<div class="twelvecol box last">
 			<h2><%= texts.yourdelegates %></h2>
 			<div class="box-description">
 				<p><%= texts.lastactions %>:</p>
