@@ -243,17 +243,12 @@ exports.show = function(state) {
 					}
 
 					for(var i=0; i < tmp_initiatives_info.length; i++) {
-						if(supported_inis.length==0) {
-							tmp_initiatives_info[i].isupportini = false;
-							continue;
-						}
-						for(var j=0; j<supported_inis.length; j++)
+						tmp_initiatives_info[i].isupportini = false
+						for(var j=0; j<supported_inis.length; j++) {
 							if(tmp_initiatives_info[i].id == supported_inis[j]) {
 								tmp_initiatives_info[i].isupportini = true;
-								}
-							else {
-								tmp_initiatives_info[i].isupportini = false;
 							}
+						}
 					}
 					initiatives_info = tmp_initiatives_info;
 					finish();
