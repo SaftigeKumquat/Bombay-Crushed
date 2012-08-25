@@ -102,7 +102,7 @@
 			</div>
 			<% } %>
 			<div class="box-footer">
-				<a href="#" class="button button-forward"><%= texts.more %></a>
+				<a href="#" class="button button-forward unavailable"><%= texts.more %></a>
 			</div>
 
 		</div>
