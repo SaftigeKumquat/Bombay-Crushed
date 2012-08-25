@@ -61,6 +61,14 @@ var user = function(state, finish, allowOtherMember) {
 			'lastactive': lf_user.last_activity
 		};
 
+		// get birthday
+		if(lf_user.birthday !== null) {
+			state.context.user.birthdate = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear();
+		}
+		else {
+			state.context.user.birthdate = null;
+		}
+
 		// delete dummy content
 		state.context.delegateactions = [];
 		state.context.strongestdelegates = [];
