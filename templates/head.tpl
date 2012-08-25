@@ -54,9 +54,9 @@
 				<li><a <% if(meta.currentpage == "profile") { %>class="active" <% } %>href="<%= meta.baseurl %>/profile"><%= texts.profile %></a></li>
 				<li><a <% if(meta.currentpage == "timeline") { %>class="active" <% } %>href="<%= meta.baseurl %>/timeline"><%= texts.timeline %></a></li>
 			</ul>
-			<!-- <form method="get" action="search" id="search">
- 				 <input name="q" type="text" size="40" placeholder="<%= texts.search %>" />
-			</form> -->
+			<form class="unavailable" method="get" action="search" id="search">
+ 				 <input class="unavailable" name="q" type="text" size="40" placeholder="<%= texts.search %>" />
+			</form>
 		</div>
 	</div>
 </div>
