@@ -89,8 +89,8 @@
 			</div>
 			<% for(var i = 0; i < delegations.length; i++) { %>
 			<div class="box-delegate-info">
-				<img src="<%= meta.baseurl %>/<%= meta.baseurl %>/<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
-				<h3><a href="#"><%= delegations[i].user.name %></a><br /><span class="<%= delegations[i].action %>"><%
+				<img src="<%= meta.baseurl %>/<%= delegations[i].user.picsmall %>" alt="<%= texts.profilepic %>" />
+				<h3><a href="<%= meta.baseurl %>/profile?user_id=<%= delegations[i].user.id %>"><%= delegations[i].user.name %></a><br /><span class="<%= delegations[i].action %>"><%
 		if(delegations[i].action == 'for') {
 		%><%= texts.for %><% }
 		if(delegations[i].action == 'against') {
@@ -98,11 +98,11 @@
 		if(delegations[i].action == 'support') {
 		%><%= texts.supports %><% }
 		%></span></h3>
-				<p><a class="hiddenlink" href="#"><%= delegations[i].title || '' %></a> <a href="#">Begründung</a></p>
+				<p><a class="hiddenlink" href="<%= meta.baseurl %>/initiative?initiative_id=<%= delegations[i].initiative_id %>"><%= delegations[i].title || '' %></a> <a class="unavailable" href="#">Begründung</a></p>
 			</div>
 			<% } %>
 			<div class="box-footer">
-				<a href="#" class="button button-forward"><%= texts.more %></a>
+				<a href="#" class="button button-forward unavailable"><%= texts.more %></a>
 			</div>
 
 		</div>

@@ -71,7 +71,7 @@ module.exports.show = function(state) {
 				builtIni.title = inis[i].name;
 				builtIni.supporter = inis[i].satisfied_supporter_count;
 				builtIni.potsupporter = inis[i].supporter_count - inis[i].satisfied_supporter_count;
-				builtIni.status = issueFunc.getIssueStateText(ini.issue.state);
+				builtIni.status = issueFunc.getIssueStateText(inis[i].issue.state);
 
 				builtIni.area = inis[i].area.name;
 				builtIni.area_id = inis[i].area.id;
@@ -145,6 +145,7 @@ module.exports.show = function(state) {
 						events.push(event_res.result[0]);
 						finish();
 					});
+					ini = {};
 					ini = ini_res.result[i];
 					ini.issue = ini_res.issues[ini.issue_id];
 					ini.area = ini_res.areas[ini.issue.area_id];

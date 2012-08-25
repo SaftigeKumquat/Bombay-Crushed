@@ -50,7 +50,6 @@ var user = function(state, finish, allowOtherMember) {
 			'name': lf_user.realname,
 			'website': lf_user.website,
 			'profession': lf_user.profession,
-			'birthdate': date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear(),
 			'email': lf_user.email,
 			'jabber': lf_user.xmpp_address,
 			'phone': lf_user.phone,
@@ -60,6 +59,14 @@ var user = function(state, finish, allowOtherMember) {
 			'memberships': lf_user.external_memberships,
 			'lastactive': lf_user.last_activity
 		};
+
+		// get birthday
+		if(lf_user.birthday !== null) {
+			state.context.user.birthdate = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear();
+		}
+		else {
+			state.context.user.birthdate = null;
+		}
 
 		// delete dummy content
 		state.context.delegateactions = [];
