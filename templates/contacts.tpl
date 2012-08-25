@@ -1,7 +1,7 @@
 <div id="contentcontainer" class="container">
 	<div class="row">
 
-		<div class="twelvecol box last">
+		<div class="twelvecol box last unavailable">
 			<h2><%= texts.delegateview %></h2>
 				<label class="table-label" for="select_fiter"><%= texts.level %>:</label>
 				<select id="select-filter" name="filter">
@@ -18,7 +18,7 @@
 	</div>
 	<div class="row">
 
-		<div class="twelvecol box last">
+		<div class="twelvecol box last unavailable">
 			<h2><%= texts.yourdelegates %></h2>
 			<div class="box-description">
 				<p><%= texts.lastactions %>:</p>

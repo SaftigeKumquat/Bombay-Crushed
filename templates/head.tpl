@@ -49,8 +49,7 @@
 			<ul id="mainmenu">
 				<li><a <% if(meta.currentpage == "overview") { %>class="active" <% } %>href="<%= meta.baseurl %>/overview"><%= texts.overview %></a></li>
 				<li><a <% if(meta.currentpage == "topics") { %>class="active" <% } %>href="<%= meta.baseurl %>/topics"><%= texts.topics %></a></li>
-				<!-- Removed empty delegates page for milestone 1
-				<li><a <% if(meta.currentpage == "contacts") { %>class="active" <% } %>href="<%= meta.baseurl %>/contacts"><%= texts.contacts %></a></li> -->
+				<li><a class="unavailable <% if(meta.currentpage == "contacts") { %>active<% } %>" href="<%= meta.baseurl %>/contacts"><%= texts.contacts %></a></li>
 				<li><a <% if(meta.currentpage == "profile") { %>class="active" <% } %>href="<%= meta.baseurl %>/profile"><%= texts.profile %></a></li>
 				<li><a <% if(meta.currentpage == "timeline") { %>class="active" <% } %>href="<%= meta.baseurl %>/timeline"><%= texts.timeline %></a></li>
 			</ul>
