@@ -155,7 +155,7 @@ exports.show = function(state) {
 			}
 
 			tmp_issue_info.quorum = res.policies[issue_res.policy_id].issue_quorum_num;
-			if(issue_res.closed === undefined) {
+			if(issue_res.closed === null) {
 				tmp_issue_info.open = true;
 			}
 			else {
