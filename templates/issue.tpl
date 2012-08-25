@@ -174,16 +174,18 @@
 
 			<div class="box-footer">
 				<ul class="pagination">
-						<% if(issue.pagination.currentinterested == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="#"><%= texts.backshort %></a></li><% }
+						<% if(issue.pagination.currentinterested == 1) { %><li class="button button-backward-off"><%= texts.backshort %></li><% } else { %><li><a class="button button-backward" href="<%= meta.baseurl %>/issue?issue_id=<%= issue.id %>&interestpage=<%= issue.pagination.currentinterested - 1 %>"><%= texts.backshort %></a></li><% }
+					if(issue.pagination.totalinterested > 1) {
 						for(var a = 1; a <= issue.pagination.totalinterested; a++) {
 							if(a == issue.pagination.currentinterested) { %>
 								<li class="active"><%= a %></li>
 							<% } else { %>
-								<li><a href="#"><%= a %></a></li>
+								<li><a href="<%= meta.baseurl %>/issue?issue_id=<%= issue.id %>&interestpage=<%= a %>"><%= a %></a></li>
 							<% }
+						}
 					}
 					var nextpage = issue.pagination.currentinterested + 1;
-					if(issue.pagination.currentinterested != issue.pagination.totalinterested) { %><li><a class="button button-forward" href="#"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
+					if(issue.pagination.currentinterested < issue.pagination.totalinterested) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/issue?issue_id=<%= issue.id %>&interestpage=<%= nextpage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 				</ul>
 			</div>
 		</div>

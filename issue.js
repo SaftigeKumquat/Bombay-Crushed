@@ -131,17 +131,26 @@ exports.show = function(state) {
 				"iwatchissue": false, //default value, may become true later
 				
 				//TODO
-				"delegationnumber": 200,
+				"delegationnumber": 0,
 				/*"delegate": { "name": "Christoph Fritzsche",
 						"picsmall": "content_img/profile_delegate_1.png" },*/
 				"pagination": {
 					"currentdelegations": 1,
-					"totaldelegations": 2,
-					"currentinterested": 2,
-					"totalinterested": 2
+					"totaldelegations": 2
 				}
 
 			};
+
+			if(state.url.query.interestpage != undefined && state.url.query.interestpage > 1) {
+				tmp_issue_info.pagination.currentinterested = state.url.query.interestpage;
+				start_interest = (state.url.query.interestpage - 1) * 24;
+				end_interest = state.url.query.interestpage * 24;
+			}
+			else {
+				tmp_issue_info.pagination.currentinterested = 1;
+				start_interest = 0;
+				end_interest = 24;
+			}
 
 			//fill undefined values
 			if(tmp_issue_info.acceptedat === null){
@@ -182,8 +191,9 @@ exports.show = function(state) {
 			lf.query('/interest', {'issue_id': issue_id, 'snapshot': 'latest'}, state, function(res) {
 				var tmp_members_info = [];
 				var members_ids = [];
+				tmp_issue_info.pagination.totalinterested = Math.ceil(res.result.length / 24);
 				//gather member ids
-				for(var i = 0; i < res.result.length; i++) {
+				for(var i = start_interest; i < res.result.length && i < end_interest; i++) {
 					if(res.result[i].member_id == state.user_id()) {
 						tmp_issue_info.iwatchissue = true;
 						members_ids.push(res.result[i].member_id);
