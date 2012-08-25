@@ -167,8 +167,8 @@
 
 				<% for(var i = 0; i < issue.members.length; i++) { %>
 				<div class="box-delegate-info box-supporters<% if(issue.members[i].isdelegated) { %> box-supporter-delegate<% } %>">
-					<a href="#"><img src="<%= meta.baseurl %>/<%= issue.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
-					<h3><a href="#"><%= issue.members[i].name %></a></h3>
+					<a href="<%= meta.baseurl %>/profile?user_id=<%= issue.members[i].id %>"><img src="<%= meta.baseurl %>/<%= issue.members[i].picmini %>" alt="<%= texts.profilepic %>"/></a>
+					<h3><a href="<%= meta.baseurl %>/profile?user_id=<%= issue.members[i].id %>"><%= issue.members[i].name %></a></h3>
 				</div>
 				<% } %>
 
