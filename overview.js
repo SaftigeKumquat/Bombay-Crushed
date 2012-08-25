@@ -9,7 +9,7 @@ var lf = require('./lfcli.js');
 
 var user = require('./user.js');
 var inis = require('./inis.js');
-var delegations = require('./delegations');
+var delegations = require('./delegations.js');
 var texts = require('./texts.json');
 
 /**
