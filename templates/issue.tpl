@@ -98,7 +98,7 @@
 							<br />
 							<dt><%= texts.createdat %></dt><dd><%= issue.createdat %></dd>
 							<dt><%= texts.acceptedat %></dt><dd><%= issue.acceptedat %></dd>
-							<dt><%= texts.halffrozenat %></dt><dd><%= issue.halffrozenat %></dd>
+							<dt><%= texts.halffrozendat %></dt><dd><%= issue.halffrozenat %></dd>
 							<dt><%= texts.frozenat %></dt><dd><%= issue.frozenat %></dd>
 							<br />
 							<dt><%= texts.timeforadmission %></dt><dd><%= issue.timeforadmission %> <% if(issue.timeforadmission=="1") { %><%= texts.day %><% } else { %><%= texts.days %><% } %></dd>
@@ -152,12 +152,12 @@
 		</div>
 
 		<div class="threecol box last">
-			<h2><%= texts.interestedmembers %> (1200)</h2>
+			<h2><%= texts.interestedmembers %> (<%= issue.members.length %>)</h2>
 			<div class="box-description">
 				<p><%= texts.areamembersinfo %></p>
 
-				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %>:</label>	
-				<select class="unavailable" id="select-filter" name="filter">							
+				<label class="table-label unavailable" for="select_fiter"><%= texts.sortedby %>:</label>
+				<select class="unavailable" id="select-filter" name="filter">
 					<option value="1"><%= texts.atoz %></option>
 					<option value="2"><%= texts.ztoa %></option>
 					<option value="3"><%= texts.newest %></option>

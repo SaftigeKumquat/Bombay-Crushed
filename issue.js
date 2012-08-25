@@ -87,9 +87,8 @@ exports.show = function(state) {
 
 	var issue_id = state.url.query.issue_id;
 
-	// the variables to that will be set by the data retrievers
-	// and if set the page will be rendered
-	var issue_info, initiatives_info, castvote_info;
+	// the variables that will be set by the data retrievers
+	// If they are finally filled with data the page will be rendered
 
 	var finish = function() {
 		var ctx = state.context;
@@ -109,10 +108,8 @@ exports.show = function(state) {
 	}
 
 	//get issue
-	//issue_id=1&include_areas=1&include_units=1&include_policies=1
 	lf.query('/issue', { 'issue_id': issue_id, 'include_units': 1, 'include_policies': 1, 'include_areas': 1 }, state, function(res)
 		{
-			//console.log(JSON.stringify(res));
 			//TODO handle empty result
 			var issue_res = res.result[0];
 			//fill directly available issue information
@@ -120,7 +117,7 @@ exports.show = function(state) {
 				id: issue_id,
 				population: issue_res.population,
 				createdat: issue_res.created,
-				accepted: issue_res.accepted,
+				acceptedat: issue_res.accepted,
 				halffrozenat: issue_res.half_frozen,
 				frozenat: issue_res.fully_frozen,
 				timeforadmission: issue_res.admission_time.days,
@@ -142,6 +139,17 @@ exports.show = function(state) {
 				}
 
 			};
+
+			//fill undefined values
+			if(tmp_issue_info.acceptedat === null){
+				tmp_issue_info.acceptedat = '-';
+			}
+			if(tmp_issue_info.halffrozenat === null){
+				tmp_issue_info.halffrozenat = '-';
+			}
+			if(tmp_issue_info.frozenat === null){
+				tmp_issue_info.frozenat = '-';
+			}
 
 			tmp_issue_info.quorum = res.policies[issue_res.policy_id].issue_quorum_num;
 			if(issue_res.closed === undefined) {
