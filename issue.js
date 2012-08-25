@@ -123,10 +123,10 @@ exports.show = function(state) {
 				accepted: issue_res.accepted,
 				halffrozenat: issue_res.half_frozen,
 				frozenat: issue_res.fully_frozen,
-				timeforadmission: issue_res.admission_time,
-				timefordiscussion: issue_res.discussion_time,
-				timeforrevision: issue_res.verification_time,
-				timeforvote: issue_res.voting_time,
+				timeforadmission: issue_res.admission_time.days,
+				timefordiscussion: issue_res.discussion_time.days,
+				timeforrevision: issue_res.verification_time.days,
+				timeforvote: issue_res.voting_time.days,
 				status: getIssueState(issue_res.state),
 				
 				//TODO
