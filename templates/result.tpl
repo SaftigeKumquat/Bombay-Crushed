@@ -113,7 +113,7 @@
 				</select>
 
 			</div>	
-			
+				<!--
 				<div class="box-delegate-info box-supporters">
 					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild"/></a>
 					<h3><a href="#">Johannes Knopp</a> <a href="" class="for">+23</a></h3>
@@ -175,7 +175,7 @@
 					<a href="#"><img src="content_img/profile_small.png" alt="Profilbild" /></a>
 					<h3><a href="#">Doktor Knopp</a></h3>
 				</div>
-												
+				-->						
 			<div class="box-footer">		
 				<ul class="pagination">
 					<li class="button button-backward-off">zurück</li>
