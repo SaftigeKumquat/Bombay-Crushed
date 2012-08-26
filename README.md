@@ -11,6 +11,7 @@ Where to start?
 `config.default.json` contains default configuration values for `server.js`. Override values by setting them in a new file called `config.json`. You can configure
 * the url and port of the Liquid Feedback API
 * the url (prefix), port and host, where the service should be hosted
+* the URL of the Liquid Feedback UI to get the API Key from
 
 `ejscli.js` allows testing templates on the command line.
 
