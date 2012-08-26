@@ -11,6 +11,7 @@ var user = require('./user.js');
 var inis = require('./inis.js');
 var delegations = require('./delegations.js');
 var texts = require('./texts.json');
+var config = require('./config.js');
 
 /**
  * Get the list of areas including membership information.
@@ -413,7 +414,8 @@ exports.show = function(state) {
 exports.showLogin = function(state) {
 	var finish = function() {
 		var ctx = state.context;
-		ctx.meta.currentpage = "login";
+		ctx.meta.currentpage = "login";		
+		ctx.hostsystem = config.hostsystem;
 		if(ctx.news !== undefined) {
 			ejs.render(state, '/login.tpl');
 		}

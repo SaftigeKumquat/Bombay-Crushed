@@ -6,5 +6,6 @@
 	"baseurl": {
 		"host": "apitest.liquidfeedback.org",
 		"port": 25520
-	}
+	},
+	"hostsystem": "http://dev.liquidfeedback.org/lf2"
 }
