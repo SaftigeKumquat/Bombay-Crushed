@@ -260,14 +260,14 @@ var news = function(state, render) {
 	// if all required data has been collected format data for template
 	// and call news-function wide calback
 	quorumHelper = function() {
-		var policies, units, last_activity;
+		var policies, units;
 
 		/**
 		 * Callback function used everytime data is stored in the object.
 		 * If all data is collected, process and call next level callback.
 		 */
 		var getIni = function() {
-			if(policies !== undefined && units !== undefined && last_activity !== undefined) {
+			if(policies !== undefined && units !== undefined) {
 				var requests = 0, responses = 0, initiatives = [];
 
 				var selectTopIni = function() {
@@ -340,7 +340,6 @@ var news = function(state, render) {
 
 						lf.query('/initiative', {
 							'initiative_revoked': false,
-							//'initiative_created_after': last_activity,
 							'issue_state': 'admission',
 							'initiative_supporter_count_below': Math.ceil(quorum),
 							'initiative_supporter_count_above': Math.floor(0.8 * quorum)
@@ -360,8 +359,7 @@ var news = function(state, render) {
 		// data setters with associated callback function
 		return {
 			'setPolicies': function(val) { policies = val, getIni() },
-			'setUnits': function(val) { units = val, getIni() },
-			'setLastActivity': function(val) { last_activity = val; console.log('LAST ACTIVITY: ' + last_activity); getIni() }
+			'setUnits': function(val) { units = val, getIni() }
 		};
 	}();
 
@@ -371,9 +369,6 @@ var news = function(state, render) {
 	});
 	lf.query('/unit', {}, state, function(res) {
 		quorumHelper.setUnits(res.result || false);
-	});
-	lf.query('/member', {'member_id': state.user_id() }, state, function(res) {
-		quorumHelper.setLastActivity(res.result[0].last_activity || false);
 	});
 };
 
