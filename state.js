@@ -98,7 +98,17 @@ module.exports = function(serverError, invalidResource) {
 				}
 			}
 
+			/**
+			 * Whether the current request cycle is being redirected to login.
+			 * Used to avoid cycles in case rendering of the login page tries
+			 * to retrieve data that would have required a login.
+			 */
+			var redirecting_to_login = false;
 			state.sendToLogin = function(message) {
+					if(redirecting_to_login) {
+						return;
+					}
+					redirecting_to_login = true;
 					// TODO pass message to template
 					if(state.local_path != '/login') {
 						state.context.meta.refresh_url = req.url;
