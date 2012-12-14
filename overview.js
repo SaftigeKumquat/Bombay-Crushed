@@ -153,22 +153,29 @@ var news = function(state, render) {
 				var pDirect = 0, pIndirect = 0;
 				var nDirect = 0, nIndirect = 0;
 
-				var i, j;
-				for(i = 0; i < voters.length; ++i) {
-					var voter = voters[i];
-					for(j = 0; j < votes.length; ++j) {
-						var vote = votes[j];
-						if(vote.member_id === voter.member_id) { // issue_id should be correct by query restriction
-							if(vote.grade > 0) {
-								pDirect = pDirect + 1;
-								pIndirect = pIndirect + voter.weight - 1;
-							}
-							if(vote.grade < 0) {
-								nDirect = nDirect + 1;
-								nIndirect = nIndirect + voter.weight - 1;
+				if(voters && votes) {
+					var i, j;
+					for(i = 0; i < voters.length; ++i) {
+						var voter = voters[i];
+						for(j = 0; j < votes.length; ++j) {
+							var vote = votes[j];
+							if(vote.member_id === voter.member_id) { // issue_id should be correct by query restriction
+								if(vote.grade > 0) {
+									pDirect = pDirect + 1;
+									pIndirect = pIndirect + voter.weight - 1;
+								}
+								if(vote.grade < 0) {
+									nDirect = nDirect + 1;
+									nIndirect = nIndirect + voter.weight - 1;
+								}
 							}
 						}
 					}
+				} else {
+					pDirect = pVoters;
+					nDirect = nVoters;
+					pIndirect = undefined;
+					nIndirect = undefined;
 				}
 
 				news.chart = {
