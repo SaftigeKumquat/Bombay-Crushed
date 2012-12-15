@@ -92,20 +92,16 @@ exports.render = function(state, template, standAlone) {
 			context.loggedin = true;
 		}
 
-		var head = ejs.render(tpls[headtpl], context);
-		var main = ejs.render(tpls[maintpl], context);
-		var footer = ejs.render(tpls[footertpl], context);
-
 		var result = state.result;
 
 		if(!standAlone) {
-			result.write(head);
+			result.write(ejs.render(tpls[headtpl], context));
 		}
 
-		result.write(main);
+		result.write(ejs.render(tpls[maintpl], context));
 		
 		if(!standAlone) {
-			result.write(footer);
+			result.write(ejs.render(tpls[footertpl], context));
 		}
 
 		result.end();
