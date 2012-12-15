@@ -38,15 +38,28 @@ fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 // Get a list of templates and cache them.
 //
 fs.readdir(__dirname + '/templates/', function(err, files) {
+	var cache_if_not_dir = function(filename) {
+		console.log('stating ' + filename);
+		fs.stat(__dirname + '/templates/' + filename, function(err, stats) {
+			// ignore errors
+			if(!err && !stats.isDirectory()) {
+				try {
+					caching('/templates/' + filename);
+					console.log(' -- ' + filename);
+				} catch (ignore) {}
+			}
+		});
+	}
+
+	var f;
+	var cache_if_not_dir;
+
 	if (err) {
 		throw err;
 	}
 	console.log('Found ' + files.length + ' template files:');
 	for (f in files) {
-		try {
-			caching('/templates/' + files[f]);
-			console.log(' -- ' + files[f]);
-		} catch (ignore) {}
+		cache_if_not_dir(files[f]);
 	}
 } );
 
