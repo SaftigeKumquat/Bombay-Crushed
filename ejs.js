@@ -131,11 +131,12 @@ exports.render = function(state, template, standAlone) {
  */
 function caching(tpl) {
 	if (tpls[tpl] === undefined) {
-		fs.readFile(__dirname + tpl, 'utf8', function(err, data) {
+		var full_path = __dirname + tpl;
+		fs.readFile(full_path, 'utf8', function(err, data) {
 			if (err) {
 				throw err;
 			}
-			tpls[tpl] = ejs.compile(data);
+			tpls[tpl] = ejs.compile(data, {filename: full_path});
 		});
 	}
 }
