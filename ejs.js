@@ -108,13 +108,13 @@ exports.render = function(state, template, standAlone) {
 		var result = state.result;
 
 		if(!standAlone) {
-			result.write(ejs.render(tpls[headtpl], context));
+			result.write(tpls[headtpl](context));
 		}
 
-		result.write(ejs.render(tpls[maintpl], context));
-		
+		result.write(tpls[maintpl](context));
+
 		if(!standAlone) {
-			result.write(ejs.render(tpls[footertpl], context));
+			result.write(tpls[footertpl](context));
 		}
 
 		result.end();
@@ -135,7 +135,7 @@ function caching(tpl) {
 			if (err) {
 				throw err;
 			}
-			tpls[tpl] = data;
+			tpls[tpl] = ejs.compile(data);
 		});
 	}
 }
