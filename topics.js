@@ -1,5 +1,6 @@
 var lf = require('./lfcli.js');
 var ejs = require('./ejs.js');
+var logger = require('./logger.js');
 
 function topics(state, render) {
 
