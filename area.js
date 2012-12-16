@@ -391,7 +391,7 @@ exports.update_issues_table = function(state) {
 	// get page numbers
 	var page = 1;
 	var memberpage = 1;
-	var issue_sort_criteria = 1;
+	var issue_sort_criteria = 5;
 	if(state.url.query.page) {
 		page = state.url.query.page;
 	}
