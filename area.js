@@ -23,6 +23,7 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 	var policies = [];
 	var interest = [];
 	var inis = [];
+	var inis_by_issueid = {};
 	var members = [];
 	var users = [];
 	var support = [];
@@ -78,6 +79,12 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 			var issue_sort_function;
 			logger(2, 'issue sort criteria is ' + issue_sort_criteria);
 			switch(issue_sort_criteria) {
+				case '3':
+					logger(2, 'sorting highes population first');
+					issue_sort_function = function(a,b) {
+						return a.population - b.population;
+					};
+					break;
 				case '4':
 					logger(2, 'sorting newest issues first');
 					issue_sort_function = function(a,b) {
@@ -126,96 +133,90 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 					}
 				}
 
-				for(var a = 0; a < inis.length; a++) {
-					if(inis[a][0].issue_id == builtIssue.id) {
+				inis_of_issue = inis_by_issueid[builtIssue.id];
 
-						// bug fix: keep original table
-						original_inis = inis[a];
-
-						if(issues[i].ranks_available) {
-							// only keep admitted inis
-							admitted_inis = [];
-							for(var b = 0; b < inis[a].length; b++) {
-								if(inis[a][b].admitted) {
-									admitted_inis.push(inis[a][b])
-								}
-							}
-							inis[a] = admitted_inis;
-
-							// sort inis by rank
-							Array.prototype.sort.call(inis[a], function(a,b) {
-								if (a.rank < b.rank)
-									return -1;
-								else if (a.rank > b.rank)
-									return 1;
-								else
-									return 0;
-							});
-						}
-						else {
-							// sort inis by supporter
-							Array.prototype.sort.call(inis[a], function(a,b) {
-								if (a.satisfied_supporter_count > b.satisfied_supporter_count)
-									return -1;
-								else if (a.satisfied_supporter_count < b.satisfied_supporter_count)
-									return 1;
-								else
-									return 0;
-							});
-						}
-
-						// TODO do something if no ini is admitted..
-						if(inis[a][0] == undefined) {
-							inis[a] = original_inis;
-						}
-
-						builtIssue.initiative_id = inis[a][0].id;
-						builtIssue.title = inis[a][0].name;
-						builtIssue.supporter = inis[a][0].satisfied_supporter_count;
-						builtIssue.potsupporter = inis[a][0].supporter_count - inis[a][0].satisfied_supporter_count;
-						builtIssue.uninterested = ( builtArea.membernumber - builtIssue.supporter ) - builtIssue.potsupporter;
-						if(builtIssue.uninterested < 0) {
-							builtIssue.uninterested = 0;
-						}
-
-						var total = builtIssue.supporter + builtIssue.potsupporter + builtIssue.uninterested;
-						builtIssue.support = Math.floor(( builtIssue.supporter / total ) * 100);
-						builtIssue.potential = Math.floor(( builtIssue.potsupporter / total ) * 100);
-						builtIssue.uninvolved = Math.floor(( builtIssue.uninterested / total ) * 100);
-						builtIssue.quorum = Math.floor(100 * quorum_num / quorum_den);
-
-						// check if member supports ini
-						if(getMemberSupport(support, builtIssue.id, inis[a][0].id)) {
-							builtIssue.isupportini = true;
-						}
-
-						builtIssue.alternativeinis = [];
-
-						for(var b = 1; b < inis[a].length; b++) {
-							alternativeIni = {};
-
-							alternativeIni.id = inis[a][b].id;
-							alternativeIni.title = inis[a][b].name;
-							alternativeIni.supporter = inis[a][b].satisfied_supporter_count;
-							alternativeIni.potsupporter = inis[a][b].supporter_count - inis[a][b].satisfied_supporter_count;
-							alternativeIni.uninterested = ( builtArea.membernumber - alternativeIni.supporter ) - alternativeIni.potsupporter;
-							if(alternativeIni.uninterested < 0) {
-								alternativeIni.uninterested = 0;
-							}
-
-							var total = alternativeIni.supporter + alternativeIni.potsupporter + alternativeIni.uninterested;
-							alternativeIni.support = Math.floor(( alternativeIni.supporter / total ) * 100);
-							alternativeIni.potential = Math.floor(( alternativeIni.potsupporter / total ) * 100);
-							alternativeIni.uninvolved = Math.floor(( alternativeIni.uninterested / total ) * 100);
-
-							// check if member supports ini
-							if(getMemberSupport(support, builtIssue.id, inis[a][b].id)) {
-								alternativeIni.isupportini = true;
-							}
-
-							builtIssue.alternativeinis.push(alternativeIni);
+				if(issues[i].ranks_available) {
+					// only keep admitted inis
+					admitted_inis = [];
+					for(var b = 0; b < inis_of_issue.length; b++) {
+						if(inis_of_issue[b].admitted) {
+							admitted_inis.push(inis_of_issue[b])
 						}
 					}
+					inis_of_issue = admitted_inis;
+
+					// sort inis by rank
+					Array.prototype.sort.call(inis_of_issue, function(a,b) {
+						if (a.rank < b.rank)
+							return -1;
+						else if (a.rank > b.rank)
+							return 1;
+						else
+							return 0;
+					});
+				}
+				else {
+					// sort inis by supporter
+					Array.prototype.sort.call(inis_of_issue, function(a,b) {
+						if (a.satisfied_supporter_count > b.satisfied_supporter_count)
+							return -1;
+						else if (a.satisfied_supporter_count < b.satisfied_supporter_count)
+							return 1;
+						else
+							return 0;
+					});
+				}
+
+				// TODO do something if no ini is admitted..
+				if(inis_of_issue[0] == undefined) {
+					inis_of_issue = inis_by_issueid[builtIssue.id];
+				}
+
+				builtIssue.initiative_id = inis_of_issue[0].id;
+				builtIssue.title = inis_of_issue[0].name;
+				builtIssue.supporter = inis_of_issue[0].satisfied_supporter_count;
+				builtIssue.potsupporter = inis_of_issue[0].supporter_count - inis_of_issue[0].satisfied_supporter_count;
+				builtIssue.uninterested = ( builtArea.membernumber - builtIssue.supporter ) - builtIssue.potsupporter;
+				if(builtIssue.uninterested < 0) {
+					builtIssue.uninterested = 0;
+				}
+
+				var total = builtIssue.supporter + builtIssue.potsupporter + builtIssue.uninterested;
+				builtIssue.support = Math.floor(( builtIssue.supporter / total ) * 100);
+				builtIssue.potential = Math.floor(( builtIssue.potsupporter / total ) * 100);
+				builtIssue.uninvolved = Math.floor(( builtIssue.uninterested / total ) * 100);
+				builtIssue.quorum = Math.floor(100 * quorum_num / quorum_den);
+
+				// check if member supports ini
+				if(getMemberSupport(support, builtIssue.id, inis_of_issue[0].id)) {
+					builtIssue.isupportini = true;
+				}
+
+				builtIssue.alternativeinis = [];
+
+				for(var b = 1; b < inis_of_issue.length; b++) {
+					alternativeIni = {};
+
+					alternativeIni.id = inis_of_issue[b].id;
+					alternativeIni.title = inis_of_issue[b].name;
+					alternativeIni.supporter = inis_of_issue[b].satisfied_supporter_count;
+					alternativeIni.potsupporter = inis_of_issue[b].supporter_count - inis_of_issue[b].satisfied_supporter_count;
+					alternativeIni.uninterested = ( builtArea.membernumber - alternativeIni.supporter ) - alternativeIni.potsupporter;
+					if(alternativeIni.uninterested < 0) {
+						alternativeIni.uninterested = 0;
+					}
+
+					var total = alternativeIni.supporter + alternativeIni.potsupporter + alternativeIni.uninterested;
+					alternativeIni.support = Math.floor(( alternativeIni.supporter / total ) * 100);
+					alternativeIni.potential = Math.floor(( alternativeIni.potsupporter / total ) * 100);
+					alternativeIni.uninvolved = Math.floor(( alternativeIni.uninterested / total ) * 100);
+
+					// check if member supports ini
+					if(getMemberSupport(support, builtIssue.id, inis_of_issue[b].id)) {
+						alternativeIni.isupportini = true;
+					}
+
+					builtIssue.alternativeinis.push(alternativeIni);
 				}
 
 				builtArea.issues.push(builtIssue);
@@ -270,6 +271,9 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 
 				lf.query('/initiative', { 'issue_id': issue_id }, state, function(ini_res) {
 					inis.push(ini_res.result);
+					if(ini_res.result.length > 0) {
+						inis_by_issueid[ini_res.result[0].issue_id] = ini_res.result;
+					}
 					finish();
 				});
 
