@@ -21,4 +21,3 @@
 		<td><a href="<%= meta.baseurl %>/area?area_id=<%= areas[j].id %>&issue_state=7"><%= areas[j].topics.status6 %></a></td>
 	</tr><% } %>
 </table>
-

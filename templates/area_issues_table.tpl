@@ -13,7 +13,7 @@
 				<option <% if(selected_issue_state == '8') { %> selected="selected" <% } %> value="8"><%= texts.all %></option>		
 			</select>
 		</div>
-		<div class="multiple-filter">
+		<div class="multiple-filter unavailable">
 			<label class="table-label" for="select_fiter2"><%= texts.mystatus %>:</label>	
 			<select id="select-filter2" name="filter">							
 				<option value="1"><%= texts.all %></option>
@@ -23,7 +23,7 @@
 				<option value="5"><%= texts.initiated %></option>		
 			</select>
 		</div>	
-		<div class="multiple-filter">			
+		<div class="multiple-filter unavailable">			
 			<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>	
 			<select id="select-filter2" name="filter">							
 				<option value="1"><%= texts.maxpotsupporter %></option>
@@ -93,5 +93,5 @@
 			var nextpage = ( area.issuespage - 1 ) + 2;
 			if(area.issuespage < area.issuespages) { %><li><a class="button button-forward" href="<%= meta.baseurl %>/area?area_id=<%= area.id %>&page=<%= nextpage %>&memberpage=<%= area.memberspage %>"><%= texts.forward %></a></li><% } else { %><li class="button button-forward-off"><%= texts.forward %></li><% } %>
 		</ul>
-	</div>	
+	</div>
 </div>
