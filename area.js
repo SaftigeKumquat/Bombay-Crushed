@@ -45,6 +45,21 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 		return max;
 	}
 
+	function max_supporters(issueid) {
+		var inis = inis_by_issueid[issueid];
+		var i;
+		var max = 0;
+		if(inis) {
+			for(i = 0; i < inis.length; i++) {
+				if(inis[i].supporter_count > max) {
+					max = inis[i].satisfied_supporter_count;
+				}
+			}
+		}
+		logger(4, 'Max supporters for ' + issueid + ': ' + max);
+		return max;
+	}
+
 	var finish = function() {
 		if(builtArea.name && builtArea.unit
 			&& membershipDone == true && issueDone == true
@@ -99,6 +114,12 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 					logger(2, 'sort by max potential supporters (includes actual)');
 					issue_sort_function = function(a,b) {
 						return max_total_supporters(b.id) - max_total_supporters(a.id);
+					}
+					break;
+				case '2':
+					logger(2, 'sort by satisfied supporters');
+					issue_sort_function = function(a,b) {
+						return max_supporters(b.id) - max_supporters(a.id);
 					}
 					break;
 				case '3':
