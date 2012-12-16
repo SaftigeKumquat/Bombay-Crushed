@@ -11,12 +11,13 @@ var url = require('url');
 var ejs = require('./ejs.js')
 var config = require('./config.js');
 var news = require('./overview.js');
+var logger = require('./logger.js');
 
 module.exports = function(serverError, invalidResource) {
 	var app_prefix = '';
 	if(config.listen.baseurl) {
 		app_prefix = url.parse(config.listen.baseurl).pathname;
-		console.log('APP Prefix: ' + app_prefix);
+		logger(1, 'APP Prefix: ' + app_prefix);
 	}
 
 	return {

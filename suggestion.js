@@ -1,6 +1,7 @@
 var ejs = require('./ejs.js');
 var lf = require('./lfcli.js');
 var user = require('./user.js');
+var logger = require('./logger.js');
 
 /**
  * Calculate the happiness smiley for the given opinion.
@@ -231,7 +232,7 @@ function opinions(state, finish) {
 				opinionpage: state.url.query.opinionpage || 1
 			}
 			if(tmp.opinionpage < 1 || tmp.opinionpage > tmp.opinionpages) {
-				console.log('WARNING: Opinion page ' + tmp.opinionpage + ' requested, but only pages 1 to ' + tmp.opinionpages + ' valid for suggestion ' + suggestion_id);
+				logger(2, 'WARNING: Opinion page ' + tmp.opinionpage + ' requested, but only pages 1 to ' + tmp.opinionpages + ' valid for suggestion ' + suggestion_id);
 				tmp.opinionpage = 1;
 			}
 			return tmp;

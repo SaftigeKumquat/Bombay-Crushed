@@ -12,7 +12,8 @@ var ejs = require('ejs')
   , fs = require('fs')
   , tpls = new Array() // Cache for templates
   , fallback_context // Fallback context
-  , texts;
+  , texts
+  , logger = require('./logger.js');
 
 fs.readFile(__dirname + '/texts.json', function(err, data) {
 	if(err) {
@@ -20,7 +21,7 @@ fs.readFile(__dirname + '/texts.json', function(err, data) {
 	}
 
 	texts = JSON.parse(data);
-	console.log('Finished parsing texts');
+	logger(1, 'Finished parsing texts');
 } );
 
 //
@@ -31,7 +32,7 @@ fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 		throw err;
 	}
 	fallback_context = JSON.parse(data);
-	console.log('Finished parsing fallback context');
+	logger(1, 'Finished parsing fallback context');
 } );
 
 //
@@ -39,13 +40,13 @@ fs.readFile(__dirname + '/context.json', 'utf8', function(err, data) {
 //
 fs.readdir(__dirname + '/templates/', function(err, files) {
 	var cache_if_not_dir = function(filename) {
-		console.log('stating ' + filename);
+		logger(1, 'stating ' + filename);
 		fs.stat(__dirname + '/templates/' + filename, function(err, stats) {
 			// ignore errors
 			if(!err && !stats.isDirectory()) {
 				try {
 					caching('/templates/' + filename);
-					console.log(' -- ' + filename);
+					logger(1, ' -- ' + filename);
 				} catch (ignore) {}
 			}
 		});
@@ -57,7 +58,7 @@ fs.readdir(__dirname + '/templates/', function(err, files) {
 	if (err) {
 		throw err;
 	}
-	console.log('Found ' + files.length + ' template files:');
+	logger(1, 'Found ' + files.length + ' template files:');
 	for (f in files) {
 		cache_if_not_dir(files[f]);
 	}
@@ -91,7 +92,7 @@ exports.render = function(state, template, standAlone) {
 		for(key in fallback_context) {
 			if( ! (key in context) ) {
 				context[key] = fallback_context[key];
-				console.log("Fell back for " + key);
+				logger(1, "Fell back for " + key);
 			}
 		}
 
@@ -119,7 +120,7 @@ exports.render = function(state, template, standAlone) {
 
 		result.end();
 
-		console.log('Served ' + state.request.url);
+		logger(1, 'Served ' + state.request.url);
 	} else {
 		state.fail('No template found for the requested page.', 500);
 	}
@@ -136,6 +137,7 @@ function caching(tpl) {
 			if (err) {
 				throw err;
 			}
+			logger(1, 'Compiling template ' + full_path);
 			tpls[tpl] = ejs.compile(data, {filename: full_path});
 		});
 	}

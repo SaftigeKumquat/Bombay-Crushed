@@ -1,4 +1,5 @@
 var lf = require('./lfcli.js');
+var logger = require('./logger.js');
 
 /**
  * Returns the object required by templates for an API member object
@@ -28,7 +29,7 @@ var user = function(state, finish, allowOtherMember) {
 		if(state.context.user !== undefined && units.length === unit_count
 		&& unit_count !== -1) {
 			state.context.user.units = units;
-			console.log('SUCCESS');
+			logger(2, 'SUCCESS');
 			finish();
 		}
 	}

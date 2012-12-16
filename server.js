@@ -19,6 +19,7 @@ var lf = require('./lfcli.js');
 var querystring = require('querystring');
 var fs = require('fs');
 var Canvas = require('canvas');
+var logger = require('./logger.js');
 
 // load configuration
 var config = require('./config.js');
@@ -98,7 +99,7 @@ var showArea = function(state) {
 
 	// we need an area id
 	if(!state.url.query.area_id) {
-		console.log('Please provide area_id parameter');
+		logger(1, 'Please provide area_id parameter');
 		invalidURL(state);
 		return;
 	}
@@ -139,7 +140,7 @@ var showInitiative = function(state) {
 
 	// we need an initiative id
 	if(!state.url.query.initiative_id) {
-		console.log('Please provide initiative_id parameter');
+		logger(1, 'Please provide initiative_id parameter');
 		invalidURL(state);
 		return;
 	}
@@ -211,7 +212,7 @@ var invalidURL = function(state, logmessage, errorcode) {
 		errorcode = 404;
 	}
 
-	console.log('WARN: ' + logmessage + ' – Sent code ' + errorcode + ' to the client');
+	logger(1, 'WARN: ' + logmessage + ' – Sent code ' + errorcode + ' to the client');
 
 	var res = state.result;
 	res.writeHead(errorcode, {'Content-Type': 'text/plain'});
@@ -310,14 +311,14 @@ var serveStatic = function(state) {
 	// stream from file to requestee
 	// TODO could probably be read chunkwise
 	filepath = __dirname + '/html' + state.local_path;
-	console.log('Serving: ' + filepath);
+	logger(1, 'Serving: ' + filepath);
 	fs.readFile(filepath, function(err, data) {
 		if(err) {
 			invalidURL(state);
 			return;
 		}
 		state.result.end(data);
-		console.log('Served: ' + filepath);
+		logger(1, 'Served: ' + filepath);
 	});
 }
 
@@ -331,7 +332,7 @@ var serveStatic = function(state) {
  */
 var sendPicture = function(state) {
 	var user_id = state.local_path.slice('/picbig/'.length);
-	console.log('Retrieving portrait for user ' + user_id);
+	logger(1, 'Retrieving portrait for user ' + user_id);
 	var query_obj = {
 		'type': 'photo',
 		'member_id': user_id
@@ -368,7 +369,7 @@ var sendPicture = function(state) {
  */
 var sendAvatar = function(state) {
 	var user_id = state.local_path.slice('/avatar/'.length);
-	console.log('Retrieving avatar for user ' + user_id);
+	logger(1, 'Retrieving avatar for user ' + user_id);
 	var query_obj = {
 		'type': 'avatar',
 		'member_id': user_id
@@ -415,7 +416,7 @@ var sendSmallPicture = function(state) {
 		});
 	};
 	var user_id = state.local_path.slice('/picmini/'.length);
-	console.log('Retrieving smallpic for user ' + user_id);
+	logger(2, 'Retrieving smallpic for user ' + user_id);
 	var query_obj = {
 		'type': 'avatar',
 		'member_id': user_id
@@ -496,14 +497,14 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 	if(config.listen.baseurl) {
 		if(state.url.pathname.substring(0, state.app_prefix.length) != state.app_prefix) {
 			// this url is outside our app
-			console.log(state.url.pathname + ' does not start with ' + state.app_prefix);
+			logger(1, state.url.pathname + ' does not start with ' + state.app_prefix);
 			invalidURL(state);
 			return;
 		}
 	}
 	var path = state.local_path;
 
-	console.log('Request url: ' + path + ' (APP Path is ' + state.app_prefix + ')');
+	logger(1, 'Request url: ' + path + ' (APP Path is ' + state.app_prefix + ')');
 
 	// check whether the url has a direct mapping
 	mapped = url_mappings[path];
@@ -526,7 +527,7 @@ mapU2F = function(state, url_mappings, pattern_mappings) {
 		if (mapped) {
 			mapped(state);
 		} else {
-			console.log(path + ' has not been mapped');
+			logger(1, path + ' has not been mapped');
 			invalidURL(state);
 		}
 	}
@@ -550,10 +551,10 @@ server = function() {
 	// check connection to API server
 	lf.query('/info', {}, null, function(res) {
 		server = lf.getBaseURL();
-		console.log('Connected to ' + server.host + ':' + server.port);
-		console.log('Core Version: ' + res.core_version);
-		console.log('API Version:  ' + res.api_version);
-		console.log('Bombay Crushed Version: 0.1.1');
+		logger(0, 'Connected to ' + server.host + ':' + server.port);
+		logger(0, 'Core Version: ' + res.core_version);
+		logger(0, 'API Version:  ' + res.api_version);
+		logger(0, 'Bombay Crushed Version: 0.1.1');
 	});
 
 	// create the HTTP-Server
@@ -565,12 +566,12 @@ server = function() {
 	});
 	if(config.listen.host) {
 		server.listen(config.listen.port, config.listen.host);
-		console.log('Server running at port ' + config.listen.port + ' on ' + config.listen.host);
+		logger(0, 'Server running at port ' + config.listen.port + ' on ' + config.listen.host);
 	} else {
 		server.listen(config.listen.port);
-		console.log('Server running at port ' + config.listen.port + ' on all interfaces');
+		logger(0, 'Server running at port ' + config.listen.port + ' on all interfaces');
 	}
-	console.log('Server Base URL: ' + config.listen.baseurl);
+	logger(1, 'Server Base URL: ' + config.listen.baseurl);
 };
 
 // invoke main function

@@ -210,16 +210,16 @@ function build_areas(areas, issues_by_areaid, sort_id) {
 }
 
 function area_sort_function(sort_id) {
-	console.log('SORT FUNCTION SELECTION: ' + sort_id);
+	logger(2, 'SORT FUNCTION SELECTION: ' + sort_id);
 	if(sort_id == 2) { // we want implicit conversion between int and string, therefore == instead of ===
-		console.log('Returning sort function 2');
+		logger(2, 'Returning sort function 2');
 		return function(a,b){
 			var A = a.name;
 			var B = b.name;
 			return (A==B) ? 0 :((A < B) ? -1 : 1);
 		};
 	} else {
-		console.log('Returtning sort function 1');
+		logger(2, 'Returtning sort function 1');
 		return function(a,b){return b.direct_member_count - a.direct_member_count;}
 	}
 }

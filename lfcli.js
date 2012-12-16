@@ -12,6 +12,7 @@ var http = require('http');
 var querystring = require('querystring');
 // load configuration
 var config = require('./config.js');
+var logger = require('./logger.js');
 
 /// Define base URL of LQFB backend
 var baseurl = config.baseurl

@@ -12,6 +12,7 @@ var inis = require('./inis.js');
 var delegations = require('./delegations.js');
 var texts = require('./texts.json');
 var config = require('./config.js');
+var logger = require('./logger.js');
 
 /**
  * Get the list of areas including membership information.
@@ -68,7 +69,7 @@ var areas = function(state, render) {
 			}
 
 			state.context.units = ui_units;
-			console.log('Meine Themen: ' + JSON.stringify(state.context.units));
+			logger(2, 'Meine Themen: ' + JSON.stringify(state.context.units));
 			render();
 		}
 	}
@@ -223,7 +224,7 @@ var news = function(state, render) {
 		var issues = res.result;
 		var last_timestamp = 0;
 		var last_issue;
-		console.log('Completed issues: ' + issues.length);
+		logger(2, 'Completed issues: ' + issues.length);
 
 		// sort the issues by closing
 		Array.prototype.sort.call(issues, function(a,b) {
@@ -251,13 +252,13 @@ var news = function(state, render) {
 				// TODO handle no result case (there should always be a result because of finished_with_winner restriction)
 				lf.query('/vote', {'initiative_id': lastBallot.id}, state, function(res) {
 					votes = res.result || false;
-					console.log('Vote: ' + JSON.stringify(votes));
+					logger(2, 'Vote: ' + JSON.stringify(votes));
 					finish();
 				});
 			});
 			lf.query('/voter', {'issue_id': last_issue.id}, state, function(res) {
 				voters = res.result || false;
-				console.log('Voter: ' + JSON.stringify(voters));
+				logger(2, 'Voter: ' + JSON.stringify(voters));
 				finish();
 			});
 		}

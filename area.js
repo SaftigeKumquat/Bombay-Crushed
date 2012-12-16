@@ -2,6 +2,7 @@ var lf = require('./lfcli.js');
 var issue = require('./issue.js');
 var userFunc = require('./user.js');
 var ejs = require('./ejs.js');
+var logger = require('./logger.js');
 
 var getMemberSupport = function(support, issue, ini) {
 	for(var a = 0; a < support.length; a++) {
@@ -304,7 +305,7 @@ function map_issue_states_to_lf(bc_state) {
 exports.update_issues_table = function(state) {
 	// we need an area id
 	if(!state.url.query.area_id) {
-		console.log('Please provide area_id parameter');
+		logger(1, 'Please provide area_id parameter');
 		invalidURL(state);
 		return;
 	}

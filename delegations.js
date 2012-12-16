@@ -3,6 +3,7 @@
  */
 var lf = require('./lfcli.js');
 var userFunc = require('./user.js');
+var logger = require('./logger.js');
 
 // Basic functions on JS objects
 var registerFunctions = function() {
@@ -68,12 +69,12 @@ exports.lastActions = function(state, render) {
 				else {
 					trustees.push(links[i].trustee_id);
 					pending_resolves++; // don't finish until we know who it is and what he did
-					console.log('Query trustee name: ' + links[i].trustee_id);
+					logger(2, 'Query trustee name: ' + links[i].trustee_id);
 				}
 
 				lf.query('/member', {'member_id': links[i].trustee_id }, state, function(res) {
 					var delegate = res.result[0];
-					console.log(JSON.stringify(delegate));
+					logger(3, JSON.stringify(delegate));
 
 					var info_obj = {
 						'user': userFunc.getUserBasic(delegate)
@@ -83,10 +84,10 @@ exports.lastActions = function(state, render) {
 					                   'issue_state': 'finished_with_winner,finished_without_winner'
 					                  }, state, function(res) {
 						if(res.result && res.result.length > 0) {
-							console.log(JSON.stringify(res));
+							logger(3, JSON.stringify(res));
 							// TODO sort these properly instead of taking an arbitrary one
 							vote = res.result[0];
-							if(vote.grade.grade > 0) {
+							if(vote.grade > 0) {
 								info_obj.action = 'for';
 							} else {
 								info_obj.action = 'against';
