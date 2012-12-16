@@ -104,7 +104,7 @@ var area = function(state, render, page, memberpage, issue_sort_criteria) {
 				case '3':
 					logger(2, 'sorting highes population first');
 					issue_sort_function = function(a,b) {
-						return a.population - b.population;
+						return b.population - a.polulation;
 					};
 					break;
 				case '4':
