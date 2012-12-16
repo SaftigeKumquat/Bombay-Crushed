@@ -23,7 +23,7 @@
 				<option value="5"><%= texts.initiated %></option>		
 			</select>
 		</div>	
-		<div class="multiple-filter unavailable">			
+		<div class="multiple-filter">
 			<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>	
 			<select id="select-filter2" name="select_filter3" onchange="update_issues_table(<%= area.id %>, <%= selected_issue_state %>, 1, <%= area.memberspage %>, this.value);">
 				<option <% if(selected_issue_sort_criteria == '1') { %> selected="selected" <% } %>value="1"><%= texts.maxpotsupporter %></option>
