@@ -186,14 +186,15 @@ function update_areas_table(unit_id, sorting_criteria) {
  * Update the issues for a certain area
  * sorting.
  */
-function update_issues_table(area_id, state_filter, issue_page, member_page) {
+function update_issues_table(area_id, state_filter, issue_page, member_page, issue_sort_criteria) {
 	var url = 'update_issues_table?area_id=' + area_id + '&issue_state=' + state_filter
-	          + '&page=' + issue_page + '&member_page=' + member_page;
+	          + '&page=' + issue_page + '&member_page=' + member_page + '&issue_sort_criteria=' + issue_sort_criteria;
 	var data = {
 		area_id: area_id,
 		issue_state: state_filter,
 		page: issue_page,
-		member_page: member_page
+		member_page: member_page,
+		issue_sort_criteria: issue_sort_criteria
 	};
 
 	$.ajax({

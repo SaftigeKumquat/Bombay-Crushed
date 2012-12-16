@@ -2,7 +2,7 @@
 	<h2><%= texts.area %> „<%= area.name %>“ <%= area.unit %></h2>
 		<div class="multiple-filter">
 			<label class="table-label" for="select_fiter"><%= texts.state %>:</label>	
-			<select id="select-filter" name="filter" onchange="update_issues_table(<%= area.id %>, this.value, 1, <%= area.memberspage %>);">
+			<select id="select-filter" name="filter" onchange="update_issues_table(<%= area.id %>, this.value, 1, <%= area.memberspage %>, <%= selected_issue_sort_criteria %>);">
 				<option <% if(selected_issue_state == '1') { %> selected="selected" <% } %> value="1"><%= texts.open %></option>
 				<option <% if(selected_issue_state == '2') { %> selected="selected" <% } %> value="2"><%= texts.status1 %></option>
 				<option <% if(selected_issue_state == '3') { %> selected="selected" <% } %> value="3"><%= texts.status2 %></option>
@@ -25,12 +25,12 @@
 		</div>	
 		<div class="multiple-filter unavailable">			
 			<label class="table-label" for="select_fiter3"><%= texts.sortedby %>:</label>	
-			<select id="select-filter2" name="filter">							
-				<option value="1"><%= texts.maxpotsupporter %></option>
-				<option value="2"><%= texts.maxsupporter %></option>
-				<option value="3"><%= texts.population %></option>
-				<option value="4"><%= texts.newest %></option>		
-				<option value="5"><%= texts.oldest %></option>		
+			<select id="select-filter2" name="select_filter3" onchange="update_issues_table(<%= area.id %>, <%= selected_issue_state %>, 1, <%= area.memberspage %>, this.value);">
+				<option <% if(selected_issue_sort_criteria == '1') { %> selected="selected" <% } %>value="1"><%= texts.maxpotsupporter %></option>
+				<option <% if(selected_issue_sort_criteria == '2') { %> selected="selected" <% } %>value="2"><%= texts.maxsupporter %></option>
+				<option <% if(selected_issue_sort_criteria == '3') { %> selected="selected" <% } %>value="3"><%= texts.population %></option>
+				<option <% if(selected_issue_sort_criteria == '4') { %> selected="selected" <% } %>value="4"><%= texts.newest %></option>		
+				<option <% if(selected_issue_sort_criteria == '5') { %> selected="selected" <% } %>value="5"><%= texts.oldest %></option>		
 			</select>
 		</div>				
 		<table class="table-area">

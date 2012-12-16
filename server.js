@@ -107,11 +107,15 @@ var showArea = function(state) {
 	// get page numbers
 	var page = 1;
 	var memberpage = 1;
+	var issue_sort_criteria = 1;
 	if(state.url.query.page) {
 		page = state.url.query.page;
 	}
 	if(state.url.query.memberpage) {
 		memberpage = state.url.query.memberpage;
+	}
+	if(state.url.query.issue_sort_criteria) {
+		issue_sort_criteria = state.url.query.issue_sort_criteria;
 	}
 
 	var finish = function() {
@@ -122,7 +126,7 @@ var showArea = function(state) {
 		}
 	}
 
-	area.show(state, finish, page, memberpage);
+	area.show(state, finish, page, memberpage, issue_sort_criteria);
 }
 
 /**

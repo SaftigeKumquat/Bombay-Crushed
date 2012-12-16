@@ -16,7 +16,7 @@ var getMemberSupport = function(support, issue, ini) {
 	}
 }
 
-var area = function(state, render, page, memberpage) {
+var area = function(state, render, page, memberpage, issue_sort_criteria) {
 	var area_id = state.url.query.area_id;
 	var builtArea = {};
 	var issues = [];
@@ -73,6 +73,37 @@ var area = function(state, render, page, memberpage) {
 
 			builtArea.memberspage = memberpage;
 			builtArea.memberspages = memberpages;
+
+			// sort issues by given criteria
+			var issue_sort_function;
+			logger(2, 'issue sort criteria is ' + issue_sort_criteria);
+			switch(issue_sort_criteria) {
+				case '4':
+					logger(2, 'sorting newest issues first');
+					issue_sort_function = function(a,b) {
+						if (a.created < b.created)
+							return 1;
+						else if (a.created > b.created)
+							return -1;
+						else
+							return 0;
+					};
+					break;
+				case '5':
+					logger(2, 'sorting oldest issues first');
+					issue_sort_function = function(a,b) {
+						if (a.created < b.created)
+							return -1;
+						else if (a.created > b.created)
+							return 1;
+						else
+							return 0;
+					};
+			};
+			if(issue_sort_function) {
+				issues.sort(issue_sort_function);
+			}
+			state.context.selected_issue_sort_criteria = issue_sort_criteria;
 
 			// only the first 6 issues
 			for(var i = start_issue; i < issues.length && i < end_issue; i++) {
@@ -313,11 +344,15 @@ exports.update_issues_table = function(state) {
 	// get page numbers
 	var page = 1;
 	var memberpage = 1;
+	var issue_sort_criteria = 1;
 	if(state.url.query.page) {
 		page = state.url.query.page;
 	}
 	if(state.url.query.memberpage) {
 		memberpage = state.url.query.memberpage;
+	}
+	if(state.url.query.issue_sort_criteria) {
+		issue_sort_criteria = state.url.query.issue_sort_criteria;
 	}
 
 	var finish = function() {
@@ -328,6 +363,6 @@ exports.update_issues_table = function(state) {
 	}
 
 	// TODO refactor to avoid querying members
-	exports.show(state, finish, page, memberpage);
+	exports.show(state, finish, page, memberpage, issue_sort_criteria);
 };
 
