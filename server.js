@@ -105,18 +105,10 @@ var showArea = function(state) {
 	}
 
 	// get page numbers
-	var page = 1;
-	var memberpage = 1;
-	var issue_sort_criteria = 5;
-	if(state.url.query.page) {
-		page = state.url.query.page;
-	}
-	if(state.url.query.memberpage) {
-		memberpage = state.url.query.memberpage;
-	}
-	if(state.url.query.issue_sort_criteria) {
-		issue_sort_criteria = state.url.query.issue_sort_criteria;
-	}
+	var page = state.url.query.page || 1;
+	var memberpage = state.url.query.memberpage || 1;
+	var my_involvment = state.url.query.my_involvment || 1;
+	var issue_sort_criteria = state.url.query.issue_sort_criteria || 5;
 
 	var finish = function() {
 		var ctx = state.context;
@@ -126,7 +118,7 @@ var showArea = function(state) {
 		}
 	}
 
-	area.show(state, finish, page, memberpage, issue_sort_criteria);
+	area.show(state, finish, page, memberpage, my_involvment, issue_sort_criteria);
 }
 
 /**
