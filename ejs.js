@@ -43,7 +43,11 @@ fs.readdir(__dirname + '/templates/', function(err, files) {
 		logger(1, 'stating ' + filename);
 		fs.stat(__dirname + '/templates/' + filename, function(err, stats) {
 			// ignore errors
-			if(!err && !stats.isDirectory()) {
+			if(!err
+			   && !stats.isDirectory() // ignore directories
+			   && !filename.match(/^\./) // ignore hidden file
+			   && !filename.match(/~$/) // ignore typical editor backup files
+			  ) {
 				try {
 					caching('/templates/' + filename);
 					logger(1, ' -- ' + filename);
