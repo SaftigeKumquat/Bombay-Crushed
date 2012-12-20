@@ -61,6 +61,8 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 	}
 
 	var finish = function() {
+		var i, tmp_issue;
+
 		if(builtArea.name && builtArea.unit
 			&& membershipDone == true && issueDone == true
 			&& interest.length == issues.length
@@ -156,12 +158,13 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 			state.context.selected_issue_sort_criteria = issue_sort_criteria;
 
 			// only the first 6 issues
-			for(var i = start_issue; i < issues.length && i < end_issue; i++) {
+			for(i = start_issue; i < issues.length && i < end_issue; i++) {
+				tmp_issue = issues[i];
 
 				builtIssue = {};
-				builtIssue.id = issues[i].id;
+				builtIssue.id = tmp_issue.id;
 
-				builtIssue.status = issue.getIssueStateText(issues[i].state);
+				builtIssue.status = issue.getIssueStateText(tmp_issue.state);
 
 				for(var a = 0; a < interest.length; a++) {
 					if(interest[a].issue_id == builtIssue.id && interest[a].iwatchissue == true) {
@@ -170,7 +173,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 				}
 
 				for(var a = 0; a < policies.length; a++) {
-					if(policies[a].id == issues[i].policy_id) {
+					if(policies[a].id == tmp_issue.policy_id) {
 						quorum_num = policies[a].issue_quorum_num;
 						quorum_den = policies[a].issue_quorum_den;
 					}
@@ -178,7 +181,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 
 				inis_of_issue = inis_by_issueid[builtIssue.id];
 
-				if(issues[i].ranks_available) {
+				if(tmp_issue.ranks_available) {
 					// only keep admitted inis
 					admitted_inis = [];
 					for(var b = 0; b < inis_of_issue.length; b++) {
@@ -284,7 +287,6 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 
 	var issue_id;
 
-	// TODO handle involvments
 	state.context.selected_my_involvment = my_involvment;
 
 	// get the area
