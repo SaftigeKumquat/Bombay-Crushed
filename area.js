@@ -89,7 +89,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 			if(pages == 0) {
 				pages = 1;
 			}
-			
+
 			builtArea.issuespage = page;
 			builtArea.issuespages = pages;
 
@@ -107,6 +107,16 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 
 			builtArea.memberspage = memberpage;
 			builtArea.memberspages = memberpages;
+
+			// filter issues by given criteria
+			var issue_involvment_filter;
+			switch(my_involvment) {
+				default:
+					logger(2, 'Not filtering by involvment');
+			}
+			if(issue_involvment_filter) {
+				issues = issues.filter(issue_involvment_filter);
+			}
 
 			// sort issues by given criteria
 			var issue_sort_function;
