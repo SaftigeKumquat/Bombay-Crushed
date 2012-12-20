@@ -22,6 +22,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 	var issues = [];
 	var policies = [];
 	var interest = [];
+	var interest_by_issueid = {};
 	var inis = [];
 	var inis_by_issueid = {};
 	var members = [];
@@ -176,11 +177,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 
 				builtIssue.status = issue.getIssueStateText(tmp_issue.state);
 
-				for(var a = 0; a < interest.length; a++) {
-					if(interest[a].issue_id == builtIssue.id && interest[a].iwatchissue == true) {
-						builtIssue.iwatchissue = true;
-					}
-				}
+				builtIssue.iwatchissue = interest_by_issueid[builtIssue.id] || false;
 
 				for(var a = 0; a < policies.length; a++) {
 					if(policies[a].id == tmp_issue.policy_id) {
@@ -320,6 +317,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 				lf.query('/interest', { 'issue_id': issue_id, 'snapshot': 'latest', 'member_id': state.user_id() }, state, function(interest_res) {
 					if(interest_res.result.length > 0) {
 						interest.push({ 'issue_id': interest_res.result[0].issue_id, 'iwatchissue': true});
+						interest_by_issueid[interest_res.result[0].issue_id] = true;
 					}
 					else {
 						interest.push({ 'issue_id': 0, 'iwatchissue': false});
