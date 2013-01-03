@@ -112,6 +112,13 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 			// filter issues by given criteria
 			var issue_involvment_filter;
 			switch(my_involvment) {
+				case '2':
+					logger(2, 'Filtering by interest');
+					logger(5, 'Interests: ' + JSON.stringify(interest_by_issueid));
+					issue_involvment_filter = function(issue) {
+						return interest_by_issueid[issue.id] || false;
+					};
+					break;
 				default:
 					logger(2, 'Not filtering by involvment');
 			}
