@@ -30,6 +30,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 	var support = [];
 	var membershipDone = false;
 	var issueDone = false;
+	var initiatorInfo;
 
 	function max_total_supporters(issueid) {
 		var inis = inis_by_issueid[issueid];
@@ -61,6 +62,19 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 		return max;
 	}
 
+	function find_initiator_info(issue_id) {
+		var i_ini, i_info;
+		inis = inis_by_issueid[issue_id] || [];
+		for(i_info = 0; i_info < initiatorInfo.length; i_info++) {
+			for(i_ini = 0; i_ini < inis.length; i_ini++) {
+				if(initiatorInfo[i_info].initiative_id === inis[i_ini].id) {
+					return initiatorInfo[i_info];
+				}
+			}
+		}
+		return false;
+	}
+
 	var finish = function() {
 		var i, tmp_issue;
 
@@ -69,7 +83,8 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 			&& interest.length == issues.length
 			&& inis.length == issues.length
 			&& members.length == users.length
-			&& support.length == issues.length ) {
+			&& support.length == issues.length
+			&& (my_involvment != '5' || initiatorInfo !== undefined)) {
 
 			builtArea.issues = [];
 			builtArea.delegations = [];
@@ -117,6 +132,13 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 					logger(5, 'Interests: ' + JSON.stringify(interest_by_issueid));
 					issue_involvment_filter = function(issue) {
 						return interest_by_issueid[issue.id] || false;
+					};
+					break;
+				case '5':
+					logger(2, 'Filtering by initiator');
+					logger(5, 'Initiated: ' + JSON.stringify(initiatorInfo));
+					issue_involvment_filter = function(issue) {
+						return find_initiator_info(issue.id) !== false;
 					};
 					break;
 				default:
@@ -349,6 +371,12 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 			}
 
 			issueDone = true;
+			finish();
+		});
+
+		// if filtering by initiator also get initiator-info
+		lf.query('/initiator', { 'area_id': area_id, 'member_id': state.user_id() }, state, function(initiator_res) {
+			initiatorInfo = initiator_res.result;
 			finish();
 		});
 
