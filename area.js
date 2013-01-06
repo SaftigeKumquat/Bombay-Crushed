@@ -75,6 +75,23 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 		return false;
 	}
 
+	function has_full_support_inis(issue_id) {
+		var i_ini, a, b;
+		var support_item;
+		var inis = inis_by_issueid[issue_id] || [];
+		for(a = 0; a < support.length; a++) {
+			for(b = 0; b < support[a].length; b++) {
+				for(i_ini = 0; i_ini < inis.length; i_ini++) {
+					support_item = support[a][b];
+					if(support_item.initiative_id === inis[i_ini].id && support_item.satisfied) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	function has_potential_support_inis(issue_id) {
 		var i_ini, a, b;
 		var support_item;
@@ -150,6 +167,12 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 					issue_involvment_filter = function(issue) {
 						return interest_by_issueid[issue.id] || false;
 					};
+					break;
+				case '3':
+					logger(2, 'Filtering by full support');
+					issue_involvment_filter = function(issue) {
+						return has_full_support_inis(issue.id);
+					}
 					break;
 				case '4':
 					logger(2, 'Filtering by conditional support');
