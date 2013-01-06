@@ -13,7 +13,7 @@
 				<option <% if(selected_issue_state == '8') { %> selected="selected" <% } %> value="8"><%= texts.all %></option>		
 			</select>
 		</div>
-		<div class="multiple-filter unavailable">
+		<div class="multiple-filter">
 			<label class="table-label" for="select_fiter2"><%= texts.mystatus %>:</label>	
 			<select id="select-filter2" name="filter" onchange="update_issues_table(<%= area.id %>, <%= selected_issue_state %>, 1, <%= area.memberspage %>, this.value, <%= selected_issue_sort_criteria %>);">
 				<option <% if(selected_my_involvment == '1') { %> selected="selected" <% } %> value="1"><%= texts.all %></option>
