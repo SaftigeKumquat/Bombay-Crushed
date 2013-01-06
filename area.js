@@ -64,7 +64,7 @@ var area = function(state, render, page, memberpage, my_involvment, issue_sort_c
 
 	function find_initiator_info(issue_id) {
 		var i_ini, i_info;
-		inis = inis_by_issueid[issue_id] || [];
+		var inis = inis_by_issueid[issue_id] || [];
 		for(i_info = 0; i_info < initiatorInfo.length; i_info++) {
 			for(i_ini = 0; i_ini < inis.length; i_ini++) {
 				if(initiatorInfo[i_info].initiative_id === inis[i_ini].id) {
