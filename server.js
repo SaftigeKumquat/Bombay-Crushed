@@ -115,7 +115,7 @@ var showArea = function(state) {
 	var page = state.url.query.page || 1;
 	var memberpage = state.url.query.memberpage || 1;
 	var my_involvment = state.url.query.my_involvment || 1;
-	var issue_sort_criteria = state.url.query.issue_sort_criteria || 5;
+	var issue_sort_criteria = state.url.query.issue_sort_criteria || '4';
 
 	var finish = function() {
 		var ctx = state.context;
