@@ -75,7 +75,14 @@ var showProfile = function(state) {
 
 	var finish = function() {
 		var ctx = state.context;
-		ctx.meta.currentpage = "profile";
+		
+		if(ctx.user.isme) {
+			ctx.meta.currentpage = "profile";
+		}
+		else {
+			ctx.meta.currentpage = "otherprofile";
+		}
+
 		if(ctx.user !== undefined && ctx.user.units.length != 0) {
 			ejs.render(state, '/profile.tpl');
 		}
