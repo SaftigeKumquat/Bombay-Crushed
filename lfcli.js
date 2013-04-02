@@ -25,7 +25,7 @@ var baseurl = config.baseurl
  * @param state The current HTTP requests state object.
  *              Used for session information
  */
-var buildRequestOptions = function(path, args, state) {
+var buildRequestOptions = function(path, args, state, isPostRequest) {
 	var options = {
 		host: baseurl.host,
 		port: baseurl.port
@@ -46,7 +46,17 @@ var buildRequestOptions = function(path, args, state) {
 		if(state && state.session_key()) {
 			args['session_key'] = state.session_key()
 		}
-		options.path += '?' + querystring.stringify(args);
+		var argsstring = querystring.stringify(args)
+		options.path += '?' + argsstring;
+
+		//Handle POST requests
+		if(isPostRequest){
+			options.method = 'POST';
+
+			//Set Content-Lenght header on POST requests
+			if(!options.headers) options.headers={};
+			options.headers['Content-Length'] = argsstring.length;
+		}
 	}
 	return options;
 }
@@ -115,8 +125,7 @@ exports.query = function(path, args, state, handler) {
  * @return The ClientResponseObject given by http(s).request.
  */
 exports.perform = function(path, args, state, handler) {
-	var options = buildRequestOptions(path, state);
-	options.method = 'POST';
+	var options = buildRequestOptions(path, args, state, true);
 
 	var extended_handler = function(res) {
 		if(res.statusCode != 200) {
