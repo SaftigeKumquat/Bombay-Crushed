@@ -1,7 +1,7 @@
 Bombay Crushed
 ==============
 
-This is the public repository for [Bombay Crushed](http://saftigekumquat.org/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) currently developed by [Saftige Kumquat](http://saftigekumquat.org/).
+This is the public repository for [Bombay Crushed](http://saftigekumquat.org/2011/10/05/bombay-crushed/), a new UI for [Liquid Feedback](http://liquidfeedback.org/) that was developed by [Saftige Kumquat](http://saftigekumquat.org/). It is no longer maintained.
 
 Where to start?
 ---------------
@@ -22,7 +22,7 @@ Requirements
 
 * [Node.js](http://nodejs.org/)
 * [npm](http://npmjs.org/) modules:
- * EJS
+ * EJS (Vulnerabilities reported for currently used EJS version; not tested for higher EJS versions)
  * cookies
  * canvas
 
